@@ -1,0 +1,90 @@
+﻿USE [SeramikStore]
+GO
+
+/****** Object:  Table [dbo].[Cart]    Script Date: 12/7/2025 8:22:18 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Cart](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[ProductCode] [nvarchar](50) NOT NULL,
+	[ProductName] [nvarchar](50) NOT NULL,
+	[UnitPrice] [decimal](18, 0) NOT NULL,
+	[Quantity] [int] NOT NULL,
+	[TotalAmount] [decimal](18, 0) NOT NULL,
+	[UserId] [int] NOT NULL,
+ CONSTRAINT [PK_Cart] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[Product]    Script Date: 12/7/2025 8:22:18 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Product](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ProductCode] [nvarchar](50) NOT NULL,
+	[ProductName] [nvarchar](50) NOT NULL,
+	[ProductDesc] [nvarchar](max) NOT NULL,
+	[CategoryId] [int] NOT NULL,
+	[UnitPrice] [decimal](18, 0) NOT NULL,
+	[Currency] [nvarchar](10) NOT NULL,
+	[AvailableForSale] [bit] NOT NULL,
+ CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[Role]    Script Date: 12/7/2025 8:22:18 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Role](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+/****** Object:  Table [dbo].[UserTable]    Script Date: 12/7/2025 8:22:18 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UserTable](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](50) NULL,
+	[Email] [nvarchar](50) NULL,
+	[Password] [nvarchar](50) NULL,
+	[Name] [nvarchar](50) NULL,
+	[TelephoneNumber] [nvarchar](50) NULL,
+	[Address] [nvarchar](max) NULL,
+	[RoleId] [int] NULL,
+ CONSTRAINT [PK_UserTable] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+

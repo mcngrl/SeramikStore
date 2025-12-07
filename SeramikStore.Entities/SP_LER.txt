@@ -1,0 +1,170 @@
+﻿USE [SeramikStore]
+GO
+
+/****** Object:  StoredProcedure [dbo].[DeleteCartById]    Script Date: 12/7/2025 8:19:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[DeleteCartById]
+    @CartId INT
+AS
+BEGIN
+    DELETE FROM [Cart]
+    WHERE Id = @CartId;
+
+    -- Silinen satır sayısını döndür
+    SELECT @@ROWCOUNT AS Result;
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetCartById]    Script Date: 12/7/2025 8:19:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetCartById]
+    @CartId INT
+AS
+BEGIN
+    SELECT Id, ProductId, ProductCode, ProductName, UnitPrice, Quantity, TotalAmount, UserId
+    FROM [Cart]
+    WHERE Id = @CartId;
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetCartDetailsByUserId]    Script Date: 12/7/2025 8:19:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetCartDetailsByUserId]
+    @UserId INT
+AS
+BEGIN
+    SELECT * 
+    FROM [Cart]
+    WHERE UserId = @UserId
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetProducts]    Script Date: 12/7/2025 8:19:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetProducts]
+AS
+BEGIN
+    SELECT Id, ProductCode, ProductName, ProductDesc, CategoryId, UnitPrice, Currency, AvailableForSale
+    FROM Product;
+END;
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_CheckUser]    Script Date: 12/7/2025 8:19:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_CheckUser]
+    @UserName NVARCHAR(50),
+    @Password NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        Id,
+        UserName,
+        Email,
+        Name,
+        RoleId
+    FROM [UserTable]
+    WHERE UserName = @UserName 
+      AND Password = @Password;
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_GetProductById]    Script Date: 12/7/2025 8:19:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetProductById]
+    @Id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        Id,
+        ProductCode,
+        ProductName,
+        ProductDesc,
+        CategoryId,
+        UnitPrice,
+        Currency,
+        AvailableForSale
+    FROM Product
+    WHERE Id = @Id;
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_GetRole]    Script Date: 12/7/2025 8:19:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_GetRole]
+    @RoleId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        Id,
+        Name
+    FROM [Role]
+    WHERE Id = @RoleId;
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[UpdateCart]    Script Date: 12/7/2025 8:19:50 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[UpdateCart]
+    @CartId INT,
+    @TotalAmount DECIMAL(18, 0),
+    @Quantity INT
+AS
+BEGIN
+    UPDATE [Cart]
+    SET 
+        Quantity = @Quantity,
+        TotalAmount = @TotalAmount
+    WHERE Id = @CartId;
+
+    -- Güncellenen satır sayısını döndür
+    SELECT @@ROWCOUNT AS Result;
+END
+GO
+
+
