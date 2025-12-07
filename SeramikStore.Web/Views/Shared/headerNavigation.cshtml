@@ -1,0 +1,44 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-action="Index" asp-controller="Home">
+            <img src="https://www.freepnglogos.com/uploads/book-png/book-clipart-transparent-17.png"
+                 width="60" height="60" />
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Carts" asp-action="Index">
+                        @await Component.InvokeAsync("Cart")
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                </li>
+
+
+                @if (HttpContextAccessor.HttpContext.Session.GetString("role") == "Admin")
+                {
+
+                    <li class="nav-item dropdown text-light">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">CMS</a>
+                        <div class="dropdown-menu ">
+                            <a class="dropdown-item text-light" asp-action="Index" asp-controller="BookStores">Book Store</a>
+                            <a class="dropdown-item text-light" asp-action="Index" asp-controller="Authors">Book Author</a>
+                            <a class="dropdown-item text-light" asp-action="Index" asp-controller="Categories">Categories</a>
+                            <a class="dropdown-item text-light" asp-action="Index" asp-controller="Books">Books</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-light" href="#">Orders</a>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <partial name="_LoginPartial" />
+        </div>
+    </div>
+</nav>
