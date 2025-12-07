@@ -1,0 +1,51 @@
+﻿@using SeramikStore.Web.ViewModels;
+@model ProductDetail
+
+<form asp-action="Cart"  method="Post">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="~/Images/f01.jpg" class="img img-thumbnail" />
+        </div>
+        <div class="col-md-6">
+
+            <dl class="row form-group">
+                <dt class="col-sm-2">
+                    <input type="hidden" asp-for="@Model.Id" />
+
+                </dt>
+                <dd class="col-sm-10">
+
+                </dd>
+                <dt class="col-sm-2">
+                    <input type="hidden" asp-for="@Model.Id" />
+                    <label asp-for="@Model.ProductCode " class="font-weight-bolder"></label>
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ProductName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ProductDesc)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Currency)
+                </dd>
+                <dt class="col-sm-2">
+                    <input type="hidden" asp-for="@Model.UnitPrice" />
+                    <label asp-for="@Model.UnitPrice" class="font-weight-bolder"></label>
+                </dt>
+                <dd class="col-sm-10">
+                    <i class="fas fa-euro-sign"></i>   @Html.DisplayFor(model => model.UnitPrice)
+                </dd>
+            </dl>
+            <div class="row form-group">
+
+                <label asp-for="@Model.Quantity" class="font-weight-bolder">Quantity : </label>
+                <input asp-for="@Model.Quantity" class="form-control w-100" />
+            </div>
+            <div class="row form-group mt-2">
+                <input type="Submit" value="Add to Cart" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
