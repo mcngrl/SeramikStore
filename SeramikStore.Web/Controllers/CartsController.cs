@@ -11,16 +11,16 @@ namespace SeramikStore.Web.Controllers
         private IProductServices _productService;
         private IAuthentication _authenticationService;
 
-        public CartsController(IProductServices bookStoreService, IAuthentication authenticationService)
+        public CartsController(IProductServices productService, IAuthentication authenticationService)
         {
-            _productService = bookStoreService;
+            _productService = productService;
             _authenticationService = authenticationService;
         }
 
         [CheckSession("userId")]
         public IActionResult Index()
         {
-            var carts = _productService.GetCartDetailByUserId((int)HttpContext.Session.GetInt32("userId"));
+            var carts = _productService.CartListByUserId((int)HttpContext.Session.GetInt32("userId"));
             return View(carts);
         }
 
@@ -28,7 +28,7 @@ namespace SeramikStore.Web.Controllers
         [CheckSession("userId")]
         public IActionResult Edit(int id)
         {
-            var cart = _productService.GetCartById(id);
+            var cart = _productService.CartGetById(id);
             return View(cart);
         }
         [HttpPost]
@@ -49,14 +49,14 @@ namespace SeramikStore.Web.Controllers
         [CheckSession("userId")]
         public IActionResult Delete(int id)
         {
-            var cart = _productService.GetCartById(id);
+            var cart = _productService.CartGetById(id);
             return View(cart);
         }
 
         [HttpPost]
         public IActionResult Delete(Cart cart)
         {
-            int result = _productService.DeleteCartById(cart.Id);
+            int result = _productService.CartDeleteById(cart.Id);
             if (result > 0)
             {
                 return RedirectToAction("Index");

@@ -16,19 +16,43 @@
                 <dd class="col-sm-10">
 
                 </dd>
+
+
                 <dt class="col-sm-2">
-                    <input type="hidden" asp-for="@Model.Id" />
+                    <input type="hidden" asp-for="@Model.ProductCode" />
                     <label asp-for="@Model.ProductCode " class="font-weight-bolder"></label>
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ProductCode)
+                </dd>
+
+                <dt class="col-sm-2">
+                    <input type="hidden" asp-for="@Model.ProductName" />
+                    <label asp-for="@Model.ProductName" class="font-weight-bolder"></label>
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ProductName)
                 </dd>
+
+
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ProductDesc)
+                    <input type="hidden" asp-for="@Model.ProductDesc" />
+                    <label asp-for="@Model.ProductDesc" class="font-weight-bolder"></label>
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ProductDesc)
+                </dd>
+
+
+                <dt class="col-sm-2">
+                    <input type="hidden" asp-for="@Model.Currency" />
+                    <label asp-for="@Model.Currency" class="font-weight-bolder"></label>
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Currency)
                 </dd>
+
+
                 <dt class="col-sm-2">
                     <input type="hidden" asp-for="@Model.UnitPrice" />
                     <label asp-for="@Model.UnitPrice" class="font-weight-bolder"></label>
@@ -37,6 +61,7 @@
                     <i class="fas fa-euro-sign"></i>   @Html.DisplayFor(model => model.UnitPrice)
                 </dd>
             </dl>
+
             <div class="row form-group">
 
                 <label asp-for="@Model.Quantity" class="font-weight-bolder">Quantity : </label>

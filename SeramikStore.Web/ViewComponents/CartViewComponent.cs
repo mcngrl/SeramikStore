@@ -25,7 +25,7 @@ namespace SeramikStore.Web.ViewComponents
                 else
                 {
                     int UserId = (int)HttpContext.Session.GetInt32("userId");
-                    HttpContext.Session.SetInt32("sessionCart", _productService.GetCartDetailByUserId(UserId).Count());
+                    HttpContext.Session.SetInt32("sessionCart", _productService.CartListByUserId(UserId).Count());
                     return View(HttpContext.Session.GetInt32("sessionCart"));
 
                 }
