@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using SeramikStore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IProductServices, ProductServices>();
 builder.Services.AddTransient<IAuthentication, AuthenticationService>();
+builder.Services.AddTransient<ICurrencyService, CurrencyService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddSession(options =>
