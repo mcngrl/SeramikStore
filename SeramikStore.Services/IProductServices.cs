@@ -9,13 +9,15 @@ namespace SeramikStore.Services
 {
     public interface IProductServices
     {
-        List<Product> GetListOfProducts();
+        List<Product> ProductList();
 
-        List<Cart> GetCartDetailByUserId(int userId);
+        List<Cart> CartListByUserId(int userId);
 
-        int DeleteCartById(int cartId);
-        Cart GetCartById(int cartId);
+        int CartDeleteById(int cartId);
+        Cart CartGetById(int cartId);
         int UpdateCart(int cartId, decimal totalAmount, int quantity);
-        Product GetProductById(int id);
+
+        int SaveCart(Cart cart);
+        Product ProductGetById(int id);
     }
 }

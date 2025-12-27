@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using SeramikStore.Services;
-using SeramikStore.Web.Models;
-using System.Diagnostics;
-using SeramikStore.Web.ViewModels;
 using Microsoft.IdentityModel.Logging;
+using SeramikStore.Entities;
+using SeramikStore.Services;
+using SeramikStore.Web.Filters;
+using SeramikStore.Web.Models;
+using SeramikStore.Web.ViewModels;
+using System.Diagnostics;
 
 namespace SeramikStore.Web.Controllers
 {
@@ -20,7 +22,7 @@ namespace SeramikStore.Web.Controllers
 
         public IActionResult Index()
         {
-            var productList = _productservices.GetListOfProducts();
+            var productList = _productservices.ProductList();
             List<ProductForListingViewModel> vm = new List<ProductForListingViewModel>();
             foreach (var item in productList)
             {
@@ -46,7 +48,7 @@ namespace SeramikStore.Web.Controllers
         public IActionResult Details(int id)
         {
             ProductDetail vm = new ProductDetail();
-            var TheProduct = _productservices.GetProductById(id);
+            var TheProduct = _productservices.ProductGetById(id);
 
             if (TheProduct.Id != 0)
             {
@@ -69,6 +71,30 @@ namespace SeramikStore.Web.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        [CheckSession("userName")]
+        [HttpPost]
+        public IActionResult Cart(ProductDetail vm)
+        {
+            Cart cart = new Cart();
+            cart.ProductId = vm.Id;
+            cart.ProductName = vm.ProductName;
+            cart.ProductCode = vm.ProductCode;
+            cart.Quantity = vm.Quantity;
+            cart.UnitPrice = vm.UnitPrice;
+            //var total = (cart.Quantity) * (cart.UnitPrice);
+            //cart.TotalAmount = total;
+            cart.UserId = (int)HttpContext.Session.GetInt32("userId");
+            int result = _productservices.SaveCart(cart);
+            if (result > 0)
+            {
+                HttpContext.Session.SetInt32("sessionCart", _productservices.CartListByUserId(cart.UserId).Count());
+                return RedirectToAction("Index", "Carts");
+            }
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }

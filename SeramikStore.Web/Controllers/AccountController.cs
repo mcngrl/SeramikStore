@@ -30,10 +30,10 @@ namespace SeramikStore.Web.Controllers
         {
             if (_authencationService.CheckUserExists(vm.UserName, vm.Password))
             {
-                var user = _authencationService.CheckUser(vm.UserName, vm.Password);
+                var user = _authencationService.UserGetByUserNameAndPassword(vm.UserName, vm.Password);
                 if (user !=null)
                 {
-                    var role = _authencationService.GetRole(user.RoleId);
+                    var role = _authencationService.RoleGetById(user.RoleId);
                     HttpContext.Session.SetString("userName", user.Name);
                     HttpContext.Session.SetString("role", role.Name);
                     HttpContext.Session.SetString("userName", user.Name);

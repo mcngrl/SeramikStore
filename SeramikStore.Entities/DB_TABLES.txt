@@ -1,7 +1,7 @@
 ﻿USE [SeramikStore]
 GO
 
-/****** Object:  Table [dbo].[Cart]    Script Date: 12/7/2025 8:22:18 PM ******/
+/****** Object:  Table [dbo].[Cart]    Script Date: 12/27/2025 3:14:49 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -13,9 +13,9 @@ CREATE TABLE [dbo].[Cart](
 	[ProductId] [int] NOT NULL,
 	[ProductCode] [nvarchar](50) NOT NULL,
 	[ProductName] [nvarchar](50) NOT NULL,
-	[UnitPrice] [decimal](18, 0) NOT NULL,
+	[UnitPrice] [decimal](9, 2) NOT NULL,
 	[Quantity] [int] NOT NULL,
-	[TotalAmount] [decimal](18, 0) NOT NULL,
+	[TotalAmount] [decimal](9, 2) NOT NULL,
 	[UserId] [int] NOT NULL,
  CONSTRAINT [PK_Cart] PRIMARY KEY CLUSTERED 
 (
@@ -24,7 +24,7 @@ CREATE TABLE [dbo].[Cart](
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[Product]    Script Date: 12/7/2025 8:22:18 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 12/27/2025 3:14:49 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -37,7 +37,7 @@ CREATE TABLE [dbo].[Product](
 	[ProductName] [nvarchar](50) NOT NULL,
 	[ProductDesc] [nvarchar](max) NOT NULL,
 	[CategoryId] [int] NOT NULL,
-	[UnitPrice] [decimal](18, 0) NOT NULL,
+	[UnitPrice] [decimal](9, 2) NOT NULL,
 	[Currency] [nvarchar](10) NOT NULL,
 	[AvailableForSale] [bit] NOT NULL,
  CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
@@ -47,7 +47,7 @@ CREATE TABLE [dbo].[Product](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[Role]    Script Date: 12/7/2025 8:22:18 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 12/27/2025 3:14:49 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -64,7 +64,7 @@ CREATE TABLE [dbo].[Role](
 ) ON [PRIMARY]
 GO
 
-/****** Object:  Table [dbo].[UserTable]    Script Date: 12/7/2025 8:22:18 PM ******/
+/****** Object:  Table [dbo].[UserTable]    Script Date: 12/27/2025 3:14:49 PM ******/
 SET ANSI_NULLS ON
 GO
 

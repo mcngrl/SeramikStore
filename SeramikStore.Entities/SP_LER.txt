@@ -1,14 +1,14 @@
 ﻿USE [SeramikStore]
 GO
 
-/****** Object:  StoredProcedure [dbo].[DeleteCartById]    Script Date: 12/7/2025 8:19:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_CartDeleteById]    Script Date: 12/27/2025 3:15:35 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[DeleteCartById]
+CREATE PROCEDURE [dbo].[sp_CartDeleteById]
     @CartId INT
 AS
 BEGIN
@@ -20,14 +20,14 @@ BEGIN
 END
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetCartById]    Script Date: 12/7/2025 8:19:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_CartGetById]    Script Date: 12/27/2025 3:15:35 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[GetCartById]
+CREATE PROCEDURE [dbo].[sp_CartGetById]
     @CartId INT
 AS
 BEGIN
@@ -37,14 +37,59 @@ BEGIN
 END
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetCartDetailsByUserId]    Script Date: 12/7/2025 8:19:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_CartInsert]    Script Date: 12/27/2025 3:15:35 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[GetCartDetailsByUserId]
+CREATE PROCEDURE [dbo].[sp_CartInsert]
+(
+    @ProductId     INT,
+    @ProductCode   NVARCHAR(100),
+    @ProductName   NVARCHAR(100),
+    @UnitPrice     DECIMAL(9,2),
+    @Quantity      INT,
+    @UserId        INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO Cart
+    (
+        ProductId,
+        ProductCode,
+        ProductName,
+        UnitPrice,
+        Quantity,
+        TotalAmount,
+        UserId
+    )
+	  OUTPUT INSERTED.Id
+    VALUES
+    (
+        @ProductId,
+        @ProductCode,
+        @ProductName,
+        @UnitPrice,
+        @Quantity,
+        @UnitPrice * @Quantity,
+        @UserId
+    );
+
+END
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_CartListByUserId]    Script Date: 12/27/2025 3:15:35 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_CartListByUserId]
     @UserId INT
 AS
 BEGIN
@@ -54,55 +99,38 @@ BEGIN
 END
 GO
 
-/****** Object:  StoredProcedure [dbo].[GetProducts]    Script Date: 12/7/2025 8:19:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_CartUpdateQuantity]    Script Date: 12/27/2025 3:15:35 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[GetProducts]
+CREATE PROCEDURE [dbo].[sp_CartUpdateQuantity]
+    @CartId INT,
+    @TotalAmount DECIMAL(18, 0),
+    @Quantity INT
 AS
 BEGIN
-    SELECT Id, ProductCode, ProductName, ProductDesc, CategoryId, UnitPrice, Currency, AvailableForSale
-    FROM Product;
-END;
-GO
+    UPDATE [Cart]
+    SET 
+        Quantity = @Quantity,
+        TotalAmount = @TotalAmount
+    WHERE Id = @CartId;
 
-/****** Object:  StoredProcedure [dbo].[sp_CheckUser]    Script Date: 12/7/2025 8:19:50 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE PROCEDURE [dbo].[sp_CheckUser]
-    @UserName NVARCHAR(50),
-    @Password NVARCHAR(50)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    SELECT 
-        Id,
-        UserName,
-        Email,
-        Name,
-        RoleId
-    FROM [UserTable]
-    WHERE UserName = @UserName 
-      AND Password = @Password;
+    -- Güncellenen satır sayısını döndür
+    SELECT @@ROWCOUNT AS Result;
 END
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_GetProductById]    Script Date: 12/7/2025 8:19:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductGetById]    Script Date: 12/27/2025 3:15:35 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_GetProductById]
+CREATE PROCEDURE [dbo].[sp_ProductGetById]
     @Id INT
 AS
 BEGIN
@@ -122,14 +150,29 @@ BEGIN
 END
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_GetRole]    Script Date: 12/7/2025 8:19:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductList]    Script Date: 12/27/2025 3:15:35 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[sp_GetRole]
+CREATE PROCEDURE [dbo].[sp_ProductList]
+AS
+BEGIN
+    SELECT Id, ProductCode, ProductName, ProductDesc, CategoryId, UnitPrice, Currency, AvailableForSale
+    FROM Product;
+END;
+GO
+
+/****** Object:  StoredProcedure [dbo].[sp_RoleGetById]    Script Date: 12/27/2025 3:15:35 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_RoleGetById]
     @RoleId INT
 AS
 BEGIN
@@ -143,27 +186,29 @@ BEGIN
 END
 GO
 
-/****** Object:  StoredProcedure [dbo].[UpdateCart]    Script Date: 12/7/2025 8:19:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserGetByUserNameAndPassword]    Script Date: 12/27/2025 3:15:35 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[UpdateCart]
-    @CartId INT,
-    @TotalAmount DECIMAL(18, 0),
-    @Quantity INT
+CREATE PROCEDURE [dbo].[sp_UserGetByUserNameAndPassword]
+    @UserName NVARCHAR(50),
+    @Password NVARCHAR(50)
 AS
 BEGIN
-    UPDATE [Cart]
-    SET 
-        Quantity = @Quantity,
-        TotalAmount = @TotalAmount
-    WHERE Id = @CartId;
+    SET NOCOUNT ON;
 
-    -- Güncellenen satır sayısını döndür
-    SELECT @@ROWCOUNT AS Result;
+    SELECT 
+        Id,
+        UserName,
+        Email,
+        Name,
+        RoleId
+    FROM [UserTable]
+    WHERE UserName = @UserName 
+      AND Password = @Password;
 END
 GO
 

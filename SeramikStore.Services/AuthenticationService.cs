@@ -1,13 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SeramikStore.Entities;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SeramikStore.Services
 {
@@ -187,42 +181,7 @@ namespace SeramikStore.Services
             }
         }
 
-        AuthenticatedUser IAuthentication.CheckUser(string userName, string password)
-        {
-            AuthenticatedUser authenticatedUser = null;
 
-            using (SqlConnection connection = new SqlConnection(connectionstring))
-            {
-                connection.Open();
-
-                using (SqlCommand command = new SqlCommand("sp_CheckUser", connection))
-                {
-                    command.CommandType = CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@UserName", userName);
-                    command.Parameters.AddWithValue("@Password", password);
-
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            authenticatedUser = new AuthenticatedUser
-                            {
-                                Id = Convert.ToInt32(reader["Id"]),
-                                UserName = reader["UserName"].ToString(),
-                                Email = reader["Email"].ToString(),
-                                Name = reader["Name"].ToString(),
-                                RoleId = Convert.ToInt32(reader["RoleId"])
-                            };
-                        }
-                    }
-                }
-
-                connection.Close();
-            }
-
-            return authenticatedUser;
-        }
 
 
         List<Role> IAuthentication.GetAllRoles()
@@ -230,7 +189,7 @@ namespace SeramikStore.Services
             throw new NotImplementedException();
         }
 
-        public Role GetRole(int roleId)
+        public Role RoleGetById(int roleId)
         {
             Role role = null;
 
@@ -238,7 +197,7 @@ namespace SeramikStore.Services
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("sp_GetRole", connection))
+                using (SqlCommand command = new SqlCommand("sp_RoleGetById", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -267,6 +226,45 @@ namespace SeramikStore.Services
         AuthenticatedUser IAuthentication.GetUserByUserId(int userId)
         {
             throw new NotImplementedException();
+        }
+
+        public AuthenticatedUser UserGetByUserNameAndPassword(string userName, string password)
+        {
+            AuthenticatedUser authenticatedUser = null;
+
+            using (SqlConnection connection = new SqlConnection(connectionstring))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("sp_UserGetByUserNameAndPassword", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@UserName", userName);
+                    command.Parameters.AddWithValue("@Password", password);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            authenticatedUser = new AuthenticatedUser
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                UserName = reader["UserName"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Name = reader["Name"].ToString(),
+                                RoleId = Convert.ToInt32(reader["RoleId"])
+                            };
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return authenticatedUser;
+
+
         }
     }
 }

@@ -29,15 +29,14 @@ namespace SeramikStore.Services
             // Ortama göre connection string seçimi
             connectionString = isWorkEnvironment ? connectionWork : connectionHome;
         }
-        public List<Product> GetListOfProducts()
+        public List<Product> ProductList()
         {
             List<Product> products = new List<Product>();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
-                // Stored Procedure adı: GetProducts
-                SqlCommand command = new SqlCommand("GetProducts", connection);
+                SqlCommand command = new SqlCommand("sp_ProductList", connection);
                 command.CommandType = CommandType.StoredProcedure; // Komut türünü Stored Procedure olarak ayarlıyoruz.
 
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -62,7 +61,7 @@ namespace SeramikStore.Services
             return products;
         }
 
-        public List<Cart> GetCartDetailByUserId(int userId)
+        public List<Cart> CartListByUserId(int userId)
         {
             List<Cart> carts = new List<Cart>();
 
@@ -71,7 +70,7 @@ namespace SeramikStore.Services
                 connection.Open();
 
                 // Saklı yordamı çağırıyoruz
-                SqlCommand command = new SqlCommand("GetCartDetailsByUserId", connection);
+                SqlCommand command = new SqlCommand("sp_CartListByUserId", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
                 // Parametreyi ekliyoruz
@@ -119,14 +118,14 @@ namespace SeramikStore.Services
         }
 
 
-        public Cart GetCartById(int cartId)
+        public Cart CartGetById(int cartId)
         {
             Cart cart = null;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("GetCartById", connection);
+                SqlCommand command = new SqlCommand("sp_CartGetById", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddWithValue("@CartId", cartId);
@@ -153,12 +152,12 @@ namespace SeramikStore.Services
             return cart;
         }
 
-        public int DeleteCartById(int cartId)
+        public int CartDeleteById(int cartId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand("DeleteCartById", connection);
+                SqlCommand command = new SqlCommand("sp_CartDeleteById", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddWithValue("@CartId", cartId);
@@ -168,7 +167,7 @@ namespace SeramikStore.Services
             }
         }
 
-        public Product GetProductById(int id)
+        public Product ProductGetById(int id)
         {
             Product product = null;
 
@@ -176,7 +175,7 @@ namespace SeramikStore.Services
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("sp_GetProductById", connection))
+                using (SqlCommand command = new SqlCommand("sp_ProductGetById", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -207,8 +206,33 @@ namespace SeramikStore.Services
             return product;
         }
 
+        public int SaveCart(Cart cart)
+        {
+            int CartId = 0;
 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
 
+                using (SqlCommand command = new SqlCommand("sp_CartInsert", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
 
+                    command.Parameters.AddWithValue("@ProductId", cart.ProductId);
+                    command.Parameters.AddWithValue("@ProductCode", cart.ProductCode);
+                    command.Parameters.AddWithValue("@ProductName", cart.ProductName);
+                    command.Parameters.AddWithValue("@UnitPrice", cart.UnitPrice);
+                    command.Parameters.AddWithValue("@Quantity", cart.Quantity);
+                    command.Parameters.AddWithValue("@UserId", cart.UserId);
+
+                    CartId = (int)command.ExecuteScalar();
+                
+                }
+
+                connection.Close();
+            }
+
+            return CartId;
+        }
     }
 }

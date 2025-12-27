@@ -14,8 +14,8 @@ namespace SeramikStore.Services
 
         int AddUser(AuthenticatedUser user);
 
-        AuthenticatedUser CheckUser(string userName, string password);
-        Role GetRole(int RoleId);
+        AuthenticatedUser UserGetByUserNameAndPassword(string userName, string password);
+        Role RoleGetById(int RoleId);
 
         bool CheckUserExists(string userName, string password);
         AuthenticatedUser GetUserByUserId(int userId);
