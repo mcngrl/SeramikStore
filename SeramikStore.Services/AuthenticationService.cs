@@ -7,26 +7,15 @@ namespace SeramikStore.Services
 {
     public class AuthenticationService : IAuthentication
     {
-        private string connectionstring = String.Empty;
+        private string connectionString = String.Empty;
         public AuthenticationService(IConfiguration config)
         {
-            // Connection string'leri config üzerinden al
-            var connectionHome = config.GetConnectionString("DefaultConnectionHome");
-            var connectionWork = config.GetConnectionString("DefaultConnectionWork");
-
-            // Çalışan dizini
-            var currentPath = AppDomain.CurrentDomain.BaseDirectory;
-
-            // Ortam tespiti (UserName veya path kontrolü)
-            bool isWorkEnvironment = currentPath.Contains("cgurel", StringComparison.OrdinalIgnoreCase);
-
-            // Ortama göre connection string seçimi
-            connectionstring = isWorkEnvironment ? connectionWork : connectionHome;
+            connectionString = config.GetConnectionString("DefaultConnection");
         }
 
         public int AddRole(string RoleName)
         {
-            using (SqlConnection connection = new SqlConnection(connectionstring))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 string Query = "INSERT INTO [Role](name)Values(@RoleName)";
@@ -43,7 +32,7 @@ namespace SeramikStore.Services
 
         public int AddUser(AuthenticatedUser user)
         {
-            using (SqlConnection con = new SqlConnection(connectionstring))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 string Query = "Insert into [UserTable](UserName, Email, Password, Name, TelephoneNumber,Address,RoleId)" +
@@ -69,7 +58,7 @@ namespace SeramikStore.Services
         public AuthenticatedUser CheckUser(string userName, string password)
         {
             AuthenticatedUser authenticatedUser = null;
-            using (SqlConnection connection = new SqlConnection(connectionstring))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 string Query = "SELECT * FROM [UserTable] WHERE UserName=@UserName and Password =@Password";
@@ -110,7 +99,7 @@ namespace SeramikStore.Services
         public List<Role> GetAllRoles()
         {
             List<Role> roles = new List<Role>();
-            using (SqlConnection connection = new SqlConnection(connectionstring))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 string Query = "SELECT * FROM [Role]";
@@ -138,7 +127,7 @@ namespace SeramikStore.Services
         {
             var authenticatedUser = new AuthenticatedUser();
 
-            using (SqlConnection con = new SqlConnection(connectionstring))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 string Query = "select * from [UserTable] where Id=@userId";
@@ -163,7 +152,7 @@ namespace SeramikStore.Services
 
         public int UpdateUserDetails(int id, string address, string TelephoneNumber)
         {
-            using (SqlConnection con = new SqlConnection(connectionstring))
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
                 string Query = "Update [UserTable] set TelephoneNumber=@TelephoneNumber,Address=@address where Id=@id";
@@ -193,7 +182,7 @@ namespace SeramikStore.Services
         {
             Role role = null;
 
-            using (SqlConnection connection = new SqlConnection(connectionstring))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -232,7 +221,7 @@ namespace SeramikStore.Services
         {
             AuthenticatedUser authenticatedUser = null;
 
-            using (SqlConnection connection = new SqlConnection(connectionstring))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 

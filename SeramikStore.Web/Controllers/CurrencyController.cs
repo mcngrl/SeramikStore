@@ -41,8 +41,7 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var currency = _currencyService.CurrencyList()
-                                           .FirstOrDefault(x => x.CurrencyId == id);
+            var currency = _currencyService.GetById(id);
 
             if (currency == null)
                 return NotFound();
@@ -61,18 +60,47 @@ namespace SeramikStore.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // DELETE - GET (Confirm Page)
+
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var currency = _currencyService.CurrencyList()
-                                           .FirstOrDefault(x => x.CurrencyId == id);
+            var currency = _currencyService.GetById(id);
 
             if (currency == null)
                 return NotFound();
 
+            // Default currency silinmesin (opsiyonel ama önerilir)
+            if (currency.IsDefault)
+            {
+                TempData["Error"] = "Default currency cannot be deleted.";
+                return RedirectToAction(nameof(Index));
+            }
+
             return View(currency);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int currencyId)
+        {
+            var currency = _currencyService.GetById(currencyId);
+
+            if (currency == null)
+                return NotFound();
+
+            if (currency.IsDefault)
+            {
+                TempData["Error"] = "Default currency cannot be deleted.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            _currencyService.DeleteCurrency(currencyId);
+
+            TempData["Success"] = "Currency deleted successfully.";
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
     }
 }

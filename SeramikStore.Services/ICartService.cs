@@ -1,5 +1,4 @@
-﻿
-using SeramikStore.Entities;
+﻿using SeramikStore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +7,12 @@ using System.Threading.Tasks;
 
 namespace SeramikStore.Services
 {
-    public interface IProductServices
+    public interface ICartService
     {
-        List<Product> ProductList();
-
         List<Cart> CartListByUserId(int userId);
-
-        int CartDeleteById(int cartId);
         Cart CartGetById(int cartId);
-        int UpdateCart(int cartId, decimal totalAmount, int quantity);
-
         int SaveCart(Cart cart);
-        Product ProductGetById(int id);
+        int UpdateCart(int cartId, int quantity);
+        int CartDeleteById(int cartId);
     }
 }

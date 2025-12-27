@@ -16,18 +16,7 @@ using System.Threading.Tasks;
 
         public CurrencyService(IConfiguration config)
         {
-            // Connection string'leri config üzerinden al
-            var connectionHome = config.GetConnectionString("DefaultConnectionHome");
-            var connectionWork = config.GetConnectionString("DefaultConnectionWork");
-
-            // Çalışan dizini
-            var currentPath = AppDomain.CurrentDomain.BaseDirectory;
-
-            // Ortam tespiti (UserName veya path kontrolü)
-            bool isWorkEnvironment = currentPath.Contains("cgurel", StringComparison.OrdinalIgnoreCase);
-
-            // Ortama göre connection string seçimi
-            connectionString = isWorkEnvironment ? connectionWork : connectionHome;
+            connectionString = config.GetConnectionString("DefaultConnection");
         }
         // LIST
         public List<Currency> CurrencyList()
@@ -152,7 +141,41 @@ using System.Threading.Tasks;
                     command.ExecuteNonQuery();
                 }
             }
+
+        public Currency GetById(int currencyId)
+        {
+            Currency currency = null;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("sp_Currency_GetById", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@CurrencyId", currencyId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        currency = new Currency
+                        {
+                            CurrencyId = Convert.ToInt32(reader["CurrencyId"]),
+                            Code = reader["Code"].ToString(),
+                            Name = reader["Name"].ToString(),
+                            Symbol = reader["Symbol"].ToString(),
+                            ExchangeRate = Convert.ToDecimal(reader["ExchangeRate"]),
+                            IsDefault = Convert.ToBoolean(reader["IsDefault"]),
+                            IsActive = Convert.ToBoolean(reader["IsActive"])
+                        };
+                    }
+                }
+            }
+
+            return currency;
         }
+
     }
+}
 
 

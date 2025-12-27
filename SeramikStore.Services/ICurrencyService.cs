@@ -14,5 +14,7 @@ namespace SeramikStore.Services
         void InsertCurrency(Currency currency);
         void UpdateCurrency(Currency currency);
         void DeleteCurrency(int currencyId);
+
+        Currency GetById(int currencyId);
     }
 }
