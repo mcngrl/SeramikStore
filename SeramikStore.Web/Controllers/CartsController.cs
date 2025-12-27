@@ -1,26 +1,28 @@
-﻿using SeramikStore.Entities;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Web.Filters;
 using SeramikStore.Web.ViewModel;
-using Microsoft.AspNetCore.Mvc;
 
 namespace SeramikStore.Web.Controllers
 {
     public class CartsController : Controller
     {
-        private IProductServices _productService;
+
+        private ICartService _cartService;
         private IAuthentication _authenticationService;
 
-        public CartsController(IProductServices productService, IAuthentication authenticationService)
+        public CartsController(ICartService cartService, IAuthentication authenticationService)
         {
-            _productService = productService;
+            _cartService = cartService;
             _authenticationService = authenticationService;
         }
 
         [CheckSession("userId")]
         public IActionResult Index()
         {
-            var carts = _productService.CartListByUserId((int)HttpContext.Session.GetInt32("userId"));
+            var carts = _cartService.CartListByUserId((int)HttpContext.Session.GetInt32("userId"));
             return View(carts);
         }
 
@@ -28,14 +30,14 @@ namespace SeramikStore.Web.Controllers
         [CheckSession("userId")]
         public IActionResult Edit(int id)
         {
-            var cart = _productService.CartGetById(id);
+            var cart = _cartService.CartGetById(id);
             return View(cart);
         }
         [HttpPost]
         public IActionResult Edit(Cart cart)
         {
             var totalAmount = (cart.Quantity) * (cart.UnitPrice);
-            int result = _productService.UpdateCart(cart.Id, totalAmount, cart.Quantity);
+            int result = _cartService.UpdateCart(cart.Id, cart.Quantity);
             if (result > 0)
             {
                 return RedirectToAction("Index");
@@ -49,14 +51,14 @@ namespace SeramikStore.Web.Controllers
         [CheckSession("userId")]
         public IActionResult Delete(int id)
         {
-            var cart = _productService.CartGetById(id);
+            var cart = _cartService.CartGetById(id);
             return View(cart);
         }
 
         [HttpPost]
         public IActionResult Delete(Cart cart)
         {
-            int result = _productService.CartDeleteById(cart.Id);
+            int result = _cartService.CartDeleteById(cart.Id);
             if (result > 0)
             {
                 return RedirectToAction("Index");
@@ -64,24 +66,6 @@ namespace SeramikStore.Web.Controllers
             return RedirectToAction("Index");
 
         }
-
-
-        //[CheckSession("userId")]
-        //public IActionResult AddToOrder()
-        //{
-        //    OrderDetail orderDetail = new OrderDetail();
-        //    var userCart = _productService.GetCartDetailByUserId((int)HttpContext.Session.GetInt32("userId"));
-        //    var result = _productService.AddCartToOrder(userCart);
-        //    if (result == true)
-        //    {
-        //        int userId = (int)HttpContext.Session.GetInt32("userId");
-        //        TempData["success"] = "Thanks For Your Order";
-        //        _productService.DeleteAllCartItemsByUserId(userId);
-        //        HttpContext.Session.SetInt32("sessionCart", _productService.GetCartDetailByUserId(userId).Count());
-        //        return View("success");
-        //    }
-        //    return View(orderDetail);
-        //}
 
 
         [CheckSession("userId")]

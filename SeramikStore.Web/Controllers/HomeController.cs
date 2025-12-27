@@ -12,12 +12,14 @@ namespace SeramikStore.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private IProductServices _productservices;
+        private IProductService _productservices;
+        private ICartService _cartservices;
 
-        public HomeController(ILogger<HomeController> logger, IProductServices productservices)
+        public HomeController(ILogger<HomeController> logger, IProductService productservices, ICartService cartservices)
         {
             _logger = logger;
             _productservices = productservices;
+            _cartservices = cartservices;
         }
 
         public IActionResult Index()
@@ -87,10 +89,10 @@ namespace SeramikStore.Web.Controllers
             //var total = (cart.Quantity) * (cart.UnitPrice);
             //cart.TotalAmount = total;
             cart.UserId = (int)HttpContext.Session.GetInt32("userId");
-            int result = _productservices.SaveCart(cart);
+            int result = _cartservices.SaveCart(cart);
             if (result > 0)
             {
-                HttpContext.Session.SetInt32("sessionCart", _productservices.CartListByUserId(cart.UserId).Count());
+                HttpContext.Session.SetInt32("sessionCart", _cartservices.CartListByUserId(cart.UserId).Count());
                 return RedirectToAction("Index", "Carts");
             }
             return RedirectToAction("Index", "Home");

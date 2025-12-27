@@ -6,11 +6,11 @@ namespace SeramikStore.Web.ViewComponents
 {
     public class CartViewComponent : ViewComponent
     {
-        private IProductServices _productService;
+        private ICartService _cartService;
 
-        public CartViewComponent(IProductServices productService)
+        public CartViewComponent(ICartService productService)
         {
-            _productService = productService;
+            _cartService = productService;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -25,7 +25,7 @@ namespace SeramikStore.Web.ViewComponents
                 else
                 {
                     int UserId = (int)HttpContext.Session.GetInt32("userId");
-                    HttpContext.Session.SetInt32("sessionCart", _productService.CartListByUserId(UserId).Count());
+                    HttpContext.Session.SetInt32("sessionCart", _cartService.CartListByUserId(UserId).Count());
                     return View(HttpContext.Session.GetInt32("sessionCart"));
 
                 }
