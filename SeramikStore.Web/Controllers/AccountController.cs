@@ -57,8 +57,8 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult Register(AuthenticatedUser model)
         {
-            int a = 1;
-            int b = 1;
+            int a = "Bilerek Hata";
+
             model.UserName = model.Email;
             var result = _authencationService.AddUser(model);
             if (result>0) {
