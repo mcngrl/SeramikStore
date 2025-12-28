@@ -1,79 +1,123 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SeramikStore.Entities;
-using System;
-using System.Collections.Generic;
 using System.Data;
 
-namespace SeramikStore.Services
+public class ProductService : IProductService
 {
-    public class ProductService : IProductService
+    private string _connectionString = String.Empty;
+
+    public ProductService(IConfiguration config)
     {
-        private string connectionString = String.Empty;
+        _connectionString = config.GetConnectionString("DefaultConnection");
+    }
 
-        public ProductService(IConfiguration config)
+    public List<Product> ProductList()
+    {
+        List<Product> list = new();
+
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_Product_List", con);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+        con.Open();
+
+        using SqlDataReader dr = cmd.ExecuteReader();
+        while (dr.Read())
         {
-            connectionString = config.GetConnectionString("DefaultConnection");
-        }
-
-        public List<Product> ProductList()
-        {
-            List<Product> products = new();
-
-            using SqlConnection connection = new(connectionString);
-            using SqlCommand command = new("sp_ProductList", connection);
-
-            command.CommandType = CommandType.StoredProcedure;
-            connection.Open();
-
-            using SqlDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            list.Add(new Product
             {
-                products.Add(new Product
-                {
-                    Id = Convert.ToInt32(reader["Id"]),
-                    ProductCode = reader["ProductCode"].ToString(),
-                    ProductName = reader["ProductName"].ToString(),
-                    ProductDesc = reader["ProductDesc"].ToString(),
-                    CategoryId = Convert.ToInt32(reader["CategoryId"]),
-                    UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
-                    Currency = reader["Currency"].ToString(),
-                    AvailableForSale = Convert.ToBoolean(reader["AvailableForSale"])
-                });
-            }
-
-            return products;
+                Id = Convert.ToInt32(dr["Id"]),
+                ProductCode = dr["ProductCode"].ToString(),
+                ProductName = dr["ProductName"].ToString(),
+                ProductDesc = dr["ProductDesc"].ToString(),
+                CategoryId = Convert.ToInt32(dr["CategoryId"]),
+                UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
+                Currency = dr["Currency"].ToString(),
+                AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"])
+            });
         }
 
-        public Product ProductGetById(int id)
+        return list;
+    }
+
+    public Product ProductGetById(int id)
+    {
+        Product product = null;
+
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_Product_GetById", con);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Id", id);
+
+        con.Open();
+
+        using SqlDataReader dr = cmd.ExecuteReader();
+        if (dr.Read())
         {
-            Product product = null;
-
-            using SqlConnection connection = new(connectionString);
-            using SqlCommand command = new("sp_ProductGetById", connection);
-
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@Id", id);
-
-            connection.Open();
-
-            using SqlDataReader reader = command.ExecuteReader();
-            if (reader.Read())
+            product = new Product
             {
-                product = new Product
-                {
-                    Id = Convert.ToInt32(reader["Id"]),
-                    ProductCode = reader["ProductCode"].ToString(),
-                    ProductName = reader["ProductName"].ToString(),
-                    ProductDesc = reader["ProductDesc"].ToString(),
-                    CategoryId = Convert.ToInt32(reader["CategoryId"]),
-                    UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
-                    Currency = reader["Currency"].ToString(),
-                    AvailableForSale = Convert.ToBoolean(reader["AvailableForSale"])
-                };
-            }
-
-            return product;
+                Id = Convert.ToInt32(dr["Id"]),
+                ProductCode = dr["ProductCode"].ToString(),
+                ProductName = dr["ProductName"].ToString(),
+                ProductDesc = dr["ProductDesc"].ToString(),
+                CategoryId = Convert.ToInt32(dr["CategoryId"]),
+                UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
+                Currency = dr["Currency"].ToString(),
+                AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"])
+            };
         }
+
+        return product;
+    }
+
+    public int InsertProduct(Product product)
+    {
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_Product_Insert", con);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@ProductCode", product.ProductCode);
+        cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+        cmd.Parameters.AddWithValue("@ProductDesc", product.ProductDesc);
+        cmd.Parameters.AddWithValue("@CategoryId", product.CategoryId);
+        cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
+        cmd.Parameters.AddWithValue("@Currency", product.Currency);
+        cmd.Parameters.AddWithValue("@AvailableForSale", product.AvailableForSale);
+
+        con.Open();
+        return Convert.ToInt32(cmd.ExecuteScalar());
+    }
+
+    public int UpdateProduct(Product product)
+    {
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_Product_Update", con);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Id", product.Id);
+        cmd.Parameters.AddWithValue("@ProductCode", product.ProductCode);
+        cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+        cmd.Parameters.AddWithValue("@ProductDesc", product.ProductDesc);
+        cmd.Parameters.AddWithValue("@CategoryId", product.CategoryId);
+        cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
+        cmd.Parameters.AddWithValue("@Currency", product.Currency);
+        cmd.Parameters.AddWithValue("@AvailableForSale", product.AvailableForSale);
+
+        con.Open();
+        return Convert.ToInt32(cmd.ExecuteScalar());
+    }
+
+    public int DeleteProduct(int id)
+    {
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_Product_Delete", con);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Id", id);
+
+        con.Open();
+        return Convert.ToInt32(cmd.ExecuteScalar());
     }
 }
