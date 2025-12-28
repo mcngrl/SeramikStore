@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SeramikStore.Entities;
 using SeramikStore.Services;
+using SeramikStore.Web.ViewModels;
 
 public class ProductController : Controller
 {
@@ -22,29 +23,42 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        var currencies = _currencyService.CurrencyList();
-
-        ViewBag.Currencies = currencies.Select(x => new SelectListItem
+        var model = new ProductCreateViewModel
         {
-            Value = x.Code,
-            Text = $"{x.Code} - {x.Name}"
-        }).ToList();
+            Product = new Product(),
+            Currencies = _currencyService.CurrencyList()
+                        .Select(x => new SelectListItem
+                        {
+                            Value = x.CurrencyId.ToString(),
+                            Text = $"{x.Code} - {x.Name}"
+                        }).ToList(),
+        };
 
-        return View();
+        return View(model);
     }
 
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(Product product)
+    public IActionResult Create(ProductCreateViewModel model)
     {
         if (!ModelState.IsValid)
-            return View(product);
+        {
+        model.Currencies = _currencyService.CurrencyList()
+        .Select(x => new SelectListItem
+        {
+        Value = x.CurrencyId.ToString(),
+        Text = $"{x.Code} - {x.Name}"
+        }).ToList();
 
-        _productService.InsertProduct(product);
-        TempData["Success"] = "Ürün eklendi";
+            return View(model);
+        }
+
+        _productService.InsertProduct(model.Product);
+        TempData["Success"] = "Product başarıyla eklendi.";
         return RedirectToAction(nameof(Index));
     }
+
 
     [HttpGet]
     public IActionResult Edit(int id)

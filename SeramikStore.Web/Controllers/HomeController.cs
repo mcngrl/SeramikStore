@@ -35,7 +35,6 @@ namespace SeramikStore.Web.Controllers
                     ProductCode = item.ProductCode,
                     AvailableForSale = item.AvailableForSale,
                     CategoryId = item.CategoryId,
-                    Currency = item.Currency,
                     UnitPrice = item.UnitPrice,
                     ProductDesc = item.ProductDesc,
                 }
@@ -60,7 +59,6 @@ namespace SeramikStore.Web.Controllers
                 vm.ProductName = TheProduct.ProductName;
                 vm.UnitPrice = TheProduct.UnitPrice;
                 vm.CategoryId = TheProduct.CategoryId;
-                vm.Currency = TheProduct.Currency;
             }
             return View(vm);
         }
