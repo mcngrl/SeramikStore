@@ -33,7 +33,7 @@ public class ProductService : IProductService
                 ProductDesc = dr["ProductDesc"].ToString(),
                 CategoryId = Convert.ToInt32(dr["CategoryId"]),
                 UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
-                Currency = dr["Currency"].ToString(),
+                CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
                 AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"])
             });
         }
@@ -64,7 +64,7 @@ public class ProductService : IProductService
                 ProductDesc = dr["ProductDesc"].ToString(),
                 CategoryId = Convert.ToInt32(dr["CategoryId"]),
                 UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
-                Currency = dr["Currency"].ToString(),
+                CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
                 AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"])
             };
         }
@@ -83,7 +83,7 @@ public class ProductService : IProductService
         cmd.Parameters.AddWithValue("@ProductDesc", product.ProductDesc);
         cmd.Parameters.AddWithValue("@CategoryId", product.CategoryId);
         cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
-        cmd.Parameters.AddWithValue("@Currency", product.Currency);
+        cmd.Parameters.AddWithValue("@CurrencyId", product.CurrencyId);
         cmd.Parameters.AddWithValue("@AvailableForSale", product.AvailableForSale);
 
         con.Open();
@@ -102,7 +102,7 @@ public class ProductService : IProductService
         cmd.Parameters.AddWithValue("@ProductDesc", product.ProductDesc);
         cmd.Parameters.AddWithValue("@CategoryId", product.CategoryId);
         cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
-        cmd.Parameters.AddWithValue("@Currency", product.Currency);
+        cmd.Parameters.AddWithValue("@CurrencyId", product.CurrencyId);
         cmd.Parameters.AddWithValue("@AvailableForSale", product.AvailableForSale);
 
         con.Open();
