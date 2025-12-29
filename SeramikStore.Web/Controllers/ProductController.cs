@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Web.ViewModels;
+using System.Globalization;
 
 public class ProductController : Controller
 {
@@ -17,7 +18,8 @@ public class ProductController : Controller
 
     public IActionResult Index()
     {
-        return View(_productService.ProductList());
+        
+        return View(_productService.ProductListForAdmin());
     }
 
     [HttpGet]
@@ -25,7 +27,7 @@ public class ProductController : Controller
     {
         var model = new ProductCreateViewModel
         {
-            Product = new Product(),
+           // Product = new Product(),
             Currencies = _currencyService.CurrencyList()
                         .Select(x => new SelectListItem
                         {
@@ -37,25 +39,39 @@ public class ProductController : Controller
         return View(model);
     }
 
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Create(ProductCreateViewModel model)
     {
         if (!ModelState.IsValid)
         {
-        model.Currencies = _currencyService.CurrencyList()
-        .Select(x => new SelectListItem
-        {
-        Value = x.CurrencyId.ToString(),
-        Text = $"{x.Code} - {x.Name}"
-        }).ToList();
+            model.Currencies = _currencyService.CurrencyList()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.CurrencyId.ToString(),
+                    Text = $"{x.Code} - {x.Name}"
+                }).ToList();
 
             return View(model);
         }
 
-        _productService.InsertProduct(model.Product);
-        TempData["Success"] = "Product başarıyla eklendi.";
+    
+        var unitPrice = decimal.Parse(
+            model.UnitPrice.Replace(".", "").Replace(",", "."),
+            CultureInfo.InvariantCulture);
+
+        var product = new Product
+        {
+            ProductCode = model.ProductCode,
+            ProductName = model.ProductName,
+            ProductDesc = model.ProductDesc,
+            UnitPrice = unitPrice,
+            CurrencyId = model.CurrencyId,
+            AvailableForSale = model.AvailableForSale
+        };
+
+        _productService.InsertProduct(product);
+
         return RedirectToAction(nameof(Index));
     }
 

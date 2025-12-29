@@ -8,23 +8,6 @@ using System.Runtime.ConstrainedExecution;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//var cultureInfo = new CultureInfo("tr-TR");
-
-//CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-//CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-var supportedCultures = new[]
-{
-    new CultureInfo("tr-TR")
-};
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    options.DefaultRequestCulture = new RequestCulture("tr-TR");
-    options.SupportedCultures = supportedCultures;
-    options.SupportedUICultures = supportedCultures;
-});
-
-
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json",
@@ -38,6 +21,29 @@ builder.Configuration
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews(options =>
+//{
+//    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+//});
+
+
+var supportedCultures = new[]
+{
+    new CultureInfo("tr-TR")
+};
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("tr-TR");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+
+    // ⚠️ BUNU EKLE (ÇOK ÖNEMLİ)
+    options.RequestCultureProviders.Clear();
+});
+
+
+
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IAuthentication, AuthenticationService>();
@@ -77,10 +83,15 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseRequestLocalization();
 
 app.UseHttpsRedirection();
 app.UseSession();
+
+
+
+app.UseRequestLocalization();
+
+
 app.UseRouting();
 
 app.UseAuthorization();
