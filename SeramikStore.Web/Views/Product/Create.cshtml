@@ -1,4 +1,5 @@
-﻿@model SeramikStore.Web.ViewModels.ProductCreateViewModel
+﻿@using System.Globalization
+@model SeramikStore.Web.ViewModels.ProductCreateViewModel
 
 <h2>Create Product</h2>
 
@@ -24,7 +25,9 @@
 
     <div class="form-group">
         <label asp-for="Product.UnitPrice"></label>
-        <input asp-for="Product.UnitPrice" class="form-control" />
+        <input asp-for="Product.UnitPrice" 
+        value="@Model.Product.UnitPrice.ToString("N2", new CultureInfo("tr-TR"))" 
+        class="form-control" placeholder="Örn: 1.250,67" />
     </div>
 
     <!-- CURRENCY DROPDOWN -->

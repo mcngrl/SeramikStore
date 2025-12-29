@@ -1,8 +1,30 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.DependencyInjection;
 using SeramikStore.Services;
+using System.Globalization;
 using System.Runtime.ConstrainedExecution;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+//var cultureInfo = new CultureInfo("tr-TR");
+
+//CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+//CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+var supportedCultures = new[]
+{
+    new CultureInfo("tr-TR")
+};
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("tr-TR");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
+
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json",
@@ -55,6 +77,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRequestLocalization();
+
 app.UseHttpsRedirection();
 app.UseSession();
 app.UseRouting();
@@ -70,3 +94,5 @@ app.MapControllerRoute(
 
 
 app.Run();
+
+
