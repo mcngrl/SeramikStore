@@ -15,7 +15,7 @@ namespace SeramikStore.Entities
         public string ProductName { get; set; }     // Product name (nvarchar(50))
         public string ProductDesc { get; set; }     // Product description (nvarchar(max))
         public int CategoryId { get; set; }         // Category ID (int)
-        public decimal UnitPrice { get; set; }          // Price (decimal(18, 0))
+        public decimal UnitPrice { get; set; }          // Price (decimal(9, 2))
         public int CurrencyId { get; set; }        // Currency (nvarchar(10))
         public bool AvailableForSale { get; set; }  // Available for sale (bit)
     }
