@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SeramikStore.Entities;
+using SeramikStore.Services.DTOs;
+using System.Collections.Generic;
 using System.Data;
 
 public class ProductService : IProductService
@@ -41,6 +43,37 @@ public class ProductService : IProductService
         return list;
     }
 
+
+    public List<ProductListForAdminDto> ProductListForAdmin() {
+
+        List<ProductListForAdminDto> list = new();
+
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_Product_List", con);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+        con.Open();
+
+        using SqlDataReader dr = cmd.ExecuteReader();
+        while (dr.Read())
+        {
+            list.Add(new ProductListForAdminDto
+            {
+                Id = Convert.ToInt32(dr["Id"]),
+                ProductCode = dr["ProductCode"].ToString(),
+                ProductName = dr["ProductName"].ToString(),
+                ProductDesc = dr["ProductDesc"].ToString(),
+                CategoryId = Convert.ToInt32(dr["CategoryId"]),
+                UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
+                CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
+                AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"]),
+                CurrencyCode = dr["CurrencyCode"].ToString(),
+                CurrencySymbol = dr["CurrencySymbol"].ToString(),
+            });
+        }
+
+        return list;
+    }
     public Product ProductGetById(int id)
     {
         Product product = null;
