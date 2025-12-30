@@ -1,6 +1,6 @@
 ﻿@model SeramikStore.Entities.Currency
 
-<h2>Delete Currency</h2>
+<h2>Para Birimi Sil</h2>
 
 <div class="alert alert-danger">
     Are you sure you want to delete this currency?
@@ -16,9 +16,6 @@
     <dt class="col-sm-3">Symbol</dt>
     <dd class="col-sm-9">@Model.Symbol</dd>
 
-    <dt class="col-sm-3">Exchange Rate</dt>
-    <dd class="col-sm-9">@Model.ExchangeRate</dd>
-
     <dt class="col-sm-3">Default</dt>
     <dd class="col-sm-9">@Model.IsDefault</dd>
 </dl>
@@ -26,7 +23,7 @@
 <form asp-action="DeleteConfirmed" method="post">
     @Html.AntiForgeryToken()
 
-    <input type="hidden" name="currencyId" value="@Model.CurrencyId" />
+    <input type="hidden" name="currencyId" value="@Model.Id" />
 
     <button type="submit" class="btn btn-danger">Delete</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>

@@ -31,7 +31,7 @@ public class ProductController : Controller
             Currencies = _currencyService.CurrencyList()
                         .Select(x => new SelectListItem
                         {
-                            Value = x.CurrencyId.ToString(),
+                            Value = x.Id.ToString(),
                             Text = $"{x.Code} - {x.Name}"
                         }).ToList(),
         };
@@ -48,7 +48,7 @@ public class ProductController : Controller
             model.Currencies = _currencyService.CurrencyList()
                 .Select(x => new SelectListItem
                 {
-                    Value = x.CurrencyId.ToString(),
+                    Value = x.Id.ToString(),
                     Text = $"{x.Code} - {x.Name}"
                 }).ToList();
 

@@ -1,16 +1,13 @@
-﻿@model List<SeramikStore.Entities.Currency>
+﻿@model IEnumerable<SeramikStore.Entities.Category>
 
-<h2>Para Birimleri</h2>
+<h2>Kategoriler</h2>
 
-<a  asp-action="Create" class="btn btn-primary">Yeni Para Birimi</a>
+<a  asp-action="Create" class="btn btn-primary">Yeni Kategori</a>
 
 <table class="table table-bordered mt-3">
     <thead>
         <tr>
-            <th>Kod</th>
-            <th>Para Birimi Adı</th>
-            <th>Sembol</th>
-            <th>Varsayılan</th>
+            <th>Name</th>
             <th></th>
         </tr>
     </thead>
@@ -18,10 +15,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Code</td>
                 <td>@item.Name</td>
-                <td>@item.Symbol</td>
-                <td>@item.IsDefault</td>
                 <td>
                     <a asp-action="Edit"
                        asp-route-id="@item.Id"

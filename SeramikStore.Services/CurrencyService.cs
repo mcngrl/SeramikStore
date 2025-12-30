@@ -36,11 +36,10 @@ using System.Threading.Tasks;
                         {
                             currencies.Add(new Currency
                             {
-                                CurrencyId = Convert.ToInt32(reader["CurrencyId"]),
+                                Id = Convert.ToInt32(reader["Id"]),
                                 Code = reader["Code"].ToString(),
                                 Name = reader["Name"].ToString(),
                                 Symbol = reader["Symbol"].ToString(),
-                                ExchangeRate = Convert.ToDecimal(reader["ExchangeRate"]),
                                 IsDefault = Convert.ToBoolean(reader["IsDefault"]),
                                 IsActive = Convert.ToBoolean(reader["IsActive"])
                             });
@@ -69,11 +68,10 @@ using System.Threading.Tasks;
                         {
                             currency = new Currency
                             {
-                                CurrencyId = Convert.ToInt32(reader["CurrencyId"]),
+                                Id = Convert.ToInt32(reader["Id"]),
                                 Code = reader["Code"].ToString(),
                                 Name = reader["Name"].ToString(),
                                 Symbol = reader["Symbol"].ToString(),
-                                ExchangeRate = Convert.ToDecimal(reader["ExchangeRate"]),
                                 IsDefault = Convert.ToBoolean(reader["IsDefault"]),
                                 IsActive = Convert.ToBoolean(reader["IsActive"])
                             };
@@ -97,7 +95,6 @@ using System.Threading.Tasks;
                     command.Parameters.AddWithValue("@Code", currency.Code);
                     command.Parameters.AddWithValue("@Name", currency.Name);
                     command.Parameters.AddWithValue("@Symbol", currency.Symbol);
-                    command.Parameters.AddWithValue("@ExchangeRate", currency.ExchangeRate);
                     command.Parameters.AddWithValue("@IsDefault", currency.IsDefault);
 
                     command.ExecuteNonQuery();
@@ -114,20 +111,17 @@ using System.Threading.Tasks;
                     SqlCommand command = new SqlCommand("sp_Currency_Update", connection);
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@CurrencyId", currency.CurrencyId);
+                    command.Parameters.AddWithValue("@Id", currency.Id);
                     command.Parameters.AddWithValue("@Code", currency.Code);
                     command.Parameters.AddWithValue("@Name", currency.Name);
                     command.Parameters.AddWithValue("@Symbol", currency.Symbol);
-                    command.Parameters.AddWithValue("@ExchangeRate", currency.ExchangeRate);
                     command.Parameters.AddWithValue("@IsDefault", currency.IsDefault);
-                    command.Parameters.AddWithValue("@IsActive", currency.IsActive);
-
                     command.ExecuteNonQuery();
                 }
             }
 
             // DELETE (Soft Delete)
-            public void DeleteCurrency(int currencyId)
+            public void DeleteCurrency(int Id)
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -136,13 +130,13 @@ using System.Threading.Tasks;
                     SqlCommand command = new SqlCommand("sp_Currency_Delete", connection);
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@CurrencyId", currencyId);
+                    command.Parameters.AddWithValue("@Id", Id);
 
                     command.ExecuteNonQuery();
                 }
             }
 
-        public Currency GetById(int currencyId)
+        public Currency GetById(int Id)
         {
             Currency currency = null;
 
@@ -152,7 +146,7 @@ using System.Threading.Tasks;
 
                 SqlCommand command = new SqlCommand("sp_Currency_GetById", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@CurrencyId", currencyId);
+                command.Parameters.AddWithValue("@Id", Id);
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -160,11 +154,10 @@ using System.Threading.Tasks;
                     {
                         currency = new Currency
                         {
-                            CurrencyId = Convert.ToInt32(reader["CurrencyId"]),
+                            Id = Convert.ToInt32(reader["Id"]),
                             Code = reader["Code"].ToString(),
                             Name = reader["Name"].ToString(),
                             Symbol = reader["Symbol"].ToString(),
-                            ExchangeRate = Convert.ToDecimal(reader["ExchangeRate"]),
                             IsDefault = Convert.ToBoolean(reader["IsDefault"]),
                             IsActive = Convert.ToBoolean(reader["IsActive"])
                         };

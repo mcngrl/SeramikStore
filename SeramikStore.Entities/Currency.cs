@@ -8,11 +8,10 @@ namespace SeramikStore.Entities
 {
     public class Currency
     {
-        public int CurrencyId { get; set; }
+        public int Id { get; set; }
         public string Code { get; set; }          // USD, EUR, TRY
         public string Name { get; set; }          // US Dollar
         public string Symbol { get; set; }        // $, €, ₺
-        public decimal ExchangeRate { get; set; }
         public bool IsDefault { get; set; }
         public bool IsActive { get; set; }
     }
