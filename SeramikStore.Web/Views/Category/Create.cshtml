@@ -1,0 +1,15 @@
+﻿@model SeramikStore.Entities.Category
+
+<h2>Kategori Yarat</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-group">
+        <label>Kategori Adı</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Kaydet</button>
+</form>

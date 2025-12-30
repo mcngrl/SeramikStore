@@ -6,7 +6,7 @@
     @Html.AntiForgeryToken()
 
     <!-- Hidden Id -->
-    <input type="hidden" asp-for="CurrencyId" />
+    <input type="hidden" asp-for="Id" />
 
     <div class="form-group">
         <label>Code</label>
@@ -26,24 +26,13 @@
         <span asp-validation-for="Symbol" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <label>Exchange Rate</label>
-        <input asp-for="ExchangeRate" class="form-control" />
-        <span asp-validation-for="ExchangeRate" class="text-danger"></span>
-    </div>
-
     <div class="form-group form-check">
         <input asp-for="IsDefault" class="form-check-input" />
         <label class="form-check-label">Default Currency</label>
     </div>
 
-    <div class="form-group form-check">
-        <input asp-for="IsActive" class="form-check-input" />
-        <label class="form-check-label">Active</label>
-    </div>
-
-    <button type="submit" class="btn btn-success">Update</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <button type="submit" class="btn btn-success">Kaydet</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
 </form>
 
 @section Scripts {
