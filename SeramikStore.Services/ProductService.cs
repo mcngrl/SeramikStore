@@ -14,12 +14,12 @@ public class ProductService : IProductService
         _connectionString = config.GetConnectionString("DefaultConnection");
     }
 
-    public List<Product> ProductList()
+    public List<ProductListForHomeDto> ProductList()
     {
-        List<Product> list = new();
+        List<ProductListForHomeDto> list = new();
 
         using SqlConnection con = new(_connectionString);
-        using SqlCommand cmd = new("sp_Product_List", con);
+        using SqlCommand cmd = new("sp_Product_ListForHomePage", con);
 
         cmd.CommandType = CommandType.StoredProcedure;
         con.Open();
@@ -27,16 +27,20 @@ public class ProductService : IProductService
         using SqlDataReader dr = cmd.ExecuteReader();
         while (dr.Read())
         {
-            list.Add(new Product
+            list.Add(new ProductListForHomeDto
             {
                 Id = Convert.ToInt32(dr["Id"]),
                 ProductCode = dr["ProductCode"].ToString(),
                 ProductName = dr["ProductName"].ToString(),
                 ProductDesc = dr["ProductDesc"].ToString(),
+                CategoryName = dr["CategoryName"].ToString(),
                 CategoryId = Convert.ToInt32(dr["CategoryId"]),
                 UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
                 CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
-                AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"])
+                AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"]),
+                CurrencyCode = dr["CurrencyCode"].ToString(),
+                CurrencySymbol = dr["CurrencySymbol"].ToString(),
+                MainImagePath = dr["MainImagePath"].ToString()
             });
         }
 
@@ -63,12 +67,13 @@ public class ProductService : IProductService
                 ProductCode = dr["ProductCode"].ToString(),
                 ProductName = dr["ProductName"].ToString(),
                 ProductDesc = dr["ProductDesc"].ToString(),
-                CategoryId = Convert.ToInt32(dr["CategoryId"]),
                 UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
-                CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
                 AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"]),
                 CurrencyCode = dr["CurrencyCode"].ToString(),
                 CurrencySymbol = dr["CurrencySymbol"].ToString(),
+                MainImagePath = dr["MainImagePath"].ToString(),
+                ImageCount = Convert.ToInt32(dr["ImageCount"]),
+                CategoryName = dr["CategoryName"].ToString(),
             });
         }
 

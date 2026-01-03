@@ -29,6 +29,17 @@
         <span asp-validation-for="UnitPrice" class="text-danger"></span>
     </div>
 
+
+
+    <div class="form-group">
+        <label>Kategori</label>
+        <select asp-for="CategoryId"
+                asp-items="Model.Categories"
+                class="form-control">
+            <option value="">-- Kategori Seçiniz.--</option>
+        </select>
+    </div>
+
     <!-- CURRENCY DROPDOWN -->
     <div class="form-group">
         <label>Currency</label>
