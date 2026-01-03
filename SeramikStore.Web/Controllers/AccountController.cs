@@ -1,76 +1,79 @@
-﻿using SeramikStore.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using SeramikStore.Entities;
 using SeramikStore.Services;
-using SeramikStore.Web.Filters;
 using SeramikStore.Web.ViewModel;
-using Microsoft.AspNetCore.Mvc;
+using SeramikStore.Web.ViewModels;
 
-namespace SeramikStore.Web.Controllers
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    private readonly IUserService _userService;
+
+    public AccountController(IUserService userService)
+    {
+        _userService = userService;
+    }
+
+    // REGISTER – GET
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View(new RegisterViewModel());
+    }
+
+    // REGISTER – POST
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Register(RegisterViewModel model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        // Email daha önce var mı?
+        if (_userService.IsEmailExists(model.Email))
+        {
+            ModelState.AddModelError("Email", "Bu email adresi zaten kayıtlı");
+            return View(model);
+        }
+
+        var user = new User
+        {
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            Email = model.Email,
+            PhoneNumber = model.PhoneNumber,
+            BirthDate = model.BirthDate
+        };
+
+        _userService.Insert(user, model.Password);
+
+        TempData["Success"] = "Kayıt başarılı. Giriş yapabilirsiniz.";
+        return RedirectToAction("Login", "Account");
+    }
+
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    //[CheckSession("userName")]
+    public IActionResult Login(LoginViewModel vm)
     {
 
-        private IAuthentication _authencationService;
-
-        public AccountController(IAuthentication authencationService)
-        {
-            _authencationService = authencationService;
-        }
-        [HttpGet]
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("Login", "Account");
-
-        }
-
-
-        [HttpPost]
-        //[CheckSession("userName")]
-        public IActionResult Login(LoginViewModel vm)
-        {
-            if (_authencationService.CheckUserExists(vm.UserName, vm.Password))
+            var user = _userService.ValidateUser(vm.UserName, vm.Password);
+            if (user != null)
             {
-                var user = _authencationService.UserGetByUserNameAndPassword(vm.UserName, vm.Password);
-                if (user !=null)
-                {
-                    var role = _authencationService.RoleGetById(user.RoleId);
-                    HttpContext.Session.SetString("userName", user.Name);
-                    HttpContext.Session.SetString("role", role.Name);
-                    HttpContext.Session.SetString("userName", user.Name);
-                    HttpContext.Session.SetInt32("userId", user.Id);
-                    
-                    return RedirectToAction("Index", "Home");
+                //var role = _authencationService.RoleGetById(user.RoleId);
+                //HttpContext.Session.SetString("userName", user.Name);
+                //HttpContext.Session.SetString("role", role.Name);
+                HttpContext.Session.SetString("userName", user.FirstName );
+                HttpContext.Session.SetInt32("userId", user.Id);
 
-                }
+                return RedirectToAction("Index", "Home");
+
             }
-            return View();
-        }
 
-
-
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Register(AuthenticatedUser model)
-        {
-            int a = 1;
-
-            model.UserName = model.Email;
-            var result = _authencationService.AddUser(model);
-            if (result>0) {
-                return RedirectToAction("Login");
-            }
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
+        return View();
     }
 }

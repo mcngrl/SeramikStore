@@ -1,75 +1,60 @@
-﻿@using SeramikStore.Entities;
-@model AuthenticatedUser
-
+﻿@model RegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Üye Ol";
 }
 
+<h3 class="mb-4">Üyelik Bilgilerim</h3>
 
-<form asp-action="Register" method="Post">
-    <div class="container vh-100">
-        <div class="row justify-content-center align-items-center h-100">
-            <div class="col-md-6">
-                <h2 class="text-center mb-4">Register</h2>
-                <form id="registrationForm">
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                            <input asp-for="Name" type="text" class="form-control" id="Name" placeholder="Name" required />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                            <input asp-for="Email" type="text" class="form-control" id="Email" placeholder="Email" required />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                            <input asp-for="TelephoneNumber" type="text" class="form-control" id="Contact" placeholder="Contact" required />
-                            <span asp-validation-for="TelephoneNumber" class="text-danger"></span>
+<form asp-action="Register" method="post">
+    @Html.AntiForgeryToken()
 
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person-fill"></i>Address</span>
-                            <TextArea asp-for="Address" class="form-control" id="Address" placeholder="Address">
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
 
-                            </TextArea>
-                            <span asp-validation-for="Address" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                            <input asp-for="Password" class="form-control" id="password" placeholder="Password" required />
-
-                            <span asp-validation-for="Password" class="text-danger"></span>
-
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                            <input asp-for="ConfirmPassword" class="form-control" id="confirmPassword" placeholder="ConfirmPassword" required />
-
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Register</button>
-                </form>
-            </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
     </div>
+
+    <div class="mb-3">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" class="form-control" />
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BirthDate"></label>
+        <input asp-for="BirthDate" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-warning w-100">
+        Üye Ol
+    </button>
 </form>
-@section scripts{
-    <partial name="_ValidationScriptsPartial"></partial>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
-
-
-
-

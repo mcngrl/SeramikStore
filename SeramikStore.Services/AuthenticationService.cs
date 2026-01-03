@@ -212,11 +212,6 @@ namespace SeramikStore.Services
         }
 
 
-        AuthenticatedUser IAuthentication.GetUserByUserId(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public AuthenticatedUser UserGetByUserNameAndPassword(string userName, string password)
         {
             AuthenticatedUser authenticatedUser = null;

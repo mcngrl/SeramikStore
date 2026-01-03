@@ -7,6 +7,7 @@ using SeramikStore.Web.Filters;
 using SeramikStore.Web.Models;
 using SeramikStore.Web.ViewModels;
 using System.Diagnostics;
+using System.Net.WebSockets;
 
 namespace SeramikStore.Web.Controllers
 {
@@ -15,12 +16,14 @@ namespace SeramikStore.Web.Controllers
         private readonly ILogger<HomeController> _logger;
         private IProductService _productservices;
         private ICartService _cartservices;
+        private IProductImageService _productimageservice;
 
-        public HomeController(ILogger<HomeController> logger, IProductService productservices, ICartService cartservices)
+        public HomeController(ILogger<HomeController> logger, IProductService productservices, ICartService cartservices, IProductImageService productimageservice)
         {
             _logger = logger;
             _productservices = productservices;
             _cartservices = cartservices;
+            _productimageservice = productimageservice;
         }
 
         public IActionResult Index()
@@ -43,6 +46,15 @@ namespace SeramikStore.Web.Controllers
                 vm.UnitPrice = TheProduct.UnitPrice;
                 vm.CategoryId = TheProduct.CategoryId;
             }
+
+            var images = _productimageservice.GetByProductId(id);
+
+            List<string> ImagePaths = new List<string>();
+            foreach (var image in images) 
+            {
+                ImagePaths.Add(image.ImagePath);  
+             };
+            vm.ImagePaths = ImagePaths;
             return View(vm);
         }
         public IActionResult Privacy()
@@ -61,14 +73,20 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult Cart(ProductDetail vm)
         {
+
+            var product = _productservices.ProductGetById(vm.Id);
+            if (product == null) {
+                return RedirectToAction("Index", "Home");
+            }
+
             Cart cart = new Cart();
-            cart.ProductId = vm.Id;
-            cart.ProductName = vm.ProductName;
-            cart.ProductCode = vm.ProductCode;
+            cart.ProductId = product.Id;
+            cart.ProductName = product.ProductName;
+            cart.ProductCode = product.ProductCode;
             cart.Quantity = vm.Quantity;
-            cart.UnitPrice = vm.UnitPrice;
-            //var total = (cart.Quantity) * (cart.UnitPrice);
-            //cart.TotalAmount = total;
+            cart.UnitPrice = product.UnitPrice;
+ 
+
             cart.UserId = (int)HttpContext.Session.GetInt32("userId");
             int result = _cartservices.SaveCart(cart);
             if (result > 0)

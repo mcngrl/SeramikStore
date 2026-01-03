@@ -12,5 +12,7 @@
 
         public int Quantity { get; set; } = 1;
         public bool AvailableForSale { get; set; }  // Available for sale (bit)
+
+        public List<string> ImagePaths { get; set; }
     }
 }
