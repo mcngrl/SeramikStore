@@ -7,40 +7,22 @@ using System.Threading.Tasks;
 
 namespace SeramikStore.Services.DTOs
 {
-    public class ProductListForAdminDto
+    public class ProductListForHomeDto
     {
         public int Id { get; set; }
-
-        [Display(Name = "Ürün Kodu")]
         public string ProductCode { get; set; }
-
-        [Display(Name = "Ürün Adı")]
         public string ProductName { get; set; }
-
-        [Display(Name = "Açıklama")]
         public string ProductDesc { get; set; }
+        public int CategoryId { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int CurrencyId { get; set; }
+        public string CurrencyCode { get; set; }
+        public string CurrencySymbol { get; set; }
+        public bool AvailableForSale { get; set; }
+        public string MainImagePath { get; set; }
 
         [Display(Name = "Kategori")]
         public string CategoryName { get; set; }
-
-        [Display(Name = "Birim Fiyat")]
-        public decimal UnitPrice { get; set; }
-
-
-        [Display(Name = "Para Birimi Kodu")]
-        public string CurrencyCode { get; set; }
-
-        [Display(Name = "Para Birimi Sembolü")]
-        public string CurrencySymbol { get; set; }
-        
-        [Display(Name = "Satışta mı?")]
-        public bool AvailableForSale { get; set; }
-
-        [Display(Name = "Ana Resim")]
-        public string MainImagePath { get; set; }
-
-        [Display(Name = "Toplam Resim Sayısı")]
-        public int ImageCount { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Logging;
 using SeramikStore.Entities;
 using SeramikStore.Services;
+using SeramikStore.Services.DTOs;
 using SeramikStore.Web.Filters;
 using SeramikStore.Web.Models;
 using SeramikStore.Web.ViewModels;
@@ -24,26 +25,8 @@ namespace SeramikStore.Web.Controllers
 
         public IActionResult Index()
         {
-            var productList = _productservices.ProductList();
-            List<ProductForListingViewModel> vm = new List<ProductForListingViewModel>();
-            foreach (var item in productList)
-            {
-                vm.Add(new ProductForListingViewModel
-                {
-                    Id = item.Id,
-                    ProductName = item.ProductName,
-                    ProductCode = item.ProductCode,
-                    AvailableForSale = item.AvailableForSale,
-                    CategoryId = item.CategoryId,
-                    UnitPrice = item.UnitPrice,
-                    ProductDesc = item.ProductDesc,
-                }
-
-                );
-
-            }
-
-            return View(vm);
+            List<ProductListForHomeDto> productList = _productservices.ProductList();
+            return View(productList);
         }
 
         public IActionResult Details(int id)
@@ -96,5 +79,9 @@ namespace SeramikStore.Web.Controllers
             return RedirectToAction("Index", "Home");
 
         }
+
+
+ 
+
     }
 }

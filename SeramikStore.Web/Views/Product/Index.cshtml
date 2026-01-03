@@ -26,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.ProductDesc)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
+                @Html.DisplayNameFor(model => model.CategoryName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.UnitPrice)
@@ -36,6 +36,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AvailableForSale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MainImagePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageCount)
             </th>
 
             <th></th>
@@ -57,7 +63,7 @@
                 @Html.DisplayFor(modelItem => item.ProductDesc)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CategoryId)
+                    @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
                 <td class="text-end">
            
@@ -70,6 +76,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AvailableForSale)
             </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.MainImagePath))
+                    {
+                        <img src="@item.MainImagePath"
+                             alt="Ürün Resmi"
+                             style="width:80px; height:80px; object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Resim yok</span>
+                    }
+                </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ImageCount)
+            </td>
 
             <td>
                     <a asp-action="Edit"
@@ -78,17 +99,15 @@
                         Edit
                     </a>
 
-                    <a asp-action="Details"
-                       asp-route-id="@item.Id"
-                       class="btn btn-sm btn-info">
-                        Details
-                    </a>
-
-                    <a asp-action="Delete"
-                       asp-route-id="@item.Id"
-                       class="btn btn-sm btn-danger">
-                        Delete
-                    </a>
+                    @if (item.ImageCount > 0)
+                    {
+                        <button class="btn btn-danger" disabled>Sil</button>
+                    }
+                    else
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.Id"
+                           class="btn btn-danger">Sil</a>
+                    }
             </td>
         </tr>
 }

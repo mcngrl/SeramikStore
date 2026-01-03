@@ -1,4 +1,4 @@
-﻿@model SeramikStore.Entities.Product
+﻿@model SeramikStore.Web.ViewModels.ProductEditViewModel
 
 <h2>Edit Product</h2>
 
@@ -22,9 +22,25 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="CategoryId"></label>
-        <input asp-for="CategoryId" class="form-control" />
+        <label>Kategori</label>
+        <select asp-for="CategoryId"
+                asp-items="Model.Categories"
+                class="form-control">
+            <option value="">-- Kategori Seçiniz.--</option>
+        </select>
     </div>
+
+    <!-- CURRENCY DROPDOWN -->
+    <div class="form-group">
+        <label>Currency</label>
+        <select asp-for="CurrencyId"
+                asp-items="Model.Currencies"
+                class="form-control">
+            <option value="">-- Select Currency --</option>
+        </select>
+    </div>
+
+
 
     <div class="form-group">
         <label asp-for="UnitPrice"></label>
@@ -37,6 +53,13 @@
         <label asp-for="AvailableForSale" class="form-check-label"></label>
     </div>
 
-    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+
+    <a asp-controller="ProductImage"
+       asp-action="Index"
+       asp-route-productId="@Model.Id"
+       class="btn btn-info">
+        Ürün Resimleri
+    </a>
 </form>

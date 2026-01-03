@@ -51,6 +51,8 @@ builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductImageService, ProductImageService>();
+
 
 // AddScoped
 // Her HTTP request için 1 kez oluşturulur

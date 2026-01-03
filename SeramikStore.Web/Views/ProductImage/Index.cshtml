@@ -1,0 +1,116 @@
+﻿@model List<SeramikStore.Entities.ProductImage>
+
+@{
+    ViewData["Title"] = "Ürün Resimleri";
+    var productId = ViewBag.ProductId;
+}
+
+<h2>Ürün Resimleri</h2>
+
+<a asp-controller="Product"
+   asp-action="Edit"
+   asp-route-id="@productId"
+   class="btn btn-secondary mb-3">
+    ← Ürüne Geri Dön
+</a>
+
+<hr />
+
+<!-- 📤 UPLOAD FORM -->
+<form asp-action="Upload"
+      method="post"
+      enctype="multipart/form-data"
+      class="mb-4">
+
+    <input type="hidden" name="productId" value="@productId" />
+
+    <div class="row">
+        <div class="col-md-4">
+            <input type="file" name="image" class="form-control" required />
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-check mt-2">
+                <input type="checkbox" name="isMain" class="form-check-input" />
+                <label class="form-check-label">Ana Resim</label>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success">
+                Resim Yükle
+            </button>
+        </div>
+    </div>
+</form>
+
+<hr />
+
+<!-- 📋 IMAGE LIST -->
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Resim</th>
+            <th>Ana</th>
+            <th>Sıra</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.ImagePath"
+                         style="height:100px"
+                         class="img-thumbnail" />
+                </td>
+
+                <td>
+                    @if (item.IsMain)
+                    {
+                        <span class="badge bg-success">ANA</span>
+                    }
+                    else
+                    {
+                        <form asp-action="SetMain" method="post">
+                            <input type="hidden" name="productId" value="@productId" />
+                            <input type="hidden" name="imageId" value="@item.Id" />
+                            <button class="btn btn-outline-primary btn-sm">
+                                Ana Yap
+                            </button>
+                        </form>
+                    }
+                </td>
+
+                <td style="width:120px">
+                    <form asp-action="UpdateOrder" method="post" class="d-flex">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="productId" value="@productId" />
+
+                        <input type="number"
+                               name="displayOrder"
+                               value="@item.DisplayOrder"
+                               class="form-control form-control-sm me-2" />
+
+                        <button class="btn btn-sm btn-primary">✔</button>
+                    </form>
+                </td>
+
+                <td>
+                    <form asp-action="Delete"
+                          method="post"
+                          onsubmit="return confirm('Resim silinsin mi?');">
+
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="productId" value="@productId" />
+
+                        <button class="btn btn-danger btn-sm">
+                            Sil
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
