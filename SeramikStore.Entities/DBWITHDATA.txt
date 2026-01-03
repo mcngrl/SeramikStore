@@ -1,6 +1,6 @@
 ﻿/****** Object:  StoredProcedure [dbo].[sp_UserGetByUserNameAndPassword]    Script Date: 03/01/2026 18:49:04 ******/
 DROP PROCEDURE [dbo].[sp_UserGetByUserNameAndPassword]
-GO
+GOa
 /****** Object:  StoredProcedure [dbo].[sp_RoleGetById]    Script Date: 03/01/2026 18:49:04 ******/
 DROP PROCEDURE [dbo].[sp_RoleGetById]
 GO
