@@ -46,7 +46,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped<IAuthentication, AuthenticationService>();
+//builder.Services.AddScoped<IAuthentication, AuthenticationService>();
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();

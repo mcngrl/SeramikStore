@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SeramikStore.Services.DTOs
 {
-    public class LoginDto
+    public class LoginDtoXXXX
     {
         public string Email { get; set; }
         public string PasswordPlaintext { get; set; }
