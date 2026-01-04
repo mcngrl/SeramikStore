@@ -1,15 +1,18 @@
 ﻿using SeramikStore.Entities;
+using SeramikStore.Services.DTOs;
 
 public interface IUserService
 {
-    void Insert(User user, string plainPassword);
-    void Update(User user);
+    void Insert(UserDto user, string plainPassword);
+    void Update(UserDto user);
     void Delete(int id);
-    List<User> GetAll();
-    User GetById(int id);
-    User GetByEmail(string email);
+    List<UserDto> GetAll();
+    UserDto GetById(int id);
+    UserDto GetByEmail(string email);
 
     bool IsEmailExists(string email);
 
-    User ValidateUser(string email, string password);
+    UserDto ValidateUser(string email, string password);
+
+    bool ChangePassword(int userId, string currentPassword, string newPassword);
 }

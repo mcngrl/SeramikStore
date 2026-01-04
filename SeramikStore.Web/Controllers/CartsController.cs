@@ -11,12 +11,11 @@ namespace SeramikStore.Web.Controllers
     {
 
         private ICartService _cartService;
-        private IAuthentication _authenticationService;
 
-        public CartsController(ICartService cartService, IAuthentication authenticationService)
+        public CartsController(ICartService cartService)
         {
             _cartService = cartService;
-            _authenticationService = authenticationService;
+            
         }
 
         [CheckSession("userId")]
@@ -64,42 +63,6 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
-
-        }
-
-
-        [CheckSession("userId")]
-        public IActionResult AddressDetail(Decimal GrandTotal)
-        {
-            BillingDetailViewModel vm = new BillingDetailViewModel();
-            var userDetail = _authenticationService.GetUserByUserId((int)HttpContext.Session.GetInt32("userId"));
-            vm.Address = userDetail.Address;
-            vm.GrandTotal = GrandTotal;
-            return View(vm);
-
-        }
-
-        [CheckSession("userId")]
-        public IActionResult ChangeAddress()
-        {
-            UserViewModel vm = new UserViewModel();
-            var userDetail = _authenticationService.GetUserByUserId((int)HttpContext.Session.GetInt32("userId"));
-            vm.Id = userDetail.Id;
-            vm.UserName = userDetail.UserName;
-            vm.Address = userDetail.Address;
-            vm.TelephoneNumber = userDetail.TelephoneNumber;
-            return View(vm);
-        }
-        [HttpPost]
-        public IActionResult ChangeAddress(UserViewModel vm)
-        {
-            int result = _authenticationService.UpdateUserDetails(vm.Id, vm.Address, vm.TelephoneNumber);
-            if (result > 0)
-            {
-                return RedirectToAction("Index");
-            }
-            return RedirectToAction("Index");
-
 
         }
 

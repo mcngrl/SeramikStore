@@ -1,0 +1,107 @@
+﻿@model SeramikStore.Web.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profilim";
+}
+
+<div class="container mt-4" style="max-width:900px;">
+    <h3 class="mb-4">Profilim</h3>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Success"]
+        </div>
+    }
+
+    <!-- ================= PROFİL BİLGİLERİ ================= -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Kişisel Bilgiler</strong>
+        </div>
+        <div class="card-body">
+            <form asp-action="Profile" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="FormType" value="Profile" />
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Profile.FirstName"></label>
+                        <input asp-for="Profile.FirstName" class="form-control" />
+                        <span asp-validation-for="Profile.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Profile.LastName"></label>
+                        <input asp-for="Profile.LastName" class="form-control" />
+                        <span asp-validation-for="Profile.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Profile.Email"></label>
+                        <input asp-for="Profile.Email" class="form-control" readonly />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Profile.PhoneNumber"></label>
+                        <input asp-for="Profile.PhoneNumber" class="form-control" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Profile.BirthDate"></label>
+                        <input asp-for="Profile.BirthDate" class="form-control" type="date" />
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Bilgileri Güncelle
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= ŞİFRE DEĞİŞTİR ================= -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Şifre Değiştir</strong>
+        </div>
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @Html.ValidationSummary(false)
+            </div>
+        }
+        <div class="card-body">
+            <form asp-action="Profile" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="FormType" value="Password" />
+
+                <div class="mb-3">
+                    <label asp-for="Password.CurrentPassword"></label>
+                    <input asp-for="Password.CurrentPassword" class="form-control" type="password" />
+                    <span asp-validation-for="Password.CurrentPassword" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password.NewPassword"></label>
+                    <input asp-for="Password.NewPassword" class="form-control" type="password" />
+                    <span asp-validation-for="Password.NewPassword" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Password.ConfirmNewPassword"></label>
+                    <input asp-for="Password.ConfirmNewPassword" class="form-control" type="password" />
+                    <span asp-validation-for="Password.ConfirmNewPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-warning">
+                    Şifreyi Değiştir
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeramikStore.Entities;
 using SeramikStore.Services;
+using SeramikStore.Services.DTOs;
 using SeramikStore.Web.ViewModel;
 using SeramikStore.Web.ViewModels;
 
@@ -35,13 +36,16 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var user = new User
+        var user = new UserDto
         {
             FirstName = model.FirstName,
             LastName = model.LastName,
             Email = model.Email,
             PhoneNumber = model.PhoneNumber,
-            BirthDate = model.BirthDate
+            BirthDate = model.BirthDate,
+            IsActive = true,
+            RoleId = 2,
+
         };
 
         _userService.Insert(user, model.Password);
@@ -49,6 +53,103 @@ public class AccountController : Controller
         TempData["Success"] = "Kayıt başarılı. Giriş yapabilirsiniz.";
         return RedirectToAction("Login", "Account");
     }
+
+
+
+    [HttpGet]
+    public IActionResult Profile()
+    {
+        int userId = HttpContext.Session.GetInt32("userId").Value;
+        var user = _userService.GetById(userId);
+
+        var vm = new ProfileViewModel
+        {
+            Profile = new ProfileInfoViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                BirthDate = user.BirthDate
+            },
+            Password = new ChangePasswordViewModel()
+        };
+
+        return View(vm);
+    }
+
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Profile(ProfileViewModel vm, string FormType)
+    {
+        int userId = HttpContext.Session.GetInt32("userId").Value;
+
+        if (FormType == "Profile")
+        {
+            ModelState.Remove("Password");
+
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            _userService.Update(new UserDto
+            {
+                Id = userId,
+                FirstName = vm.Profile.FirstName,
+                LastName = vm.Profile.LastName,
+                PhoneNumber = vm.Profile.PhoneNumber,
+                BirthDate = vm.Profile.BirthDate
+            });
+
+            TempData["Success"] = "Profil bilgileri güncellendi";
+            return RedirectToAction("Profile");
+        }
+
+        if (FormType == "Password")
+        {
+            ModelState.Remove("Profile");
+
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            bool result = _userService.ChangePassword(
+                userId,
+                vm.Password.CurrentPassword,
+                vm.Password.NewPassword
+            );
+
+            if (!result)
+            {
+                ModelState.AddModelError(
+                    "Password.CurrentPassword",
+                    "Şu anki şifre hatalı"
+                );
+
+                var user = _userService.GetById(userId);
+                vm.Profile = new ProfileInfoViewModel
+                {
+                    Id = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
+                    BirthDate = user.BirthDate
+                };
+
+                return View(vm);
+            }
+
+            TempData["Success"] = "Şifre başarıyla değiştirildi";
+            return RedirectToAction("Profile");
+        }
+
+        return View(vm);
+    }
+
+
+
 
     [HttpGet]
     public IActionResult Login()
@@ -61,19 +162,31 @@ public class AccountController : Controller
     public IActionResult Login(LoginViewModel vm)
     {
 
-            var user = _userService.ValidateUser(vm.UserName, vm.Password);
-            if (user != null)
-            {
-                //var role = _authencationService.RoleGetById(user.RoleId);
-                //HttpContext.Session.SetString("userName", user.Name);
-                //HttpContext.Session.SetString("role", role.Name);
-                HttpContext.Session.SetString("userName", user.FirstName );
-                HttpContext.Session.SetInt32("userId", user.Id);
+        if (!ModelState.IsValid)
+            return View(vm);
 
-                return RedirectToAction("Index", "Home");
+        var user = _userService.ValidateUser(vm.UserName, vm.Password);
 
-            }
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "Kullanıcı adı veya şifre hatalı");
+            return View(vm);
+        }
 
-        return View();
+        HttpContext.Session.SetString("userName", user.Email);
+        HttpContext.Session.SetString("role", user.RoleName);
+        HttpContext.Session.SetInt32("userId", user.Id);
+
+        return RedirectToAction("Index", "Home");
+    }
+
+
+    public IActionResult Logout()
+    {
+        // Tüm session'ları temizler
+        HttpContext.Session.Clear();
+
+        // Login ekranına yönlendir
+        return RedirectToAction("Login", "Account");
     }
 }
