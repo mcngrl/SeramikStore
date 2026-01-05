@@ -1,0 +1,69 @@
+﻿@model SeramikStore.Web.ViewModels.UserAddressViewModel
+@{
+    ViewData["Title"] = "Yeni Adres";
+}
+
+<div class="container mt-4" style="max-width:800px;">
+    <h3 class="mb-4">Yeni Adres Ekle</h3>
+
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Ad"></label>
+                <input asp-for="Ad" class="form-control" />
+                <span asp-validation-for="Ad" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="Soyad"></label>
+                <input asp-for="Soyad" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="Telefon"></label>
+                <input asp-for="Telefon" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="Baslik"></label>
+                <input asp-for="Baslik" class="form-control" placeholder="Ev, İş vb." />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="Il"></label>
+                <input asp-for="Il" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="Ilce"></label>
+                <input asp-for="Ilce" class="form-control" />
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label asp-for="Mahalle"></label>
+                <input asp-for="Mahalle" class="form-control" />
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label asp-for="Adres"></label>
+                <textarea asp-for="Adres" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="col-md-12 mb-3 form-check">
+                <input asp-for="IsDefault" class="form-check-input" />
+                <label asp-for="IsDefault" class="form-check-label">
+                    Varsayılan adres olarak ayarla
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Kaydet</button>
+        <a asp-action="Index" class="btn btn-secondary">İptal</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

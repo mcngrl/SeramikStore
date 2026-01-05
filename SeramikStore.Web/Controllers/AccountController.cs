@@ -54,7 +54,12 @@ public class AccountController : Controller
         return RedirectToAction("Login", "Account");
     }
 
+    [HttpGet]
+    public IActionResult MyProfile()
+    {
 
+        return View();
+    }
 
     [HttpGet]
     public IActionResult Profile()

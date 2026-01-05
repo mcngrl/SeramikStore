@@ -1,0 +1,35 @@
+﻿@model List<SeramikStore.Entities.UserAddress>
+
+<h3>Adreslerim</h3>
+<a asp-action="Create" class="btn btn-primary mb-3">Yeni Adres</a>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>UserId</th>
+        <th>Başlık</th>
+        <th>Adres</th>
+        <th>Varsayılan</th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.UserId</td>
+            <td>@item.Baslik</td>
+            <td>@item.Adres</td>
+            <td>@(item.IsDefault ? "Evet" : "Hayır")</td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id"
+                   class="btn btn-sm btn-danger">Sil</a>
+            </td>
+            <td>
+            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                Adresi Düzenle
+            </a>
+            </td>
+        </tr>
+    }
+</table>
