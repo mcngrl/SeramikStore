@@ -1,0 +1,30 @@
+﻿@model SeramikStore.Web.ViewModels.UserAddressViewModel
+@{
+    ViewData["Title"] = "Adres Sil";
+}
+
+<div class="container mt-5" style="max-width:600px;">
+    <div class="card border-danger">
+        <div class="card-header bg-danger text-white">
+            Adres Sil
+        </div>
+        <div class="card-body">
+            <p>
+                <strong>@Model.Baslik</strong> başlıklı adresi silmek istediğinize emin misiniz?
+            </p>
+
+            <p>
+                @Model.Il / @Model.Ilce <br />
+                @Model.Adres
+            </p>
+
+            <form asp-action="Delete" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <button type="submit" class="btn btn-danger">Evet, Sil</button>
+                <a asp-action="Index" class="btn btn-secondary">Vazgeç</a>
+            </form>
+        </div>
+    </div>
+</div>

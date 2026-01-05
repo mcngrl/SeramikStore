@@ -53,6 +53,23 @@
     </div>
 </form>
 
+<form asp-action="Login" method="post">
+    <input asp-for="UserName" class="form-control" value="admin@admin.com" placeholder="Email adresiniz" />
+    <input asp-for="Password" type="password" class="form-control" value="321321" placeholder="Şifreniz" />
+    <button type="submit">
+        <i class="fas fa-sign-in-alt"></i> Admin Olarak Gir
+    </button>
+</form>
+<form asp-action="Login" method="post">
+ 
+        <input asp-for="UserName" class="form-control" value="customer@customer.com" placeholder="Email adresiniz" />
+        <input asp-for="Password" type="password" class="form-control" value="321321" placeholder="Şifreniz" />
+    <button type="submit">
+        <i class="fas fa-sign-in-alt"></i> Müşteri Olarak Gir
+    </button>
+</form>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
