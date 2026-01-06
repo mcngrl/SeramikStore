@@ -82,12 +82,12 @@
                         <span>@toplam.ToString("N2", culture) TL</span>
                     </div>
 
-                    <form asp-action="AddressDetail" asp-controller="Carts" method="post">
-                        <input type="hidden" name="grandTotal" value="@toplam" />
-                        <button type="submit" class="btn btn-warning w-100 mt-3">
-                            Sepeti Onayla
-                        </button>
-                    </form>
+                    <div>
+                        <a asp-controller="Carts"
+                           asp-action="AddressDetail"
+                           class="btn btn-warning w-100 mt-3">
+                            Alış verişi Tamamla
+                        </a>
                 </div>
             </div>
         </div>
