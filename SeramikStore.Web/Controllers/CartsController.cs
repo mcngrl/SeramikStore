@@ -1,21 +1,26 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Web.Filters;
 using SeramikStore.Web.ViewModel;
+using SeramikStore.Web.ViewModels;
 
 namespace SeramikStore.Web.Controllers
 {
     public class CartsController : Controller
     {
 
-        private ICartService _cartService;
+        private readonly IUserAddressService _userAddressService;
+        private readonly ICartService _cartService;
 
-        public CartsController(ICartService cartService)
+        public CartsController(
+            IUserAddressService userAddressService,
+            ICartService cartService)
         {
+            _userAddressService = userAddressService;
             _cartService = cartService;
-            
         }
 
         [CheckSession("userId")]
@@ -84,7 +89,60 @@ namespace SeramikStore.Web.Controllers
         //    //_cartService.Delete(id);
         //    //return RedirectToAction("Index");
         //}
+        // 📌 Adres Seçme Sayfası
+        [HttpGet]
+        public IActionResult AddressDetail()
+        {
+            int userId = HttpContext.Session.GetInt32("userId").Value;
 
+            var addresses = _userAddressService.GetByUserId(userId);
+
+            var vm = new AddressSelectViewModel
+            {
+                Addresses = addresses.Select(a => new UserAddressViewModel
+                {
+                    Id = a.Id,
+                    Ad = a.Ad,
+                    Soyad = a.Soyad,
+                    Telefon = a.Telefon,
+                    Il = a.Il,
+                    Ilce = a.Ilce,
+                    Mahalle = a.Mahalle,
+                    Adres = a.Adres,
+                    Baslik = a.Baslik,
+                    IsDefault = a.IsDefault
+                }).ToList(),
+
+                SelectedAddressId = addresses
+                    .FirstOrDefault(x => x.IsDefault)?.Id ?? 0,
+
+                //OrderTotal = _cartService.GetCartTotal(userId)
+               // OrderTotal = 1
+            };
+
+            return View(vm);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddressDetail(AddressSelectViewModel vm)
+        {
+            if (vm.SelectedAddressId == 0)
+            {
+                ModelState.AddModelError("", "Lütfen bir adres seçiniz");
+                return View(vm);
+            }
+
+            // Seçilen adresi session’a al (checkout için)
+            //HttpContext.Session.SetInt32(
+            //    "SelectedAddressId",
+            //    vm.SelectedAddressId
+            //);
+
+            // 👉 Sonraki adım: Ödeme
+            return RedirectToAction("Payment");
+        }
     }
 
 

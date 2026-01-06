@@ -1,54 +1,99 @@
-﻿@using SeramikStore.Web.ViewModel;
-@model BillingDetailViewModel
+﻿@model SeramikStore.Web.ViewModels.AddressSelectViewModel
+
 
 @{
-    ViewData["Title"] = "AddressDetail";
+    ViewData["Title"] = "Teslimat Adresi";
 }
 
-<a asp-action="ChangeAddress" asp-controller="Carts">Change Address Details</a>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddToOrder">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <textarea readonly asp-for="Address" class="form-control"></textarea>
-                <span asp-validation-for="Address" class="text-danger"></span>
+<div class="container mt-4">
+    <div class="row">
+
+        <!-- ================= SOL TARAF ================= -->
+        <div class="col-md-8">
+            <h4 class="mb-3 text-primary">Teslimat Adresim</h4>
+
+            <form asp-action="AddressDetail" method="post">
+
+                @foreach (var address in Model.Addresses)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body d-flex align-items-start">
+
+                            <input type="radio"
+                                   name="SelectedAddressId"
+                                   value="@address.Id"
+                                   class="form-check-input mt-2 me-3"
+                                   @(address.IsDefault ? "checked" : "") />
+
+                            <div class="flex-grow-1">
+                                <strong>@address.Baslik</strong>
+                                <div>@address.Ad @address.Soyad</div>
+                                <div class="text-muted small">
+                                    @address.Mahalle, @address.Ilce / @address.Il
+                                </div>
+                                <div class="text-muted small">
+                                    @address.Adres
+                                </div>
+                                <div class="text-muted small">
+                                    @address.Telefon
+                                </div>
+                            </div>
+
+                            <div>
+                                <a asp-controller="UserAddress"
+                                   asp-action="Edit"
+                                   asp-route-id="@address.Id"
+                                   class="btn btn-sm btn-outline-warning">
+                                    Ekle / Değiştir
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <!-- Bilgilendirme -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" required />
+                            <label class="form-check-label">
+                                Ön bilgilendirme formunu ve
+                                <strong>Mesafeli satış sözleşmesini</strong> onaylıyorum
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-3">
+                    Siparişi Onayla
+                </button>
+            </form>
+        </div>
+
+        <!-- ================= SAĞ TARAF ================= -->
+        <div class="col-md-4">
+            <div class="card sticky-top" style="top:100px;">
+                <div class="card-body">
+                    <h6 class="text-warning">ÖDENECEK TUTAR</h6>
+
+                    <h3 class="fw-bold">
+                        @Model.GrandTotal.ToString("N2") ₺
+                    </h3>
+
+                    <hr />
+
+                    <div class="d-flex justify-content-between">
+                        <span>Ürünler</span>
+                        <span>@Model.ProductTotal.ToString("N2") ₺</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <span>Kargo</span>
+                        <span>@Model.CargoPrice.ToString("N2") ₺</span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="GrandTotal" class="control-label"></label>
-                <input readonly asp-for="GrandTotal" class="form-control" />
-                <span asp-validation-for="GrandTotal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CardName" class="control-label"></label>
-                <input asp-for="CardName" class="form-control" />
-                <span asp-validation-for="CardName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CardNumber" class="control-label"></label>
-                <input asp-for="CardNumber" class="form-control" />
-                <span asp-validation-for="CardNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ExpireNumber" class="control-label"></label>
-                <input asp-for="ExpireNumber" class="form-control" />
-                <span asp-validation-for="ExpireNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CVV" class="control-label"></label>
-                <input asp-for="CVV" class="form-control" />
-                <span asp-validation-for="CVV" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="Submit" value="Place Order" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
