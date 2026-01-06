@@ -10,20 +10,22 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Yeni Ürün Yarat</a>
 </p>
+<button id="btnSaveOrder" class="btn btn-success">
+    Sıralamayı Kaydet
+</button>
 <table class="table table-bordered mt-3">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.ProductCode)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductDesc)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CategoryName)
@@ -47,36 +49,34 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="sortable-products">
 @foreach (var item in Model) {
-        <tr>
-            <td>
+        <tr data-id="@item.Id" >
+                <td class="drag-handle">☰</td>
+                <td class="drag-handle">
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
-            <td>
+                <td class="drag-handle">
                 @Html.DisplayFor(modelItem => item.ProductCode)
             </td>
-            <td>
+                <td class="drag-handle">
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductDesc)
-            </td>
-            <td>
+                <td class="drag-handle">
                     @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
-                <td class="text-end">
+                <td class="drag-handle" class="text-end">
            
                     @item.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
                     @Html.DisplayFor(modelItem => item.CurrencySymbol)
             </td>
-                <td>
+                <td class="drag-handle">
                     @Html.DisplayFor(modelItem => item.CurrencyCode)
                 </td>
-            <td>
+                <td class="drag-handle">
                 @Html.DisplayFor(modelItem => item.AvailableForSale)
             </td>
-                <td>
+                <td class="drag-handle">
                     @if (!string.IsNullOrEmpty(item.MainImagePath))
                     {
                         <img src="@item.MainImagePath"
@@ -88,7 +88,7 @@
                         <span class="text-muted">Resim yok</span>
                     }
                 </td>
-            <td>
+                <td class="drag-handle">
                     @Html.DisplayFor(modelItem => item.ImageCount)
             </td>
 
@@ -113,3 +113,29 @@
 }
     </tbody>
 </table>
+
+@* <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Ürün</th>
+            <th>Fiyat</th>
+        </tr>
+    </thead>
+    <tbody id="sortable-products">
+        @foreach (var item in Model)
+        {
+            <tr data-id="@item.Id">
+                <td class="drag-handle">☰</td>
+                <td>@item.ProductName</td>
+                <td>@item.UnitPrice</td>
+            </tr>
+        }
+    </tbody>
+</table> *@
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="~/js/product-order.js"></script>
+}

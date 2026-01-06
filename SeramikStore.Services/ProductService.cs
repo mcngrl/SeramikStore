@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using SeramikStore.Entities;
 using SeramikStore.Services.DTOs;
 using System.Collections.Generic;
@@ -158,4 +159,27 @@ public class ProductService : IProductService
         con.Open();
         return Convert.ToInt32(cmd.ExecuteScalar());
     }
+
+    public void UpdateDisplayOrder(List<ProductOrderDto> list)
+    {
+        try
+        {
+            var json = JsonConvert.SerializeObject(list);
+
+            using SqlConnection con = new(_connectionString);
+            using SqlCommand cmd = new("sp_Product_UpdateDisplayOrder", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@JsonData", json);
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+        }
+        catch (Exception e)
+        {
+
+            string msg = e.Message;
+        }
+
+    }
+
 }

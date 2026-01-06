@@ -13,5 +13,7 @@ using SeramikStore.Services.DTOs;
         int InsertProduct(Product product);
         int UpdateProduct(Product product);
         int DeleteProduct(int id);
-    }
+
+        void UpdateDisplayOrder(List<ProductOrderDto> list);
+}
 
