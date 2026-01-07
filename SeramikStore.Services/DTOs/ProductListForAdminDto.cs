@@ -33,13 +33,13 @@ namespace SeramikStore.Services.DTOs
         [Display(Name = "Para Birimi Sembolü")]
         public string CurrencySymbol { get; set; }
         
-        [Display(Name = "Satışta mı?")]
+        [Display(Name = "Satış")]
         public bool AvailableForSale { get; set; }
 
         [Display(Name = "Ana Resim")]
         public string MainImagePath { get; set; }
 
-        [Display(Name = "Toplam Resim Sayısı")]
+        [Display(Name = "Resim Sayısı")]
         public int ImageCount { get; set; }
 
     }

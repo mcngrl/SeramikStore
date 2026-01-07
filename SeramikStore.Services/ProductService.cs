@@ -80,9 +80,9 @@ public class ProductService : IProductService
 
         return list;
     }
-    public Product ProductGetById(int id)
+    public ProductDetailDto ProductGetById(int id)
     {
-        Product product = null;
+        ProductDetailDto product = null;
 
         using SqlConnection con = new(_connectionString);
         using SqlCommand cmd = new("sp_Product_GetById", con);
@@ -95,7 +95,7 @@ public class ProductService : IProductService
         using SqlDataReader dr = cmd.ExecuteReader();
         if (dr.Read())
         {
-            product = new Product
+            product = new ProductDetailDto
             {
                 Id = Convert.ToInt32(dr["Id"]),
                 ProductCode = dr["ProductCode"].ToString(),
@@ -104,7 +104,10 @@ public class ProductService : IProductService
                 CategoryId = Convert.ToInt32(dr["CategoryId"]),
                 UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
                 CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
-                AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"])
+                AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"]),
+                CurrencyCode = dr["CurrencyCode"].ToString(),
+                CurrencySymbol = dr["CurrencySymbol"].ToString(),
+                CategoryName = dr["CategoryName"].ToString()
             };
         }
 

@@ -1,8 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace SeramikStore.Web.ViewModels
+namespace SeramikStore.Services.DTOs
 {
-    public class ProductDetail
+    public class ProductDetailDto
     {
         public int Id { get; set; }                // Primary Key
         public string ProductCode { get; set; }     // Product code (nvarchar(50))
@@ -10,15 +14,11 @@ namespace SeramikStore.Web.ViewModels
         public string ProductDesc { get; set; }     // Product description (nvarchar(max))
         public int CategoryId { get; set; }         // Category ID (int)
         public decimal UnitPrice { get; set; }          // Price (decimal(18, 0))
-        public string CurrencyCode { get; set; }        
-        public string CurrencySymbol { get; set; }       
-        public string CategoryName { get; set; }
-
-        [Required(ErrorMessage = "Adet zorunludur")]
-        [Range(1, 1000, ErrorMessage = "Adet en az 1 olmalıdır")]
-        public int Quantity { get; set; } = 1;
+        public int CurrencyId { get; set; }
         public bool AvailableForSale { get; set; }  // Available for sale (bit)
-
-        public List<string> ImagePaths { get; set; }
+        public int DisplayOrderNo { get; set; }
+        public string CurrencyCode { get; set; }
+        public string CurrencySymbol { get; set; }
+        public string CategoryName { get; set; }
     }
 }

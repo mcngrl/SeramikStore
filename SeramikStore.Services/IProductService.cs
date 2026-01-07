@@ -8,8 +8,8 @@ using SeramikStore.Services.DTOs;
 
         List<ProductListForAdminDto> ProductListForAdmin();
 
+        ProductDetailDto ProductGetById(int id);
 
-        Product ProductGetById(int id);
         int InsertProduct(Product product);
         int UpdateProduct(Product product);
         int DeleteProduct(int id);
