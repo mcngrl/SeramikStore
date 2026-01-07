@@ -1,0 +1,5 @@
+﻿Admin ekranında Ürün resimlerinde sıralama
+Admin olrak girince ASP.BET Entity iel rolleri kullanmak
+Aynı aynda birden çok resim yükleme
+Ana sayfa ütün listemeden Kategori bazlı ayırma
+Müşterinin kayıtlının adresi yoksa. chekc out sırasıyda yeni adres yaratıp kaydığı yerden devam edebilmeli.

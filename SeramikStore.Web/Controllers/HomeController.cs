@@ -8,6 +8,7 @@ using SeramikStore.Web.Models;
 using SeramikStore.Web.ViewModels;
 using System.Diagnostics;
 using System.Net.WebSockets;
+using System.Runtime.Intrinsics.X86;
 
 namespace SeramikStore.Web.Controllers
 {
@@ -45,6 +46,10 @@ namespace SeramikStore.Web.Controllers
                 vm.ProductName = TheProduct.ProductName;
                 vm.UnitPrice = TheProduct.UnitPrice;
                 vm.CategoryId = TheProduct.CategoryId;
+                vm.CurrencyCode = TheProduct.CurrencyCode;
+                vm.CurrencySymbol = TheProduct.CurrencySymbol;
+                vm.CategoryName = TheProduct.CategoryName;
+                
             }
 
             var images = _productimageservice.GetByProductId(id);
@@ -73,6 +78,38 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult Cart(ProductDetail vm)
         {
+            if (vm.Quantity < 3)
+            {
+                ModelState.AddModelError("Quantity", "Adet en az 1 olmalýdýr");
+
+                var TheProduct = _productservices.ProductGetById(vm.Id);
+
+                if (TheProduct.Id != 0)
+                {
+
+                    vm.ProductDesc = TheProduct.ProductDesc;
+                    vm.ProductCode = TheProduct.ProductCode;
+                    vm.ProductName = TheProduct.ProductName;
+                    vm.UnitPrice = TheProduct.UnitPrice;
+                    vm.CategoryId = TheProduct.CategoryId;
+                    vm.CurrencyCode = TheProduct.CurrencyCode;
+                    vm.CurrencySymbol = TheProduct.CurrencySymbol;
+                    vm.CategoryName = TheProduct.CategoryName;
+
+                }
+
+                var images = _productimageservice.GetByProductId(vm.Id);
+
+                List<string> ImagePaths = new List<string>();
+                foreach (var image in images)
+                {
+                    ImagePaths.Add(image.ImagePath);
+                }
+                ;
+                vm.ImagePaths = ImagePaths;
+                return View("Details", vm);
+            }
+
 
             var product = _productservices.ProductGetById(vm.Id);
             if (product == null) {

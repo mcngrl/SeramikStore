@@ -1,65 +1,94 @@
 ﻿@model SeramikStore.Web.ViewModels.ProductEditViewModel
 
-<h2>Edit Product</h2>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<h2 class="mb-4">Ürün Güncelleme</h2>
 
 <form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()
     <input type="hidden" asp-for="Id" />
 
-    <div class="form-group">
-        <label asp-for="ProductCode"></label>
-        <input asp-for="ProductCode" class="form-control" />
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <!-- CODE + NAME -->
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label asp-for="ProductCode"></label>
+                    <input asp-for="ProductCode" class="form-control" maxlength="50" />
+                </div>
+                <div class="col-md-8">
+                    <label asp-for="ProductName"></label>
+                    <input asp-for="ProductName" class="form-control" maxlength="255" />
+                </div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <label class="form-label">Ürün Açıklaması</label>
+            <div id="editor" style="height:200px;">
+                @Html.Raw(Model.ProductDesc)
+            </div>
+
+            <input type="hidden" asp-for="ProductDesc" />
+
+            <!-- CATEGORY + CURRENCY -->
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-4">
+                    <label asp-for="UnitPrice"></label>
+                    <input asp-for="UnitPrice" class="form-control text-end" style="font-family: monospace; " />
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="CurrencyId"></label>
+                    <select asp-for="CurrencyId" asp-items="Model.Currencies" class="form-select"></select>
+                </div>
+            </div>
+
+            <!-- PRICE + SALE -->
+            <div class="row mb-3 align-items-center">
+                <div class="col-md-4">
+                    <label>Kategori</label>
+                    <select asp-for="CategoryId"
+                            asp-items="Model.Categories"
+                            class="form-select"></select>
+                </div>
+                <div class="col-md-4 form-check mt-4">
+                    <input asp-for="AvailableForSale" class="form-check-input" />
+                    <label asp-for="AvailableForSale" class="form-check-label"></label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-footer text-end">
+            <button class="btn btn-primary">Kaydet</button>
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            <a asp-controller="ProductImage"
+               asp-action="Index"
+               asp-route-productId="@Model.Id"
+               class="btn btn-info">
+                Ürün Resimleri
+            </a>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="ProductName"></label>
-        <input asp-for="ProductName" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label asp-for="ProductDesc"></label>
-        <textarea asp-for="ProductDesc" class="form-control"></textarea>
-    </div>
-
-    <div class="form-group">
-        <label>Kategori</label>
-        <select asp-for="CategoryId"
-                asp-items="Model.Categories"
-                class="form-control">
-            <option value="">-- Kategori Seçiniz.--</option>
-        </select>
-    </div>
-
-    <!-- CURRENCY DROPDOWN -->
-    <div class="form-group">
-        <label>Currency</label>
-        <select asp-for="CurrencyId"
-                asp-items="Model.Currencies"
-                class="form-control">
-            <option value="">-- Select Currency --</option>
-        </select>
-    </div>
-
-
-
-    <div class="form-group">
-        <label asp-for="UnitPrice"></label>
-        <input asp-for="UnitPrice" class="form-control" />
-    </div>
-
-
-    <div class="form-group form-check">
-        <input asp-for="AvailableForSale" class="form-check-input" />
-        <label asp-for="AvailableForSale" class="form-check-label"></label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Kaydet</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-
-    <a asp-controller="ProductImage"
-       asp-action="Index"
-       asp-route-productId="@Model.Id"
-       class="btn btn-info">
-        Ürün Resimleri
-    </a>
 </form>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+<script>
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link'],
+                ['clean']
+            ]
+        }
+    });
+
+    document.querySelector('form').addEventListener('submit', function () {
+        document.querySelector('[name="ProductDesc"]').value =
+            quill.root.innerHTML;
+    });
+</script>

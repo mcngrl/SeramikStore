@@ -34,9 +34,6 @@
                 @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CurrencyCode)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.AvailableForSale)
             </th>
             <th>
@@ -65,14 +62,10 @@
                 <td class="drag-handle">
                     @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
-                <td class="drag-handle" class="text-end">
-           
-                    @item.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
-                    @Html.DisplayFor(modelItem => item.CurrencySymbol)
-            </td>
-                <td class="drag-handle">
+                <td class="drag-handle text-end" style="font-family: monospace; ">
+                       @item.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
                     @Html.DisplayFor(modelItem => item.CurrencyCode)
-                </td>
+            </td>
                 <td class="drag-handle">
                 @Html.DisplayFor(modelItem => item.AvailableForSale)
             </td>
