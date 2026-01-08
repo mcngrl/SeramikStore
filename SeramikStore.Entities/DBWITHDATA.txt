@@ -1,179 +1,187 @@
-﻿/****** Object:  StoredProcedure [dbo].[sp_UserGetByUserNameAndPassword]    Script Date: 1/6/2026 10:20:35 PM ******/
+﻿/****** Object:  StoredProcedure [dbo].[sp_UserGetByUserNameAndPassword]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_UserGetByUserNameAndPassword]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Update]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_UserAddress_Update]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_ListByUserId]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_ListByUserId]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_UserAddress_ListByUserId]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Insert]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_UserAddress_Insert]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_GetDefault]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_GetDefault]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_UserAddress_GetDefault]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_GetById]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_UserAddress_GetById]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Delete]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_UserAddress_Delete]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_Update]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_User_Update]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_List]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_List]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_User_List]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_Insert]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_User_Insert]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_GetById]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_User_GetById]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_GetByEmail]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_GetByEmail]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_User_GetByEmail]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_Delete]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_User_Delete]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_ChangePassword]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_ChangePassword]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_User_ChangePassword]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_RoleGetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_RoleGetById]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_RoleGetById]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Update]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_ProductImage_Update]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_SetMain]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_SetMain]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_ProductImage_SetMain]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_ListByProductId]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_ListByProductId]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_ProductImage_ListByProductId]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Insert]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_ProductImage_Insert]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Delete]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_ProductImage_Delete]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_UpdateDisplayOrder]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_UpdateDisplayOrder]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Product_UpdateDisplayOrder]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_Update]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Product_Update]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_SwapOrder]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_SwapOrder]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Product_SwapOrder]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_ListForHomePage]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_ListForHomePage]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Product_ListForHomePage]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_List]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_List]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Product_List]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_Insert]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Product_Insert]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_GetById]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Product_GetById]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_Delete]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Product_Delete]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_Update]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Currency_Update]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_List]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_List]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Currency_List]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_Insert]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Currency_Insert]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_GetDefault]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_GetDefault]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Currency_GetDefault]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_GetById]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Currency_GetById]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_Delete]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Currency_Delete]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_Update]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Category_Update]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_List]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_List]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Category_List]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_Insert]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Category_Insert]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_GetById]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Category_GetById]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_Delete]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Category_Delete]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_UpdateQuantity]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_UpdateQuantity]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Cart_UpdateQuantity]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_ListByUserId]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_ListByUserId]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Cart_ListByUserId]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_Insert]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Cart_Insert]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_GetById]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Cart_GetById]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_DeleteById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_DeleteById]    Script Date: 08/01/2026 17:32:04 ******/
 DROP PROCEDURE [dbo].[sp_Cart_DeleteById]
 GO
-ALTER TABLE [dbo].[ProductImage] DROP CONSTRAINT [DF__ProductIm__Displ__4C0144E4]
+ALTER TABLE [dbo].[ProductImage] DROP CONSTRAINT [DF__ProductIm__Displ__33008CF0]
 GO
-ALTER TABLE [dbo].[ProductImage] DROP CONSTRAINT [DF__ProductIm__IsMai__4B0D20AB]
+ALTER TABLE [dbo].[ProductImage] DROP CONSTRAINT [DF__ProductIm__IsMai__320C68B7]
 GO
-/****** Object:  Index [UQ__User__A9D105340FDE981B]    Script Date: 1/6/2026 10:20:35 PM ******/
-ALTER TABLE [dbo].[User] DROP CONSTRAINT [UQ__User__A9D105340FDE981B]
+/****** Object:  Index [UQ__User__A9D10534EC042E43]    Script Date: 08/01/2026 17:32:04 ******/
+ALTER TABLE [dbo].[User] DROP CONSTRAINT [UQ__User__A9D10534EC042E43]
 GO
-/****** Object:  Table [dbo].[UserTable]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[UserTable]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UserTable]') AND type in (N'U'))
 DROP TABLE [dbo].[UserTable]
 GO
-/****** Object:  Table [dbo].[UserAddress]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[UserAddress]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[UserAddress]') AND type in (N'U'))
 DROP TABLE [dbo].[UserAddress]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[User]') AND type in (N'U'))
 DROP TABLE [dbo].[User]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Role]') AND type in (N'U'))
 DROP TABLE [dbo].[Role]
 GO
-/****** Object:  Table [dbo].[ProductImage]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[ProductImage]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ProductImage]') AND type in (N'U'))
 DROP TABLE [dbo].[ProductImage]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Product]') AND type in (N'U'))
 DROP TABLE [dbo].[Product]
 GO
-/****** Object:  Table [dbo].[Currency]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[Currency]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Currency]') AND type in (N'U'))
 DROP TABLE [dbo].[Currency]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[CategoryB]    Script Date: 08/01/2026 17:32:04 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CategoryB]') AND type in (N'U'))
+DROP TABLE [dbo].[CategoryB]
+GO
+/****** Object:  Table [dbo].[CategoryA]    Script Date: 08/01/2026 17:32:04 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CategoryA]') AND type in (N'U'))
+DROP TABLE [dbo].[CategoryA]
+GO
+/****** Object:  Table [dbo].[Category]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Category]') AND type in (N'U'))
 DROP TABLE [dbo].[Category]
 GO
-/****** Object:  Table [dbo].[Cart]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[Cart]    Script Date: 08/01/2026 17:32:04 ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Cart]') AND type in (N'U'))
 DROP TABLE [dbo].[Cart]
 GO
-/****** Object:  Table [dbo].[Cart]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[Cart]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -190,10 +198,10 @@ CREATE TABLE [dbo].[Cart](
  CONSTRAINT [PK_Cart] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Category]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[Category]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -205,10 +213,32 @@ CREATE TABLE [dbo].[Category](
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Currency]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[CategoryA]    Script Date: 08/01/2026 17:32:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CategoryA](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[IsActive] [bit] NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CategoryB]    Script Date: 08/01/2026 17:32:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CategoryB](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[IsActive] [bit] NOT NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Currency]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -223,10 +253,10 @@ CREATE TABLE [dbo].[Currency](
  CONSTRAINT [PK_Currency] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -234,7 +264,7 @@ GO
 CREATE TABLE [dbo].[Product](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ProductCode] [nvarchar](50) NOT NULL,
-	[ProductName] [nvarchar](50) NOT NULL,
+	[ProductName] [nvarchar](255) NOT NULL,
 	[ProductDesc] [nvarchar](max) NOT NULL,
 	[CategoryId] [int] NOT NULL,
 	[UnitPrice] [decimal](9, 2) NOT NULL,
@@ -244,10 +274,10 @@ CREATE TABLE [dbo].[Product](
  CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ProductImage]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[ProductImage]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -261,10 +291,10 @@ CREATE TABLE [dbo].[ProductImage](
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Role]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[Role]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -275,10 +305,10 @@ CREATE TABLE [dbo].[Role](
  CONSTRAINT [PK_Role] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[User]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -296,10 +326,10 @@ CREATE TABLE [dbo].[User](
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserAddress]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[UserAddress]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -319,10 +349,10 @@ CREATE TABLE [dbo].[UserAddress](
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserTable]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Table [dbo].[UserTable]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -339,7 +369,7 @@ CREATE TABLE [dbo].[UserTable](
  CONSTRAINT [PK_UserTable] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 SET IDENTITY_INSERT [dbo].[Cart] ON 
@@ -368,9 +398,17 @@ INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice
 GO
 INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3010, 3018, N'can', N'can', CAST(11111.00 AS Decimal(9, 2)), 1, CAST(11111.00 AS Decimal(9, 2)), 2004)
 GO
-INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3011, 3016, N'asddas', N'sda', CAST(123.00 AS Decimal(9, 2)), 3, CAST(369.00 AS Decimal(9, 2)), 2004)
+INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3013, 3021, N'DIMBIŞ', N'DIMBIŞ', CAST(546.00 AS Decimal(9, 2)), 1, CAST(546.00 AS Decimal(9, 2)), 2004)
 GO
-INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3012, 3016, N'A03', N'Erbaşlar Love Bırd Yeşil Seri Tombul 12 Parça Lüx ', CAST(78545.00 AS Decimal(9, 2)), 1, CAST(78545.00 AS Decimal(9, 2)), 2004)
+INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3015, 3021, N'URN01024', N'Gelinlik Kahvesi', CAST(15200.00 AS Decimal(9, 2)), 1, CAST(15200.00 AS Decimal(9, 2)), 2004)
+GO
+INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3016, 3021, N'URN01024', N'Gelinlik Kahvesi', CAST(15200.00 AS Decimal(9, 2)), -1, CAST(-15200.00 AS Decimal(9, 2)), 2004)
+GO
+INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3018, 3006, N'A05', N'İLİVA 6 Kişilik 12 Parça Modern Renkli Kahve Finca', CAST(8714.00 AS Decimal(9, 2)), 1, CAST(8714.00 AS Decimal(9, 2)), 2004)
+GO
+INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3019, 3006, N'A05', N'İLİVA 6 Kişilik 12 Parça Modern Renkli Kahve Finca', CAST(8714.00 AS Decimal(9, 2)), 1, CAST(8714.00 AS Decimal(9, 2)), 2004)
+GO
+INSERT [dbo].[Cart] ([Id], [ProductId], [ProductCode], [ProductName], [UnitPrice], [Quantity], [TotalAmount], [UserId]) VALUES (3020, 3006, N'A05', N'İLİVA 6 Kişilik 12 Parça Modern Renkli Kahve Finca', CAST(8714.00 AS Decimal(9, 2)), 1, CAST(8714.00 AS Decimal(9, 2)), 2004)
 GO
 SET IDENTITY_INSERT [dbo].[Cart] OFF
 GO
@@ -387,6 +425,12 @@ GO
 INSERT [dbo].[Category] ([Id], [Name], [IsActive]) VALUES (5, N'Stoneware', 1)
 GO
 SET IDENTITY_INSERT [dbo].[Category] OFF
+GO
+SET IDENTITY_INSERT [dbo].[CategoryA] ON 
+GO
+INSERT [dbo].[CategoryA] ([Id], [Name], [IsActive]) VALUES (1, N'Can', 1)
+GO
+SET IDENTITY_INSERT [dbo].[CategoryA] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Currency] ON 
 GO
@@ -433,18 +477,7 @@ Zaman biraz yavaşlar.
 İLİVA’da
 Kahve, stile dönüşür.', 5, CAST(8714.00 AS Decimal(9, 2)), 1, 1, 4)
 GO
-INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3008, N'A04', N'WPAWZ Özel Tasarım Sevgililer Günü 2’li Evin Hanım', N'WPAWZ Özel Tasarım Sevgililer Günü 2’li Evin Hanımı Evin Beyi Baskılı Fincan Takımı
-Evin Hanımı & Evin Beyi
-
-İki fincan yan yana,
-Adı konmuş bir mutluluk.
-Biri “evin hanımı”,
-Biri “evin beyi”.
-
-Kahve sıcak,
-Ev tamam.
-Bir yudumda
-Biz olur hayat.', 5, CAST(10.00 AS Decimal(9, 2)), 2, 1, 5)
+INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3008, N'A04', N'WPAWZ Özel Tasarım Sevgililer Günü 2’li Evin Hanım', N'<ul><li><strong>Kahve köpüğünde saklı küçük mutluluklar,</strong></li><li><strong>Bir yudumda gülüş, bir yudumda anılar.</strong></li><li><strong>Sevgililer Günü’nde değil yalnız bugün,</strong></li><li><strong>Her sabah hatırlatır: “Bu evde sevgi hüküm sürer.”</strong></li><li><strong>İki fincan, tek kalp, paylaşılan bir ömür,</strong></li><li><strong>Sıcak bir kahve gibi… Aşk hep taze.</strong></li></ul>', 5, CAST(10.00 AS Decimal(9, 2)), 2, 1, 6)
 GO
 INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3016, N'A03', N'Erbaşlar Love Bırd Yeşil Seri Tombul 12 Parça Lüx ', N'Erbaşlar Love Bırd Yeşil Seri Tombul 12 Parça Lüx Seramik Tombul Kahve Fincan Takımı Türk Kahvesi Fincanı
 Love Bird Yeşil Seri
@@ -457,7 +490,7 @@ Hatır sessizce kalır.
 İki yudum huzur,
 Bir an durur zaman.
 Love Bird’de
-Kahve, biraz aşktır.', 3, CAST(78545.00 AS Decimal(9, 2)), 1, 1, 3)
+Kahve, biraz aşktır.', 3, CAST(78545.00 AS Decimal(9, 2)), 1, 1, 5)
 GO
 INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3018, N'A06', N'Erbaşlar Love Bırd Lacivert Seri Tombul 12 Parça L', N'Erbaşlar Love Bırd Lacivert Seri Tombul 12 Parça Lüx Seramik Tombul Kahve Fincan Takımı Türk Kahvesi Fincanı
 ŞURAMUTFAK Beyaz Tombul Fincan
@@ -473,22 +506,9 @@ Her yudumda ev hissi,
 Her masada dinginlik.
 
 Çay demlenir, zaman yavaşlar,
-Beyaz fincanlarda mutluluk çoğalır. ☕🤍', 5, CAST(5211.00 AS Decimal(9, 2)), 1, 1, 6)
+Beyaz fincanlarda mutluluk çoğalır. ☕🤍', 5, CAST(5211.00 AS Decimal(9, 2)), 1, 1, 7)
 GO
-INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3019, N'A02', N'ŞURAMUTFAK 12 Parça Fincan Takımı | 6 Kişilik Finc', N'ŞURAMUTFAK Beyaz Tombul Fincan
-
-Beyazın sessizliğinde saklı huzur,
-Tombul bir fincanda tamamlanan an.
-Altı kişilik bir sofra,
-Altı ayrı gülümseme, tek sıcak çay.
-
-Ne fazla konuşur, ne eksik kalır,
-Sadeliğiyle sarar sohbeti.
-Her yudumda ev hissi,
-Her masada dinginlik.
-
-Çay demlenir, zaman yavaşlar,
-Beyaz fincanlarda mutluluk çoğalır. ☕🤍', 5, CAST(960.00 AS Decimal(9, 2)), 1, 1, 2)
+INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3019, N'A02', N'ŞURAMUTFAK 12 Parça Fincan Takımı | 6 Kişilik Finc', N'<p>Detayları buraya </p><p>yazaıyorum</p><p><strong>Bold</strong></p><p><br></p><p><br></p><p><br></p>', 5, CAST(960.00 AS Decimal(9, 2)), 1, 1, 3)
 GO
 INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3020, N'A01', N'Hopce Flora El Yapımı Papatya Desenli, 4 Parça 2 K', N'Hopce Flora Papatya Çay Fincanı
 
@@ -503,9 +523,13 @@ Bir yudum huzur, bir tutam mutluluk saklı.
 Paylaştıkça çoğalır sohbet.
 
 Çay soğusa bile,
-Anı sıcak kalır bu fincanda. 🌼☕', 5, CAST(700.00 AS Decimal(9, 2)), 1, 1, 7)
+Anı sıcak kalır bu fincanda. 🌼☕', 5, CAST(700.00 AS Decimal(9, 2)), 1, 1, 8)
 GO
-INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3021, N'DIMBIŞ', N'DIMBIŞ', N'DIMBIŞ', 5, CAST(546.00 AS Decimal(9, 2)), 1, 1, 1)
+INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3021, N'URN01024', N'Gelinlik Kahvesi', N'<ul><li><strong>Kahve köpüğünde saklı küçük mutluluklar,</strong></li><li><strong>Bir yudumda gülüş, bir yudumda anılar.</strong></li><li><strong>Sevgililer Günü’nde değil yalnız bugün,</strong></li><li><strong>Her sabah hatırlatır: “Bu evde sevgi hüküm sürer.”</strong></li><li><strong>İki fincan, tek kalp, paylaşılan bir ömür,</strong></li><li><strong>Sıcak bir kahve gibi… Aşk hep taze, hep dür.</strong></li></ul>', 5, CAST(15200.00 AS Decimal(9, 2)), 2, 1, 2)
+GO
+INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3022, N'dsaasd', N'sdasda', N'<p><strong>sdasdaads</strong></p>', 5, CAST(2331.00 AS Decimal(9, 2)), 2, 1, 9)
+GO
+INSERT [dbo].[Product] ([Id], [ProductCode], [ProductName], [ProductDesc], [CategoryId], [UnitPrice], [CurrencyId], [AvailableForSale], [DisplayOrderNo]) VALUES (3023, N'ABC', N'ACa111', N'<p><strong>assad</strong></p>', 3, CAST(1.00 AS Decimal(9, 2)), 3, 1, 1)
 GO
 SET IDENTITY_INSERT [dbo].[Product] OFF
 GO
@@ -605,17 +629,17 @@ SET IDENTITY_INSERT [dbo].[UserTable] OFF
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [UQ__User__A9D105340FDE981B]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  Index [UQ__User__A9D10534EC042E43]    Script Date: 08/01/2026 17:32:04 ******/
 ALTER TABLE [dbo].[User] ADD UNIQUE NONCLUSTERED 
 (
 	[Email] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[ProductImage] ADD  DEFAULT ((0)) FOR [IsMain]
 GO
 ALTER TABLE [dbo].[ProductImage] ADD  DEFAULT ((0)) FOR [DisplayOrder]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_DeleteById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_DeleteById]    Script Date: 08/01/2026 17:32:04 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -631,7 +655,7 @@ BEGIN
     SELECT @@ROWCOUNT AS Result;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_GetById]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -645,7 +669,7 @@ BEGIN
     WHERE Id = @CartId;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_Insert]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -687,7 +711,7 @@ BEGIN
 
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_ListByUserId]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_ListByUserId]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -701,7 +725,7 @@ BEGIN
     WHERE UserId = @UserId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Cart_UpdateQuantity]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Cart_UpdateQuantity]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -721,7 +745,7 @@ BEGIN
     SELECT @@ROWCOUNT AS Result;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_Delete]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -740,7 +764,7 @@ BEGIN
     SELECT @Id AS DeactivatedId;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_GetById]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -760,7 +784,7 @@ BEGIN
     WHERE Id = @Id;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_Insert]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -778,7 +802,7 @@ BEGIN
     SELECT SCOPE_IDENTITY() AS NewId;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_List]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_List]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -798,7 +822,7 @@ BEGIN
     ORDER BY Name;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Category_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Category_Update]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -819,7 +843,7 @@ BEGIN
     SELECT @Id AS UpdatedId;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_Delete]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -838,7 +862,7 @@ BEGIN
     WHERE Id = @Id;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_GetById]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -862,7 +886,7 @@ BEGIN
     WHERE Id = @Id;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_GetDefault]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_GetDefault]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -877,7 +901,7 @@ BEGIN
     WHERE IsDefault = 1 AND IsActive = 1;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_Insert]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -909,7 +933,7 @@ BEGIN
     );
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_List]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_List]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -931,7 +955,7 @@ BEGIN
     ORDER BY IsDefault DESC, Name;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Currency_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Currency_Update]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -962,7 +986,7 @@ BEGIN
     WHERE Id = @Id;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_Delete]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -980,7 +1004,7 @@ BEGIN
     SELECT @@ROWCOUNT
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_GetById]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -991,14 +1015,18 @@ CREATE PROCEDURE [dbo].[sp_Product_GetById]
     @Id INT
 AS
 BEGIN
-    SELECT *
-    FROM Product
-    WHERE Id = @Id
+    SELECT 
+	t1.Id,t1.ProductCode,t1.ProductName,t1.ProductDesc,t1.CategoryId,
+	t1.UnitPrice,t1.CurrencyId,t1.AvailableForSale,t1.DisplayOrderNo,
+	t2.Code AS CurrencyCode, t2.Symbol AS CurrencySymbol, t3.Name AS CategoryName
+    FROM [dbo].[Product] t1
+	LEFT OUTER JOIN	 [dbo].[Currency] t2 ON t1.CurrencyId = t2.Id 
+	LEFT OUTER JOIN	 [dbo].[Category] t3 ON t1.CategoryId = t3.Id
+    WHERE t1.Id = @Id
 END
 
-
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_Insert]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1008,7 +1036,7 @@ GO
 CREATE PROCEDURE [dbo].[sp_Product_Insert]
 (
     @ProductCode NVARCHAR(50),
-    @ProductName NVARCHAR(50),
+    @ProductName NVARCHAR(255),
     @ProductDesc NVARCHAR(MAX),
     @CategoryId INT,
     @UnitPrice DECIMAL(9,2),
@@ -1037,7 +1065,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_List]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_List]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1074,7 +1102,7 @@ BEGIN
     ORDER BY DisplayOrderNo ASC
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_ListForHomePage]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_ListForHomePage]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1107,7 +1135,7 @@ BEGIN
     ORDER BY DisplayOrderNo ASC
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_SwapOrder]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_SwapOrder]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1128,7 +1156,7 @@ BEGIN
     UPDATE Product SET DisplayOrderNo = @Order1 WHERE Id = @ProductId2
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_Update]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1139,7 +1167,7 @@ CREATE PROCEDURE [dbo].[sp_Product_Update]
 (
     @Id INT,
     @ProductCode NVARCHAR(50),
-    @ProductName NVARCHAR(50),
+    @ProductName NVARCHAR(255),
     @ProductDesc NVARCHAR(MAX),
     @CategoryId INT,
     @UnitPrice DECIMAL(9,2),
@@ -1164,7 +1192,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[sp_Product_UpdateDisplayOrder]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_Product_UpdateDisplayOrder]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1204,7 +1232,7 @@ BEGIN CATCH
 END CATCH
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Delete]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1217,7 +1245,7 @@ BEGIN
     SELECT @@ROWCOUNT
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Insert]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1237,7 +1265,7 @@ BEGIN
     SELECT SCOPE_IDENTITY()
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_ListByProductId]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_ListByProductId]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1257,7 +1285,7 @@ BEGIN
     ORDER BY DisplayOrder
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_SetMain]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_SetMain]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1276,7 +1304,7 @@ BEGIN
     WHERE Id = @ImageId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_ProductImage_Update]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1296,7 +1324,7 @@ BEGIN
     SELECT @@ROWCOUNT
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_RoleGetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_RoleGetById]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1314,7 +1342,7 @@ BEGIN
     WHERE Id = @RoleId;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_ChangePassword]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_ChangePassword]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1330,7 +1358,7 @@ BEGIN
     WHERE Id = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_Delete]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1344,7 +1372,7 @@ BEGIN
     WHERE Id = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_GetByEmail]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_GetByEmail]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1360,7 +1388,7 @@ BEGIN
     AND IsActive = 1
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_GetById]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1375,7 +1403,7 @@ BEGIN
     WHERE t1.Id = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_Insert]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1397,7 +1425,7 @@ BEGIN
     (@FirstName, @LastName, @Email, @PasswordHash, @PhoneNumber, @BirthDate,@IsActive,@RoleId)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_List]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_List]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1418,7 +1446,7 @@ BEGIN
     ORDER BY t1.Id DESC
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_User_Update]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_User_Update]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1440,7 +1468,7 @@ BEGIN
     WHERE Id = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Delete]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Delete]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1455,7 +1483,7 @@ BEGIN
     WHERE Id = @Id;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_GetById]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_GetById]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1483,7 +1511,7 @@ BEGIN
     ORDER BY IsDefault DESC, Id DESC;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_GetDefault]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_GetDefault]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1499,7 +1527,7 @@ BEGIN
     WHERE UserId = @UserId AND IsDefault = 1;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Insert]    Script Date: 1/6/2026 10:20:35 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Insert]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1541,7 +1569,7 @@ BEGIN
     );
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_ListByUserId]    Script Date: 1/6/2026 10:20:36 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_ListByUserId]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1569,7 +1597,7 @@ BEGIN
     ORDER BY IsDefault DESC, Id DESC;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Update]    Script Date: 1/6/2026 10:20:36 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserAddress_Update]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1613,7 +1641,7 @@ BEGIN
     WHERE Id = @Id;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_UserGetByUserNameAndPassword]    Script Date: 1/6/2026 10:20:36 PM ******/
+/****** Object:  StoredProcedure [dbo].[sp_UserGetByUserNameAndPassword]    Script Date: 08/01/2026 17:32:05 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
