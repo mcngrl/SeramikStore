@@ -8,13 +8,9 @@ using System.Text;
 
 class Scripter
 {
-    public static void Main(string? connectionString)
+    public static void Main(string? connectionString, string outputFile)
     {
   
-        string outputFile = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-            "FullDatabaseScript.sql");
-
         using var conn = new SqlConnection(connectionString);
         conn.Open();
 
@@ -42,6 +38,7 @@ class Scripter
             writer.WriteLine($"-- ===============================");
 
             WriteDropCreateTable(conn, writer, schema, table);
+            WritePrimaryKey(conn, writer, schema, table); // ⭐ EKLENDİ
             WriteInsertData(conn, writer, schema, table);
             writer.WriteLine();
         }
@@ -53,8 +50,8 @@ class Scripter
 
         WriteStoredProcedures(conn, writer);
 
-        Console.WriteLine("✔ Script oluşturuldu:");
-        Console.WriteLine(outputFile);
+        conn.Close();
+
     }
 
     // ===================== TABLE LIST =====================
@@ -272,4 +269,47 @@ GO");
             writer.WriteLine();
         }
     }
+
+    static void WritePrimaryKey(SqlConnection conn, TextWriter writer, string schema, string table)
+    {
+        string sql = @"
+    SELECT
+        kc.name AS ConstraintName,
+        c.name AS ColumnName,
+        ic.key_ordinal
+    FROM sys.key_constraints kc
+    JOIN sys.index_columns ic 
+        ON kc.parent_object_id = ic.object_id
+        AND kc.unique_index_id = ic.index_id
+    JOIN sys.columns c 
+        ON ic.object_id = c.object_id
+        AND ic.column_id = c.column_id
+    WHERE kc.type = 'PK'
+      AND kc.parent_object_id = OBJECT_ID(@TableName)
+    ORDER BY ic.key_ordinal";
+
+        using var cmd = new SqlCommand(sql, conn);
+        cmd.Parameters.AddWithValue("@TableName", $"{schema}.{table}");
+
+        using var rdr = cmd.ExecuteReader();
+
+        var columns = new List<string>();
+        string constraintName = null;
+
+        while (rdr.Read())
+        {
+            constraintName ??= rdr["ConstraintName"].ToString();
+            columns.Add($"[{rdr["ColumnName"]}]");
+        }
+
+        if (!columns.Any())
+            return;
+
+        writer.WriteLine($@"
+ALTER TABLE [{schema}].[{table}]
+ADD CONSTRAINT [{constraintName}]
+PRIMARY KEY CLUSTERED ({string.Join(", ", columns)})
+GO");
+    }
+
 }
