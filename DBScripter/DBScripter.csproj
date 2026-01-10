@@ -15,7 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="appsettings.local.json">
+    <Folder Include="DBScripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Development.local.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
