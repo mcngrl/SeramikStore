@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SeramikStore.Entities;
+using SeramikStore.Services.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,22 +17,23 @@ namespace SeramikStore.Services
             connectionString = config.GetConnectionString("DefaultConnection");
         }
 
-        public List<Cart> CartListByUserId(int userId)
+        public CartResultDto CartListByUserId(int userId)
         {
-            List<Cart> carts = new();
+            var result = new CartResultDto();
 
             using SqlConnection connection = new(connectionString);
             using SqlCommand command = new("sp_Cart_ListByUserId", connection);
-
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@UserId", userId);
 
             connection.Open();
 
             using SqlDataReader reader = command.ExecuteReader();
+
+            // 1️⃣ CART ITEMS
             while (reader.Read())
             {
-                carts.Add(new Cart
+                result.Items.Add(new CartItemDto
                 {
                     Id = Convert.ToInt32(reader["Id"]),
                     ProductId = Convert.ToInt32(reader["ProductId"]),
@@ -39,13 +41,24 @@ namespace SeramikStore.Services
                     ProductName = reader["ProductName"].ToString(),
                     UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
                     Quantity = Convert.ToInt32(reader["Quantity"]),
-                    TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
-                    UserId = Convert.ToInt32(reader["UserId"])
+                    LineTotal = Convert.ToDecimal(reader["LineTotal"])
                 });
             }
 
-            return carts;
+            // 2️⃣ SUMMARY
+            if (reader.NextResult() && reader.Read())
+            {
+                result.Summary = new CartSummaryDto
+                {
+                    TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
+                    CargoAmount = Convert.ToDecimal(reader["CargoAmount"]),
+                    GrandTotal = Convert.ToDecimal(reader["GrandTotal"])
+                };
+            }
+
+            return result;
         }
+
 
         public Cart CartGetById(int cartId)
         {

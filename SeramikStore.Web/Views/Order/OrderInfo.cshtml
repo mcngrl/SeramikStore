@@ -1,0 +1,23 @@
+﻿
+
+<h4>Sipariş No: @Model.OrderId</h4>
+<p>Durum: <strong>@Model.OrderStatus</strong></p>
+
+<table class="table">
+    @foreach (var item in Model.Details)
+    {
+        <tr>
+            <td>@item.ProductName</td>
+            <td>@item.Quantity</td>
+            <td>@item.LineTotal</td>
+        </tr>
+    }
+</table>
+
+<p>Ürün Toplamı: @Model.ProductTotal</p>
+<p>Kargo: @Model.CargoAmount</p>
+<h4>Genel Toplam: @Model.GrandTotal</h4>
+
+<div class="alert alert-info">
+    Lütfen ödemeyi <strong>TRXX XXXX XXXX XXXX</strong> IBAN numarasına yapınız.
+</div>

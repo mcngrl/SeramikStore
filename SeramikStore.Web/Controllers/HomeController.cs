@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+ï»¿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Logging;
 using SeramikStore.Entities;
 using SeramikStore.Services;
@@ -78,9 +78,9 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult Cart(ProductDetail vm)
         {
-            if (vm.Quantity < 3)
+            if (vm.Quantity < 1)
             {
-                ModelState.AddModelError("Quantity", "Adet en az 1 olmalýdýr");
+                ModelState.AddModelError("Quantity", "Adet en az 1 olmalÄ±dÄ±r");
 
                 var TheProduct = _productservices.ProductGetById(vm.Id);
 
@@ -128,7 +128,7 @@ namespace SeramikStore.Web.Controllers
             int result = _cartservices.SaveCart(cart);
             if (result > 0)
             {
-                HttpContext.Session.SetInt32("sessionCart", _cartservices.CartListByUserId(cart.UserId).Count());
+                HttpContext.Session.SetInt32("sessionCart", _cartservices.CartListByUserId(cart.UserId).Items.Count());
                 return RedirectToAction("Index", "Carts");
             }
             return RedirectToAction("Index", "Home");

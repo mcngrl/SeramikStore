@@ -1,4 +1,4 @@
-﻿using SeramikStore.Entities;
+using SeramikStore.Entities;
 using SeramikStore.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +25,7 @@ namespace SeramikStore.Web.ViewComponents
                 else
                 {
                     int UserId = (int)HttpContext.Session.GetInt32("userId");
-                    HttpContext.Session.SetInt32("sessionCart", _cartService.CartListByUserId(UserId).Count());
+                    HttpContext.Session.SetInt32("sessionCart", _cartService.CartListByUserId(UserId).Items.Count());
                     return View(HttpContext.Session.GetInt32("sessionCart"));
 
                 }
