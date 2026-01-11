@@ -54,6 +54,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserAddressService, UserAddressService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 
 // AddScoped

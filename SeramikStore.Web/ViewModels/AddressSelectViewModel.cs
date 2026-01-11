@@ -1,4 +1,4 @@
-﻿namespace SeramikStore.Web.ViewModels
+namespace SeramikStore.Web.ViewModels
 {
     public class AddressSelectViewModel
     {
@@ -7,6 +7,8 @@
 
         public decimal ProductTotal { get; set; }
         public decimal CargoPrice { get; set; }
-        public decimal GrandTotal => ProductTotal + CargoPrice;
+        //public decimal GrandTotal => ProductTotal + CargoPrice;
+
+        public decimal GrandTotal { get; set; }
     }
 }

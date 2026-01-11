@@ -1,0 +1,59 @@
+﻿@using SeramikStore.Web.ViewModels
+@model OrderPaymentInfoViewModel
+
+<h3>Ödeme Bilgilendirme</h3>
+
+<hr />
+
+<h5>📦 Teslimat Adresi</h5>
+<div class="border p-3 mb-3">
+    <strong>@Model.Address.Ad</strong><br />
+    @Model.Address.Adres<br />
+    @Model.Address.Ilce / @Model.Address.Il
+</div>
+
+<h5>🛒 Sipariş Özeti</h5>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ürün</th>
+            <th class="text-end">Fiyat</th>
+            <th class="text-center">Adet</th>
+            <th class="text-end">Tutar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td class="text-end">@item.UnitPrice.ToString("N2")</td>
+                <td class="text-center">@item.Quantity</td>
+                <td class="text-end">@item.LineTotal.ToString("N2")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-end">
+    <p>Ürün Toplamı: <strong>@Model.TotalAmount.ToString("N2")</strong></p>
+    <p>Kargo: <strong>@Model.CargoAmount.ToString("N2")</strong></p>
+    <h5>Genel Toplam: <strong>@Model.GrandTotal.ToString("N2")</strong></h5>
+</div>
+
+<hr />
+
+<h5>🏦 Banka Havalesi Bilgileri</h5>
+<div class="alert alert-info">
+    <strong>Banka:</strong> @Model.BankName <br />
+    <strong>IBAN:</strong> @Model.Iban <br /><br />
+    Açıklama kısmına <strong>Sipariş Numaranızı</strong> yazmayı unutmayınız.
+</div>
+
+<form asp-action="CreateOrder" method="post">
+    <input type="hidden" name="AddressId" value="@Model.Address.Id" />
+    <input type="hidden" name="CargoAmount" value="@Model.CargoAmount" />
+    <button type="submit" class="btn btn-success">
+        Siparişi Oluştur
+    </button>
+</form>

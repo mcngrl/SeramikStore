@@ -26,8 +26,8 @@ namespace SeramikStore.Web.Controllers
         [CheckSession("userId")]
         public IActionResult Index()
         {
-            var carts = _cartService.CartListByUserId((int)HttpContext.Session.GetInt32("userId"));
-            return View(carts);
+            var cartResult = _cartService.CartListByUserId((int)HttpContext.Session.GetInt32("userId"));
+            return View(cartResult);
         }
 
         [HttpGet]
@@ -94,6 +94,7 @@ namespace SeramikStore.Web.Controllers
         public IActionResult AddressDetail()
         {
             int userId = HttpContext.Session.GetInt32("userId").Value;
+            var cartResult = _cartService.CartListByUserId(userId);
 
             var addresses = _userAddressService.GetByUserId(userId);
 
@@ -116,8 +117,10 @@ namespace SeramikStore.Web.Controllers
                 SelectedAddressId = addresses
                     .FirstOrDefault(x => x.IsDefault)?.Id ?? 0,
 
-                //OrderTotal = _cartService.GetCartTotal(userId)
-               // OrderTotal = 1
+
+                ProductTotal = cartResult.Summary.TotalAmount,
+                CargoPrice = cartResult.Summary.CargoAmount,
+                GrandTotal = cartResult.Summary.GrandTotal,
             };
 
             return View(vm);
@@ -141,6 +144,8 @@ namespace SeramikStore.Web.Controllers
             //);
 
             // 👉 Sonraki adım: Ödeme
+
+
             return RedirectToAction("Payment");
         }
     }

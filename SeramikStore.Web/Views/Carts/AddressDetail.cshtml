@@ -12,7 +12,7 @@
         <div class="col-md-8">
             <h4 class="mb-3 text-primary">Teslimat Adresim</h4>
 
-            <form asp-action="AddressDetail" method="post">
+            <form asp-controller="Order" asp-action="PaymentInfo" method="post">
 
                 @foreach (var address in Model.Addresses)
                 {
@@ -23,7 +23,7 @@
                                    name="SelectedAddressId"
                                    value="@address.Id"
                                    class="form-check-input mt-2 me-3"
-                                   @(address.IsDefault ? "checked" : "") />
+                                   @(address.IsDefault ? "checked" : "") required />
 
                             <div class="flex-grow-1">
                                 <strong>@address.Baslik</strong>
@@ -65,7 +65,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-success mt-3">
-                    Siparişi Onayla
+                    Siparişi Oluştur.
                 </button>
             </form>
         </div>
