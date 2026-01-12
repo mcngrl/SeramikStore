@@ -13,3 +13,5 @@ Elle yazılır
 SP’ye göre şekillenir
 Entity’den farklı olabilir (ve olmalı)
 
+Yeni tablo yarat
+1) Entity Creatoru çalıştır.
