@@ -1,0 +1,36 @@
+﻿using System.Text;
+
+public static class EntityWriter
+{
+    public static string GenerateEntity(
+        string ns,
+        string className,
+        List<DbColumn> columns)
+    {
+        var sb = new StringBuilder();
+
+        sb.AppendLine("using System;");
+        sb.AppendLine();
+        sb.AppendLine($"namespace {ns}");
+        sb.AppendLine("{");
+        sb.AppendLine($"    public class {className}");
+        sb.AppendLine("    {");
+
+        foreach (var col in columns)
+        {
+            string type = SqlTypeMapper.ToCSharp(
+                col.SqlType, col.IsNullable);
+
+            if (col.IsIdentity)
+                sb.AppendLine("        // Identity");
+
+            sb.AppendLine(
+                $"        public {type} {col.Name} {{ get; set; }}");
+        }
+
+        sb.AppendLine("    }");
+        sb.AppendLine("}");
+
+        return sb.ToString();
+    }
+}
