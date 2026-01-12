@@ -15,20 +15,25 @@ if (string.IsNullOrWhiteSpace(connectionString))
 
 
 string solutionRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.Parent!.FullName;
+string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
 
-string scriptsFolder = Path.Combine(solutionRoot, "SeramikStore.Entities");
+string FolderForEntity = Path.Combine(solutionRoot, "SeramikStore.Entities");
+string FolderForSP = Path.Combine(projectRoot, "CRUDSP");
 
 
 
 bool menu = true;
 string tabloadi = "";
-string outputFile = "";
+string classadi = "";
+string outputFileForEntity = "";
+string outputFileForSP = "";
 
 while (menu)
 {
     Console.Clear();
     tabloadi = "";
-    outputFile = "";
+    outputFileForEntity = "";
+    Console.WriteLine("EntityWriter");
     Console.WriteLine("CONNECTION STRING:");
     Console.WriteLine(connectionString);
     Console.WriteLine("--------------------");
@@ -36,11 +41,16 @@ while (menu)
     Console.WriteLine("--------------------");
     Console.Write("Tablo Adı ? : ");
     tabloadi = Console.ReadLine()?.Trim();
+    classadi = tabloadi;
 
-    string fileName = $"{tabloadi}.cs";
-    outputFile = Path.Combine(scriptsFolder, fileName);
-    Console.WriteLine("HEDED DOSYA");
-    Console.WriteLine(outputFile);
+    outputFileForEntity = Path.Combine(FolderForEntity, $"{tabloadi}.cs");
+    outputFileForSP = Path.Combine(FolderForSP, $"SP_CRUD_{tabloadi}_{DateTime.Now:yyyyMMddHHmmss}.sql");
+
+    Console.WriteLine("Entity için Hedef Dosya");
+    Console.WriteLine(outputFileForEntity);
+    Console.WriteLine("CRUD SPleri için Hedef Dosya");
+    Console.WriteLine(outputFileForSP);
+
     Console.WriteLine();
     Console.Write("DEVAM ET? (E/H): ");
     var cevap = Console.ReadLine()?.Trim().ToUpper();
@@ -51,20 +61,36 @@ while (menu)
         return;
 }
 
+
 try
 {
-    EntityCreator.Creator.Main(connectionString,"dbo", tabloadi, tabloadi, "SeramikStore.Entities", outputFile);
+    EntityCreator.FileCreator.RunForEntityClass(connectionString, "dbo", tabloadi, classadi, "SeramikStore.Entities", outputFileForEntity);
+    Console.WriteLine("BAŞARI İLE SONLANDI. Entity");
+    Console.WriteLine(tabloadi);
+    Console.WriteLine(outputFileForEntity);
 }
 catch (Exception ex)
 {
-    Console.WriteLine("Hata oluştu:");
+    Console.WriteLine("HATA oluştu EntityCreator.Creator");
     Console.WriteLine(ex);
     Console.ReadLine();
 }
 
-Console.WriteLine("BAŞARI İLE SONLANDI.");
-Console.WriteLine(tabloadi);
-Console.WriteLine(outputFile);
+try
+{
+    EntityCreator.FileCreator.RunCRUDSPSql(connectionString, "dbo", tabloadi, classadi, "SeramikStore.Entities", outputFileForSP);
+    Console.WriteLine("BAŞARI İLE SONLANDI. CRUDSP");
+    Console.WriteLine(tabloadi);
+    Console.WriteLine(outputFileForSP);
+}
+catch (Exception ex)
+{
+    Console.WriteLine("HATA oluştu EntityCreator.Creator Hata oluştu:");
+    Console.WriteLine(ex);
+    Console.ReadLine();
+}
 
-Console.WriteLine("Porgramdan çıkmak için ENTER'a basınız.");
+
+
+Console.WriteLine("Programdan çıkmak için ENTER'a basınız.");
 Console.ReadLine();
