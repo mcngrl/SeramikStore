@@ -114,8 +114,10 @@ CREATE TABLE [{schema}].[{table}] (");
 
             writer.Write($"   [{col}] {type}");
 
-            if (type is "varchar" or "nvarchar" or "char" or "nchar")
+            if (type is "varchar" or "char")
                 writer.Write(maxLength == -1 ? "(MAX)" : $"({maxLength})");
+            else if (type is "nchar" or "nvarchar")
+                writer.Write(maxLength == -1 ? "(MAX)" : $"({maxLength/2})");
             else if (type is "decimal" or "numeric")
                 writer.Write($"({precision},{scale})");
 
