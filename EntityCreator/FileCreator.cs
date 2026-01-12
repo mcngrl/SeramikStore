@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +30,7 @@ namespace EntityCreator
             connectionString, schema, table);
 
             string tsqlCode = SpWriter.GenerateCrudSp(
-            strnamespace,
+            schema,
             className,
             columns);
 

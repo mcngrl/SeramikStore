@@ -116,12 +116,14 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Cart cart = new Cart();
-            cart.ProductId = product.Id;
-            cart.ProductName = product.ProductName;
-            cart.ProductCode = product.ProductCode;
-            cart.Quantity = vm.Quantity;
-            cart.UnitPrice = product.UnitPrice;
+            Cart cart = new Cart {
+                ProductId = product.Id,
+                ProductName = product.ProductName,
+                ProductCode = product.ProductCode,
+                Quantity = vm.Quantity,
+                UnitPrice = product.UnitPrice,
+            };
+     
  
 
             cart.UserId = (int)HttpContext.Session.GetInt32("userId");

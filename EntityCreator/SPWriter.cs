@@ -1,4 +1,4 @@
-ï»¿using EntityCreator;
+using EntityCreator;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -24,30 +24,52 @@ public static class SpWriter
         return sb.ToString();
     }
 
-    static string GenerateInsert(
-    string schema,
-    string table,
-    List<DbColumn> cols)
+    static string GenerateInsert(string schema, string table, List<DbColumn> cols)
     {
-        var nonIdentity = cols.Where(c => !c.IsIdentity).ToList();
-
+        if (cols.Count == 0)
+        {
+            return "";
+        }
         var sb = new StringBuilder();
-        sb.AppendLine($"CREATE PROCEDURE [{schema}].[sp_{table}_Insert]");
 
+        // Identity hariç tüm kolonlar
+        var insertCols = cols
+            .Where(c => !c.IsIdentity && !c.IsUpdateDate())
+            .ToList();
+
+        sb.AppendLine($"CREATE OR ALTER PROCEDURE [{schema}].[sp_{table}_Insert]");
+
+        // PARAMETRELER
         sb.AppendLine(string.Join(",\n",
-            nonIdentity.Select(c =>
-                $"    @{c.Name} {c.SqlType}" +
-                (c.IsNullable ? " = NULL" : "")
-            )));
+            insertCols
+                .Where(c => !c.IsInsertDate() && !c.IsIsActive())
+                .Select(c =>
+                    $"    @{c.Name} {DbSchemaReader.GetSqlType(c)}" +
+                    (c.IsNullable ? " = NULL" : "")
+                )));
 
         sb.AppendLine("AS");
         sb.AppendLine("BEGIN");
-        sb.AppendLine("    INSERT INTO [" + schema + "].[" + table + "]");
-        sb.AppendLine("    (" +
-            string.Join(", ", nonIdentity.Select(c => $"[{c.Name}]")) + ")");
+        sb.AppendLine("    SET NOCOUNT ON;");
+        sb.AppendLine();
+
+        // INSERT COLUMNS
+        sb.AppendLine($"    INSERT INTO [{schema}].[{table}]");
+        sb.AppendLine("    (" + string.Join(", ",
+            insertCols.Select(c => $"[{c.Name}]")
+        ) + ")");
+
+        // INSERT VALUES
         sb.AppendLine("    VALUES");
-        sb.AppendLine("    (" +
-            string.Join(", ", nonIdentity.Select(c => $"@{c.Name}")) + ")");
+        sb.AppendLine("    (" + string.Join(", ",
+            insertCols.Select(c =>
+                c.IsInsertDate() ? "GETDATE()" :
+                c.IsIsActive() ? "1" :
+                $"@{c.Name}"
+            )
+        ) + ");");
+
+        sb.AppendLine();
         sb.AppendLine("    SELECT SCOPE_IDENTITY() AS NewId;");
         sb.AppendLine("END");
 
@@ -55,34 +77,51 @@ public static class SpWriter
     }
 
 
-    static string GenerateUpdate(
-    string schema,
-    string table,
-    List<DbColumn> cols)
+
+
+    static string GenerateUpdate(string schema, string table, List<DbColumn> cols)
     {
+        if (cols.Count == 0)
+        {
+            return "";
+        }
+
         var id = cols.First(c => c.IsIdentity);
-        var others = cols.Where(c => !c.IsIdentity).ToList();
+
+        var updatable = cols
+            .Where(c => !c.IsIdentity && !c.IsInsertDate())
+            .ToList();
 
         var sb = new StringBuilder();
-        sb.AppendLine($"CREATE PROCEDURE [{schema}].[sp_{table}_Update]");
-        sb.AppendLine($"    @{id.Name} {id.SqlType},");
+
+        sb.AppendLine($"CREATE OR ALTER PROCEDURE [{schema}].[sp_{table}_Update]");
+        sb.AppendLine($"    @{id.Name} {DbSchemaReader.GetSqlType(id)},");
         sb.AppendLine(string.Join(",\n",
-            others.Select(c =>
-                $"    @{c.Name} {c.SqlType}" +
+            updatable.Select(c =>
+                $"    @{c.Name} {DbSchemaReader.GetSqlType(c)}" +
                 (c.IsNullable ? " = NULL" : "")
             )));
 
         sb.AppendLine("AS");
         sb.AppendLine("BEGIN");
+        sb.AppendLine("    SET NOCOUNT ON;");
+        sb.AppendLine();
         sb.AppendLine($"    UPDATE [{schema}].[{table}]");
         sb.AppendLine("    SET");
+
         sb.AppendLine(string.Join(",\n",
-            others.Select(c => $"        [{c.Name}] = @{c.Name}")));
+            updatable.Select(c =>
+                c.IsUpdateDate()
+                    ? "        [UpdateDate] = GETDATE()"
+                    : $"        [{c.Name}] = @{c.Name}"
+            )));
+
         sb.AppendLine($"    WHERE [{id.Name}] = @{id.Name};");
         sb.AppendLine("END");
 
         return sb.ToString();
     }
+
 
 
 
