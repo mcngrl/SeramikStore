@@ -23,7 +23,7 @@ namespace EntityCreator
         }
     
 
-            public static void RunCRUDSPSql(string connectionString, string schema, string table, string className, string strnamespace, string outputFile)
+        public static void RunCRUDSPSql(string connectionString, string schema, string table, string className, string strnamespace, string outputFile)
         {
 
             var columns = DbSchemaReader.GetColumns(
@@ -36,5 +36,36 @@ namespace EntityCreator
 
             File.WriteAllText(outputFile, tsqlCode);
         }
+
+        public static void RunDTO(string connectionString, string schema, string table, string className, string strnamespace, string outputFile)
+        {
+
+            var columns = DbSchemaReader.GetColumns(
+            connectionString, schema, table);
+
+            string tsqlCode = DtoWriter.GenerateDtos(
+            strnamespace,
+            className,
+            columns);
+
+            File.WriteAllText(outputFile, tsqlCode);
+        }
+
+
+        public static void RunService(string connectionString, string schema, string table, string className, string strnamespace, string outputFile)
+        {
+
+            var columns = DbSchemaReader.GetColumns(
+            connectionString, schema, table);
+
+            string tsqlCode = ServiceWriter.GenerateService(
+            strnamespace,
+            table,
+            columns);
+
+            File.WriteAllText(outputFile, tsqlCode);
+        }
+
+
     }
 }

@@ -1,7 +1,8 @@
-﻿Entities      → DB'yi birebir temsil eder (Cart, OrderHeader)
-DTOs          → SP result / input
-Services      → ADO.NET + SP
-Web           → ViewModel
+﻿1) Entities      → DB'yi birebir temsil eder (Cart, OrderHeader)
+2) DTOs          → SP result / input
+3) Repository    → ADO.NET + SP Repository iş kuralı bilmez, sadece veri alır/verir
+4) Services      → Service katmanı (iş kuralı burada)
+5) Web           → ViewModel
 
 ✔️ Entity’ler:
 Auto‑generated (senin tool’un)
