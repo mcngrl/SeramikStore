@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityCreator", "EntityCrea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfToText", "PdfToText\PdfToText.csproj", "{578A6BBD-31FE-4686-BEDE-7E62753AD59D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeramikStore.Repositories", "SeramikStore.Repositories\SeramikStore.Repositories.csproj", "{C4A367C8-1C48-4C88-8A5A-94E6EC435593}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeramikStore.Contracts", "SeramikStore.Contracts\SeramikStore.Contracts.csproj", "{7762A6CE-E249-412A-ADAE-30F04CD8BC55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +50,10 @@ Global
 		{578A6BBD-31FE-4686-BEDE-7E62753AD59D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{578A6BBD-31FE-4686-BEDE-7E62753AD59D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{578A6BBD-31FE-4686-BEDE-7E62753AD59D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4A367C8-1C48-4C88-8A5A-94E6EC435593}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4A367C8-1C48-4C88-8A5A-94E6EC435593}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4A367C8-1C48-4C88-8A5A-94E6EC435593}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4A367C8-1C48-4C88-8A5A-94E6EC435593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

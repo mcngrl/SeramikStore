@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,15 +52,28 @@ namespace EntityCreator
             File.WriteAllText(outputFile, tsqlCode);
         }
 
+        //public static void RunRepositories(string connectionString, string schema, string table, string className, string strnamespace, string contractNamespace, string outputFile)
+        //{
+            
+        //    var columns = DbSchemaReader.GetColumns(
+        //    connectionString, schema, table);
 
-        public static void RunService(string connectionString, string schema, string table, string className, string strnamespace, string outputFile)
+        //    string tsqlCode = RepositoryWriter.GenerateRepository(
+        //    strnamespace,
+        //    contractNamespace,
+        //    table,
+        //    columns);
+
+        //    File.WriteAllText(outputFile, tsqlCode);
+        //}
+        public static void RunService(string connectionString, string schema, string table, string className, string strnamespace, string contractNamespace, string outputFile)
         {
 
             var columns = DbSchemaReader.GetColumns(
             connectionString, schema, table);
 
             string tsqlCode = ServiceWriter.GenerateService(
-            strnamespace,
+            strnamespace, contractNamespace,
             table,
             columns);
 

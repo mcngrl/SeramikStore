@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 
 public static class DtoWriter
 {
@@ -35,7 +35,8 @@ public static class DtoWriter
         sb.AppendLine($"    public class {name}Dto");
         sb.AppendLine("    {");
 
-        foreach (var c in cols.Where(IncludeInRead))
+        //foreach (var c in cols.Where(IncludeInRead))
+        foreach (var c in cols)
             sb.AppendLine($"        public {ToCSharp(c)} {c.Name} {{ get; set; }}");
 
         sb.AppendLine("    }");
