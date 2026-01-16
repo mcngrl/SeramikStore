@@ -16,3 +16,21 @@ Entity’den farklı olabilir (ve olmalı)
 
 Yeni tablo yarat
 1) Entity Creatoru çalıştır.
+
+✅ Doğru Bağımlılık Yönü (ALTIN KURAL)
+Bağımlılık daima yukarıdan aşağıya olur:
+
+Web
+ ↓
+Services
+ ↓
+Repositories
+ ↓
+Database
+❌ Aşağı katman, üst katmanı ASLA referans almaz.
+
+SeramikStore.Entities      → DB modeli
+SeramikStore.Contracts     → DTOs, PagedResult
+SeramikStore.Repositories  → ADO.NET + SP
+SeramikStore.Services      → İş kuralları
+SeramikStore.Web           → Controller / UI

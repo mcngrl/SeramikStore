@@ -2,7 +2,7 @@
 
 static string AskYesNoExit(string message)
 {
-    Console.WriteLine();
+
     Console.WriteLine(message);
     Console.Write("Seçiminiz (E/H/C): ");
     return Console.ReadLine()?.Trim().ToUpper() ?? "H";
@@ -24,8 +24,10 @@ string solutionRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Par
 string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
 
 string folderForEntity = Path.Combine(solutionRoot, "SeramikStore.Entities");
-string folderForDTO = Path.Combine(Path.Combine(solutionRoot, "SeramikStore.Services"), "DTOs");
+string folderForDTO = Path.Combine(solutionRoot, "SeramikStore.Contracts");
+
 string folderForSP = Path.Combine(projectRoot, "CRUDSP");
+string folderForService = Path.Combine(solutionRoot, "SeramikStore.Services");
 
 while (true)
 {
@@ -48,6 +50,8 @@ while (true)
     string className = tableName;
     string entityFile = Path.Combine(folderForEntity, $"{tableName}.cs");
     string DTOFile = Path.Combine(folderForDTO, $"{tableName}Dto.cs");
+    string ServiceFile = Path.Combine(folderForService, $"{tableName}Service.cs");
+
     string spFile = Path.Combine(
         folderForSP,
         $"SP_CRUD_{tableName}_{DateTime.Now:yyyyMMddHHmmss}.sql"
@@ -132,7 +136,7 @@ while (true)
         {
             EntityCreator.FileCreator.RunDTO(
                 connectionString, "dbo", tableName, className,
-                "SeramikStore.Services.DTOs." + className, DTOFile);
+                "SeramikStore.Contracts." + className, DTOFile);
 
             Console.WriteLine($"{tableName}Dto.cs başarıyla oluşturuldu.");
         }
@@ -146,6 +150,44 @@ while (true)
     {
         Console.WriteLine("ADIM 3 atlandı.");
     }
+
+    // =======================
+    // ADIM 4 - Services
+    // =======================
+    Console.WriteLine();
+    Console.WriteLine("ADIM 4) Services");
+    Console.WriteLine(ServiceFile);
+
+    var step4 = AskYesNoExit("Devam edilsin mi?");
+    if (step4 == "C") return;
+
+    if (step4 == "E")
+    {
+        try
+        {
+            EntityCreator.FileCreator.RunService(
+                connectionString, "dbo", tableName, className,
+                "SeramikStore.Services",
+                $"SeramikStore.Contracts.{tableName}",
+                ServiceFile);
+
+            Console.WriteLine($"{ServiceFile} başarıyla oluşturuldu.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Services oluşturulurken hata oluştu:");
+            Console.WriteLine(ex);
+        }
+    }
+    else
+    {
+        Console.WriteLine("ADIM 4 atlandı.");
+    }
+
+
+    Console.WriteLine();
+    Console.WriteLine($"{tableName} için code generation tamamlandı.");
+    Console.WriteLine();
 
     // =======================
     // BAŞA DÖN?
