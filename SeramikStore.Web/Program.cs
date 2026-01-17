@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SeramikStore.Services;
 using System.Globalization;
+using System.Numerics;
 using System.Runtime.ConstrainedExecution;
 
 
@@ -55,6 +56,7 @@ builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserAddressService, UserAddressService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+
 
 
 // AddScoped
