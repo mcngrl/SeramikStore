@@ -8,20 +8,14 @@ using System.Data;
 
 namespace SeramikStore.Services
 {
-    public class CartService : ICartService
+    public partial class CartService : ICartService
     {
-        private string connectionString = String.Empty;
-
-        public CartService(IConfiguration config)
-        { 
-            connectionString = config.GetConnectionString("DefaultConnection");
-        }
-
+  
         public CartResultDto CartListByUserId(int userId)
         {
             var result = new CartResultDto();
-
-            using SqlConnection connection = new(connectionString);
+  
+            using SqlConnection connection = new(_connectionString);
             using SqlCommand command = new("sp_Cart_ListByUserId", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@UserId", userId);
@@ -64,7 +58,7 @@ namespace SeramikStore.Services
         {
             Cart cart = null;
 
-            using SqlConnection connection = new(connectionString);
+            using SqlConnection connection = new(_connectionString);
             using SqlCommand command = new("sp_Cart_GetById", connection);
 
             command.CommandType = CommandType.StoredProcedure;
@@ -93,7 +87,7 @@ namespace SeramikStore.Services
 
         public int SaveCart(Cart cart)
         {
-            using SqlConnection connection = new(connectionString);
+            using SqlConnection connection = new(_connectionString);
             using SqlCommand command = new("sp_Cart_Insert", connection);
 
             command.CommandType = CommandType.StoredProcedure;
@@ -102,15 +96,16 @@ namespace SeramikStore.Services
             command.Parameters.AddWithValue("@ProductName", cart.ProductName);
             command.Parameters.AddWithValue("@UnitPrice", cart.UnitPrice);
             command.Parameters.AddWithValue("@Quantity", cart.Quantity);
+            command.Parameters.AddWithValue("@TotalAmount", cart.TotalAmount);
             command.Parameters.AddWithValue("@UserId", cart.UserId);
 
             connection.Open();
-            return (int)command.ExecuteScalar();
+            return Convert.ToInt32(command.ExecuteScalar());
         }
 
         public int UpdateCart(int cartId, int quantity)
         {
-            using SqlConnection connection = new(connectionString);
+            using SqlConnection connection = new(_connectionString);
             using SqlCommand command = new("sp_Cart_UpdateQuantity", connection);
 
             command.CommandType = CommandType.StoredProcedure;
@@ -123,7 +118,7 @@ namespace SeramikStore.Services
 
         public int CartDeleteById(int cartId)
         {
-            using SqlConnection connection = new(connectionString);
+            using SqlConnection connection = new(_connectionString);
             using SqlCommand command = new("sp_Cart_DeleteById", connection);
 
             command.CommandType = CommandType.StoredProcedure;

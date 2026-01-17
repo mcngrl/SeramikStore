@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SeramikStore.Services
 {
-    public interface ICartService
+    public partial interface ICartService
     {
         CartResultDto CartListByUserId(int userId);
         Cart CartGetById(int cartId);

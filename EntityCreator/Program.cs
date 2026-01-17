@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EntityCreator;
+using Microsoft.Extensions.Configuration;
 
 static string AskYesNoExit(string message)
 {
@@ -13,21 +14,25 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.Development.local.json", optional: false)
     .Build();
 
-string? connectionString = configuration.GetConnectionString("DefaultConnection");
-if (string.IsNullOrWhiteSpace(connectionString))
+string? connectionStr = configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionStr))
 {
     Console.WriteLine("Connection string bulunamadı!");
     return;
 }
 
 string solutionRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.Parent!.FullName;
-string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
 
-string folderForEntity = Path.Combine(solutionRoot, "SeramikStore.Entities");
-string folderForDTO = Path.Combine(solutionRoot, "SeramikStore.Contracts");
 
-string folderForSP = Path.Combine(projectRoot, "CRUDSP");
-string folderForService = Path.Combine(solutionRoot, "SeramikStore.Services");
+List<Target> targets = new List<Target>
+{
+    //new Target(1,solutionRoot,@"EntityCreator\CRUDSP",false,$"_{DateTime.Now:yyyyMMddHHmmss}.sql", new CrudSpAction()),
+    new Target(1,solutionRoot,@"EntityCreator\CRUDSP",false,$".generated.sql", new CrudSpAction()),
+    new Target(2,solutionRoot,"SeramikStore.Entities",false,".generated.cs", new EntityAction()),
+    new Target(3,solutionRoot,"SeramikStore.Contracts",true,"", new DtoAction()),
+    new Target(4,solutionRoot,"SeramikStore.Services",true,"Service.generated.cs", new ServiceAction())
+};
+
 
 while (true)
 {
@@ -35,7 +40,7 @@ while (true)
     Console.WriteLine("WELCOME TO ENTITY CREATOR");
     Console.WriteLine(new string('-', 100));
     Console.WriteLine("CONNECTION STRING:");
-    Console.WriteLine(connectionString);
+    Console.WriteLine(connectionStr);
     Console.WriteLine(new string('-', 100));
 
     Console.Write("Tablo Adı ? : ");
@@ -47,141 +52,24 @@ while (true)
         continue;
     }
 
-    string className = tableName;
-    string entityFile = Path.Combine(folderForEntity, $"{tableName}.cs");
-    string DTOFile = Path.Combine(folderForDTO, $"{tableName}Dto.cs");
-    string ServiceFile = Path.Combine(folderForService, $"{tableName}Service.cs");
 
-    string spFile = Path.Combine(
-        folderForSP,
-        $"SP_CRUD_{tableName}_{DateTime.Now:yyyyMMddHHmmss}.sql"
-    );
-
-    // =======================
-    // ADIM 1 - ENTITY
-    // =======================
-    Console.WriteLine();
-    Console.WriteLine("ADIM 1) Entity Oluşturma");
-    Console.WriteLine(entityFile);
-
-    var step1 = AskYesNoExit("Devam edilsin mi?");
-    if (step1 == "C") return;
-
-    if (step1 == "E")
+  
+    foreach (var targetItem in targets)
     {
-        try
+        targetItem.TableName = tableName;
+        targetItem.ConnectionString = connectionStr;
+
+        Console.WriteLine(targetItem.WelcomeText);
+        Console.WriteLine(targetItem.FileFullPath);
+
+        var ans = AskYesNoExit("Devam edilsin mi?");
+        if (ans == "C") return;
+
+        if (ans == "E")
         {
-            EntityCreator.FileCreator.RunForEntityClass(
-                connectionString, "dbo", tableName, className,
-                "SeramikStore.Entities", entityFile);
-
-            Console.WriteLine($"{tableName}.cs başarıyla oluşturuldu.");
+            targetItem.Execute();
+            Console.WriteLine($"{targetItem.ProjectName} başarıyla oluşturuldu.");
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Entity oluşturulurken hata oluştu:");
-            Console.WriteLine(ex);
-        }
-    }
-    else
-    {
-        Console.WriteLine("ADIM 1 atlandı.");
-    }
-
-    // =======================
-    // ADIM 2 - CRUD SP
-    // =======================
-    Console.WriteLine();
-    Console.WriteLine("ADIM 2) CRUD Stored Procedure");
-    Console.WriteLine(spFile);
-
-    var step2 = AskYesNoExit("Devam edilsin mi?");
-    if (step2 == "C") return;
-
-    if (step2 == "E")
-    {
-        try
-        {
-            EntityCreator.FileCreator.RunCRUDSPSql(
-                connectionString, "dbo", tableName, className,
-                "SeramikStore.Entities", spFile);
-
-            Console.WriteLine("CRUD SP scripti başarıyla oluşturuldu.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("CRUD SP oluşturulurken hata oluştu:");
-            Console.WriteLine(ex);
-        }
-    }
-    else
-    {
-        Console.WriteLine("ADIM 2 atlandı.");
-    }
-
-
-    // =======================
-    // ADIM 3 - DTO
-    // =======================
-    Console.WriteLine();
-    Console.WriteLine("ADIM 3) DTO Oluşturma");
-    Console.WriteLine(DTOFile);
-
-    var step3 = AskYesNoExit("Devam edilsin mi?");
-    if (step3 == "C") return;
-
-    if (step3 == "E")
-    {
-        try
-        {
-            EntityCreator.FileCreator.RunDTO(
-                connectionString, "dbo", tableName, className,
-                "SeramikStore.Contracts." + className, DTOFile);
-
-            Console.WriteLine($"{tableName}Dto.cs başarıyla oluşturuldu.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("DTO oluşturulurken hata oluştu:");
-            Console.WriteLine(ex);
-        }
-    }
-    else
-    {
-        Console.WriteLine("ADIM 3 atlandı.");
-    }
-
-    // =======================
-    // ADIM 4 - Services
-    // =======================
-    Console.WriteLine();
-    Console.WriteLine("ADIM 4) Services");
-    Console.WriteLine(ServiceFile);
-
-    var step4 = AskYesNoExit("Devam edilsin mi?");
-    if (step4 == "C") return;
-
-    if (step4 == "E")
-    {
-        try
-        {
-            EntityCreator.FileCreator.RunService(
-                connectionString, "dbo", tableName, className,
-                "SeramikStore.Services",
-                $"SeramikStore.Contracts.{tableName}",
-                ServiceFile);
-
-            Console.WriteLine($"{ServiceFile} başarıyla oluşturuldu.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Services oluşturulurken hata oluştu:");
-            Console.WriteLine(ex);
-        }
-    }
-    else
-    {
-        Console.WriteLine("ADIM 4 atlandı.");
     }
 
 
