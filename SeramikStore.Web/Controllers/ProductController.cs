@@ -41,7 +41,7 @@ public class ProductController : Controller
                             Text = $"{x.Code} - {x.Name}"
                         }).ToList(),
 
-            Categories = _categoryService.CategoryList()
+            Categories = _categoryService.List()
                         .Select(x => new SelectListItem
                         {
                             Value = x.Id.ToString(),
@@ -65,7 +65,7 @@ public class ProductController : Controller
                     Text = $"{x.Code} - {x.Name}"
                 }).ToList();
 
-            model.Categories = _categoryService.CategoryList()
+            model.Categories = _categoryService.List()
             .Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
@@ -128,7 +128,7 @@ public class ProductController : Controller
                 })
                 .ToList(),
 
-            Categories = _categoryService.CategoryList()
+            Categories = _categoryService.List()
                         .Select(x => new SelectListItem
                         {
                             Value = x.Id.ToString(),
@@ -152,7 +152,7 @@ public class ProductController : Controller
                     Text = $"{x.Code} - {x.Name}"
                 }).ToList();
 
-            model.Categories = _categoryService.CategoryList()
+            model.Categories = _categoryService.List()
             .Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),

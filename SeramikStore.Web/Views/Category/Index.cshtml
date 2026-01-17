@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SeramikStore.Entities.Category>
+@model IEnumerable<SeramikStore.Contracts.Category.CategoryListItemDto>
 
 <h2>Kategoriler</h2>
 
@@ -20,7 +20,7 @@
                     <a asp-action="Edit"
                        asp-route-id="@item.Id"
                        class="btn btn-sm btn-warning">
-                        Güncelle
+                        G�ncelle
                     </a>
 
                     <a asp-action="Delete"

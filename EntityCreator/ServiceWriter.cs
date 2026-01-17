@@ -102,7 +102,7 @@ public static class ServiceWriter
     static string GenerateUpdate(string entity, List<DbColumn> cols)
     {
         var id = cols.First(c => c.IsIdentity);
-        var updateCols = cols.Where(c => !c.IsIdentity && !c.IsInsertDate()).ToList();
+        var updateCols = cols.Where(c => !c.IsIdentity && !c.IsInsertDate() && !c.IsIsActive()).ToList();
 
         var sb = new StringBuilder();
         sb.AppendLine($"public void Update({entity}UpdateDto dto)");
