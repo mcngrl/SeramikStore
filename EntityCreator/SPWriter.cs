@@ -85,7 +85,7 @@ public static class SpWriter
     {
         var id = cols.First(c => c.IsIdentity);
         var updatable = cols
-            .Where(c => !c.IsIdentity && !c.IsInsertDate())
+            .Where(c => !c.IsIdentity && !c.IsInsertDate() && !c.IsIsActive())
             .ToList();
 
         var sb = new StringBuilder();
