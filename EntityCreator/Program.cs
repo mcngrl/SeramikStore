@@ -26,12 +26,12 @@ string solutionRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Par
 
 List<Target> targets = new List<Target>
 {
-    //new Target(1,solutionRoot,@"EntityCreator\CRUDSP",false,$"_{DateTime.Now:yyyyMMddHHmmss}.sql", new CrudSpAction()),
-    new Target(1,solutionRoot,@"EntityCreator\CRUDSP",false,$".generated.sql", new CrudSpAction()),
-    new Target(2,solutionRoot,"SeramikStore.Entities",false,".generated.cs", new EntityAction()),
-    new Target(3,solutionRoot,"SeramikStore.Contracts",true,"", new DtoAction()),
-    new Target(4,solutionRoot,"SeramikStore.Services",true,"", new ServiceAction()),
-    new Target(5,solutionRoot,"SeramikStore.Web",true,"", new ViewModelAction())
+    //new Target(1,solutionRoot,@"EntityCreator\CRUDSP",false,$".generated.sql", new CrudSpAction()),
+    //new Target(2,solutionRoot,"SeramikStore.Entities",false,".generated.cs", new EntityAction()),
+    //new Target(3,solutionRoot,"SeramikStore.Contracts",true,"", new DtoAction()),
+    //new Target(4,solutionRoot,"SeramikStore.Services",true,"", new ServiceAction()),
+    //new Target(5,solutionRoot,"SeramikStore.Web",true,"", new ViewModelAction()),
+    new Target(6,solutionRoot,@"SeramikStore.Web\Controllers",true,"Controller.generated.cs", new ControllerAction())
 };
 
 
