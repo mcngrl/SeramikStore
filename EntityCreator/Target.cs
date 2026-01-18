@@ -12,6 +12,11 @@ namespace EntityCreator
 
         public string Namespace { get; set; }
         public string ContractNamespace { get; set; }
+        public string ServiceNamespace { get; set; }
+        public string ContractsNamespace { get; set; }
+        public string ViewModelNamespace { get; set; }
+        public string ControllerNamespace { get; set; }
+
         public string ConnectionString { get; set; }
         public string _solutionRoot { get; set; }
         public string ProjectName { get; set; }
@@ -34,6 +39,12 @@ namespace EntityCreator
                 _tableName = value;
                 FileFullPath = Path.Combine(_folderName, $"{_tableName}{_fileExtension}");
                 ContractNamespace = $"SeramikStore.Contracts.{_tableName}";
+                ServiceNamespace = $"SeramikStore.Services";
+                ViewModelNamespace = $"SeramikStore.Web.ViewModels.{_tableName}";
+                ControllerNamespace = $"SeramikStore.Web.Controllers";
+                ContractNamespace = $"SeramikStore.Contracts.{_tableName}";
+  
+
                 if (_NameSpacewithEntityname)
                 {
                     Namespace = $"{ProjectName}.{_tableName}"; 

@@ -103,8 +103,7 @@ namespace EntityCreator
         }
     }
 
-
-     public class ViewModelAction : ITargetAction
+    public class ViewModelAction : ITargetAction
     {
         public void Execute(Target target)
         {
@@ -131,6 +130,25 @@ namespace EntityCreator
                     Path.Combine(folder, file.Key),
                     file.Value);
             }
+        }
+    }
+
+    public class ControllerAction : ITargetAction
+    {
+        public void Execute(Target target)
+        {
+
+            string fileContent = ControllerWriter.GenerateController(
+                target.ControllerNamespace,
+                target.TableName,
+                target.ServiceNamespace,
+                target.ViewModelNamespace,
+                target.ContractNamespace
+             );
+
+            File.WriteAllText(target.FileFullPath, fileContent);
+
+
         }
     }
 }
