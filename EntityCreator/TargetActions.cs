@@ -70,7 +70,6 @@ namespace EntityCreator
         }
     }
 
-
     public class ServiceAction : ITargetAction
     {
         public void Execute(Target target)
@@ -105,5 +104,33 @@ namespace EntityCreator
     }
 
 
+     public class ViewModelAction : ITargetAction
+    {
+        public void Execute(Target target)
+        {
+            var columns = DbSchemaReader.GetColumns(
+                target.ConnectionString,
+                "dbo",
+                target.TableName);
 
+            var folder = Path.Combine(
+                target._solutionRoot,
+                @"SeramikStore.Web\ViewModels",
+                target.TableName);
+
+            Directory.CreateDirectory(folder);
+
+            var files = ViewModelWriter.GenerateViewModels(
+                $"SeramikStore.Web.ViewModels.{target.TableName}",
+                target.TableName,
+                columns);
+
+            foreach (var file in files)
+            {
+                File.WriteAllText(
+                    Path.Combine(folder, file.Key),
+                    file.Value);
+            }
+        }
+    }
 }
