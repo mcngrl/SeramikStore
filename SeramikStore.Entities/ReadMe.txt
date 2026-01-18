@@ -34,3 +34,6 @@ SeramikStore.Contracts     → DTOs, PagedResult
 SeramikStore.Repositories  → ADO.NET + SP
 SeramikStore.Services      → İş kuralları
 SeramikStore.Web           → Controller / UI
+
+
+
