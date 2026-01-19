@@ -1,0 +1,41 @@
+@model IEnumerable<SeramikStore.Web.ViewModels.Category.CategoryListViewModel>
+
+<h2>Kategoriler</h2>
+
+<a  asp-action="Create" class="btn btn-primary">Yeni Kategori</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-warning">
+                        Güncelle
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-danger">
+                        Sil
+                    </a>
+
+                    <a asp-action="Detail"
+                       asp-route-id="@item.Id"
+                       class="btn btn-sm btn-danger">
+                        Detail
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
