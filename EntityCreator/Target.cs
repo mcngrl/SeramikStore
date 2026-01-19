@@ -24,7 +24,7 @@ namespace EntityCreator
         public string WelcomeText { get; set; }
 
         private string _fileExtension { get; set; }
-        private int _OrderNo { get; set; }
+        public int OrderNo { get; set; }
 
         private string _tableName;
         public string TableName
@@ -62,16 +62,16 @@ namespace EntityCreator
 
         public ITargetAction Action { get; set; }
 
-        public Target(int OrderNo,string solutionRoot, string projectName, 
+        public Target(int orderNo,string solutionRoot, string projectName, 
             bool NameSpacewithEntityname, string fileExtension, ITargetAction action)
         {
             _solutionRoot = solutionRoot;
             ProjectName= projectName;
 
             _folderName = Path.Combine(solutionRoot, projectName);
-            WelcomeText = $"ADIM {OrderNo} {projectName}";
+            WelcomeText = $"ADIM {orderNo} {projectName}";
 
-            _OrderNo = OrderNo;
+            OrderNo = orderNo;
             _NameSpacewithEntityname = NameSpacewithEntityname;
             _fileExtension = fileExtension;
 

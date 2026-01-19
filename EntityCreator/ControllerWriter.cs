@@ -129,11 +129,37 @@ public static class ControllerWriter
     // ================= DELETE =================
     static void AppendDelete(StringBuilder sb, string entity)
     {
-        sb.AppendLine("        // DELETE");
+        var serviceField = $"_{entity.ToLower()}Service";
+
+        // DELETE (GET)
+        sb.AppendLine("        // DELETE (GET)");
         sb.AppendLine("        public IActionResult Delete(int id)");
         sb.AppendLine("        {");
-        sb.AppendLine($"            _{entity.ToLower()}Service.Delete(id);");
+        sb.AppendLine($"            var dto = {serviceField}.GetById(id);");
+        sb.AppendLine("            if (dto == null)");
+        sb.AppendLine("                return NotFound();");
+        sb.AppendLine();
+        sb.AppendLine($"            var vm = new {entity}ViewModel");
+        sb.AppendLine("            {");
+        sb.AppendLine("                Id = dto.Id,");
+        sb.AppendLine("                Name = dto.Name,");
+        sb.AppendLine("                IsActive = dto.IsActive");
+        sb.AppendLine("            };");
+        sb.AppendLine();
+        sb.AppendLine("            return View(vm);");
+        sb.AppendLine("        }");
+        sb.AppendLine();
+
+        // DELETE (POST)
+        sb.AppendLine("        // DELETE (POST)");
+        sb.AppendLine("        [HttpPost, ActionName(\"DeleteConfirmed\")]");
+        sb.AppendLine("        [ValidateAntiForgeryToken]");
+        sb.AppendLine("        public IActionResult DeleteConfirmed(int id)");
+        sb.AppendLine("        {");
+        sb.AppendLine($"            {serviceField}.Delete(id);");
         sb.AppendLine("            return RedirectToAction(nameof(Index));");
         sb.AppendLine("        }");
+        sb.AppendLine();
     }
+
 }

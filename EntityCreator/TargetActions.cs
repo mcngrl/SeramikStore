@@ -151,4 +151,36 @@ namespace EntityCreator
 
         }
     }
+
+
+ 
+    public class ViewAction : ITargetAction
+    {
+        public void Execute(Target target)
+        {
+            var columns = DbSchemaReader.GetColumns(
+                target.ConnectionString,
+                "dbo",
+                target.TableName);
+
+            var folder = Path.Combine(
+                target._solutionRoot,
+                "SeramikStore.Web\\Views",
+                target.TableName);
+
+            Directory.CreateDirectory(folder);
+
+            var files = ViewWriter.GenerateViews(
+                target.TableName,
+                $"SeramikStore.Web.ViewModels.{target.TableName}",
+                columns);
+
+            foreach (var file in files)
+            {
+                File.WriteAllText(
+                    Path.Combine(folder, file.Key),
+                    file.Value);
+            }
+        }
+    }
 }
