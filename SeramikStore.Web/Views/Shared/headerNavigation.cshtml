@@ -22,6 +22,19 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Home" asp-action="About">Hakkımızda</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Culture"
+                       asp-action="Set"
+                       asp-route-culture="en-US"
+                       asp-route-returnUrl="@Context.Request.Path">EN</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Culture"
+                       asp-action="Set"
+                       asp-route-culture="tr-TR"
+                       asp-route-returnUrl="@Context.Request.Path">TR</a>
+                </li>
+
 
      
                 @if (HttpContextAccessor.HttpContext.Session.GetString("role") == "Admin")
@@ -132,6 +145,40 @@
                         </ul>
                     </li>
                 }
+  
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       id="languageDropdown"
+                       role="button"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        🌐@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper()
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Culture"
+                               asp-action="Set"
+                               asp-route-culture="tr-TR"
+                               asp-route-returnUrl="@Context.Request.Path">
+                                🇹🇷 Türkçe
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Culture"
+                               asp-action="Set"
+                               asp-route-culture="en-US"
+                               asp-route-returnUrl="@Context.Request.Path">
+                                🇬🇧 English
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
     </div>
