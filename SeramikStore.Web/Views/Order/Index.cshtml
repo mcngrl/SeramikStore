@@ -57,3 +57,202 @@
         </table>
     }
 </div>
+@* <div class="d-flex gap-2 flex-wrap">
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-outline-primary">Outline Primary</button>
+    <button class="btn btn-warning">Warning</button>
+    <button class="btn btn-outline-warning">Outline Warning</button>
+    <button class="btn btn-danger">Danger</button>
+    <button class="btn btn-outline-danger">Outline Danger</button>
+</div>
+<div class="d-flex gap-2 flex-wrap">
+<button class="btn btn-primary">Primary</button>
+<button class="btn btn-secondary">Secondary</button>
+<button class="btn btn-outline-success">Success2</button>
+    <button class="btn btn-success">Success</button>
+<button class="btn btn-danger">Danger</button>
+<button class="btn btn-warning">Warning</button>
+    <button class="btn btn-outline-info">Info2</button>
+    <button class="btn btn-info rounded-pill px-3" type="button">Info</button>
+    <button class="btn btn-outline-info rounded-pill px-3" type="button">Info</button>
+    <button class="btn btn-info">Info</button>
+<button class="btn btn-light">Light</button>
+<button class="btn btn-dark">Dark</button>
+</div>
+<div class="d-flex gap-2 flex-wrap">
+<button class="btn btn-sm btn-primary">Small</button>
+<button class="btn btn-primary">Normal</button>
+<button class="btn btn-lg btn-primary">Large</button>
+</div>
+
+<button class="btn btn-sm btn-primary">Small</button>
+<button class="btn btn-primary">Normal</button>
+<button class="btn btn-lg btn-primary">Large</button>
+
+<br>
+<a class="btn btn-sm btn-outline-primary rounded-pill">Detail</a>
+<a class="btn btn-sm btn-outline-warning rounded-pill">Edit</a>
+<a class="btn btn-sm btn-outline-danger rounded-pill">Delete</a>
+</br>
+
+<br />
+
+<button class="btn btn-sm btn-light border">Cancel</button>
+<button class="btn btn-sm btn-primary shadow-sm">Save</button>
+
+<br />
+
+<a class="btn btn-sm bg-primary bg-opacity-10 text-primary">
+    Detail
+</a>
+<a class="btn btn-sm bg-danger bg-opacity-10 text-danger">
+    Delete
+</a>
+
+<br />
+
+<a class="btn btn-sm btn-outline-primary">
+    <i class="fa fa-eye"></i>
+</a>
+
+<a class="btn btn-sm btn-outline-warning">
+    <i class="fa fa-edit"></i>
+</a>
+
+<a class="btn btn-sm btn-outline-danger">
+    <i class="fa fa-trash"></i>
+</a>
+
+<button class="btn btn-outline-info rounded-pill px-3" type="button"><i class="fa fa-info"></i>Info</button>
+<button class="btn btn-outline-warning rounded-pill px-3" type="button"><i class="fa fa-edit"></i>Edit</button>
+<button class="btn btn-outline-info rounded-pill px-3" type="button"><i class="fa fa-edit"></i>Info</button>
+<button class="btn btn-outline-info rounded-pill px-3" type="button"><i class="fa fa-edit"></i>Info</button>
+
+<br />
+
+<a class="btn btn-sm btn-outline-secondary">Edit</a>
+<a class="btn btn-sm btn-outline-danger">Delete</a>
+
+<br />
+
+<button class="px-3 py-1 text-sm text-blue-600 bg-blue-100 rounded hover:bg-blue-200">
+    Detail
+</button>
+
+<br />
+<button class="btn btn-sm bg-primary bg-opacity-10 text-primary rounded">Detail</button>
+<button class="btn btn-sm bg-warning bg-opacity-10 text-warning rounded">Edit</button>
+<button class="btn btn-sm bg-danger bg-opacity-10 text-danger rounded">Delete</button>
+<br />
+<button class="btn btn-success shadow-sm">Save</button>
+<button class="btn btn-secondary">Cancel</button>
+<br />
+<button class="btn btn-danger">Delete</button>
+<button class="btn btn-light border">Delete</button>
+<br />
+<button class="btn btn-sm bg-danger bg-opacity-10 text-danger rounded">Delete</button>
+<button class="btn btn-sm bg-danger bg-opacity-10 text-danger rounded">Delete</button>
+<br /> *@
+@* <button class="btn btn-outline-warning rounded-pill px-3">
+    <i class="fa fa-edit me-1"></i> Edit
+</button>
+<br />
+<br />
+<a class="btn btn-outline-primary rounded-pill px-3"
+   asp-action="Details"
+   asp-route-id="1">
+    <i class="fa fa-eye me-1"></i> Detail
+</a>
+<a class="btn btn-outline-danger rounded-pill px-3"
+   asp-action="Delete"
+   asp-route-id="1">
+    <i class="fa fa-trash me-1"></i> Delete
+</a>
+<button type="submit" class="btn btn-outline-success rounded-pill px-4">
+    <i class="fa fa-save me-1"></i> Save
+</button>
+<a asp-action="Index" class="btn btn-outline-dark rounded-pill px-4">
+    <i class="fa fa-times me-1"></i> Cancel
+</a>
+<a asp-action="Create" class="btn btn-outline-success rounded-pill px-4">
+    <i class="fa fa-plus me-1"></i> New
+</a>
+<a class="btn btn-outline-info rounded-pill px-3"
+   asp-action="Details"
+   asp-route-id="1">
+    <i class="fa fa-info-circle me-1"></i> Infossssss
+</a>
+<br />
+
+<br />
+
+<br />
+<br />
+
+<a class="btn btn-sm btn-outline-warning rounded-pill px-3"
+   asp-action="Edit"
+   asp-route-id="1">
+    <i class="fa fa-edit me-1"></i>
+</a>
+<a class="btn btn-sm btn-outline-primary rounded-pill px-3"
+   asp-action="Details"
+   asp-route-id="1">
+    <i class="fa fa-eye me-1"></i>
+</a>
+<a class="btn btn-sm btn-outline-danger rounded-pill px-3"
+   asp-action="Delete"
+   asp-route-id="1">
+    <i class="fa fa-trash me-1"></i>
+</a>
+<button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-4">
+    <i class="fa fa-save me-1"></i>
+</button>
+<a asp-action="Index" class="btn btn-sm btn-outline-dark rounded-pill px-4">
+    <i class="fa fa-times me-1"></i>
+</a>
+<a asp-action="Create" class="btn btn-sm btn-outline-success rounded-pill px-4">
+    <i class="fa fa-file me-1"></i>
+</a>
+
+<br />
+<br />
+
+<a class="btn btn-sm btn-outline-info rounded-pill px-3"
+   asp-action="Details"
+   asp-route-id="1">
+    <i class="fa fa-info-circle me-1"></i> Info
+</a>
+ *@
+
+<br />
+
+<a class="btn btn-sm btn-outline-warning rounded-pill px-3"
+   asp-action="Edit"
+   asp-route-id="1">
+    <i class="fa fa-edit me-1"></i>Edit
+</a>
+<a class="btn btn-sm btn-outline-primary rounded-pill px-3"
+   asp-action="Details"
+   asp-route-id="1">
+    <i class="fa fa-eye me-1"></i>Detail
+</a>
+<a class="btn btn-sm btn-outline-danger rounded-pill px-3"
+   asp-action="Delete"
+   asp-route-id="1">
+    <i class="fa fa-trash me-1"></i>Delete
+</a>
+<button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-4">
+    <i class="fa fa-save me-1"></i>Save
+</button>
+<a asp-action="Index" class="btn btn-sm btn-outline-dark rounded-pill px-4">
+    <i class="fa fa-times me-1"></i>Cancel
+</a>
+<a asp-action="Create" class="btn btn-sm btn-outline-success rounded-pill px-4">
+    <i class="fa fa-file me-1"></i>New
+</a>
+<a class="btn btn-sm btn-outline-info rounded-pill px-3"
+   asp-action="Details"
+   asp-route-id="1">
+    <i class="fa fa-info-circle me-1"></i>Info
+</a>
+<br />
