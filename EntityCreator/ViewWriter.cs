@@ -7,7 +7,7 @@ public static class ViewWriter
         string viewModelNamespace,
         List<DbColumn> cols)
     {
-        return new Dictionary<string, string>
+        return new()
         {
             { "Index.cshtml",  GenerateIndex(entity, viewModelNamespace, cols) },
             { "Create.cshtml", GenerateCreate(entity, viewModelNamespace, cols) },
@@ -27,9 +27,11 @@ public static class ViewWriter
         sb.AppendLine();
         sb.AppendLine($"<h2>{entity} Listesi</h2>");
 
-        sb.AppendLine(
-            "<a asp-action=\"Create\" class=\"btn btn-outline-success rounded-pill px-3 mb-3\">" +
-            "<i class=\"fa fa-file-circle-plus me-1\"></i> New</a>");
+        sb.AppendLine("""
+<a asp-action="Create" class="btn btn-sm btn-outline-success rounded-pill px-4 mb-3">
+    <i class="fa fa-file me-1"></i>New
+</a>
+""");
 
         sb.AppendLine("<table class=\"table table-bordered\">");
         sb.AppendLine("<thead><tr>");
@@ -37,7 +39,7 @@ public static class ViewWriter
         foreach (var c in cols)
             sb.AppendLine($"<th>{c.Name}</th>");
 
-        sb.AppendLine("<th style=\"width:160px\"></th>");
+        sb.AppendLine("<th style=\"width:200px\"></th>");
         sb.AppendLine("</tr></thead>");
         sb.AppendLine("<tbody>");
 
@@ -48,28 +50,32 @@ public static class ViewWriter
         foreach (var c in cols)
             sb.AppendLine($"<td>@item.{c.Name}</td>");
 
-        sb.AppendLine("<td class=\"text-nowrap\">");
+        sb.AppendLine("""
+<td class="text-nowrap">
+    <a class="btn btn-sm btn-outline-warning rounded-pill px-3 me-1"
+       asp-action="Edit"
+       asp-route-id="@item.Id">
+        <i class="fa fa-edit me-1"></i>Edit
+    </a>
 
-        sb.AppendLine(
-            "<a asp-action=\"Edit\" asp-route-id=\"@item.Id\" " +
-            "class=\"btn btn-sm btn-outline-warning rounded-pill px-3 me-1\">" +
-            "<i class=\"fa fa-edit\"></i></a>");
+    <a class="btn btn-sm btn-outline-primary rounded-pill px-3 me-1"
+       asp-action="Detail"
+       asp-route-id="@item.Id">
+        <i class="fa fa-eye me-1"></i>Detail
+    </a>
 
-        sb.AppendLine(
-            "<a asp-action=\"Detail\" asp-route-id=\"@item.Id\" " +
-            "class=\"btn btn-sm btn-outline-info rounded-pill px-3 me-1\">" +
-            "<i class=\"fa fa-circle-info\"></i></a>");
+    <a class="btn btn-sm btn-outline-danger rounded-pill px-3"
+       asp-action="Delete"
+       asp-route-id="@item.Id">
+        <i class="fa fa-trash me-1"></i>Delete
+    </a>
+</td>
+""");
 
-        sb.AppendLine(
-            "<a asp-action=\"Delete\" asp-route-id=\"@item.Id\" " +
-            "class=\"btn btn-sm btn-outline-danger rounded-pill px-3\">" +
-            "<i class=\"fa fa-trash\"></i></a>");
-
-        sb.AppendLine("</td>");
         sb.AppendLine("</tr>");
         sb.AppendLine("}");
-
         sb.AppendLine("</tbody></table>");
+
         return sb.ToString();
     }
 
@@ -81,11 +87,13 @@ public static class ViewWriter
 
         sb.AppendLine($"@model {vmNs}.{entity}CreateViewModel");
         sb.AppendLine();
-        sb.AppendLine($"<h2>{entity} Yarat</h2>");
+        sb.AppendLine($"<h2>{entity} Yeni</h2>");
 
-        sb.AppendLine("<form asp-action=\"Create\" method=\"post\">");
-        sb.AppendLine("@Html.AntiForgeryToken()");
-        sb.AppendLine("<div asp-validation-summary=\"ModelOnly\" class=\"text-danger\"></div>");
+        sb.AppendLine("""
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+""");
 
         foreach (var c in cols.Where(c =>
                      !c.IsIdentity &&
@@ -93,26 +101,29 @@ public static class ViewWriter
                      !c.IsUpdateDate() &&
                      !c.IsIsActive()))
         {
-            sb.AppendLine("<div class=\"mb-3\">");
-            sb.AppendLine($"<label asp-for=\"{c.Name}\" class=\"form-label\"></label>");
-            sb.AppendLine($"<input asp-for=\"{c.Name}\" class=\"form-control\" />");
-            sb.AppendLine($"<span asp-validation-for=\"{c.Name}\" class=\"text-danger\"></span>");
-            sb.AppendLine("</div>");
+            sb.AppendLine($"""
+    <div class="mb-3">
+        <label asp-for="{c.Name}" class="form-label"></label>
+        <input asp-for="{c.Name}" class="form-control" />
+        <span asp-validation-for="{c.Name}" class="text-danger"></span>
+    </div>
+""");
         }
 
-        sb.AppendLine(
-            "<button type=\"submit\" class=\"btn btn-success rounded-pill px-3 me-2\">" +
-            "<i class=\"fa fa-save me-1\"></i> Kaydet</button>");
+        sb.AppendLine("""
+    <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-4 me-2">
+        <i class="fa fa-save me-1"></i>Save
+    </button>
 
-        sb.AppendLine(
-            "<a asp-action=\"Index\" class=\"btn btn-outline-secondary rounded-pill px-3\">" +
-            "<i class=\"fa fa-xmark me-1\"></i> İptal</a>");
+    <a asp-action="Index" class="btn btn-sm btn-outline-dark rounded-pill px-4">
+        <i class="fa fa-times me-1"></i>Cancel
+    </a>
+</form>
 
-        sb.AppendLine("</form>");
-
-        sb.AppendLine("@section Scripts {");
-        sb.AppendLine("@{ await Html.RenderPartialAsync(\"_ValidationScriptsPartial\"); }");
-        sb.AppendLine("}");
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+""");
 
         return sb.ToString();
     }
@@ -127,9 +138,11 @@ public static class ViewWriter
         sb.AppendLine();
         sb.AppendLine($"<h2>{entity} Düzenle</h2>");
 
-        sb.AppendLine("<form asp-action=\"Edit\" method=\"post\">");
-        sb.AppendLine("@Html.AntiForgeryToken()");
-        sb.AppendLine("<input type=\"hidden\" asp-for=\"Id\" />");
+        sb.AppendLine("""
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+""");
 
         foreach (var c in cols.Where(c =>
                      !c.IsIdentity &&
@@ -138,26 +151,29 @@ public static class ViewWriter
                      !c.IsIsActive() &&
                      c.Name != "Id"))
         {
-            sb.AppendLine("<div class=\"mb-3\">");
-            sb.AppendLine($"<label asp-for=\"{c.Name}\" class=\"form-label\"></label>");
-            sb.AppendLine($"<input asp-for=\"{c.Name}\" class=\"form-control\" />");
-            sb.AppendLine($"<span asp-validation-for=\"{c.Name}\" class=\"text-danger\"></span>");
-            sb.AppendLine("</div>");
+            sb.AppendLine($"""
+    <div class="mb-3">
+        <label asp-for="{c.Name}" class="form-label"></label>
+        <input asp-for="{c.Name}" class="form-control" />
+        <span asp-validation-for="{c.Name}" class="text-danger"></span>
+    </div>
+""");
         }
 
-        sb.AppendLine(
-            "<button type=\"submit\" class=\"btn btn-success rounded-pill px-3 me-2\">" +
-            "<i class=\"fa fa-save me-1\"></i> Kaydet</button>");
+        sb.AppendLine("""
+    <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-4 me-2">
+        <i class="fa fa-save me-1"></i>Save
+    </button>
 
-        sb.AppendLine(
-            "<a asp-action=\"Index\" class=\"btn btn-outline-secondary rounded-pill px-3\">" +
-            "<i class=\"fa fa-xmark me-1\"></i> İptal</a>");
+    <a asp-action="Index" class="btn btn-sm btn-outline-dark rounded-pill px-4">
+        <i class="fa fa-times me-1"></i>Cancel
+    </a>
+</form>
 
-        sb.AppendLine("</form>");
-
-        sb.AppendLine("@section Scripts {");
-        sb.AppendLine("@{ await Html.RenderPartialAsync(\"_ValidationScriptsPartial\"); }");
-        sb.AppendLine("}");
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+""");
 
         return sb.ToString();
     }
@@ -172,30 +188,39 @@ public static class ViewWriter
         sb.AppendLine();
         sb.AppendLine($"<h2>{entity} Sil</h2>");
 
-        sb.AppendLine("<div class=\"alert alert-danger\">Silmek istediğinize emin misiniz?</div>");
-        sb.AppendLine("<dl class=\"row\">");
+        sb.AppendLine("""
+<div class="alert alert-danger">
+    Silmek istediğinize emin misiniz?
+</div>
+
+<dl class="row">
+""");
 
         foreach (var c in cols)
         {
-            sb.AppendLine($"<dt class=\"col-sm-3\">{c.Name}</dt>");
-            sb.AppendLine($"<dd class=\"col-sm-9\">@Model.{c.Name}</dd>");
+            sb.AppendLine($"""
+    <dt class="col-sm-3">{c.Name}</dt>
+    <dd class="col-sm-9">@Model.{c.Name}</dd>
+""");
         }
 
-        sb.AppendLine("</dl>");
+        sb.AppendLine("""
+</dl>
 
-        sb.AppendLine("<form asp-action=\"DeleteConfirmed\" method=\"post\">");
-        sb.AppendLine("@Html.AntiForgeryToken()");
-        sb.AppendLine("<input type=\"hidden\" asp-for=\"Id\" />");
+<form asp-action="DeleteConfirmed" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
 
-        sb.AppendLine(
-            "<button type=\"submit\" class=\"btn btn-outline-danger rounded-pill px-3 me-2\">" +
-            "<i class=\"fa fa-trash me-1\"></i> Sil</button>");
+    <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-4 me-2">
+        <i class="fa fa-trash me-1"></i>Delete
+    </button>
 
-        sb.AppendLine(
-            "<a asp-action=\"Index\" class=\"btn btn-outline-secondary rounded-pill px-3\">" +
-            "<i class=\"fa fa-xmark me-1\"></i> İptal</a>");
+    <a asp-action="Index" class="btn btn-sm btn-outline-dark rounded-pill px-4">
+        <i class="fa fa-times me-1"></i>Cancel
+    </a>
+</form>
+""");
 
-        sb.AppendLine("</form>");
         return sb.ToString();
     }
 
@@ -208,7 +233,6 @@ public static class ViewWriter
         sb.AppendLine($"@model {vmNs}.{entity}ViewModel");
         sb.AppendLine();
         sb.AppendLine($"<h2>{entity} Detay</h2>");
-
         sb.AppendLine("<dl class=\"row\">");
 
         foreach (var c in cols.Where(c =>
@@ -217,15 +241,19 @@ public static class ViewWriter
                      !c.IsUpdateDate() &&
                      !c.IsIsActive()))
         {
-            sb.AppendLine($"<dt class=\"col-sm-3\">{c.Name}</dt>");
-            sb.AppendLine($"<dd class=\"col-sm-9\">@Model.{c.Name}</dd>");
+            sb.AppendLine($"""
+    <dt class="col-sm-3">{c.Name}</dt>
+    <dd class="col-sm-9">@Model.{c.Name}</dd>
+""");
         }
 
-        sb.AppendLine("</dl>");
+        sb.AppendLine("""
+</dl>
 
-        sb.AppendLine(
-            "<a asp-action=\"Index\" class=\"btn btn-outline-secondary rounded-pill px-3\">" +
-            "<i class=\"fa fa-arrow-left me-1\"></i> Geri</a>");
+<a asp-action="Index" class="btn btn-sm btn-outline-primary rounded-pill px-4">
+    <i class="fa fa-arrow-left me-1"></i>Back
+</a>
+""");
 
         return sb.ToString();
     }
