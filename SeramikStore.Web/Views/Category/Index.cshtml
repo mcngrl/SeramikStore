@@ -1,8 +1,13 @@
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
 @model IEnumerable<SeramikStore.Web.ViewModels.Category.CategoryListViewModel>
-@inject IViewLocalizer L
 
-<h2>@L["Title"]</h2>
+@inject IStringLocalizer<CategoryResource> L
+@inject IStringLocalizer<CommonResource> C
+
+<h2>@L["ListTitle"]</h2>
+
 
 <a asp-action="Create" class="btn btn-sm btn-outline-success rounded-pill px-4 mb-3">
     <i class="fa fa-file me-1"></i>@L["New"]

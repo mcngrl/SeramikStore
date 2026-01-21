@@ -15,13 +15,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\ViewModels\Category\CategoryCreateViewModel.tr.resx">
+    <EmbeddedResource Update="Resources\Localization\CategoryResource.en.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Category\Index.en.resx">
+    <EmbeddedResource Update="Resources\Localization\CategoryResource.tr.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Views\Category\Index.tr.resx">
+    <EmbeddedResource Update="Resources\Localization\Common.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Localization\Common.tr.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
