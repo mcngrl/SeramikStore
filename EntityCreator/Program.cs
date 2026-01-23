@@ -148,18 +148,6 @@ while (true)
     }
 
     Console.WriteLine(new string('-', 100));
-    //Console.Write("Tablo Adı ? : ");
-    //string? tableName = Console.ReadLine()?.Trim();
-
-    //if (string.IsNullOrWhiteSpace(tableName))
-    //{
-    //    Console.WriteLine("Tablo adı boş olamaz!");
-    //    Console.ReadKey();
-    //    continue;
-    //}
-
-
-
     Console.WriteLine("Tablo nasıl seçilsin?");
     Console.WriteLine("1) Veritabanından seç");
     Console.WriteLine("2) Manuel tablo adı gir");
@@ -185,41 +173,54 @@ while (true)
         Console.ReadKey();
         continue;
     }
-
-
-
-
-
-
+    Console.WriteLine();
     Console.Write("Tablo: " + tableName);
-
-
-
+    Console.WriteLine();
     // =======================
-    // GENERATION
+    // GENERATION FINAL ONAY
     // =======================
     foreach (var targetItem in selectedTargets)
     {
         targetItem.TableName = tableName;
         targetItem.ConnectionString = connectionStr;
 
-        Console.WriteLine();
+
         Console.WriteLine(targetItem.WelcomeText);
         Console.WriteLine(targetItem.FileFullPath);
+    }
+    Console.WriteLine();
+    var ans = AskYesNoExit("Devam edilsin mi?");
 
-        var ans = AskYesNoExit("Devam edilsin mi?");
-        if (ans == "C") return;
+    if (ans == "H")
+    {
+        Console.WriteLine();
+        Console.WriteLine($"{tableName} için code generation iptal Edildi.");
+    }
 
-        if (ans == "E")
+    if (ans == "C")
+    {
+        return;
+    }
+
+
+    if (ans == "E")
+    {
+        foreach (var targetItem in selectedTargets)
         {
+            targetItem.TableName = tableName;
+            targetItem.ConnectionString = connectionStr;
+
+            Console.WriteLine();
+            Console.WriteLine(targetItem.WelcomeText);
+            Console.WriteLine(targetItem.FileFullPath);
             targetItem.Execute();
             Console.WriteLine($"{targetItem.ProjectName} başarıyla oluşturuldu.");
         }
+        Console.WriteLine();
+        Console.WriteLine($"{tableName} için code generation tamamlandı.");
     }
 
     Console.WriteLine();
-    Console.WriteLine($"{tableName} için code generation tamamlandı.");
-
     var again = AskYesNoExit("Yeni bir tablo için devam etmek ister misiniz?");
     if (again != "E")
         return;
