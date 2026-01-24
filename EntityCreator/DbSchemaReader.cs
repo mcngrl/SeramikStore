@@ -1,6 +1,7 @@
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
+using System.Text.RegularExpressions;
 
 public static class DbSchemaReader
 {
@@ -62,4 +63,38 @@ public static class DbSchemaReader
 
         return c.SqlType;
     }
+
+    public static void RunSqlFile(string connectionString, string fileFullPath)
+    {
+        if (!File.Exists(fileFullPath))
+            throw new FileNotFoundException("SQL dosyası bulunamadı.", fileFullPath);
+
+        string script = File.ReadAllText(fileFullPath);
+
+        // GO ifadelerini ayır (satır bazlı)
+        var batches = Regex.Split(
+            script,
+            @"^\s*GO\s*$",
+            RegexOptions.Multiline | RegexOptions.IgnoreCase);
+
+        using SqlConnection conn = new(connectionString);
+        conn.Open();
+
+        foreach (var batch in batches)
+        {
+            if (string.IsNullOrWhiteSpace(batch))
+                continue;
+
+            using SqlCommand cmd = new(batch, conn);
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandTimeout = 0; // uzun scriptler için (0 = limitsiz)
+
+            cmd.ExecuteNonQuery();
+        }
+    }
+
 }
+
+
+
+

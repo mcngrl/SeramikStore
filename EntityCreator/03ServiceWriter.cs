@@ -256,12 +256,28 @@ $@"public void DeleteSoft(int id)
         if (info.IsNeverNullable)
             return $"({info.ClrType})rdr[\"{c.Name}\"]";
 
+        if (info.ClrType == "DateOnly")
+        {
+            return c.IsNullable
+                ? $"rdr[\"{c.Name}\"] == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)rdr[\"{c.Name}\"])"
+                : $"DateOnly.FromDateTime((DateTime)rdr[\"{c.Name}\"])";
+        }
+
+        if (info.ClrType == "TimeOnly")
+        {
+            return c.IsNullable
+                ? $"rdr[\"{c.Name}\"] == DBNull.Value ? (TimeOnly?)null : TimeOnly.FromTimeSpan((TimeSpan)rdr[\"{c.Name}\"])"
+                : $"TimeOnly.FromTimeSpan((TimeSpan)rdr[\"{c.Name}\"])";
+        }
+
         if (c.IsNullable)
             return $"rdr[\"{c.Name}\"] == DBNull.Value ? ({info.ClrType}?)null : ({info.ClrType})rdr[\"{c.Name}\"]";
 
         return $"({info.ClrType})rdr[\"{c.Name}\"]";
     }
 
+
+ 
 
     static string Indent(string text, int level)
     {
