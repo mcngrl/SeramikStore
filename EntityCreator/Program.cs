@@ -53,6 +53,7 @@ static List<int> AskLayerSelection()
     Console.WriteLine("5 - ViewModel");
     Console.WriteLine("6 - Controller");
     Console.WriteLine("7 - View");
+    Console.WriteLine("8 - LocalizationMaker");
     Console.Write("Seçimler (1,3,5): ");
 
     var input = Console.ReadLine();
@@ -103,6 +104,9 @@ List<Target> targets = new()
     new Target(5, solutionRoot, "SeramikStore.Web", true, "", new ViewModelAction()),
     new Target(6, solutionRoot, @"SeramikStore.Web\Controllers", true, "Controller.generated.cs", new ControllerAction()),
     new Target(7, solutionRoot, @"SeramikStore.Web\Views", true, "", new ViewAction()),
+    new Target(8, solutionRoot, @"SeramikStore.Web\Localization", true, "Resource.generated.cs", new  LocalizationMarkerAction()),
+
+   
 };
 
 // =====================

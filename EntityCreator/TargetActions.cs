@@ -37,6 +37,8 @@ namespace EntityCreator
 
             File.WriteAllText(target.FileFullPath, fileContent);
 
+            DbSchemaReader.RunSqlFile(target.ConnectionString, target.FileFullPath);
+
         }
     }
 
@@ -153,6 +155,8 @@ namespace EntityCreator
 
             File.WriteAllText(target.FileFullPath, fileContent);
 
+   
+
 
         }
     }
@@ -188,4 +192,16 @@ namespace EntityCreator
             }
         }
     }
+    public class LocalizationMarkerAction: ITargetAction
+    {
+        public void Execute(Target target)
+        {
+            string fileContent = LocalizationMarkerWriter.Generate("SeramikStore.Web.Localization", target.TableName);
+
+            File.WriteAllText(target.FileFullPath, fileContent);
+        }
+    }
+
+
+
 }

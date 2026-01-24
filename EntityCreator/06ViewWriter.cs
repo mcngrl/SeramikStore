@@ -167,10 +167,13 @@ public static class ViewWriter
                      !c.IsUpdateDate() &&
                      !c.IsIsActive()))
         {
+
+            var inputType = ResolveInputType(c);
+
             sb.AppendLine($"""
     <div class="mb-3">
         <label asp-for="{c.Name}" class="form-label"></label>
-        <input asp-for="{c.Name}" class="form-control" />
+        <input asp-for="{c.Name}" type="{inputType}" class="form-control" />
         <span asp-validation-for="{c.Name}" class="text-danger"></span>
     </div>
 """);
@@ -323,4 +326,21 @@ public static class ViewWriter
 
         return sb.ToString();
     }
+
+    static string ResolveInputType(DbColumn c)
+    {
+        var type = SqlTypeMapper.Map(c.SqlType);
+
+        if (type.ClrType == "DateOnly")
+            return "date";
+
+        if (type.ClrType == "DateTime" || type.ClrType == "DateTimeOffset")
+            return "datetime-local";
+
+        if (type.ClrType == "bool")
+            return "checkbox";
+
+        return "text";
+    }
+
 }

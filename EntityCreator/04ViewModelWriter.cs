@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.ComponentModel.DataAnnotations;
 
 public static class ViewModelWriter
@@ -71,27 +71,27 @@ public static class ViewModelWriter
     {
         var typeInfo = SqlTypeMapper.Map(c.SqlType);
 
-        var isNullable =
+        // SQL tarafında nullable mı?
+        var sqlNullable =
             !typeInfo.IsNeverNullable &&
-            (c.IsNullable || typeInfo.IsReferenceType);
-
-        // ===== [Required] sadece nullable olmayan reference type =====
-        if (typeInfo.IsReferenceType && !isNullable)
-            sb.AppendLine("        [Required]");
-
-        sb.AppendLine($"        [Display(Name = \"{c.Name}\")]");
+            c.IsNullable;
 
         var clrType = typeInfo.ClrType;
 
-        if (isNullable && !typeInfo.IsReferenceType)
-            clrType += "?";
+        if (sqlNullable)
+            clrType = clrType + "?";
 
-        if (isNullable && typeInfo.IsReferenceType)
-            clrType += "?";
 
+        // ===== [Required] =====
+        // SQL NOT NULL ise → Required
+        if (!sqlNullable)
+        sb.AppendLine("        [Required]");
+
+        sb.AppendLine($"        [Display(Name = \"{c.Name}\")]");
         sb.AppendLine($"        public {clrType} {c.Name} {{ get; set; }}");
         sb.AppendLine();
     }
+
 
     // ---------------- TEMPLATE HELPERS ----------------
     static StringBuilder Start(string ns, string className)
