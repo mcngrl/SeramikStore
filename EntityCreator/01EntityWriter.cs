@@ -19,7 +19,7 @@ public static class EntityWriter
 
         foreach (var col in columns)
         {
-            string type = SqlTypeMapper.ToCSharp(
+            string type = ToCSharpProperty(
                 col.SqlType, col.IsNullable);
 
             if (col.IsIdentity)
@@ -33,5 +33,18 @@ public static class EntityWriter
         sb.AppendLine("}");
 
         return sb.ToString();
+    }
+
+    public static string ToCSharpProperty(string sqlType, bool isNullable)
+    {
+        var info = SqlTypeMapper.Map(sqlType);
+
+        if (info.IsNeverNullable)
+            return $"required {info.ClrType}";
+
+        if (info.IsReferenceType)
+            return isNullable ? $"{info.ClrType}?" : $"required {info.ClrType}";
+
+        return isNullable ? $"{info.ClrType}?" : info.ClrType;
     }
 }

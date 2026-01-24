@@ -30,7 +30,7 @@ public static class DtoWriter
         sb.AppendLine("    {");
 
         foreach (var c in cols)
-            sb.AppendLine($"        public {MapClr(c)} {c.Name} {{ get; set; }}");
+            sb.AppendLine($"        public {ToCSharpProperty(c.SqlType, c.IsNullable)} {c.Name} {{ get; set; }}");
 
         sb.AppendLine("    }");
         sb.AppendLine("}");
@@ -55,7 +55,7 @@ public static class DtoWriter
                      !c.IsUpdateDate() &&
                      !c.IsIsActive()))
         {
-            sb.AppendLine($"        public {MapClr(c)} {c.Name} {{ get; set; }}");
+            sb.AppendLine($"        public {ToCSharpProperty(c.SqlType, c.IsNullable)} {c.Name} {{ get; set; }}");
         }
 
         sb.AppendLine("    }");
@@ -76,7 +76,7 @@ public static class DtoWriter
         sb.AppendLine("    {");
 
         foreach (var c in cols.Where(c => !c.IsInsertDate()))
-            sb.AppendLine($"        public {MapClr(c)} {c.Name} {{ get; set; }}");
+            sb.AppendLine($"        public {ToCSharpProperty(c.SqlType, c.IsNullable)} {c.Name} {{ get; set; }}");
 
         sb.AppendLine("    }");
         sb.AppendLine("}");
@@ -96,20 +96,26 @@ public static class DtoWriter
         sb.AppendLine("    {");
 
         foreach (var c in cols.Where(c => !c.IsUpdateDate()))
-            sb.AppendLine($"        public {MapClr(c)} {c.Name} {{ get; set; }}");
+            sb.AppendLine($"        public {ToCSharpProperty(c.SqlType,c.IsNullable)} {c.Name} {{ get; set; }}");
 
         sb.AppendLine("    }");
         sb.AppendLine("}");
         return sb.ToString();
     }
 
-    static string MapClr(DbColumn c) =>
-        c.SqlType switch
-        {
-            "int" => "int",
-            "bit" => "bool",
-            "decimal" => "decimal",
-            "datetime" => "DateTime",
-            _ => "string"
-        };
+
+
+    public static string ToCSharpProperty(string sqlType, bool isNullable)
+    {
+        var info = SqlTypeMapper.Map(sqlType);
+
+        if (info.IsNeverNullable)
+            return $"required {info.ClrType}";
+
+        if (info.IsReferenceType)
+            return isNullable ? $"{info.ClrType}?" : $"required {info.ClrType}";
+
+        return isNullable ? $"{info.ClrType}?" : info.ClrType;
+    }
+
 }

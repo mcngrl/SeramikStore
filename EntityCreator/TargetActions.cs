@@ -137,13 +137,18 @@ namespace EntityCreator
     {
         public void Execute(Target target)
         {
+            var columns = DbSchemaReader.GetColumns(
+            target.ConnectionString,
+            "dbo",
+            target.TableName);
 
             string fileContent = ControllerWriter.GenerateController(
                 target.ControllerNamespace,
                 target.TableName,
                 target.ServiceNamespace,
                 target.ViewModelNamespace,
-                target.ContractNamespace
+                target.ContractNamespace, 
+                columns
              );
 
             File.WriteAllText(target.FileFullPath, fileContent);

@@ -189,7 +189,7 @@ while (true)
         Console.WriteLine(targetItem.FileFullPath);
     }
     Console.WriteLine();
-    var ans = AskYesNoExit("Devam edilsin mi?");
+    var ans = AskYesNoExit("Emin misiniz?");
 
     if (ans == "H")
     {

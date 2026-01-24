@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBScripter", "DBScripter\DB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityCreator", "EntityCreator\EntityCreator.csproj", "{3BA1A421-F68C-44E6-92E1-B49E977397DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfToText", "PdfToText\PdfToText.csproj", "{578A6BBD-31FE-4686-BEDE-7E62753AD59D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeramikStore.Contracts", "SeramikStore.Contracts\SeramikStore.Contracts.csproj", "{7762A6CE-E249-412A-ADAE-30F04CD8BC55}"
 EndProject
 Global
@@ -46,10 +44,6 @@ Global
 		{3BA1A421-F68C-44E6-92E1-B49E977397DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BA1A421-F68C-44E6-92E1-B49E977397DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BA1A421-F68C-44E6-92E1-B49E977397DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{578A6BBD-31FE-4686-BEDE-7E62753AD59D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{578A6BBD-31FE-4686-BEDE-7E62753AD59D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{578A6BBD-31FE-4686-BEDE-7E62753AD59D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{578A6BBD-31FE-4686-BEDE-7E62753AD59D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Release|Any CPU.ActiveCfg = Release|Any CPU
