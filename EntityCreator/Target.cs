@@ -9,7 +9,7 @@ namespace EntityCreator
 {
     public class Target
     {
-
+        public string OperationName { get; set; }
         public string Namespace { get; set; }
         public string ContractNamespace { get; set; }
         public string ServiceNamespace { get; set; }
@@ -63,7 +63,7 @@ namespace EntityCreator
         public ITargetAction Action { get; set; }
 
         public Target(int orderNo,string solutionRoot, string projectName, 
-            bool NameSpacewithEntityname, string fileExtension, ITargetAction action)
+            bool NameSpacewithEntityname, string fileExtension, ITargetAction action, string operationName)
         {
             _solutionRoot = solutionRoot;
             ProjectName= projectName;
@@ -75,8 +75,7 @@ namespace EntityCreator
             _NameSpacewithEntityname = NameSpacewithEntityname;
             _fileExtension = fileExtension;
 
-          
-            
+            OperationName = operationName;    
             Action = action;
         }
 
