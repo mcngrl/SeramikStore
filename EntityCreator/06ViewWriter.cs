@@ -220,10 +220,13 @@ public static class ViewWriter
                      !c.IsIsActive() &&
                      c.Name != "Id"))
         {
+
+            var inputType = ResolveInputType(c);
+
             sb.AppendLine($"""
     <div class="mb-3">
         <label asp-for="{c.Name}" class="form-label"></label>
-        <input asp-for="{c.Name}" class="form-control" />
+          <input asp-for="{c.Name}" type="{inputType}" class="form-control" />
         <span asp-validation-for="{c.Name}" class="text-danger"></span>
     </div>
 """);
