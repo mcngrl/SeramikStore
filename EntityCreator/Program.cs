@@ -34,16 +34,33 @@ static string AskTableNameFromDb(string connectionString)
     return tables[choice - 1];
 }
 
-static int AskMainMenu()
+//static int AskMainMenu()
+//{
+//    Console.WriteLine("1) Tüm layer’ları üret");
+//    Console.WriteLine("2) Layer seçerek üret");
+//    Console.WriteLine("3) Çıkış");
+//    Console.Write("Seçiminiz: ");
+//    return int.TryParse(Console.ReadLine(), out var x) ? x : 0;
+//}
+
+static int AskMainMenu(int? lastChoice)
 {
     Console.WriteLine("1) Tüm layer’ları üret");
     Console.WriteLine("2) Layer seçerek üret");
-    Console.WriteLine("3) Çıkış");
-    Console.Write("Seçiminiz: ");
-    return int.TryParse(Console.ReadLine(), out var x) ? x : 0;
+    Console.WriteLine("3) Son Seçime göre tekrar üret");
+    Console.WriteLine("4) Çıkış");
+    Console.Write($"Seçiminiz:[{lastChoice}]");
+
+
+    var input = Console.ReadLine();
+    if (string.IsNullOrWhiteSpace(input))
+        return lastChoice ?? 0;
+
+    return int.TryParse(input, out var x) ? x : 0;
 }
 
-static List<int> AskLayerSelection()
+
+static List<int> AskLayerSelection(List<int>? last)
 {
     Console.WriteLine("Layer Seçimi:");
     Console.WriteLine("1 - CRUD SP");
@@ -54,16 +71,23 @@ static List<int> AskLayerSelection()
     Console.WriteLine("6 - Controller");
     Console.WriteLine("7 - View");
     Console.WriteLine("8 - LocalizationMaker");
-    Console.Write("Seçimler (1,3,5): ");
 
+    var lastText = last != null && last.Any()
+        ? string.Join(",", last)
+        : "";
+
+    Console.Write($"Seçimler (1,3,5) [{lastText}]:");
     var input = Console.ReadLine();
-    return input?
+
+    if (string.IsNullOrWhiteSpace(input))
+        return last ?? new();
+
+    return input
         .Split(',', StringSplitOptions.RemoveEmptyEntries)
         .Select(x => int.TryParse(x.Trim(), out var i) ? i : -1)
         .Where(x => x > 0)
         .Distinct()
-        .ToList()
-        ?? new();
+        .ToList();
 }
 
 static string AskYesNoExit(string message)
@@ -118,9 +142,13 @@ while (true)
     Console.WriteLine("WELCOME TO ENTITY CREATOR");
     Console.WriteLine(new string('-', 100));
 
-    var mainChoice = AskMainMenu();
-    if (mainChoice == 3)
+    var last = LastSelectionStore.Load();
+
+    var mainChoice = AskMainMenu(last.MainMenu);
+    if (mainChoice == 4)
         return;
+
+    string tableName = string.Empty;
 
     List<Target> selectedTargets;
 
@@ -132,7 +160,7 @@ while (true)
     else if (mainChoice == 2)
     {
         // SEÇEREK
-        var selections = AskLayerSelection();
+        var selections = AskLayerSelection(last.Layers);
         selectedTargets = targets
             .Where(t => selections.Contains(t.OrderNo))
             .ToList();
@@ -144,6 +172,18 @@ while (true)
             continue;
         }
     }
+    else if (mainChoice == 3)
+    {
+        mainChoice = last.MainMenu;
+        selectedTargets = targets
+            .Where(t => last.Layers.Contains(t.OrderNo))
+            .ToList();
+        tableName = last.TableName;
+        RunCreator(connectionStr, tableName, selectedTargets, last.MainMenu, last.TableMode);
+        continue;
+
+    }
+
     else
     {
         Console.WriteLine("Geçersiz seçim!");
@@ -155,11 +195,11 @@ while (true)
     Console.WriteLine("Tablo nasıl seçilsin?");
     Console.WriteLine("1) Veritabanından seç");
     Console.WriteLine("2) Manuel tablo adı gir");
-    Console.Write("Seçiminiz: ");
+    Console.Write($"Seçiminiz: [{last.TableMode}]:");
 
     var tableMode = Console.ReadLine();
+  
 
-    string tableName = string.Empty;
 
     if (tableMode == "1")
     {
@@ -167,7 +207,7 @@ while (true)
     }
     else if (tableMode == "2")
     {
-        Console.Write("Tablo Adı: ");
+        Console.Write($"Tablo Adı [{last.TableName}]: ");
         tableName = Console.ReadLine()?.Trim() ?? "";
     }
 
@@ -177,6 +217,17 @@ while (true)
         Console.ReadKey();
         continue;
     }
+    
+    RunCreator(connectionStr, tableName, selectedTargets,mainChoice,tableMode);
+
+    Console.WriteLine();
+    var again = AskYesNoExit("Yeni bir tablo için devam etmek ister misiniz?");
+    if (again != "E")
+        return;
+}
+
+void RunCreator(string connectionStr, string tableName, List<Target> selectedTargets, int mainChoice, string tableMode)
+{
     Console.WriteLine();
     Console.Write("Tablo: " + tableName);
     Console.WriteLine();
@@ -192,8 +243,12 @@ while (true)
         Console.WriteLine(targetItem.WelcomeText);
         Console.WriteLine(targetItem.FileFullPath);
     }
+
+
+
+
     Console.WriteLine();
-    var ans = AskYesNoExit("Emin misiniz?");
+    var ans = AskYesNoExit(" CREATOR Çalışacak Emin misiniz?");
 
     if (ans == "H")
     {
@@ -222,10 +277,13 @@ while (true)
         }
         Console.WriteLine();
         Console.WriteLine($"{tableName} için code generation tamamlandı.");
-    }
 
-    Console.WriteLine();
-    var again = AskYesNoExit("Yeni bir tablo için devam etmek ister misiniz?");
-    if (again != "E")
-        return;
+        LastSelectionStore.Save(new LastSelections
+        {
+            MainMenu = mainChoice,
+            Layers = selectedTargets.Select(t => t.OrderNo).ToList(),
+            TableMode = tableMode,
+            TableName = tableName
+        });
+    }
 }
