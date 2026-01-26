@@ -88,7 +88,8 @@ public static class ViewModelWriter
         sb.AppendLine("        [Required]");
 
         sb.AppendLine($"        [Display(Name = \"{c.Name}\")]");
-        sb.AppendLine($"        public {clrType} {c.Name} {{ get; set; }}");
+        sb.AppendLine($"        public {ToCSharpProperty(c.SqlType, c.IsNullable)} {c.Name} {{ get; set; }}");
+
         sb.AppendLine();
     }
 
@@ -113,5 +114,20 @@ public static class ViewModelWriter
         sb.AppendLine("    }");
         sb.AppendLine("}");
         return sb.ToString();
+    }
+
+    public static string ToCSharpProperty(string sqlType, bool isNullable)
+    {
+        var info = SqlTypeMapper.Map(sqlType);
+
+        if (info.IsNeverNullable)
+            return $"required {info.ClrType}";
+
+        //if (info.IsReferenceType)
+        //    return isNullable ? $"{info.ClrType}?" : $"required {info.ClrType}";
+
+        //return isNullable ? $"{info.ClrType}?" : info.ClrType;
+        return $"{info.ClrType}?";
+
     }
 }
