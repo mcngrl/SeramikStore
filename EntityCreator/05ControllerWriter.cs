@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 
 public static class ControllerWriter
@@ -126,7 +127,25 @@ public static class ControllerWriter
                      !c.IsUpdateDate() &&
                      !c.IsIsActive()))
         {
-            sb.AppendLine($"                {c.Name} = vm.{c.Name},");
+            var typeInfo = SqlTypeMapper.Map(c.SqlType);
+
+            // SQL NOT NULL ? bilinçli unwrap
+            if (!c.IsNullable && !typeInfo.IsNeverNullable)
+            {
+                if (typeInfo.IsReferenceType)
+                {
+                    sb.AppendLine($"                {c.Name} = vm.{c.Name}!,");
+                }
+                else
+                {
+                    sb.AppendLine($"                {c.Name} = vm.{c.Name}!.Value,");
+                }
+            }
+            else
+            {
+                // SQL NULL ? direkt geç
+                sb.AppendLine($"                {c.Name} = vm.{c.Name},");
+            }
         }
 
         sb.AppendLine("            });");
@@ -155,7 +174,9 @@ public static class ControllerWriter
         sb.AppendLine("            {");
 
         foreach (var c in cols.Where(c => !c.IsInsertDate()))
+        {
             sb.AppendLine($"                {c.Name} = dto.{c.Name},");
+        }
 
         sb.AppendLine("            });");
         sb.AppendLine("        }");
@@ -172,7 +193,32 @@ public static class ControllerWriter
         sb.AppendLine("            {");
 
         foreach (var c in cols.Where(c => !c.IsInsertDate()))
-            sb.AppendLine($"                {c.Name} = vm.{c.Name},");
+        {
+            
+            var typeInfo = SqlTypeMapper.Map(c.SqlType);
+
+            // SQL NOT NULL ? bilinçli unwrap
+            if (!c.IsNullable && !typeInfo.IsNeverNullable)
+            {
+                if (typeInfo.IsReferenceType)
+                {
+                    sb.AppendLine($"                {c.Name} = vm.{c.Name}!,");
+                }
+                else
+                {
+                    sb.AppendLine($"                {c.Name} = vm.{c.Name}!.Value,");
+                }
+            }
+            else
+            {
+                // SQL NULL ? direkt geç
+                sb.AppendLine($"                {c.Name} = vm.{c.Name},");
+            }
+
+
+
+
+        }
 
         sb.AppendLine("            });");
         sb.AppendLine();
