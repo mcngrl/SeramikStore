@@ -29,7 +29,10 @@ public static class DtoWriter
         sb.AppendLine($"    public class {entity}Dto");
         sb.AppendLine("    {");
 
-        foreach (var c in cols)
+        foreach (var c in cols.Where(c =>
+                     !c.IsInsertDate() &&
+                     !c.IsUpdateDate() &&
+                     !c.IsIsActive()))
             sb.AppendLine($"        public {ToCSharpProperty(c.SqlType, c.IsNullable)} {c.Name} {{ get; set; }}");
 
         sb.AppendLine("    }");
@@ -75,7 +78,11 @@ public static class DtoWriter
         sb.AppendLine($"    public class {entity}UpdateDto");
         sb.AppendLine("    {");
 
-        foreach (var c in cols.Where(c => !c.IsInsertDate()))
+
+        foreach (var c in cols.Where(c =>
+                     !c.IsInsertDate() &&
+                     !c.IsUpdateDate() &&
+                     !c.IsIsActive()))
             sb.AppendLine($"        public {ToCSharpProperty(c.SqlType, c.IsNullable)} {c.Name} {{ get; set; }}");
 
         sb.AppendLine("    }");
@@ -95,7 +102,11 @@ public static class DtoWriter
         sb.AppendLine($"    public class {entity}ListItemDto");
         sb.AppendLine("    {");
 
-        foreach (var c in cols.Where(c => !c.IsUpdateDate()))
+
+        foreach (var c in cols.Where(c =>
+                     !c.IsInsertDate() &&
+                     !c.IsUpdateDate() &&
+                     !c.IsIsActive()))
             sb.AppendLine($"        public {ToCSharpProperty(c.SqlType,c.IsNullable)} {c.Name} {{ get; set; }}");
 
         sb.AppendLine("    }");

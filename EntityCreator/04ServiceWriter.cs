@@ -118,6 +118,7 @@ public static class ServiceWriter
         var updateCols = cols.Where(c =>
             !c.IsIdentity &&
             !c.IsInsertDate() &&
+            !c.IsUpdateDate() &&
             !c.IsIsActive()
         );
 
@@ -155,7 +156,11 @@ public static class ServiceWriter
         sb.AppendLine($"    return new {entity}Dto");
         sb.AppendLine("    {");
 
-        foreach (var c in cols)
+        foreach (var c in cols.Where(c =>
+              !c.IsInsertDate() &&
+              !c.IsUpdateDate() &&
+              !c.IsIsActive()
+          ))
             sb.AppendLine($"        {c.Name} = {ReadValue(c)},");
 
         sb.AppendLine("    };");
@@ -180,7 +185,11 @@ public static class ServiceWriter
         sb.AppendLine($"        list.Add(new {entity}ListItemDto");
         sb.AppendLine("        {");
 
-        foreach (var c in cols.Where(c => !c.IsUpdateDate()))
+        foreach (var c in cols.Where(c =>
+            !c.IsInsertDate() &&
+            !c.IsUpdateDate() &&
+            !c.IsIsActive()
+        ))
             sb.AppendLine($"            {c.Name} = {ReadValue(c)},");
 
         sb.AppendLine("        });");
@@ -210,8 +219,15 @@ public static class ServiceWriter
         sb.AppendLine($"        result.Items.Add(new {entity}ListItemDto");
         sb.AppendLine("        {");
 
-        foreach (var c in cols.Where(c => !c.IsUpdateDate()))
+        foreach (var c in cols.Where(c =>
+            !c.IsInsertDate() &&
+            !c.IsUpdateDate() &&
+            !c.IsIsActive()
+        ))
+        {
             sb.AppendLine($"            {c.Name} = {ReadValue(c)},");
+        }
+           
 
         sb.AppendLine("        });");
         sb.AppendLine("    }");
@@ -275,9 +291,6 @@ $@"public void DeleteSoft(int id)
 
         return $"({info.ClrType})rdr[\"{c.Name}\"]";
     }
-
-
- 
 
     static string Indent(string text, int level)
     {

@@ -52,8 +52,13 @@ public static class ViewModelWriter
     static string GenerateUpdateViewModel(string ns, string entity, List<DbColumn> cols)
     {
         var sb = Start(ns, $"{entity}UpdateViewModel");
-        foreach (var c in cols.Where(c => !c.IsInsertDate()))
+        foreach (var c in cols.Where(c =>
+                     !c.IsInsertDate() &&
+                     !c.IsUpdateDate() &&
+                     !c.IsIsActive()))
+        {
             AppendProperty(sb, c);
+        }
         return End(sb);
     }
 
