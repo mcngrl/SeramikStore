@@ -61,7 +61,11 @@ public static class ControllerWriter
         sb.AppendLine($"            var vm = list.Select(x => new {entity}ListViewModel");
         sb.AppendLine("            {");
 
-        foreach (var c in cols.Where(c => !c.IsUpdateDate()))
+        foreach (var c in cols.Where(c =>
+            !c.IsInsertDate() &&
+            !c.IsUpdateDate() &&
+            !c.IsIsActive()
+        ))
             sb.AppendLine($"                {c.Name} = x.{c.Name},");
 
         sb.AppendLine("            }).ToList();");
@@ -88,7 +92,11 @@ public static class ControllerWriter
         sb.AppendLine();
         sb.AppendLine($"            var vm = new {entity}ViewModel");
         sb.AppendLine("            {");
-        foreach (var c in cols)
+        foreach (var c in cols.Where(c =>
+            !c.IsInsertDate() &&
+            !c.IsUpdateDate() &&
+            !c.IsIsActive()
+        ))
             sb.AppendLine($"                {c.Name} = dto.{c.Name},");
         sb.AppendLine("            };");
         sb.AppendLine();
@@ -173,7 +181,11 @@ public static class ControllerWriter
         sb.AppendLine($"            return View(new {entity}UpdateViewModel");
         sb.AppendLine("            {");
 
-        foreach (var c in cols.Where(c => !c.IsInsertDate()))
+
+        foreach (var c in cols.Where(c =>
+             !c.IsInsertDate() &&
+             !c.IsUpdateDate() &&
+             !c.IsIsActive()))
         {
             sb.AppendLine($"                {c.Name} = dto.{c.Name},");
         }
@@ -192,7 +204,10 @@ public static class ControllerWriter
         sb.AppendLine($"            {serviceField}.Update(new {entity}UpdateDto");
         sb.AppendLine("            {");
 
-        foreach (var c in cols.Where(c => !c.IsInsertDate()))
+        foreach (var c in cols.Where(c =>
+             !c.IsInsertDate() &&
+             !c.IsUpdateDate() &&
+             !c.IsIsActive()))
         {
             
             var typeInfo = SqlTypeMapper.Map(c.SqlType);
@@ -245,7 +260,11 @@ public static class ControllerWriter
         sb.AppendLine($"            var vm = new {entity}ViewModel");
         sb.AppendLine("            {");
 
-        foreach (var c in cols)
+        foreach (var c in cols.Where(c =>
+            !c.IsInsertDate() &&
+            !c.IsUpdateDate() &&
+            !c.IsIsActive()
+        ))
             sb.AppendLine($"                {c.Name} = dto.{c.Name},");
 
         sb.AppendLine("            };");

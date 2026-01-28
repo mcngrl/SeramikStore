@@ -156,8 +156,6 @@ List<Target> targets = new()
     new Target(6, solutionRoot, @"SeramikStore.Web\Controllers", true, "Controller.generated.cs", new ControllerAction(),"6 - Controller"),
     new Target(7, solutionRoot, @"SeramikStore.Web\Views", true, "", new ViewAction(),"7 - View"),
     new Target(8, solutionRoot, @"SeramikStore.Web\Localization", true, "Resource.generated.cs", new  LocalizationMarkerAction(),"8 - LocalizationMaker"),
-
-   
 };
 
 // =====================
