@@ -1,7 +1,11 @@
-﻿@model IEnumerable<SeramikStore.Services.DTOs.ProductListForHomeDto>
+﻿@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
+@model IEnumerable<SeramikStore.Services.DTOs.ProductListForHomeDto>
+@inject IStringLocalizer<HomeResource> L
+
 
 @{
-    ViewData["Title"] = "Ürünler";
+    ViewData["Title"] = @L["Ürünler"];
 }
 
 <div class="container-fluid px-4 mt-4">

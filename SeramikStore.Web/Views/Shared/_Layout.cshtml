@@ -1,9 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
+@inject IStringLocalizer<CommonResource> C
+@using System.Globalization
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SeramikStore.Web</title>
+    <title>@ViewData["Title"] - Dibu Seramik</title>
     @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/myTheme.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -19,10 +24,28 @@
         </main>
     </div>
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - SeramikStore.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+        
+        @if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "tr")
+        {
+            <div class="container text-center">
+                &copy; @DateTime.Now.Year – Dibu Seramik |
+                <a asp-controller="Home" asp-action="PrivacyTR">Gizlilik Politikası</a>|
+                <a asp-controller="Home" asp-action="KVKKTR">KVKK Aydınlatma Metni</a>|
+                <a asp-controller="Home" asp-action="MesafeliSatisTR">Mesafeli Satış Sözleşmesi</a>
+            </div>
+        }
+        else if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "en")
+        {
+            <div class="container text-center">
+                &copy; @DateTime.Now.Year – Dibu Seramik |
+                <a asp-action="PrivacyEN">Privacy Policy</a> |
+                <a asp-action="KVKKEN">Data Protection</a> |
+                <a asp-action="MesafeliSatisEN">Distance Sales</a>
+            </div>
+        }
+
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
