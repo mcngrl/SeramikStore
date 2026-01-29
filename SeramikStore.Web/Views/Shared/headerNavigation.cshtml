@@ -1,11 +1,17 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
+@inject IStringLocalizer<CommonResource> C
+
+
 @* <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
 <nav class="navbar navbar-expand-lg bg-primary>*@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <!-- LOGO -->
         <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
-            SeramikStore
+            Dibu Seramik
         </a>
 
         <!-- MOBILE TOGGLE -->
@@ -17,56 +23,36 @@
             <!-- SOL MENÜ -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="Index">Ürünler</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">@C["Ürünler"]</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-controller="Potansiyel" asp-action="Index">Olası Müşteriler</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="About">@C["Hakkımızda"]</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="About">Hakkımızda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Culture"
-                       asp-action="Set"
-                       asp-route-culture="en-US"
-                       asp-route-returnUrl="@Context.Request.Path">EN</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Culture"
-                       asp-action="Set"
-                       asp-route-culture="tr-TR"
-                       asp-route-returnUrl="@Context.Request.Path">TR</a>
-                </li>
-
-
-
-
-     
                 @if (HttpContextAccessor.HttpContext.Session.GetString("role") == "Admin")
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="accountDropdown"
                            role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user"></i> Yönetim
+                            <i class="fas fa-user"></i> @C["Yönetim"]
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Product">Ürünler</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Product">@C["Ürün Tanımlama"]</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" asp-controller="Currency">Para Birimleri</a>
+                                <a class="dropdown-item" asp-controller="Currency">@C["Para Birimleri"]</a>
  
                             </li>
                             <li>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Category">Kategoriler</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Category">@C["Kategoriler"]</a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Order">Müşteri Siparişleri</a>
+                                <a class="dropdown-item" asp-action="Index" asp-controller="Order">@C["Müşteri Siparişleri"]</a>
                             </li>
-                            <li>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Order">Orders</a>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Potansiyel" asp-action="Index">@C["Potansiyel Müşteriler"]</a>
                             </li>
 
                         </ul>
@@ -96,12 +82,12 @@
                     <!-- Giriş yapılmamış -->
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Account" asp-action="Login">
-                            <i class="fas fa-sign-in-alt"></i> Giriş Yap
+                            <i class="fas fa-sign-in-alt"></i>@C["Giriş Yap"]
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Account" asp-action="Register">
-                            <i class="fas fa-user-plus"></i> Kayıt Ol
+                            <i class="fas fa-user-plus"></i>@C["Kayıt Ol"]
                         </a>
                     </li>
                 }
@@ -117,7 +103,7 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
-                                    <i class="fas fa-id-card"></i> Profilim
+                                    <i class="fas fa-id-card"></i> Kullanıcı Bilgilerim
                                 </a>
                             </li>
 
@@ -169,7 +155,7 @@
                                asp-action="Set"
                                asp-route-culture="tr-TR"
                                asp-route-returnUrl="@Context.Request.Path">
-                                🇹🇷 Türkçe
+                                Türkçe
                             </a>
                         </li>
                         <li>
@@ -178,7 +164,7 @@
                                asp-action="Set"
                                asp-route-culture="en-US"
                                asp-route-returnUrl="@Context.Request.Path">
-                                🇬🇧 English
+                                English
                             </a>
                         </li>
                     </ul>
