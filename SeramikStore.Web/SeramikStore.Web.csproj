@@ -15,6 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Localization\HomeResource.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Localization\HomeResource.tr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Localization\CategoryResource.en.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

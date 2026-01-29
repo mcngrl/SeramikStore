@@ -117,40 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-	<data name="Title" xml:space="preserve">
-  <value>Category</value>
-</data>
-
-	<data name="Name" xml:space="preserve">
-  <value>Name</value>
-</data>
-
-	<data name="IsActive" xml:space="preserve">
-  <value>Active</value>
-</data>
-
-	<data name="New" xml:space="preserve">
-  <value>New</value>
-</data>
-
-	<data name="Edit" xml:space="preserve">
-  <value>Edit</value>
-</data>
-
-	<data name="Delete" xml:space="preserve">
-  <value>Delete</value>
-</data>
-
-	<data name="Detail" xml:space="preserve">
-  <value>Detail</value>
-</data>
-
-	<data name="Save" xml:space="preserve">
-  <value>Save</value>
-</data>
-
-	<data name="Cancel" xml:space="preserve">
-  <value>Cancel</value>
-</data>
-
+  <data name="Title" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="KVKK Aydınlatma Metni" xml:space="preserve">
+    <value>KVKK Aydınlatma Metni</value>
+  </data>
+  <data name="Gizlilik Politikası" xml:space="preserve">
+    <value>Gizlilik Politikası</value>
+  </data>
 </root>

@@ -7,6 +7,7 @@ using SeramikStore.Web.Filters;
 using SeramikStore.Web.Models;
 using SeramikStore.Web.ViewModels;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net.WebSockets;
 using System.Runtime.Intrinsics.X86;
 
@@ -62,10 +63,80 @@ namespace SeramikStore.Web.Controllers
             vm.ImagePaths = ImagePaths;
             return View(vm);
         }
-        public IActionResult Privacy()
+        public IActionResult PrivacyTR()
         {
+            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            if (lang == "en")
+            {
+                return RedirectToAction(nameof(PrivacyEN));
+            }
+
+            return View(); 
+        }
+
+        public IActionResult PrivacyEN()
+        {
+            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            if (lang == "tr")
+            {
+                return RedirectToAction(nameof(PrivacyTR));
+            }
+
             return View();
         }
+        public IActionResult KVKKTR()
+        {
+            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            if (lang == "en")
+            {
+                return RedirectToAction(nameof(KVKKEN));
+            }
+
+            return View();
+        }
+        public IActionResult KVKKEN()
+        {
+            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            if (lang == "tr")
+            {
+                return RedirectToAction(nameof(KVKKTR));
+            }
+
+            return View();
+        }
+
+        public IActionResult MesafeliSatisTR()
+        {
+            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            if (lang == "en")
+            {
+                return RedirectToAction(nameof(MesafeliSatisEN));
+            }
+
+            return View();
+        }
+        public IActionResult MesafeliSatisEN()
+        {
+            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+            if (lang == "tr")
+            {
+                return RedirectToAction(nameof(MesafeliSatisTR));
+            }
+
+            return View();
+        }
+
+
+
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
