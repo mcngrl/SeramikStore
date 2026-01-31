@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SeramikStore.Entities;
@@ -33,6 +33,9 @@ public class UserService : IUserService
         cmd.Parameters.AddWithValue("@BirthDate", user.BirthDate ?? (object)DBNull.Value);
         cmd.Parameters.AddWithValue("@IsActive", user.IsActive);
         cmd.Parameters.AddWithValue("@RoleId", user.RoleId);
+        cmd.Parameters.AddWithValue("@AcceptMembershipAgreement", user.AcceptMembershipAgreement);
+        cmd.Parameters.AddWithValue("@AcceptKvkk", user.AcceptKvkk);
+        cmd.Parameters.AddWithValue("@AgreementAcceptedIp", user.AgreementAcceptedIp); 
 
         con.Open();
         cmd.ExecuteNonQuery();

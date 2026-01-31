@@ -33,4 +33,26 @@ public class RegisterViewModel
     [DataType(DataType.Date)]
     [Display(Name = "Doğum Tarihi")]
     public DateTime? BirthDate { get; set; }
+
+
+
+    // ===============================
+    // SÖZLEŞME & KVKK
+    // ===============================
+
+    [Range(typeof(bool), "true", "true",
+        ErrorMessage = "Üyelik sözleşmesini kabul etmelisiniz")]
+    public bool AcceptMembershipAgreement { get; set; }
+
+    [Range(typeof(bool), "true", "true",
+        ErrorMessage = "KVKK aydınlatma metnini kabul etmelisiniz")]
+    public bool AcceptKvkk { get; set; }
+
+    // server-side log
+    public string? AgreementAcceptedIp { get; set; }
+
+    // ===============================
+    // LOG / HUKUKİ KAYIT (server set eder)
+    // ===============================
+
 }
