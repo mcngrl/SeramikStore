@@ -156,9 +156,18 @@ public class UserService : IUserService
 
     public bool IsEmailExists(string email)
     {
-        return false;
-    }
+        using var conn = new SqlConnection(_connectionString);
+        using var cmd = new SqlCommand("sp_User_IsEmailExists", conn);
 
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.Add("@Email", SqlDbType.NVarChar, 256).Value = email;
+
+        conn.Open();
+
+        var result = cmd.ExecuteScalar();
+
+        return Convert.ToInt32(result) == 1;
+    }
 
     public bool ChangePassword(int userId, string currentPassword, string newPassword)
     {

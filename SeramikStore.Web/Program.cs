@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using SeramikStore.Services;
+using SeramikStore.Web.Localization;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +23,12 @@ builder.Services.AddLocalization(options =>
 });
 
 builder.Services.AddControllersWithViews()
-    .AddViewLocalization()
-    .AddDataAnnotationsLocalization();
+        .AddViewLocalization()
+       .AddDataAnnotationsLocalization(options =>
+       {
+           options.DataAnnotationLocalizerProvider = (type, factory) =>
+               factory.Create(typeof(AccountResource));
+       });
 
 // Desteklenen diller
 var supportedCultures = new[]

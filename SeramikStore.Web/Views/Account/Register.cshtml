@@ -1,12 +1,17 @@
-﻿@model RegisterViewModel
+﻿@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
+@inject IStringLocalizer<AccountResource> L
+@model SeramikStore.Web.ViewModels.Account.RegisterViewModel
 @{
-    ViewData["Title"] = "Üye Ol";
+    
+    
+    ViewData["Title"] = @L["Üye Ol"];
 }
 
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-6">
-            <h3 class="mb-4">Üyelik Bilgilerim</h3>
+            <h3 class="mb-4">@L["Üyelik Bilgilerim"]</h3>
 
             <form asp-action="Register" method="post">
                 @Html.AntiForgeryToken()
@@ -27,76 +32,94 @@
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="PhoneNumber" class="form-label"></label>
 
-                <div class="mb-3">
-                    <label asp-for="Email" class="form-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                        <input asp-for="PhoneNumber"
+                               class="form-control"
+                               id="phoneNumber"
+                               autocomplete="off"
+                               inputmode="numeric"
+                               placeholder="(5XX) XXX XX XX" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label asp-for="Password" class="form-label"></label>
-                    <input asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="ConfirmPassword" class="form-label"></label>
-                    <input asp-for="ConfirmPassword" class="form-control" />
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="PhoneNumber" class="form-label"></label>
-                    <input asp-for="PhoneNumber" class="form-control" />
-                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                </div>
-
                 <div class="mb-3">
                     <label asp-for="BirthDate" class="form-label"></label>
                     <input asp-for="BirthDate" class="form-control" />
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                 </div>
 
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <div class="input-group mb-3">
+                    <input asp-for="Password"
+                           class="form-control"
+                           id="passwordInput" />
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            id="togglePassword">
+                        👁️
+                    </button>
+                    </div>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                    <div class="input-group mb-3">
+                    <input asp-for="ConfirmPassword"
+                           class="form-control"
+                           id="confirmPasswordInput" />
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            id="toggleConfirmPassword">
+                        👁️
+                    </button>
+                    </div>
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 <hr />
 
-                <!-- ÜYELİK SÖZLEŞMESİ -->
-                <div class="form-check mb-1">
-                    <input type="checkbox"
-                           class="form-check-input"
-                           name="AcceptMembershipAgreement"
-                           value="true"
-                           @(Model.AcceptMembershipAgreement ? "checked" : "") />
-                    <label class="form-check-label">
-                        <a href="/Home/MembershipAgreement" target="_blank">
-                            Üyelik Sözleşmesini
-                        </a>
-                        okudum, anladım ve kabul ediyorum
-                    </label>
+                <div class="border rounded p-3 mb-2 bg-light">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input fs-5 strong-checkbox" name="AcceptMembershipAgreement" value="true"
+                               @(Model.AcceptMembershipAgreement ? "checked" : "") />
+                        <label class="form-check-label fw-semibold">
+                            <a href="/Home/MembershipAgreement" target="_blank">
+                                @L["Üyelik Sözleşmesini okudum, anladım ve kabul ediyorum"]
+                            </a>
+                        </label>
+                    </div>
+                    <span asp-validation-for="AcceptMembershipAgreement"
+                          class="text-danger d-block mt-1"></span>
                 </div>
-                <span asp-validation-for="AcceptMembershipAgreement"
-                      class="text-danger d-block mb-2"></span>
 
-                <!-- KVKK -->
-                <div class="form-check mb-1">
-                    <input type="checkbox"
-                           class="form-check-input"
-                           name="AcceptKvkk"
-                           value="true"
-                           @(Model.AcceptKvkk ? "checked" : "") />
-                    <label class="form-check-label">
-                        <a href="/Home/Kvkk" target="_blank">
-                            Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini
-                        </a>
-                        okudum
-                    </label>
+                <div class="border rounded p-3 mb-3 bg-light">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input fs-5 strong-checkbox" name="AcceptKvkk" value="true"
+                               @(Model.AcceptKvkk ? "checked" : "") />
+                        <label class="form-check-label fw-semibold">
+                            <a href="/Home/Kvkk" target="_blank">
+                                @L["Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum"]"
+                            </a>
+                        </label>
+                    </div>
+                    <span asp-validation-for="AcceptKvkk"
+                          class="text-danger d-block mt-1"></span>
                 </div>
-                <span asp-validation-for="AcceptKvkk"
-                      class="text-danger d-block mb-3"></span>
 
                 <button type="submit"
                         class="btn btn-warning w-100">
-                    Üye Ol
+                    @L["Üye Ol"]
                 </button>
             </form>
         </div>
@@ -106,3 +129,67 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+
+<script>
+    const phoneInput = document.getElementById("phoneNumber");
+
+    phoneInput.addEventListener("input", function (e) {
+        let digits = this.value.replace(/\D/g, "");
+
+        // başta 0 yazılırsa at
+        if (digits.startsWith("0")) {
+            digits = digits.substring(1);
+        }
+
+        // max 10 rakam
+        digits = digits.substring(0, 10);
+
+        let formatted = "";
+
+        if (digits.length > 0) {
+            formatted = "(" + digits.substring(0, 3);
+        }
+        if (digits.length >= 4) {
+            formatted += ") " + digits.substring(3, 6);
+        }
+        if (digits.length >= 7) {
+            formatted += " " + digits.substring(6, 8);
+        }
+        if (digits.length >= 9) {
+            formatted += " " + digits.substring(8, 10);
+        }
+
+        this.value = formatted;
+    });
+</script>
+
+
+<script>
+    function setupHoldToView(buttonId, inputId) {
+        const btn = document.getElementById(buttonId);
+        const input = document.getElementById(inputId);
+
+        // Mouse
+        btn.addEventListener("mousedown", () => input.type = "text");
+        btn.addEventListener("mouseup", () => input.type = "password");
+        btn.addEventListener("mouseleave", () => input.type = "password");
+
+        // Touch (mobil)
+        btn.addEventListener("touchstart", () => input.type = "text");
+        btn.addEventListener("touchend", () => input.type = "password");
+        btn.addEventListener("touchcancel", () => input.type = "password");
+    }
+
+    setupHoldToView("togglePassword", "passwordInput");
+    setupHoldToView("toggleConfirmPassword", "confirmPasswordInput");
+</script>
+
+<style>
+    .strong-checkbox {
+        border: 2px solid #000 !important; /* Koyu çerçeve */
+    }
+
+
+</style>

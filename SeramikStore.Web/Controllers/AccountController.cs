@@ -2,8 +2,8 @@
 using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Services.DTOs;
-using SeramikStore.Web.ViewModel;
 using SeramikStore.Web.ViewModels;
+using SeramikStore.Web.ViewModels.Account;
 
 public class AccountController : Controller
 {

@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace SeramikStore.Web.ViewModel
+namespace SeramikStore.Web.ViewModels
 {
     public class LoginViewModel
     {
