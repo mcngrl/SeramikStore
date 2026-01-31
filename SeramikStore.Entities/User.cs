@@ -1,4 +1,4 @@
-﻿namespace SeramikStore.Entities
+namespace SeramikStore.Entities
 {
     public class User
     {
@@ -10,5 +10,10 @@
         public string PhoneNumber { get; set; }
         public DateTime? BirthDate { get; set; }
         public bool IsActive { get; set; }
+        public bool AcceptMembershipAgreement { get; set; }
+        public bool AcceptKvkk { get; set; }
+        public DateTime AgreementAcceptedAt { get; set; }
+        public string AgreementAcceptedIp { get; set; }
+
     }
 }

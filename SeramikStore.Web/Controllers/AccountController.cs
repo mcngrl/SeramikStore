@@ -45,7 +45,9 @@ public class AccountController : Controller
             BirthDate = model.BirthDate,
             IsActive = true,
             RoleId = 2,
-
+            AcceptKvkk = model.AcceptKvkk,
+            AcceptMembershipAgreement = model.AcceptMembershipAgreement,
+            AgreementAcceptedIp = HttpContext.Connection.RemoteIpAddress?.ToString()
         };
 
         _userService.Insert(user, model.Password);

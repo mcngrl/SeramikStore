@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +18,9 @@ namespace SeramikStore.Services.DTOs
             public bool IsActive { get; set; }
             public int RoleId { get; set; }
             public string RoleName { get; set; }
+            public bool AcceptMembershipAgreement { get; set; }
+            public bool AcceptKvkk { get; set; }
+            public string AgreementAcceptedIp { get; set; }
     }
 
 
