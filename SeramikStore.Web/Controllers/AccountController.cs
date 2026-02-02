@@ -35,6 +35,7 @@ public class AccountController : Controller
             ModelState.AddModelError("Email", "Bu email adresi zaten kayıtlı");
             return View(model);
         }
+        var token = Guid.NewGuid().ToString("N");
 
         var user = new UserDto
         {
@@ -44,6 +45,9 @@ public class AccountController : Controller
             PhoneNumber = model.PhoneNumber,
             BirthDate = model.BirthDate,
             IsActive = true,
+            IsEmailConfirmed = false,
+            EmailConfirmToken = token,
+            EmailConfirmTokenExpire = DateTime.UtcNow.AddHours(24),
             RoleId = 2,
             AcceptKvkk = model.AcceptKvkk,
             AcceptMembershipAgreement = model.AcceptMembershipAgreement,
@@ -52,9 +56,48 @@ public class AccountController : Controller
 
         _userService.Insert(user, model.Password);
 
+        var confirmLink = Url.Action(
+        "ConfirmEmail",
+        "Account",
+        new { token = token, email = model.Email },
+        Request.Scheme
+        );
+        //_emailService.Send(
+        //model.Email,
+        //"Email Doğrulama",
+        //$"Email adresinizi doğrulamak için <a href='{confirmLink}'>buraya tıklayın</a>"
+        //);
+
         TempData["Success"] = "Kayıt başarılı. Giriş yapabilirsiniz.";
         return RedirectToAction("Login", "Account");
     }
+
+    [HttpGet]
+    public IActionResult ConfirmEmail(string token, string email)
+    {
+        var user = _userService.GetByEmail(email);
+
+        if (user == null)
+            return BadRequest("Kullanıcı bulunamadı");
+
+        if (user.IsEmailConfirmed)
+            return View("EmailAlreadyConfirmed");
+
+        if (user.EmailConfirmToken != token ||
+            user.EmailConfirmTokenExpire < DateTime.UtcNow)
+        {
+            return View("InvalidOrExpiredToken");
+        }
+
+        user.IsEmailConfirmed = true;
+        user.EmailConfirmToken = null;
+        user.EmailConfirmTokenExpire = null;
+
+        _userService.Update(user);
+
+        return View("EmailConfirmed");
+    }
+
 
     [HttpGet]
     public IActionResult MyProfile()
@@ -180,6 +223,11 @@ public class AccountController : Controller
             return View(vm);
         }
 
+        if (!user.IsEmailConfirmed)
+        {
+            ModelState.AddModelError("", "Email adresinizi doğrulamanız gerekiyor");
+            return View(vm);
+        }
         HttpContext.Session.SetString("userName", user.Email);
         HttpContext.Session.SetString("role", user.RoleName);
         HttpContext.Session.SetInt32("userId", user.Id);

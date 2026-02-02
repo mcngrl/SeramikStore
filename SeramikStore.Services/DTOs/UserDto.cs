@@ -21,6 +21,9 @@ namespace SeramikStore.Services.DTOs
             public bool AcceptMembershipAgreement { get; set; }
             public bool AcceptKvkk { get; set; }
             public string AgreementAcceptedIp { get; set; }
+            public bool IsEmailConfirmed { get; set; }
+            public string EmailConfirmToken { get; set; }
+            public DateTime? EmailConfirmTokenExpire { get; set; }
     }
 
 

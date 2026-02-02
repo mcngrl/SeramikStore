@@ -36,6 +36,9 @@ public class UserService : IUserService
         cmd.Parameters.AddWithValue("@AcceptMembershipAgreement", user.AcceptMembershipAgreement);
         cmd.Parameters.AddWithValue("@AcceptKvkk", user.AcceptKvkk);
         cmd.Parameters.AddWithValue("@AgreementAcceptedIp", user.AgreementAcceptedIp); 
+        cmd.Parameters.AddWithValue("@IsEmailConfirmed", user.IsEmailConfirmed); 
+        cmd.Parameters.AddWithValue("@EmailConfirmToken", user.EmailConfirmToken); 
+        cmd.Parameters.AddWithValue("@EmailConfirmTokenExpire", user.EmailConfirmTokenExpire); 
 
         con.Open();
         cmd.ExecuteNonQuery();
