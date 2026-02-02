@@ -2,16 +2,19 @@
 using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Services.DTOs;
+using SeramikStore.Services.Email;
 using SeramikStore.Web.ViewModels;
 using SeramikStore.Web.ViewModels.Account;
 
 public class AccountController : Controller
 {
     private readonly IUserService _userService;
+    private readonly IEmailService _emailService;
 
-    public AccountController(IUserService userService)
+    public AccountController(IUserService userService, IEmailService emailService)
     {
         _userService = userService;
+        _emailService = emailService;
     }
 
     // REGISTER – GET
@@ -62,11 +65,15 @@ public class AccountController : Controller
         new { token = token, email = model.Email },
         Request.Scheme
         );
-        //_emailService.Send(
-        //model.Email,
-        //"Email Doğrulama",
-        //$"Email adresinizi doğrulamak için <a href='{confirmLink}'>buraya tıklayın</a>"
-        //);
+        _emailService.Send(
+            model.Email,
+            "Email Doğrulama",
+            $@"
+            <h3>Email Doğrulama</h3>
+            <p>Email adresinizi doğrulamak için aşağıdaki linke tıklayın:</p>
+            <a href='{confirmLink}'>Email adresimi doğrula</a>
+            "
+        );
 
         TempData["Success"] = "Kayıt başarılı. Giriş yapabilirsiniz.";
         return RedirectToAction("Login", "Account");

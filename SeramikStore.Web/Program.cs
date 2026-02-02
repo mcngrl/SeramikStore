@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using SeramikStore.Services;
+using SeramikStore.Services.Email;
 using SeramikStore.Web.Localization;
 using System.Globalization;
 
@@ -67,6 +68,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserAddressService, UserAddressService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPotansiyelService, PotansiyelService>();
+builder.Services.Configure<EmailSettings>(
+    builder.Configuration.GetSection("EmailSettings"));
+
+builder.Services.AddScoped<IEmailService, EmailService>();
+
 // =====================
 // SESSION
 // =====================
