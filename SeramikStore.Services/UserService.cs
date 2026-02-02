@@ -153,7 +153,10 @@ public class UserService : IUserService
             BirthDate = dr["BirthDate"] as DateTime?,
             IsActive = Convert.ToBoolean(dr["IsActive"]),
             RoleId = Convert.ToInt32(dr["RoleId"]),
-            RoleName = dr["RoleName"].ToString()
+            RoleName = dr["RoleName"].ToString(),
+            IsEmailConfirmed = Convert.ToBoolean(dr["IsEmailConfirmed"]),
+            EmailConfirmToken = dr["EmailConfirmToken"].ToString(),
+            EmailConfirmTokenExpire = dr["EmailConfirmTokenExpire"] as DateTime?,
         };
     }
 

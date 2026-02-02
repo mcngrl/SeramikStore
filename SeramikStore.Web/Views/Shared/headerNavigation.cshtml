@@ -155,7 +155,7 @@
                                asp-action="Set"
                                asp-route-culture="tr-TR"
                                asp-route-returnUrl="@Context.Request.Path">
-                                Türkçe
+                                Türkçe @Context.Request.Path
                             </a>
                         </li>
                         <li>
@@ -164,7 +164,7 @@
                                asp-action="Set"
                                asp-route-culture="en-US"
                                asp-route-returnUrl="@Context.Request.Path">
-                                English
+                                English @Context.Request.Path
                             </a>
                         </li>
                     </ul>

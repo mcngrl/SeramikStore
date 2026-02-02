@@ -6,15 +6,21 @@ using SeramikStore.Services.Email;
 using SeramikStore.Web.ViewModels;
 using SeramikStore.Web.ViewModels.Account;
 
+using Microsoft.Extensions.Localization;
+using SeramikStore.Web.Localization;
+
 public class AccountController : Controller
 {
     private readonly IUserService _userService;
     private readonly IEmailService _emailService;
+    private readonly IStringLocalizer<AccountResource> _L;
 
-    public AccountController(IUserService userService, IEmailService emailService)
+    public AccountController(IUserService userService, IEmailService emailService,
+        IStringLocalizer<AccountResource> L)
     {
         _userService = userService;
         _emailService = emailService;
+        _L = L;
     }
 
     // REGISTER – GET
@@ -24,20 +30,18 @@ public class AccountController : Controller
         return View(new RegisterViewModel());
     }
 
-    // REGISTER – POST
     [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Register(RegisterViewModel model)
+    public async Task<IActionResult> Register(RegisterViewModel model)
     {
         if (!ModelState.IsValid)
             return View(model);
 
-        // Email daha önce var mı?
         if (_userService.IsEmailExists(model.Email))
         {
             ModelState.AddModelError("Email", "Bu email adresi zaten kayıtlı");
             return View(model);
         }
+
         var token = Guid.NewGuid().ToString("N");
 
         var user = new UserDto
@@ -60,45 +64,48 @@ public class AccountController : Controller
         _userService.Insert(user, model.Password);
 
         var confirmLink = Url.Action(
-        "ConfirmEmail",
-        "Account",
-        new { token = token, email = model.Email },
-        Request.Scheme
-        );
-        _emailService.Send(
-            model.Email,
-            "Email Doğrulama",
-            $@"
-            <h3>Email Doğrulama</h3>
-            <p>Email adresinizi doğrulamak için aşağıdaki linke tıklayın:</p>
-            <a href='{confirmLink}'>Email adresimi doğrula</a>
-            "
+            "ConfirmEmail",
+            "Account",
+            new { token, email = model.Email },
+            Request.Scheme
         );
 
-        TempData["Success"] = "Kayıt başarılı. Giriş yapabilirsiniz.";
+        await _emailService.SendAsync(
+            model.Email,
+            "Email Doğrulama",
+            $"Email adresinizi doğrulamak için <a href='{confirmLink}'>buraya tıklayın</a>"
+        );
+
+        TempData["Success"] = "Kayıt başarılı. Email adresinizi doğrulayın.";
         return RedirectToAction("Login", "Account");
     }
+
 
     [HttpGet]
     public IActionResult ConfirmEmail(string email, string token)
     {
+        if (email == null)
+        {
+            return RedirectToAction("Login");
+        }
+
         var user = _userService.GetByEmail(email);
 
         if (user == null)
-            return View("EmailConfirmResult", "Kullanıcı bulunamadı");
+            return View("EmailConfirmResult", _L["Kullanıcı bulunamadı"].Value);
 
         if (user.IsEmailConfirmed)
-            return View("EmailConfirmResult", "Email zaten doğrulanmış");
+            return View("EmailConfirmResult", _L["Email zaten doğrulanmış"].Value);
 
         if (user.EmailConfirmToken != token)
-            return View("EmailConfirmResult", "Geçersiz doğrulama linki");
+            return View("EmailConfirmResult", _L["Geçersiz doğrulama linki"].Value);
 
         if (user.EmailConfirmTokenExpire < DateTime.UtcNow)
-            return View("EmailConfirmResult", "Doğrulama linkinin süresi dolmuş");
+            return View("EmailConfirmResult", _L["Doğrulama linkinin süresi dolmuş"].Value);
 
         _userService.ConfirmEmail(user.Id);
 
-        return View("EmailConfirmResult", "Email başarıyla doğrulandı 🎉");
+        return View("EmailConfirmResult", _L["Email başarıyla doğrulandı"].Value);
     }
 
 

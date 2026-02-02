@@ -34,7 +34,33 @@ namespace SeramikStore.Services.Email
                 EnableSsl = _settings.EnableSsl
             };
 
-            //client.Send(message);
+            client.Send(message);
         }
+
+        public async Task SendAsync(string to, string subject, string htmlBody)
+        {
+            using var message = new MailMessage
+            {
+                From = new MailAddress(_settings.FromEmailAdress, _settings.FromName),
+                Subject = subject,
+                Body = htmlBody,
+                IsBodyHtml = true
+            };
+
+            message.To.Add(to);
+
+            using var client = new SmtpClient(_settings.Host, _settings.Port)
+            {
+                Credentials = new NetworkCredential(
+                    _settings.UserName,
+                    _settings.Password
+                ),
+                EnableSsl = _settings.EnableSsl,
+                Timeout = 10000 // ⬅️ 10 saniye timeout (çok önemli)
+            };
+
+            await client.SendMailAsync(message);
+        }
+
     }
 }
