@@ -17,7 +17,7 @@ namespace SeramikStore.Services.Email
         {
             var message = new MailMessage
             {
-                From = new MailAddress(_settings.UserName, _settings.FromName),
+                From = new MailAddress(_settings.FromEmailAdress, _settings.FromName),
                 Subject = subject,
                 Body = htmlBody,
                 IsBodyHtml = true
@@ -34,7 +34,7 @@ namespace SeramikStore.Services.Email
                 EnableSsl = _settings.EnableSsl
             };
 
-            client.Send(message);
+            //client.Send(message);
         }
     }
 }
