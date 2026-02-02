@@ -189,4 +189,10 @@
   <data name="Cep Telefonu" xml:space="preserve">
     <value>Mobile Phone</value>
   </data>
+  <data name="Şifre Tekrar" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="{0} geçerli e-posta adresi değildir." xml:space="preserve">
+    <value>The {0} field is not a valid e-mail address.</value>
+  </data>
 </root>

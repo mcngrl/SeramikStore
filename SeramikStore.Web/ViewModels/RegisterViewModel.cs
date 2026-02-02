@@ -16,23 +16,24 @@ namespace SeramikStore.Web.ViewModels.Account
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "{0} alanı zorunludur.")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "{0} geçerli e-posta adresi değildir.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "{0} alanı zorunludur.")]
         [DataType(DataType.Password)]
-        [MinLength(6)]
+        [MinLength(6, ErrorMessage = "PasswordMinLength")]
         [Display(Name = "Şifre")]
         public string Password { get; set; }
 
-     
+
+        [Required(ErrorMessage = "{0} alanı zorunludur.")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Şifreler uyuşmuyor")]
         [Display(Name = "Şifre Tekrar")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} alanı zorunludur.")]
         [Display(Name = "Cep Telefonu")]
         [RegularExpression(
           @"^\(5\d{2}\)\s\d{3}\s\d{2}\s\d{2}$",

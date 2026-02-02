@@ -189,4 +189,10 @@
   <data name="Cep Telefonu" xml:space="preserve">
     <value>Cep Telefonu</value>
   </data>
+  <data name="Şifre Tekrar" xml:space="preserve">
+    <value>Şifre Tekrar</value>
+  </data>
+  <data name="{0} geçerli e-posta adresi değildir." xml:space="preserve">
+    <value>{0} geçerli e-posta adresi değildir.</value>
+  </data>
 </root>
