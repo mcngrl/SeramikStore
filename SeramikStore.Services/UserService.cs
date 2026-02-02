@@ -200,4 +200,15 @@ public class UserService : IUserService
         return true;
     }
 
+    public void ConfirmEmail(int userId)
+    {
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_User_ConfirmEmail", con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@UserId", userId);
+
+        con.Open();
+        cmd.ExecuteNonQuery();
+    }
+
 }

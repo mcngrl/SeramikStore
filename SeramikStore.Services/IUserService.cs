@@ -15,4 +15,6 @@ public interface IUserService
     UserDto ValidateUser(string email, string password);
 
     bool ChangePassword(int userId, string currentPassword, string newPassword);
+
+    void ConfirmEmail(int userId);
 }
