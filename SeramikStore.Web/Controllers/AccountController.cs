@@ -73,30 +73,27 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public IActionResult ConfirmEmail(string token, string email)
+    public IActionResult ConfirmEmail(string email, string token)
     {
         var user = _userService.GetByEmail(email);
 
         if (user == null)
-            return BadRequest("Kullanıcı bulunamadı");
+            return View("EmailConfirmResult", "Kullanıcı bulunamadı");
 
         if (user.IsEmailConfirmed)
-            return View("EmailAlreadyConfirmed");
+            return View("EmailConfirmResult", "Email zaten doğrulanmış");
 
-        if (user.EmailConfirmToken != token ||
-            user.EmailConfirmTokenExpire < DateTime.UtcNow)
-        {
-            return View("InvalidOrExpiredToken");
-        }
+        if (user.EmailConfirmToken != token)
+            return View("EmailConfirmResult", "Geçersiz doğrulama linki");
 
-        user.IsEmailConfirmed = true;
-        user.EmailConfirmToken = null;
-        user.EmailConfirmTokenExpire = null;
+        if (user.EmailConfirmTokenExpire < DateTime.UtcNow)
+            return View("EmailConfirmResult", "Doğrulama linkinin süresi dolmuş");
 
-        _userService.Update(user);
+        _userService.ConfirmEmail(user.Id);
 
-        return View("EmailConfirmed");
+        return View("EmailConfirmResult", "Email başarıyla doğrulandı 🎉");
     }
+
 
 
     [HttpGet]
