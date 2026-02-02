@@ -195,4 +195,19 @@
   <data name="{0} geçerli e-posta adresi değildir." xml:space="preserve">
     <value>The {0} field is not a valid e-mail address.</value>
   </data>
+  <data name="Kullanıcı bulunamadı" xml:space="preserve">
+    <value>User not found</value>
+  </data>
+  <data name="Email zaten doğrulanmış" xml:space="preserve">
+    <value>Email is already verified</value>
+  </data>
+  <data name="Geçersiz doğrulama linki" xml:space="preserve">
+    <value>Invalid verification link</value>
+  </data>
+  <data name="Doğrulama linkinin süresi dolmuş" xml:space="preserve">
+    <value>The verification link has expired.</value>
+  </data>
+  <data name="Email başarıyla doğrulandı" xml:space="preserve">
+    <value>Email verified successfully</value>
+  </data>
 </root>
