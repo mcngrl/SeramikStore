@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Services.DTOs;
 using SeramikStore.Services.Email;
+using SeramikStore.Web.Localization;
 using SeramikStore.Web.ViewModels;
 using SeramikStore.Web.ViewModels.Account;
-
-using Microsoft.Extensions.Localization;
-using SeramikStore.Web.Localization;
 
 public class AccountController : Controller
 {
@@ -70,16 +70,28 @@ public class AccountController : Controller
             Request.Scheme
         );
 
-        await _emailService.SendAsync(
-            model.Email,
-            "Email Doğrulama",
-            $"Email adresinizi doğrulamak için <a href='{confirmLink}'>buraya tıklayın</a>"
-        );
+
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await _emailService.SendAsync(
+                    model.Email,
+                    "Email Doğrulama",
+                    $"Email adresinizi doğrulamak için <a href='{confirmLink}'>buraya tıklayın</a>"
+                );
+            }
+            catch (Exception ex)
+            {
+                // LOG AL ama kullanıcıyı bekletme
+                //_logger.LogError(ex, "Email gönderilemedi");
+            }
+        });
+
 
         TempData["Success"] = "Kayıt başarılı. Email adresinizi doğrulayın.";
         return RedirectToAction("Login", "Account");
     }
-
 
     [HttpGet]
     public IActionResult ConfirmEmail(string email, string token)
@@ -107,8 +119,6 @@ public class AccountController : Controller
 
         return View("EmailConfirmResult", _L["Email başarıyla doğrulandı"].Value);
     }
-
-
 
     [HttpGet]
     public IActionResult MyProfile()
@@ -139,8 +149,6 @@ public class AccountController : Controller
 
         return View(vm);
     }
-
-
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -209,9 +217,6 @@ public class AccountController : Controller
         return View(vm);
     }
 
-
-
-
     [HttpGet]
     public IActionResult Login()
     {
@@ -220,7 +225,7 @@ public class AccountController : Controller
 
     [HttpPost]
     //[CheckSession("userName")]
-    public IActionResult Login(LoginViewModel vm)
+     public IActionResult Login(LoginViewModel vm)
     {
 
         if (!ModelState.IsValid)
@@ -243,9 +248,26 @@ public class AccountController : Controller
         HttpContext.Session.SetString("role", user.RoleName);
         HttpContext.Session.SetInt32("userId", user.Id);
 
-        return RedirectToAction("Index", "Home");
-    }
+        HttpContext.Session.SetString("userName", user.Email);
+        HttpContext.Session.SetString("role", user.RoleName);
+        HttpContext.Session.SetInt32("userId", user.Id);
 
+        if (vm.RememberMe)
+        {
+            Response.Cookies.Append(
+                "remember_me",
+                user.Email,
+                new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddDays(30),
+                    HttpOnly = true,
+                    Secure = true
+                });
+        }
+
+        return RedirectToAction("Index", "Home");
+
+    }
 
     public IActionResult Logout()
     {
@@ -255,4 +277,91 @@ public class AccountController : Controller
         // Login ekranına yönlendir
         return RedirectToAction("Login", "Account");
     }
+
+    [HttpGet]
+    public IActionResult ForgotPassword()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var user = _userService.GetByEmail(model.Email);
+        if (user == null || !user.IsEmailConfirmed)
+        {
+            // güvenlik: kullanıcı var mı yok mu söyleme
+            return View("ForgotPasswordConfirmation");
+        }
+
+        var token = Guid.NewGuid().ToString("N");
+        _userService.SetResetPasswordToken(user.Id, token, DateTime.UtcNow.AddHours(1));
+
+        var resetLink = Url.Action(
+            "ResetPassword",
+            "Account",
+            new { email = model.Email, token },
+            Request.Scheme
+        );
+
+        // 🔥 EMAIL HATA VERSE BİLE DEVAM ETSİN
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await _emailService.SendAsync(
+                    model.Email,
+                    "Şifre Sıfırlama",
+                    $"<a href='{resetLink}'>Şifremi sıfırla</a>"
+                );
+            }
+            catch { /* log */ }
+        });
+
+        return View("ForgotPasswordConfirmation");
+    }
+
+    [HttpGet]
+    public IActionResult ResetPassword(string email, string token)
+    {
+        var user = _userService.GetByEmail(email);
+
+        if (user == null ||
+            user.ResetPasswordToken != token ||
+            user.ResetPasswordTokenExpire < DateTime.UtcNow)
+        {
+            return View("ResetPasswordResult", "Geçersiz veya süresi dolmuş link");
+        }
+
+        return View(new ResetPasswordViewModel
+        {
+            Email = email,
+            Token = token
+        });
+    }
+
+    [HttpPost]
+    public IActionResult ResetPassword(ResetPasswordViewModel vm)
+    {
+        if (!ModelState.IsValid)
+            return View(vm);
+
+        var user = _userService.GetByEmail(vm.Email);
+
+        if (user == null ||
+            user.ResetPasswordToken != vm.Token ||
+            user.ResetPasswordTokenExpire < DateTime.UtcNow)
+        {
+            return View("ResetPasswordResult", "Geçersiz veya süresi dolmuş link");
+        }
+
+        _userService.ResetPassword(user.Id, vm.Password);
+
+        return View("ResetPasswordResult", "Şifreniz başarıyla güncellendi");
+    }
+
+
 }

@@ -210,4 +210,22 @@
   <data name="Email başarıyla doğrulandı" xml:space="preserve">
     <value>Email başarıyla doğrulandı</value>
   </data>
+  <data name="Giriş Yap" xml:space="preserve">
+    <value>Giriş Yap</value>
+  </data>
+  <data name="Üye Girişi" xml:space="preserve">
+    <value>Üye Girişi</value>
+  </data>
+  <data name="Kayıt Ol" xml:space="preserve">
+    <value>Kayıt Ol</value>
+  </data>
+  <data name="Hesabın yok mu?" xml:space="preserve">
+    <value>Hesabın yok mu?</value>
+  </data>
+  <data name="E-Posta Adresiniz" xml:space="preserve">
+    <value>E-Posta Adresiniz</value>
+  </data>
+  <data name="Şifreniz" xml:space="preserve">
+    <value>Şifreniz</value>
+  </data>
 </root>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using SeramikStore.Entities;
 using SeramikStore.Services.DTOs;
 using System.Data;
@@ -214,4 +215,36 @@ public class UserService : IUserService
         cmd.ExecuteNonQuery();
     }
 
+
+    public void SetResetPasswordToken(int userId, string token, DateTime expire)
+    {
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_User_SetResetPasswordToken", con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@UserId", userId);
+        cmd.Parameters.AddWithValue("@Token", token);
+        cmd.Parameters.AddWithValue("@Expire", expire);
+
+        con.Open();
+        cmd.ExecuteNonQuery();
+    }
+
+    public bool ResetPassword(int userId, string newPassword)
+    {
+        var user = GetById(userId);
+        if (user == null) 
+            return false;
+
+        var newHash = _passwordHasher.HashPassword(user, newPassword);
+
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_User_ResetPassword", con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@UserId", userId);
+        cmd.Parameters.AddWithValue("@PasswordHash", newHash);
+
+        con.Open();
+        cmd.ExecuteNonQuery();
+        return true;
+    }
 }
