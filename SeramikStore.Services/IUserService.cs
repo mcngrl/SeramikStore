@@ -9,12 +9,10 @@ public interface IUserService
     List<UserDto> GetAll();
     UserDto GetById(int id);
     UserDto GetByEmail(string email);
-
     bool IsEmailExists(string email);
-
     UserDto ValidateUser(string email, string password);
-
     bool ChangePassword(int userId, string currentPassword, string newPassword);
-
     void ConfirmEmail(int userId);
+    void SetResetPasswordToken(int userId, string token, DateTime expire);
+    bool ResetPassword(int userId, string newPassword);
 }

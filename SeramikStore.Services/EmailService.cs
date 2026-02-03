@@ -1,16 +1,20 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System.Net;
 using System.Net.Mail;
+using System.Reflection;
 
 namespace SeramikStore.Services.Email
 {
     public class EmailService : IEmailService
     {
         private readonly EmailSettings _settings;
+        private readonly ILogger<EmailService> _logger;
 
-        public EmailService(IOptions<EmailSettings> settings)
+        public EmailService(IOptions<EmailSettings> settings,ILogger<EmailService> logger)
         {
             _settings = settings.Value;
+            _logger = logger;
         }
 
         public void Send(string to, string subject, string htmlBody)
@@ -39,27 +43,43 @@ namespace SeramikStore.Services.Email
 
         public async Task SendAsync(string to, string subject, string htmlBody)
         {
-            using var message = new MailMessage
+            try
             {
-                From = new MailAddress(_settings.FromEmailAdress, _settings.FromName),
-                Subject = subject,
-                Body = htmlBody,
-                IsBodyHtml = true
-            };
+                using var message = new MailMessage
+                {
+                    From = new MailAddress(_settings.FromEmailAdress, _settings.FromName),
+                    Subject = subject,
+                    Body = htmlBody,
+                    IsBodyHtml = true
+                };
 
-            message.To.Add(to);
+                message.To.Add(to);
 
-            using var client = new SmtpClient(_settings.Host, _settings.Port)
+                using var client = new SmtpClient(_settings.Host, _settings.Port)
+                {
+                    Credentials = new NetworkCredential(
+                        _settings.UserName,
+                        _settings.Password
+                    ),
+                    EnableSsl = _settings.EnableSsl,
+                    Timeout = 10000 // ⬅️ 10 saniye timeout (çok önemli)
+                };
+
+                await client.SendMailAsync(message);
+            }
+            catch (Exception ex)
             {
-                Credentials = new NetworkCredential(
-                    _settings.UserName,
-                    _settings.Password
-                ),
-                EnableSsl = _settings.EnableSsl,
-                Timeout = 10000 // ⬅️ 10 saniye timeout (çok önemli)
-            };
 
-            await client.SendMailAsync(message);
+                _logger.LogError(ex,
+                               $"Email gönderilemedi. To: {to}, Subject: {subject}",
+                               to,
+                               subject
+                           );
+
+                // 🔥 KRİTİK: exception fırlatmıyoruz → uygulama devam eder
+            }
+
+
         }
 
     }
