@@ -109,4 +109,28 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+app.Use(async (context, next) =>
+{
+    if (!context.Session.Keys.Contains("userId"))
+    {
+        if (context.Request.Cookies.TryGetValue("remember_me", out var token))
+        {
+            var user = context.RequestServices
+                .GetRequiredService<IUserService>()
+                .GetByRememberMeToken(token);
+
+            if (user != null && user.RememberMeExpire > DateTime.UtcNow)
+            {
+                context.Session.SetInt32("userId", user.Id);
+                context.Session.SetString("userName", user.Email);
+                context.Session.SetString("role", user.RoleName);
+            }
+        }
+    }
+
+    await next();
+});
+
+
 app.Run();

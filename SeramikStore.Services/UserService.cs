@@ -40,6 +40,8 @@ public class UserService : IUserService
         cmd.Parameters.AddWithValue("@IsEmailConfirmed", user.IsEmailConfirmed); 
         cmd.Parameters.AddWithValue("@EmailConfirmToken", user.EmailConfirmToken); 
         cmd.Parameters.AddWithValue("@EmailConfirmTokenExpire", user.EmailConfirmTokenExpire); 
+        cmd.Parameters.AddWithValue("@RememberMeToken", user.RememberMeToken); 
+        cmd.Parameters.AddWithValue("@RememberMeExpire", user.RememberMeExpire); 
 
         con.Open();
         cmd.ExecuteNonQuery();
@@ -159,7 +161,9 @@ public class UserService : IUserService
             EmailConfirmToken = dr["EmailConfirmToken"].ToString(),
             EmailConfirmTokenExpire = dr["EmailConfirmTokenExpire"] as DateTime?,
             ResetPasswordToken = dr["ResetPasswordToken"].ToString(),
-            ResetPasswordTokenExpire = dr["ResetPasswordTokenExpire"] as DateTime?
+            ResetPasswordTokenExpire = dr["ResetPasswordTokenExpire"] as DateTime?,
+            RememberMeToken = dr["RememberMeToken"].ToString(),
+            RememberMeExpire = dr["RememberMeExpire"] as DateTime?
         };
     }
 
@@ -248,5 +252,43 @@ public class UserService : IUserService
         con.Open();
         cmd.ExecuteNonQuery();
         return true;
+    }
+
+    
+
+    public void SetRememberMeToken(int userId, string token, DateTime expire)
+    {
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_User_SetRememberMeToken", con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@UserId", userId);
+        cmd.Parameters.AddWithValue("@Token", token);
+        cmd.Parameters.AddWithValue("@Expire", expire);
+
+        con.Open();
+        cmd.ExecuteNonQuery();
+    }
+
+    public UserDto GetByRememberMeToken(string token)
+    {
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_User_GetByRememberMeToken", con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Token", token);
+
+        con.Open();
+        using SqlDataReader dr = cmd.ExecuteReader();
+        return dr.Read() ? MapUser(dr) : null;
+    }
+
+    public void ClearRememberMeToken(string token)
+    {
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("[sp_User_ClearRememberMeToken]", con);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Token", token);
+
+        con.Open();
+        cmd.ExecuteNonQuery();
     }
 }

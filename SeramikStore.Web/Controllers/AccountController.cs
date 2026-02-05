@@ -254,16 +254,27 @@ public class AccountController : Controller
 
         if (vm.RememberMe)
         {
+            var token = Guid.NewGuid().ToString("N");
+
+                _userService.SetRememberMeToken(
+                user.Id,
+                token,
+                DateTime.UtcNow.AddDays(30)
+            );
+
             Response.Cookies.Append(
                 "remember_me",
-                user.Email,
+                token,
                 new CookieOptions
                 {
                     Expires = DateTimeOffset.UtcNow.AddDays(30),
                     HttpOnly = true,
-                    Secure = true
-                });
+                    Secure = true,
+                    SameSite = SameSiteMode.Strict
+                }
+            );
         }
+
 
         return RedirectToAction("Index", "Home");
 
@@ -274,7 +285,14 @@ public class AccountController : Controller
         // Tüm session'ları temizler
         HttpContext.Session.Clear();
 
-        // Login ekranına yönlendir
+        var token = Request.Cookies["remember_me"];
+        if (token != null)
+        {
+            _userService.ClearRememberMeToken(token);
+            Response.Cookies.Delete("remember_me");
+        }
+
+        HttpContext.Session.Clear();
         return RedirectToAction("Login", "Account");
     }
 

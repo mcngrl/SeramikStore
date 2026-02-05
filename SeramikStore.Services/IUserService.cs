@@ -15,4 +15,7 @@ public interface IUserService
     void ConfirmEmail(int userId);
     void SetResetPasswordToken(int userId, string token, DateTime expire);
     bool ResetPassword(int userId, string newPassword);
+    void SetRememberMeToken(int userId, string token, DateTime expire);
+    UserDto GetByRememberMeToken(string token);
+    void ClearRememberMeToken(string token);
 }
