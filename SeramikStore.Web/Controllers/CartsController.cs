@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SeramikStore.Entities;
 using SeramikStore.Services;
+using SeramikStore.Services.DTOs;
 using SeramikStore.Web.Filters;
 using SeramikStore.Web.ViewModel;
 using SeramikStore.Web.ViewModels;
@@ -23,18 +24,47 @@ namespace SeramikStore.Web.Controllers
             _cartService = cartService;
         }
 
-        [CheckSession("userId")]
-        public IActionResult Index()
+          public IActionResult Index()
         {
-            var cartResult = _cartService.CartListByUserId((int)HttpContext.Session.GetInt32("userId"));
+            var userId = HttpContext.Session.GetInt32("userId");
+            CartResultDto cartResult;
+
+            if (userId.HasValue)
+            {
+                // 👤 Login olmuş kullanıcı
+                cartResult = _cartService.CartListByUserId(userId.Value);
+            }
+            else
+            {
+                // 🛒 Anon kullanıcı
+                var cartId = GetOrCreateCartId();
+                cartResult = _cartService.CartListByCartToken(cartId);
+            }
+
             return View(cartResult);
         }
 
         [HttpGet]
-        [CheckSession("userId")]
         public IActionResult Edit(int id)
         {
+
             var cart = _cartService.CartGetById(id);
+            if (cart == null)
+                return RedirectToAction("Index");
+
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            if (userId.HasValue)
+            {
+                if (cart.UserId != userId.Value)
+                    return Unauthorized();
+            }
+            else
+            {
+                var cartId = Request.Cookies["cart_id"];
+                if (cart.cart_id_token != cartId)
+                    return Unauthorized();
+            }
             return View(cart);
         }
         [HttpPost]
@@ -52,16 +82,55 @@ namespace SeramikStore.Web.Controllers
         }
 
         [HttpGet]
-        [CheckSession("userId")]
         public IActionResult Delete(int id)
         {
+    
+
             var cart = _cartService.CartGetById(id);
+            if (cart == null)
+                return RedirectToAction("Index");
+
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            if (userId.HasValue)
+            {
+                if (cart.UserId != userId.Value)
+                    return Unauthorized();
+            }
+            else
+            {
+                var cartId = Request.Cookies["cart_id"];
+                if (cart.cart_id_token != cartId)
+                    return Unauthorized();
+            }
+
+
             return View(cart);
+
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(Cart cart)
         {
+
+            var dbCart = _cartService.CartGetById(cart.Id);
+            if (dbCart == null)
+                return RedirectToAction("Index");
+
+            var userId = HttpContext.Session.GetInt32("userId");
+            if (userId.HasValue)
+            {
+                if (dbCart.UserId != userId.Value)
+                    return Unauthorized();
+            }
+            else
+            {
+                var cartId = Request.Cookies["cart_id"];
+                if (dbCart.cart_id_token != cartId)
+                    return Unauthorized();
+            }
+
             int result = _cartService.CartDeleteById(cart.Id);
             if (result > 0)
             {
@@ -69,17 +138,56 @@ namespace SeramikStore.Web.Controllers
             }
             return RedirectToAction("Index");
 
+
+
         }
 
 
         public IActionResult Increase(int id)
         {
+
+            var cart = _cartService.CartGetById(id);
+            if (cart == null)
+                return RedirectToAction("Index");
+
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            if (userId.HasValue)
+            {
+                if (cart.UserId != userId.Value)
+                    return Unauthorized();
+            }
+            else
+            {
+                var cartId = Request.Cookies["cart_id"];
+                if (cart.cart_id_token != cartId)
+                    return Unauthorized();
+            }
+
             //_cartService.IncreaseQuantity(id);
             return RedirectToAction("Index");
         }
 
         public IActionResult Decrease(int id)
         {
+
+            var cart = _cartService.CartGetById(id);
+            if (cart == null)
+                return RedirectToAction("Index");
+
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            if (userId.HasValue)
+            {
+                if (cart.UserId != userId.Value)
+                    return Unauthorized();
+            }
+            else
+            {
+                var cartId = Request.Cookies["cart_id"];
+                if (cart.cart_id_token != cartId)
+                    return Unauthorized();
+            }
             //_cartService.DecreaseQuantity(id);
             return RedirectToAction("Index");
         }
@@ -93,10 +201,18 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult AddressDetail()
         {
-            int userId = HttpContext.Session.GetInt32("userId").Value;
-            var cartResult = _cartService.CartListByUserId(userId);
+ 
+            var userId = HttpContext.Session.GetInt32("userId");
+            if (!userId.HasValue)
+            {
+                return RedirectToAction("Login", "Account",
+                    new { returnUrl = Url.Action("AddressDetail", "Carts") });
+            }
 
-            var addresses = _userAddressService.GetByUserId(userId);
+
+            var cartResult = _cartService.CartListByUserId((int)userId);
+
+            var addresses = _userAddressService.GetByUserId((int)userId);
 
             var vm = new AddressSelectViewModel
             {
@@ -148,7 +264,29 @@ namespace SeramikStore.Web.Controllers
 
             return RedirectToAction("Payment");
         }
+
+
+        private string GetOrCreateCartId()
+        {
+            const string cookieName = "cart_id";
+
+            if (Request.Cookies[cookieName] != null)
+                return Request.Cookies[cookieName];
+
+            var cartId = Guid.NewGuid().ToString("N");
+
+            Response.Cookies.Append(
+                cookieName,
+                cartId,
+                new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddDays(30),
+                    HttpOnly = true,
+                    Secure = Request.IsHttps,
+                    SameSite = SameSiteMode.Lax
+                });
+
+            return cartId;
+        }
     }
-
-
 }

@@ -145,7 +145,7 @@ namespace SeramikStore.Web.Controllers
         }
 
 
-        [CheckSession("userName")]
+        //[CheckSession("userName")]
         [HttpPost]
         public IActionResult Cart(ProductDetail vm)
         {
@@ -187,29 +187,64 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Cart cart = new Cart {
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            Cart cart = new Cart
+            {
                 ProductId = product.Id,
                 ProductName = product.ProductName,
                 ProductCode = product.ProductCode,
                 Quantity = vm.Quantity,
                 UnitPrice = product.UnitPrice,
+                cart_id_token = GetOrCreateCartId(),
+                UserId = userId
             };
-     
- 
 
-            cart.UserId = (int)HttpContext.Session.GetInt32("userId");
             int result = _cartservices.SaveCart(cart);
+
             if (result > 0)
             {
-                HttpContext.Session.SetInt32("sessionCart", _cartservices.CartListByUserId(cart.UserId).Items.Count());
+                if (userId.HasValue)
+                    HttpContext.Session.SetInt32("sessionCart",
+                        _cartservices.CartListByUserId(userId.Value).Items.Count());
+                else
+                    HttpContext.Session.SetInt32("sessionCart",
+                        _cartservices.CartListByCartToken(cart.cart_id_token).Items.Count());
+
                 return RedirectToAction("Index", "Carts");
             }
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
+               
+        }
+
+        private string GetOrCreateCartId()
+        {
+            const string cookieName = "cart_id";
+
+            if (Request.Cookies[cookieName] != null)
+                return Request.Cookies[cookieName];
+
+            var cartId = Guid.NewGuid().ToString("N");
+
+            Response.Cookies.Append(
+                cookieName,
+                cartId,
+                new CookieOptions
+                {
+                    Expires = DateTimeOffset.UtcNow.AddDays(30),
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.Lax
+                });
+
+            return cartId;
         }
 
 
- 
 
     }
 }

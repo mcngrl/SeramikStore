@@ -1,4 +1,4 @@
-using SeramikStore.Entities;
+﻿using SeramikStore.Entities;
 using SeramikStore.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,26 +16,29 @@ namespace SeramikStore.Web.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
 
-            if (HttpContext.Session.GetInt32("userId") != null)
-            {
-                if (HttpContext.Session.GetString("sessionCart") != null)
-                {
-                    return View(HttpContext.Session.GetInt32("sessionCart"));
-                }
-                else
-                {
-                    int UserId = (int)HttpContext.Session.GetInt32("userId");
-                    HttpContext.Session.SetInt32("sessionCart", _cartService.CartListByUserId(UserId).Items.Count());
-                    return View(HttpContext.Session.GetInt32("sessionCart"));
+            int count = 0;
 
-                }
-            }
-            else 
+            // ✅ LOGIN OLMUŞ KULLANICI
+            var userId = HttpContext.Session.GetInt32("userId");
+            if (userId.HasValue && userId.Value > 0)
             {
-                HttpContext.Session.Clear();
-                return View(0);
+                count = _cartService
+                    .CartListByUserId(userId.Value)
+                    .Items.Count();
+
+                return View(count);
             }
-            
+
+            // ✅ LOGIN OLMAMIŞ (GUEST)
+            if (Request.Cookies.TryGetValue("cart_id", out var cartId))
+            {
+                count = _cartService
+                    .CartListByCartToken(cartId)
+                    .Items.Count();
+            }
+
+            return View(count);
+
         }
     }
 }
