@@ -158,6 +158,8 @@ public class UserService : IUserService
             IsEmailConfirmed = Convert.ToBoolean(dr["IsEmailConfirmed"]),
             EmailConfirmToken = dr["EmailConfirmToken"].ToString(),
             EmailConfirmTokenExpire = dr["EmailConfirmTokenExpire"] as DateTime?,
+            ResetPasswordToken = dr["ResetPasswordToken"].ToString(),
+            ResetPasswordTokenExpire = dr["ResetPasswordTokenExpire"] as DateTime?
         };
     }
 

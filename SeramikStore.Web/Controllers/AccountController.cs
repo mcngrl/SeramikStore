@@ -70,7 +70,7 @@ public class AccountController : Controller
             Request.Scheme
         );
 
-
+        
         _ = Task.Run(async () =>
         {
             try
@@ -333,14 +333,17 @@ public class AccountController : Controller
             user.ResetPasswordToken != token ||
             user.ResetPasswordTokenExpire < DateTime.UtcNow)
         {
-            return View("ResetPasswordResult", "Geçersiz veya süresi dolmuş link");
+
+            return View("ResetPasswordResult", _L["Geçersiz veya süreci geçmiş link"].Value);
         }
 
         return View(new ResetPasswordViewModel
         {
+            Token = user.ResetPasswordToken,
             Email = email,
-            Token = token
         });
+
+
     }
 
     [HttpPost]
@@ -355,13 +358,14 @@ public class AccountController : Controller
             user.ResetPasswordToken != vm.Token ||
             user.ResetPasswordTokenExpire < DateTime.UtcNow)
         {
-            return View("ResetPasswordResult", "Geçersiz veya süresi dolmuş link");
+            return View("ResetPasswordResult", _L["Geçersiz veya süreci geçmiş link"].Value);
         }
 
         _userService.ResetPassword(user.Id, vm.Password);
 
-        return View("ResetPasswordResult", "Şifreniz başarıyla güncellendi");
+        return View("ResetPasswordResult", _L["Şifreniz başarıyla güncellenmiştir"].Value);
     }
+
 
 
 }
