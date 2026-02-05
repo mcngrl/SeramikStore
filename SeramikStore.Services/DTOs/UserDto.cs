@@ -26,6 +26,8 @@ namespace SeramikStore.Services.DTOs
             public DateTime? EmailConfirmTokenExpire { get; set; }
             public string ResetPasswordToken { get; set; }
             public DateTime? ResetPasswordTokenExpire { get; set; }
+            public string RememberMeToken { get; set; }
+            public DateTime? RememberMeExpire { get; set; }
     }
 
 
