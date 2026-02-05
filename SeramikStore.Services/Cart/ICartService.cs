@@ -15,5 +15,8 @@ namespace SeramikStore.Services
         int SaveCart(Cart cart);
         int UpdateCart(int cartId, int quantity);
         int CartDeleteById(int cartId);
+        CartResultDto CartListByCartToken(string cart_id_token);
+
+        void MergeAnonymousCartToUser(string cartToken, int userId);
     }
 }

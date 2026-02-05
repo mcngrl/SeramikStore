@@ -13,14 +13,16 @@ public class AccountController : Controller
 {
     private readonly IUserService _userService;
     private readonly IEmailService _emailService;
+    private readonly ICartService _cartService;
     private readonly IStringLocalizer<AccountResource> _L;
 
     public AccountController(IUserService userService, IEmailService emailService,
-        IStringLocalizer<AccountResource> L)
+        IStringLocalizer<AccountResource> L, ICartService cartService)
     {
         _userService = userService;
         _emailService = emailService;
         _L = L;
+        _cartService = cartService;
     }
 
     // REGISTER – GET
@@ -248,9 +250,14 @@ public class AccountController : Controller
         HttpContext.Session.SetString("role", user.RoleName);
         HttpContext.Session.SetInt32("userId", user.Id);
 
-        HttpContext.Session.SetString("userName", user.Email);
-        HttpContext.Session.SetString("role", user.RoleName);
-        HttpContext.Session.SetInt32("userId", user.Id);
+        // 🛒 ANON SEPET VAR MI?
+        if (Request.Cookies.TryGetValue("cart_id", out var cartToken))
+        {
+            _cartService.MergeAnonymousCartToUser(cartToken, user.Id);
+
+            // cookie'yi temizle
+            Response.Cookies.Delete("cart_id");
+        }
 
         if (vm.RememberMe)
         {
