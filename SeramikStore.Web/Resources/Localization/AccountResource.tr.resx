@@ -237,4 +237,7 @@
   <data name="Bu email adresi zaten kayıtlı" xml:space="preserve">
     <value>Bu email adresi zaten kayıtlı</value>
   </data>
+  <data name="Profil bilgileri güncellendi" xml:space="preserve">
+    <value>Profile information updated</value>
+  </data>
 </root>
