@@ -37,8 +37,18 @@ namespace SeramikStore.Web.Controllers
             else
             {
                 // 🛒 Anon kullanıcı
-                var cartId = GetOrCreateCartId();
-                cartResult = _cartService.CartListByCartToken(cartId);
+
+                if (Request.Cookies.TryGetValue("cart_id", out var cartTokend))
+                {
+                    cartResult = _cartService.CartListByCartToken(cartTokend);
+                }
+                else
+                {
+                    cartResult = new CartResultDto();
+                    cartResult.Summary = new CartSummaryDto();
+                }
+
+               
             }
 
             return View(cartResult);
@@ -265,28 +275,5 @@ namespace SeramikStore.Web.Controllers
             return RedirectToAction("Payment");
         }
 
-
-        private string GetOrCreateCartId()
-        {
-            const string cookieName = "cart_id";
-
-            if (Request.Cookies[cookieName] != null)
-                return Request.Cookies[cookieName];
-
-            var cartId = Guid.NewGuid().ToString("N");
-
-            Response.Cookies.Append(
-                cookieName,
-                cartId,
-                new CookieOptions
-                {
-                    Expires = DateTimeOffset.UtcNow.AddDays(30),
-                    HttpOnly = true,
-                    Secure = Request.IsHttps,
-                    SameSite = SameSiteMode.Lax
-                });
-
-            return cartId;
-        }
     }
 }
