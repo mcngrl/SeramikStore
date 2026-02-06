@@ -204,13 +204,6 @@ namespace SeramikStore.Web.Controllers
 
             if (result > 0)
             {
-                if (userId.HasValue)
-                    HttpContext.Session.SetInt32("sessionCart",
-                        _cartservices.CartListByUserId(userId.Value).Items.Count());
-                else
-                    HttpContext.Session.SetInt32("sessionCart",
-                        _cartservices.CartListByCartToken(cart.cart_id_token).Items.Count());
-
                 return RedirectToAction("Index", "Carts");
             }
             else

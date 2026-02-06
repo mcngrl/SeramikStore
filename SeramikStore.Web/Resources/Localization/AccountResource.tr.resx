@@ -228,4 +228,13 @@
   <data name="Şifreniz" xml:space="preserve">
     <value>Şifreniz</value>
   </data>
+  <data name="Şifremi Unuttum" xml:space="preserve">
+    <value>Şifremi Unuttum</value>
+  </data>
+  <data name="Beni Hatırla" xml:space="preserve">
+    <value>Beni Hatırla</value>
+  </data>
+  <data name="Bu email adresi zaten kayıtlı" xml:space="preserve">
+    <value>Bu email adresi zaten kayıtlı</value>
+  </data>
 </root>

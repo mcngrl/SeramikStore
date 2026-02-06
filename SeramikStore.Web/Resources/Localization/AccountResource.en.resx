@@ -228,4 +228,13 @@
   <data name="Şifreniz" xml:space="preserve">
     <value>Your Password</value>
   </data>
+  <data name="Şifremi Unuttum" xml:space="preserve">
+    <value>I Forgot My Password</value>
+  </data>
+  <data name="Beni Hatırla" xml:space="preserve">
+    <value>Remember Me</value>
+  </data>
+  <data name="Bu email adresi zaten kayıtlı" xml:space="preserve">
+    <value>This email address is already registered.</value>
+  </data>
 </root>

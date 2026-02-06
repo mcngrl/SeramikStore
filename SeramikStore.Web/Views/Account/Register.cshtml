@@ -1,4 +1,4 @@
-﻿@using Microsoft.Extensions.Localization
+﻿
 @using SeramikStore.Web.Localization
 @inject IStringLocalizer<AccountResource> L
 @model SeramikStore.Web.ViewModels.Account.RegisterViewModel
@@ -109,7 +109,7 @@
                                @(Model.AcceptKvkk ? "checked" : "") />
                         <label class="form-check-label fw-semibold">
                             <a href="/Home/Kvkk" target="_blank">
-                                @L["Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum"]"
+                                @L["Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum"]
                             </a>
                         </label>
                     </div>

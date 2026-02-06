@@ -22,9 +22,9 @@ namespace SeramikStore.Web.ViewComponents
             var userId = HttpContext.Session.GetInt32("userId");
             if (userId.HasValue && userId.Value > 0)
             {
-                count = _cartService
-                    .CartListByUserId(userId.Value)
-                    .Items.Count();
+
+                var items = _cartService.CartListByUserId(userId.Value)?.Items;
+                count = items?.Sum(x => x.Quantity) ?? 0;
 
                 return View(count);
             }
@@ -32,9 +32,10 @@ namespace SeramikStore.Web.ViewComponents
             // ✅ LOGIN OLMAMIŞ (GUEST)
             if (Request.Cookies.TryGetValue("cart_id", out var cartId))
             {
-                count = _cartService
-                    .CartListByCartToken(cartId)
-                    .Items.Count();
+
+                var items = _cartService.CartListByCartToken(cartId)?.Items;
+                count = items?.Sum(x => x.Quantity) ?? 0;
+
             }
 
             return View(count);
