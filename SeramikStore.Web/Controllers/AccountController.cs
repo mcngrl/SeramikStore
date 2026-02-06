@@ -40,7 +40,7 @@ public class AccountController : Controller
 
         if (_userService.IsEmailExists(model.Email))
         {
-            ModelState.AddModelError("Email", "Bu email adresi zaten kayıtlı");
+            ModelState.AddModelError("Email", _L["Bu email adresi zaten kayıtlı"].Value);
             return View(model);
         }
 
@@ -91,7 +91,7 @@ public class AccountController : Controller
         });
 
 
-        TempData["Success"] = "Kayıt başarılı. Email adresinizi doğrulayın.";
+        TempData["Success"] = _L["Kayıt başarılı. Email adresinizi doğrulayın."].Value;
         return RedirectToAction("Login", "Account");
     }
 
@@ -174,7 +174,7 @@ public class AccountController : Controller
                 BirthDate = vm.Profile.BirthDate
             });
 
-            TempData["Success"] = "Profil bilgileri güncellendi";
+            TempData["Success"] = _L["Profil bilgileri güncellendi"].Value;
             return RedirectToAction("Profile");
         }
 
@@ -195,7 +195,7 @@ public class AccountController : Controller
             {
                 ModelState.AddModelError(
                     "Password.CurrentPassword",
-                    "Şu anki şifre hatalı"
+                    _L["Şu anki şifre hatalı"].Value    
                 );
 
                 var user = _userService.GetById(userId);
@@ -212,7 +212,7 @@ public class AccountController : Controller
                 return View(vm);
             }
 
-            TempData["Success"] = "Şifre başarıyla değiştirildi";
+            TempData["Success"] = _L["Şifre başarıyla değiştirildi"].Value;
             return RedirectToAction("Profile");
         }
 
@@ -220,7 +220,7 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public IActionResult Login()
+    public IActionResult Login()            
     {
         return View();
     }
@@ -237,13 +237,13 @@ public class AccountController : Controller
 
         if (user == null)
         {
-            ModelState.AddModelError(string.Empty, "Kullanıcı adı veya şifre hatalı");
+            ModelState.AddModelError(string.Empty, _L["Kullanıcı adı veya şifre hatalı"].Value);
             return View(vm);
         }
 
         if (!user.IsEmailConfirmed)
         {
-            ModelState.AddModelError("", "Email adresinizi doğrulamanız gerekiyor");
+            ModelState.AddModelError("", _L["Email adresinizi doğrulamanız gerekiyor"].Value);
             return View(vm);
         }
         HttpContext.Session.SetString("userName", user.Email);

@@ -174,7 +174,7 @@ namespace SeramikStore.Web.Controllers
                     return Unauthorized();
             }
 
-            //_cartService.IncreaseQuantity(id);
+            _cartService.IncreaseQuantity(id);
             return RedirectToAction("Index");
         }
 
@@ -198,7 +198,7 @@ namespace SeramikStore.Web.Controllers
                 if (cart.cart_id_token != cartId)
                     return Unauthorized();
             }
-            //_cartService.DecreaseQuantity(id);
+            _cartService.DecreaseQuantity(id);
             return RedirectToAction("Index");
         }
 

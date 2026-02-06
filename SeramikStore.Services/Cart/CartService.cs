@@ -90,7 +90,7 @@ namespace SeramikStore.Services
         public int SaveCart(Cart cart)
         {
             using SqlConnection connection = new(_connectionString);
-            using SqlCommand command = new("sp_Cart_Insert", connection);
+            using SqlCommand command = new("sp_Cart_Save", connection);
 
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@ProductId", cart.ProductId);
@@ -228,6 +228,31 @@ namespace SeramikStore.Services
                 }
             }
         }
+
+        public void IncreaseQuantity(int cartId)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("sp_Cart_IncreaseQuantity", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@CartId", cartId);
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+
+        public void DecreaseQuantity(int cartId)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("sp_Cart_DecreaseQuantity", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@CartId", cartId);
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+
 
     }
 }
