@@ -40,8 +40,6 @@ public class UserService : IUserService
         cmd.Parameters.AddWithValue("@IsEmailConfirmed", user.IsEmailConfirmed); 
         cmd.Parameters.AddWithValue("@EmailConfirmToken", user.EmailConfirmToken); 
         cmd.Parameters.AddWithValue("@EmailConfirmTokenExpire", user.EmailConfirmTokenExpire); 
-        cmd.Parameters.AddWithValue("@RememberMeToken", user.RememberMeToken); 
-        cmd.Parameters.AddWithValue("@RememberMeExpire", user.RememberMeExpire); 
 
         con.Open();
         cmd.ExecuteNonQuery();
