@@ -4,14 +4,14 @@
 @using SeramikStore.Web.Localization
 @inject IStringLocalizer<CommonResource> C
 
-
+@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
 @* <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
 <nav class="navbar navbar-expand-lg bg-primary>*@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <!-- LOGO -->
         <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
-            Dibu Seramik
+            @Company.Value.Name
         </a>
 
         <!-- MOBILE TOGGLE -->

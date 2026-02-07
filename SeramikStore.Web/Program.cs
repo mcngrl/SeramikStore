@@ -2,6 +2,7 @@
 using SeramikStore.Services;
 using SeramikStore.Services.Email;
 using SeramikStore.Web.Localization;
+using SeramikStore.Web.Options;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,6 +76,10 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPotansiyelService, PotansiyelService>();
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings"));
+
+builder.Services.Configure<CompanyOptions>(
+    builder.Configuration.GetSection("Company")
+);
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddLogging();
