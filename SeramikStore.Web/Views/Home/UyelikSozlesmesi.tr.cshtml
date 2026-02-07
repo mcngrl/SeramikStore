@@ -1,0 +1,48 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
+    ViewData["Title"] = "Üyelik Sözleşmesi";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+            <h1 class="mb-4 text-center">Üyelik Sözleşmesi</h1>
+            <p>
+                İşbu Üyelik Sözleşmesi, @(Company.Value.Name) ile siteye üye olan kullanıcı
+                arasında, aşağıda belirtilen hüküm ve şartlar çerçevesinde
+                akdedilmiştir.
+            </p>
+
+            <h5>1. Taraflar</h5>
+            <p>
+                Şirket:  @(Company.Value.Name) <br />
+                Üye: Siteye kayıt olan gerçek kişi
+            </p>
+
+            <h5>2. Sözleşmenin Konusu</h5>
+            <p>
+                Bu sözleşme, üyenin siteye üye olması ve sunulan hizmetlerden
+                yararlanmasına ilişkin şartları düzenler.
+            </p>
+
+            <h5>3. Üyelik ve Hesap Güvenliği</h5>
+            <p>
+                Üye, hesap bilgilerini gizli tutmakla yükümlüdür. Hesap üzerinden
+                yapılan tüm işlemler üyeye ait kabul edilir.
+            </p>
+
+            <h5>4. Kişisel Veriler</h5>
+            <p>
+                Kişisel veriler KVKK Aydınlatma Metni kapsamında işlenmektedir.
+            </p>
+
+            <h5>5. Yürürlük</h5>
+            <p>
+                Üye, siteye üye olarak bu sözleşmenin tüm hükümlerini kabul etmiş
+                sayılır.
+            </p>
+        </div>
+    </div>
+</div>
+

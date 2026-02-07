@@ -255,4 +255,19 @@
   <data name="Şifreniz başarıyla güncellenmiştir" xml:space="preserve">
     <value>Şifreniz başarıyla güncellenmiştir</value>
   </data>
+  <data name="Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum" xml:space="preserve">
+    <value>Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum</value>
+  </data>
+  <data name="Gizlilik Politikası" xml:space="preserve">
+    <value>Gizlilik Politikası</value>
+  </data>
+  <data name="KVKK Aydınlatma Metni" xml:space="preserve">
+    <value>KVKK Aydınlatma Metni</value>
+  </data>
+  <data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
+    <value>Mesafeli Satış Sözleşmesi</value>
+  </data>
+  <data name="Üyelik Sözleşmesi" xml:space="preserve">
+    <value>Üyelik Sözleşmesi</value>
+  </data>
 </root>

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Services.DTOs;
 using SeramikStore.Services.Email;
 using SeramikStore.Web.Localization;
+using SeramikStore.Web.Options;
 using SeramikStore.Web.ViewModels;
 using SeramikStore.Web.ViewModels.Account;
 using System.Globalization;
@@ -17,15 +19,18 @@ public class AccountController : Controller
     private readonly ICartService _cartService;
     private readonly IStringLocalizer<AccountResource> _L;
     private readonly IStringLocalizer<EmailResource> _emailL;
+    private readonly CompanyOptions _company;
 
     public AccountController(IUserService userService, IEmailService emailService,
-        IStringLocalizer<AccountResource> L, ICartService cartService, IStringLocalizer<EmailResource> emailL)
+        IStringLocalizer<AccountResource> L, ICartService cartService,
+        IStringLocalizer<EmailResource> emailL, IOptions<CompanyOptions> companyOptions)
     {
         _userService = userService;
         _emailService = emailService;
         _L = L;
         _cartService = cartService;
         _emailL = emailL;
+        _company = companyOptions.Value;
     }
 
     // REGISTER – GET
@@ -93,6 +98,7 @@ public class AccountController : Controller
                     .Replace("{{Button}}", _emailL["EmailConfirmButton"])
                     .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
                     .Replace("{{Footer}}", _emailL["EmailFooter"])
+                    .Replace("{{Company}}", _company.Name)
                     .Replace("{{Link}}", confirmLink);
 
                 await _emailService.SendAsync(
@@ -367,6 +373,7 @@ public class AccountController : Controller
             .Replace("{{Button}}", _emailL["ResetPasswordButton"])
             .Replace("{{Expire}}", _emailL["ResetPasswordExpire"])
             .Replace("{{Ignore}}", _emailL["ResetPasswordIgnore"])
+            .Replace("{{Company}}", _company.Name)
             .Replace("{{Link}}", resetLink);
 
         _ = Task.Run(async () =>

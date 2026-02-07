@@ -63,79 +63,24 @@ namespace SeramikStore.Web.Controllers
             vm.ImagePaths = ImagePaths;
             return View(vm);
         }
-        public IActionResult PrivacyTR()
+
+        public IActionResult MesafeliSatis()
         {
-            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-            if (lang == "en")
-            {
-                return RedirectToAction(nameof(PrivacyEN));
-            }
-
-            return View(); 
-        }
-
-        public IActionResult PrivacyEN()
-        {
-            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-            if (lang == "tr")
-            {
-                return RedirectToAction(nameof(PrivacyTR));
-            }
-
             return View();
         }
-        public IActionResult KVKKTR()
+        public IActionResult KVKK()
         {
-            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-            if (lang == "en")
-            {
-                return RedirectToAction(nameof(KVKKEN));
-            }
-
             return View();
         }
-        public IActionResult KVKKEN()
+        public IActionResult Privacy()
         {
-            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-            if (lang == "tr")
-            {
-                return RedirectToAction(nameof(KVKKTR));
-            }
-
             return View();
         }
 
-        public IActionResult MesafeliSatisTR()
+        public IActionResult UyelikSozlesmesi()
         {
-            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-            if (lang == "en")
-            {
-                return RedirectToAction(nameof(MesafeliSatisEN));
-            }
-
             return View();
         }
-        public IActionResult MesafeliSatisEN()
-        {
-            var lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-            if (lang == "tr")
-            {
-                return RedirectToAction(nameof(MesafeliSatisTR));
-            }
-
-            return View();
-        }
-
-
-
-
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

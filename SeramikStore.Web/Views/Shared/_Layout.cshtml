@@ -1,6 +1,7 @@
 ﻿
 @using System.Globalization
-
+@using SeramikStore.Web.Localization
+@inject IStringLocalizer<AccountResource> L
 @inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
 
 <!DOCTYPE html>
@@ -24,25 +25,14 @@
         </main>
     </div>
     <footer class="border-top footer text-muted">
-        
-        @if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "tr")
-        {
-            <div class="container text-center">
-                &copy; @DateTime.Now.Year – @Company.Value.Name |
-                <a asp-controller="Home" asp-action="PrivacyTR">Gizlilik Politikası</a> |
-                <a asp-controller="Home" asp-action="KVKKTR">KVKK Aydınlatma Metni</a> |
-                <a asp-controller="Home" asp-action="MesafeliSatisTR">Mesafeli Satış Sözleşmesi</a>
-            </div>
-        }
-        else if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "en")
-        {
-            <div class="container text-center">
-                &copy; @DateTime.Now.Year – @Company.Value.Name |
-                <a asp-action="PrivacyEN">Privacy Policy</a> |
-                <a asp-action="KVKKEN">Data Protection</a> |
-                <a asp-action="MesafeliSatisEN">Distance Sales</a>
-            </div>
-        }
+
+        <div class="container text-center">
+            &copy; @DateTime.Now.Year – @Company.Value.Name |
+            <a asp-controller="Home" asp-action="Privacy">@L["Gizlilik Politikası"]</a> |
+            <a asp-controller="Home" asp-action="KVKK">@L["KVKK Aydınlatma Metni"]</a> |
+            <a asp-controller="Home" asp-action="MesafeliSatis">@L["Mesafeli Satış Sözleşmesi"] |</a>
+            <a asp-controller="Home" asp-action="UyelikSozlesmesi">@L["Üyelik Sözleşmesi"] |</a>
+        </div>
 
     </footer>
 
