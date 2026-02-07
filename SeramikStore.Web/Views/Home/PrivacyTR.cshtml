@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
     ViewData["Title"] = "Gizlilik Politikası";
 }
 
@@ -9,8 +10,8 @@
             <h1 class="mb-4 text-center">Gizlilik Politikası</h1>
 
             <p>
-                Dibu Seramik olarak, ziyaretçilerimizin ve müşterilerimizin kişisel verilerinin gizliliğine
-                önem veriyoruz. Bu Gizlilik Politikası, <strong>dibuseramik.com</strong> internet sitesi
+                @Company.Value.Name olarak, ziyaretçilerimizin ve müşterilerimizin kişisel verilerinin gizliliğine
+                önem veriyoruz. Bu Gizlilik Politikası, <strong>@Company.Value.WebsiteUrl</strong> internet sitesi
                 üzerinden toplanan kişisel verilerin hangi amaçlarla işlendiğini ve nasıl korunduğunu
                 açıklamaktadır.
             </p>
@@ -74,7 +75,7 @@
             </p>
 
             <p class="fw-bold">
-                📧 info@dibuseramik.com
+                📧 @Company.Value.Email  
             </p>
 
         </div>

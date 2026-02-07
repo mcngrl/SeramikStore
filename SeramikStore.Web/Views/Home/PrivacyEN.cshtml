@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
     ViewData["Title"] = "Privacy Policy";
 }
 
@@ -9,9 +10,9 @@
             <h1 class="mb-4 text-center">Privacy Policy</h1>
 
             <p>
-                At <strong>Dibu Seramik</strong>, we value the privacy of our visitors and customers.
+                At <strong>@Company.Value.Name</strong>, we value the privacy of our visitors and customers.
                 This Privacy Policy explains how personal data collected through
-                <strong>www.dibuseramik.com</strong> is processed and protected.
+                <strong>@Company.Value.WebsiteUrl</strong> is processed and protected.
             </p>
 
             <h4 class="mt-4">1. Personal Data Collected</h4>
@@ -59,7 +60,7 @@
             </p>
 
             <p class="fw-bold">
-                Contact: 📧 info@dibuseramik.com
+                Contact: 📧 @Company.Value.Email
             </p>
 
         </div>

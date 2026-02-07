@@ -1,4 +1,5 @@
-Ôªø@{
+@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
     ViewData["Title"] = "Distance Sales Agreement";
 }
 
@@ -9,16 +10,16 @@
             <h1 class="mb-4 text-center">Distance Sales Agreement</h1>
 
             <p>
-                This Distance Sales Agreement (‚ÄúAgreement‚Äù) is concluded electronically between
-                <strong>Dibu Seramik</strong> (‚ÄúSeller‚Äù) and the customer (‚ÄúBuyer‚Äù) in accordance with
+                This Distance Sales Agreement (ìAgreementî) is concluded electronically between
+                <strong>@Company.Value.Name</strong> (ìSellerî) and the customer (ìBuyerî) in accordance with
                 consumer protection regulations.
             </p>
 
             <h4 class="mt-4">1. Seller Information</h4>
             <p>
-                Dibu Seramik<br />
-                Website: www.dibuseramik.com<br />
-                Email: info@dibuseramik.com
+                @Company.Value.Name<br />
+                Website: @Company.Value.WebsiteUrl<br />
+                Email: @Company.Value.Email
             </p>
 
             <h4 class="mt-4">2. Subject of the Agreement</h4>
@@ -43,7 +44,7 @@
             <p>
                 The Buyer has the right to withdraw within <strong>14 days</strong> from the date of delivery.
                 However, this right does not apply to handmade or custom-made products prepared upon
-                the Buyer‚Äôs request.
+                the Buyerís request.
             </p>
 
             <h4 class="mt-4">6. Returns</h4>

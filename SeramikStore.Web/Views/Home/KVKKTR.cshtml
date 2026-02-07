@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
     ViewData["Title"] = "KVKK Aydınlatma Metni";
 }
 
@@ -10,14 +11,14 @@
 
             <p>
                 İşbu Aydınlatma Metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu (“KVKK”)
-                kapsamında, <strong>Dibu Seramik</strong> tarafından kişisel verilerin
+                kapsamında, <strong>@Company.Value.Name</strong> tarafından kişisel verilerin
                 işlenmesine ilişkin olarak hazırlanmıştır.
             </p>
 
             <h4 class="mt-4">1. Veri Sorumlusu</h4>
             <p>
                 KVKK uyarınca kişisel verileriniz; veri sorumlusu sıfatıyla
-                <strong>Dibu Seramik</strong> tarafından işlenmektedir.
+                <strong>@Company.Value.Name</strong> tarafından işlenmektedir.
             </p>
 
             <h4 class="mt-4">2. İşlenen Kişisel Veriler</h4>
@@ -79,7 +80,7 @@
             </p>
 
             <p class="fw-bold">
-                📧 info@dibuseramik.com
+                📧 @Company.Value.Email
             </p>
 
         </div>

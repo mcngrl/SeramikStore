@@ -1,12 +1,14 @@
 ﻿
 @using System.Globalization
 
+@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Dibu Seramik</title>
+    <title>@ViewData["Title"] - @Company.Value.Name</title>
     @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/css/myTheme.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -26,16 +28,16 @@
         @if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "tr")
         {
             <div class="container text-center">
-                &copy; @DateTime.Now.Year – Dibu Seramik |
-                <a asp-controller="Home" asp-action="PrivacyTR">Gizlilik Politikası</a>|
-                <a asp-controller="Home" asp-action="KVKKTR">KVKK Aydınlatma Metni</a>|
+                &copy; @DateTime.Now.Year – @Company.Value.Name |
+                <a asp-controller="Home" asp-action="PrivacyTR">Gizlilik Politikası</a> |
+                <a asp-controller="Home" asp-action="KVKKTR">KVKK Aydınlatma Metni</a> |
                 <a asp-controller="Home" asp-action="MesafeliSatisTR">Mesafeli Satış Sözleşmesi</a>
             </div>
         }
         else if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "en")
         {
             <div class="container text-center">
-                &copy; @DateTime.Now.Year – Dibu Seramik |
+                &copy; @DateTime.Now.Year – @Company.Value.Name |
                 <a asp-action="PrivacyEN">Privacy Policy</a> |
                 <a asp-action="KVKKEN">Data Protection</a> |
                 <a asp-action="MesafeliSatisEN">Distance Sales</a>

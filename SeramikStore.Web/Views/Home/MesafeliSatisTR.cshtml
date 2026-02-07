@@ -1,4 +1,5 @@
-﻿@{
+﻿@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
     ViewData["Title"] = "Mesafeli Satış Sözleşmesi";
 }
 
@@ -19,14 +20,14 @@
 
             <p>
                 <strong>Satıcı:</strong><br />
-                Dibu Seramik<br />
-                Web Sitesi: www.dibuseramik.com<br />
-                E-posta: info@dibuseramik.com
+                @Company.Value.Name<br />
+                Web Sitesi: @Company.Value.WebsiteUrl<br />
+                E-posta: @Company.Value.Email
             </p>
 
             <p>
                 <strong>Alıcı:</strong><br />
-                www.dibuseramik.com internet sitesi üzerinden sipariş veren gerçek kişi
+                @Company.Value.WebsiteUrl internet sitesi üzerinden sipariş veren gerçek kişi
             </p>
 
             <h4 class="mt-4">2. Sözleşme Konusu</h4>
