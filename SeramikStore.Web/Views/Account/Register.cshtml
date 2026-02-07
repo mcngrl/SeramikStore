@@ -3,9 +3,9 @@
 @inject IStringLocalizer<AccountResource> L
 @model SeramikStore.Web.ViewModels.Account.RegisterViewModel
 @{
-    
-    
+
     ViewData["Title"] = @L["Üye Ol"];
+    string currentLang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
 }
 
 <div class="container mt-4">
@@ -94,7 +94,8 @@
                         <input type="checkbox" class="form-check-input fs-5 strong-checkbox" name="AcceptMembershipAgreement" value="true"
                                @(Model.AcceptMembershipAgreement ? "checked" : "") />
                         <label class="form-check-label fw-semibold">
-                            <a href="/Home/MembershipAgreement" target="_blank">
+                            <a asp-controller="Home" asp-action="UyelikSozlesmesi" target="_blank"
+                               rel="noopener noreferrer">
                                 @L["Üyelik Sözleşmesini okudum, anladım ve kabul ediyorum"]
                             </a>
                         </label>
@@ -108,7 +109,8 @@
                         <input type="checkbox" class="form-check-input fs-5 strong-checkbox" name="AcceptKvkk" value="true"
                                @(Model.AcceptKvkk ? "checked" : "") />
                         <label class="form-check-label fw-semibold">
-                            <a href="/Home/Kvkk" target="_blank">
+                            <a asp-controller="Home" asp-action="KVKK" target="_blank"
+                               rel="noopener noreferrer">
                                 @L["Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum"]
                             </a>
                         </label>

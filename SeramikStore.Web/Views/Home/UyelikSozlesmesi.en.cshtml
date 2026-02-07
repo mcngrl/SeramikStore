@@ -1,0 +1,50 @@
+@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
+    ViewData["Title"] = "Membership Agreement";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+            <h1 class="mb-4 text-center">Membership Agreement</h1>
+            <p>
+                This Membership Agreement is concluded between @(Company.Value.Name)
+                and the user who becomes a member of the website, under the terms
+                and conditions set forth below.
+            </p>
+
+            <h5>1. Parties</h5>
+            <p>
+                Company: @(Company.Value.Name) <br />
+                Member: The natural person who registers on the website
+            </p>
+
+            <h5>2. Subject of the Agreement</h5>
+            <p>
+                This agreement regulates the terms and conditions regarding the
+                member’s registration on the website and the use of the services
+                provided.
+            </p>
+
+            <h5>3. Membership and Account Security</h5>
+            <p>
+                The member is obliged to keep account information confidential.
+                All transactions carried out through the account shall be deemed
+                to have been performed by the member.
+            </p>
+
+            <h5>4. Personal Data</h5>
+            <p>
+                Personal data is processed within the scope of the Privacy Notice
+                on the Protection of Personal Data.
+            </p>
+
+            <h5>5. Effectiveness</h5>
+            <p>
+                By registering on the website, the member shall be deemed to have
+                accepted all provisions of this agreement.
+            </p>
+        </div>
+    </div>
+</div>
