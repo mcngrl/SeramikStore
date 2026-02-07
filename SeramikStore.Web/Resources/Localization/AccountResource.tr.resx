@@ -123,9 +123,6 @@
   <data name="Üye Ol" xml:space="preserve">
     <value>Üye Ol</value>
   </data>
-  <data name="Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum" xml:space="preserve">
-    <value>Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum</value>
-  </data>
   <data name="RequiredField" xml:space="preserve">
     <value>Bu alan zorunludur</value>
   </data>
@@ -183,9 +180,6 @@
   <data name="Üyelik sözleşmesini kabul etmelisiniz" xml:space="preserve">
     <value>Üyelik sözleşmesini kabul etmelisiniz</value>
   </data>
-  <data name="KVKK aydınlatma metnini kabul etmelisiniz" xml:space="preserve">
-    <value>KVKK aydınlatma metnini kabul etmelisiniz</value>
-  </data>
   <data name="Cep Telefonu" xml:space="preserve">
     <value>Cep Telefonu</value>
   </data>
@@ -239,5 +233,26 @@
   </data>
   <data name="Profil bilgileri güncellendi" xml:space="preserve">
     <value>Profile information updated</value>
+  </data>
+  <data name="Kullanıcı adı veya şifre hatalı" xml:space="preserve">
+    <value>Kullanıcı adı veya şifre hatalı</value>
+  </data>
+  <data name="Kayıt başarılı. Email adresinizi doğrulayın." xml:space="preserve">
+    <value>Kayıt başarılı. Email adresinizi doğrulayın.</value>
+  </data>
+  <data name="Şu anki şifre hatalı" xml:space="preserve">
+    <value>Şu anki şifre hatalı</value>
+  </data>
+  <data name="Şifre başarıyla değiştirildi" xml:space="preserve">
+    <value>Şifre başarıyla değiştirildi</value>
+  </data>
+  <data name="Email adresinizi doğrulamanız gerekiyor" xml:space="preserve">
+    <value>Email adresinizi doğrulamanız gerekiyor</value>
+  </data>
+  <data name="Geçersiz veya süreci geçmiş link" xml:space="preserve">
+    <value>Geçersiz veya süreci geçmiş link</value>
+  </data>
+  <data name="Şifreniz başarıyla güncellenmiştir" xml:space="preserve">
+    <value>Şifreniz başarıyla güncellenmiştir</value>
   </data>
 </root>

@@ -8,6 +8,7 @@ using SeramikStore.Services.Email;
 using SeramikStore.Web.Localization;
 using SeramikStore.Web.ViewModels;
 using SeramikStore.Web.ViewModels.Account;
+using System.Globalization;
 
 public class AccountController : Controller
 {
@@ -15,14 +16,16 @@ public class AccountController : Controller
     private readonly IEmailService _emailService;
     private readonly ICartService _cartService;
     private readonly IStringLocalizer<AccountResource> _L;
+    private readonly IStringLocalizer<EmailResource> _emailL;
 
     public AccountController(IUserService userService, IEmailService emailService,
-        IStringLocalizer<AccountResource> L, ICartService cartService)
+        IStringLocalizer<AccountResource> L, ICartService cartService, IStringLocalizer<EmailResource> emailL)
     {
         _userService = userService;
         _emailService = emailService;
         _L = L;
         _cartService = cartService;
+        _emailL = emailL;
     }
 
     // REGISTER – GET
@@ -77,12 +80,29 @@ public class AccountController : Controller
         {
             try
             {
+
+                var culture = CultureInfo.CurrentUICulture;
+
+                var template = System.IO.File.ReadAllText(
+                    Path.Combine(Directory.GetCurrentDirectory(),
+                    "EmailTemplates", "EmailConfirm.html"));
+
+                var body = template
+                    .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
+                    .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
+                    .Replace("{{Button}}", _emailL["EmailConfirmButton"])
+                    .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
+                    .Replace("{{Footer}}", _emailL["EmailFooter"])
+                    .Replace("{{Link}}", confirmLink);
+
                 await _emailService.SendAsync(
                     model.Email,
-                    "Email Doğrulama",
-                    $"Email adresinizi doğrulamak için <a href='{confirmLink}'>buraya tıklayın</a>"
+                    _emailL["EmailConfirmSubject"],
+                    body
                 );
-            }
+
+
+           }
             catch (Exception ex)
             {
                 // LOG AL ama kullanıcıyı bekletme
@@ -332,19 +352,53 @@ public class AccountController : Controller
             Request.Scheme
         );
 
-        // 🔥 EMAIL HATA VERSE BİLE DEVAM ETSİN
+
+        var templatePath = Path.Combine(
+       Directory.GetCurrentDirectory(),
+       "EmailTemplates",
+       "ResetPassword.html"
+   );
+
+        var template = System.IO.File.ReadAllText(templatePath);
+
+        var body = template
+            .Replace("{{Title}}", _emailL["ResetPasswordTitle"])
+            .Replace("{{Intro}}", _emailL["ResetPasswordIntro"])
+            .Replace("{{Button}}", _emailL["ResetPasswordButton"])
+            .Replace("{{Expire}}", _emailL["ResetPasswordExpire"])
+            .Replace("{{Ignore}}", _emailL["ResetPasswordIgnore"])
+            .Replace("{{Link}}", resetLink);
+
         _ = Task.Run(async () =>
         {
             try
             {
                 await _emailService.SendAsync(
                     model.Email,
-                    "Şifre Sıfırlama",
-                    $"<a href='{resetLink}'>Şifremi sıfırla</a>"
+                    _emailL["ResetPasswordSubject"],
+                    body
                 );
             }
-            catch { /* log */ }
+            catch
+            {
+                // log
+            }
         });
+
+
+
+        //_ = Task.Run(async () =>
+        //{
+        //    try
+        //    {
+        //        await _emailService.SendAsync(
+        //            model.Email,
+        //            "Şifre Sıfırlama",
+        //            $"<a href='{resetLink}'>Şifremi sıfırla</a>"
+        //        );
+        //    }
+        //    catch { /* log */ }
+        //});
 
         return View("ForgotPasswordConfirmation");
     }
