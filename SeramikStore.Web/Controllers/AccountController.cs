@@ -452,6 +452,9 @@ public class AccountController : Controller
         return View("ResetPasswordResult", _L["Şifreniz başarıyla güncellenmiştir"].Value);
     }
 
-
+    public IActionResult AccessDenied()
+    {
+        return View("AccessDenied", _L["Bu sayfayı görüntüleme yetkiniz yok."].Value);
+    }
 
 }

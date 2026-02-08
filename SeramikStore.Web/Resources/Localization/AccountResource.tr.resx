@@ -270,4 +270,7 @@
   <data name="Üyelik Sözleşmesi" xml:space="preserve">
     <value>Üyelik Sözleşmesi</value>
   </data>
+  <data name="Bu sayfayı görüntüleme yetkiniz yok." xml:space="preserve">
+    <value>Bu sayfayı görüntüleme yetkiniz yok.</value>
+  </data>
 </root>
