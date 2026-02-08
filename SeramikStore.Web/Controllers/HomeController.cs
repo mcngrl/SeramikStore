@@ -149,7 +149,7 @@ namespace SeramikStore.Web.Controllers
 
             if (result > 0)
             {
-                return RedirectToAction("Index", "Carts");
+                return RedirectToAction("Summary", "Cart");
             }
             else
             {

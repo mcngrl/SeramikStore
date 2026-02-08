@@ -28,12 +28,12 @@ public static class ControllerWriter
 
         var serviceField = $"_{char.ToLowerInvariant(entity[0])}{entity[1..]}Service";
 
-        sb.AppendLine($"        private readonly I{entity}Service {serviceField};");
-        sb.AppendLine();
-        sb.AppendLine($"        public {entity}Controller(I{entity}Service service)");
-        sb.AppendLine("        {");
-        sb.AppendLine($"            {serviceField} = service;");
-        sb.AppendLine("        }");
+        //sb.AppendLine($"        private readonly I{entity}Service {serviceField};");
+        //sb.AppendLine();
+        //sb.AppendLine($"        public {entity}Controller(I{entity}Service service)");
+        //sb.AppendLine("        {");
+        //sb.AppendLine($"            {serviceField} = service;");
+        //sb.AppendLine("        }");
         sb.AppendLine();
 
         AppendIndex(sb, entity, serviceField, cols);
