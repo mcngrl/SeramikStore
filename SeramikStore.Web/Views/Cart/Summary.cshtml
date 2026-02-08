@@ -49,7 +49,7 @@
                             <div class="fw-bold text-danger">
                                 @item.LineTotal.ToString("N2", culture) TL
                             </div>
-                            <a asp-action="Delete"
+                            <a asp-action="DeleteCartItem"
                                asp-route-id="@item.Id"
                                class="text-muted small">
                                 🗑 Sil
@@ -84,7 +84,7 @@
                     </div>
 
                     <div>
-                        <a asp-controller="Carts"
+                        <a asp-controller="Cart"
                            asp-action="AddressDetail"
                            class="btn btn-warning w-100 mt-3">
                             Alış verişi Tamamla

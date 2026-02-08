@@ -9,11 +9,11 @@ public static class ViewWriter
     {
         return new()
         {
-            { "Index.cshtml",  GenerateIndex(entity, viewModelNamespace, cols) },
-            { "Create.cshtml", GenerateCreate(entity, viewModelNamespace, cols) },
-            { "Edit.cshtml",   GenerateEdit(entity, viewModelNamespace, cols) },
-            { "Delete.cshtml", GenerateDelete(entity, viewModelNamespace, cols) },
-            { "Detail.cshtml", GenerateDetails(entity, viewModelNamespace, cols) }
+            { "Index.generated.cshtml",  GenerateIndex(entity, viewModelNamespace, cols) },
+            { "Create.generated.cshtml", GenerateCreate(entity, viewModelNamespace, cols) },
+            { "Edit.generated.cshtml",   GenerateEdit(entity, viewModelNamespace, cols) },
+            { "Delete.generated.cshtml", GenerateDelete(entity, viewModelNamespace, cols) },
+            { "Detail.generated.cshtml", GenerateDetails(entity, viewModelNamespace, cols) }
         };
     }
 
