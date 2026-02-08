@@ -270,4 +270,7 @@
   <data name="Üyelik Sözleşmesi" xml:space="preserve">
     <value>Membership Agreement</value>
   </data>
+  <data name="Bu sayfayı görüntüleme yetkiniz yok." xml:space="preserve">
+    <value>You do not have permission to view this page.</value>
+  </data>
 </root>

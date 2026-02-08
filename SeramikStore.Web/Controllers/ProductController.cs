@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SeramikStore.Entities;
 using SeramikStore.Services;
+using SeramikStore.Web.Filters;
 using SeramikStore.Web.ViewModels;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,6 +23,7 @@ public class ProductController : Controller
         _categoryService = categoryService;
     }
 
+    [RoleAuthorize("Admin")]
     public IActionResult Index()
     {
         
