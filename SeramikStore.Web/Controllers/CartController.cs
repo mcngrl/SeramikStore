@@ -32,8 +32,7 @@ namespace SeramikStore.Web.Controllers
             _userAddressService = userAddressService;
             _cartService = cartService;
         }
-
-        public IActionResult Summary()
+        private CartResultDto GetCurrentCart()
         {
             var userId = HttpContext.Session.GetInt32("userId");
             CartResultDto cartResult;
@@ -59,7 +58,20 @@ namespace SeramikStore.Web.Controllers
 
 
             }
+             return cartResult;
+        }
 
+        public IActionResult EmptyCart()
+        {
+            return View();
+        }
+        public IActionResult Summary()
+        {
+            CartResultDto cartResult = GetCurrentCart();
+            if (cartResult == null || !cartResult.Items.Any())
+            {
+                return RedirectToAction("EmptyCart");
+            }
             return View(cartResult);
         }
 
@@ -178,6 +190,11 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult AddressDetail()
         {
+            CartResultDto cartResult = GetCurrentCart();
+            if (cartResult == null || !cartResult.Items.Any())
+            {
+                return RedirectToAction("EmptyCart");
+            }
 
             var userId = HttpContext.Session.GetInt32("userId");
             if (!userId.HasValue)
@@ -185,9 +202,6 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("Login", "Account",
                     new { returnUrl = Url.Action("AddressDetail", "Cart") });
             }
-
-
-            var cartResult = _cartService.CartListByUserId((int)userId);
 
             var addresses = _userAddressService.GetByUserId((int)userId);
 
