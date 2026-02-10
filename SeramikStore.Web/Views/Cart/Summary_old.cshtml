@@ -1,56 +1,58 @@
-﻿@using Microsoft.Extensions.Localization
-@using SeramikStore.Web.Localization
-@model SeramikStore.Services.DTOs.CartResultDto
-@inject IStringLocalizer<CartResource> L
+﻿@model SeramikStore.Services.DTOs.CartResultDto
 @using System.Globalization
 
 @{
-    ViewData["Title"] = L["Sepetim"];
-    var culture = CultureInfo.CurrentCulture;
+    ViewData["Title"] = "Sepetim";
+
+    var culture = new CultureInfo("tr-TR");
     var araToplam = Model.Summary.TotalAmount;
-    var kargo = Model.Summary.CargoAmount;
+    var Kargo = Model.Summary.CargoAmount;
     var toplam = Model.Summary.GrandTotal;
 }
 
 <div class="container mt-4">
-    <h4 class="mb-3">
-        @L["Sepetim"] (@Model.Items.Count() @L["Ürün"])
-    </h4>
+    <h4 class="mb-3">Sepetim (@Model.Items.Count() Ürün)</h4>
 
     <div class="row">
         <!-- SOL TARAF : SEPET LİSTESİ -->
         <div class="col-md-8">
+
             @foreach (var item in Model.Items)
             {
                 <div class="card mb-3 shadow-sm">
                     <div class="card-body d-flex align-items-center">
+
+                        <!-- ÜRÜN RESMİ -->
+          @*               <img src="@(string.IsNullOrEmpty(item.ImagePath) ? "/images/no-image.png" : item.ImagePath)"
+                             class="img-thumbnail me-3"
+                             style="width:100px;height:100px;object-fit:cover;" /> *@
+
                         <!-- ÜRÜN BİLGİ -->
                         <div class="flex-grow-1">
                             <h6 class="mb-1">@item.ProductName</h6>
                             <small class="text-muted">@item.ProductCode</small>
+
                             <div class="text-success mt-1">
-                                <i class="bi bi-truck"></i> @L["Hızlı Teslimat"]
+                                <i class="bi bi-truck"></i> Hızlı Teslimat
                             </div>
                         </div>
 
                         <!-- ADET -->
                         <div class="d-flex align-items-center me-3">
-                            <a asp-action="Decrease" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm">-</a>
+                            <a asp-action="Decrease" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">-</a>
                             <span class="mx-2 fw-bold">@item.Quantity</span>
-                            <a asp-action="Increase" asp-route-id="@item.Id"
-                               class="btn btn-outline-secondary btn-sm">+</a>
+                            <a asp-action="Increase" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm">+</a>
                         </div>
 
                         <!-- FİYAT -->
                         <div class="text-end" style="width:120px;">
                             <div class="fw-bold text-danger">
-                                @item.LineTotal.ToString("N2", culture)
+                                @item.LineTotal.ToString("N2", culture) TL
                             </div>
                             <a asp-action="DeleteCartItem"
                                asp-route-id="@item.Id"
                                class="text-muted small">
-                                🗑 @L["Sil"]
+                                🗑 Sil
                             </a>
                         </div>
                     </div>
@@ -62,31 +64,31 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="mb-3">@L["Sepet Özeti"]</h5>
+                    <h5 class="mb-3">Sepet Özeti</h5>
 
                     <div class="d-flex justify-content-between mb-2">
-                        <span>@L["Ara Toplam"]</span>
-                        <span>@araToplam.ToString("N2", culture)</span>
+                        <span>Ara Toplam</span>
+                        <span>@araToplam.ToString("N2", culture) TL</span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-2">
-                        <span>@L["Kargo"]</span>
-                        <span>@kargo.ToString("N2", culture)</span>
+                        <span>Kargo</span>
+                        <span>@Kargo.ToString("N2", culture) TL</span>
                     </div>
 
                     <hr />
 
                     <div class="d-flex justify-content-between fw-bold fs-5 text-danger">
-                        <span>@L["Toplam"]</span>
-                        <span>@toplam.ToString("N2", culture)</span>
+                        <span>Toplam</span>
+                        <span>@toplam.ToString("N2", culture) TL</span>
                     </div>
 
-                    <a asp-controller="Cart"
-                       asp-action="AddressDetail"
-                       class="btn btn-warning w-100 mt-3"
-                       @(Model.Items.Any() ? "" : "disabled")>
-                        @L["Alışverişi Tamamla"]
-                    </a>
+                    <div>
+                        <a asp-controller="Cart"
+                           asp-action="AddressDetail"
+                           class="btn btn-warning w-100 mt-3">
+                            Alış verişi Tamamla
+                        </a>
                 </div>
             </div>
         </div>
