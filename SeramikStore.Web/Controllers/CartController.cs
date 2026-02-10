@@ -70,7 +70,7 @@ namespace SeramikStore.Web.Controllers
             CartResultDto cartResult = GetCurrentCart();
             if (cartResult == null || !cartResult.Items.Any())
             {
-                return RedirectToAction("EmptyCart");
+               return RedirectToAction("EmptyCart");
             }
             return View(cartResult);
         }
