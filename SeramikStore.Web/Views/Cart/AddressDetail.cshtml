@@ -1,24 +1,23 @@
-﻿@model SeramikStore.Web.ViewModels.AddressSelectViewModel
-
+﻿@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
+@model SeramikStore.Web.ViewModels.AddressSelectViewModel
+@inject IStringLocalizer<CartResource> L
 
 @{
-    ViewData["Title"] = "Teslimat Adresi";
+    ViewData["Title"] = L["Teslimat Adresi"];
 }
 
 <div class="container mt-4">
-    <div class="row">
+    <h4 class="mb-3 text-primary">@L["Teslimat Adresim"]</h4>
 
-        <!-- ================= SOL TARAF ================= -->
-        <div class="col-md-8">
-            <h4 class="mb-3 text-primary">Teslimat Adresim</h4>
-
-            <form asp-controller="Order" asp-action="PaymentInfo" method="post">
-
+    <form asp-controller="Order" asp-action="PaymentInfo" method="post">
+        <div class="row">
+            <!-- ================= SOL TARAF : ADRESLER ================= -->
+            <div class="col-md-8">
                 @foreach (var address in Model.Addresses)
                 {
-                    <div class="card mb-3">
+                    <div class="card mb-3 shadow-sm">
                         <div class="card-body d-flex align-items-start">
-
                             <input type="radio"
                                    name="SelectedAddressId"
                                    value="@address.Id"
@@ -31,69 +30,59 @@
                                 <div class="text-muted small">
                                     @address.Mahalle, @address.Ilce / @address.Il
                                 </div>
-                                <div class="text-muted small">
-                                    @address.Adres
-                                </div>
-                                <div class="text-muted small">
-                                    @address.Telefon
-                                </div>
+                                <div class="text-muted small">@address.Adres</div>
+                                <div class="text-muted small">@address.Telefon</div>
                             </div>
 
-                            <div>
-                                <a asp-controller="UserAddress"
-                                   asp-action="Edit"
-                                   asp-route-id="@address.Id"
-                                   class="btn btn-sm btn-outline-warning">
-                                    Ekle / Değiştir
-                                </a>
-                            </div>
+                            <a asp-controller="UserAddress"
+                               asp-action="Edit"
+                               asp-route-id="@address.Id"
+                               class="btn btn-sm btn-outline-warning">
+                                @L["Ekle / Değiştir"]
+                            </a>
                         </div>
                     </div>
                 }
+            </div>
 
-                <!-- Bilgilendirme -->
-                <div class="card mt-3">
+            <!-- ================= SAĞ TARAF : ÖZET ================= -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
                     <div class="card-body">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" required />
-                            <label class="form-check-label">
-                                Ön bilgilendirme formunu ve
-                                <strong>Mesafeli satış sözleşmesini</strong> onaylıyorum
+                        <h5 class="mb-3">@L["Sipariş Özeti"]</h5>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>@L["Ürünler"]</span>
+                            <span>@Model.ProductTotal.ToString("N2") ₺</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>@L["Kargo"]</span>
+                            <span>@Model.CargoPrice.ToString("N2") ₺</span>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between fw-bold fs-5 text-danger">
+                            <span>@L["Toplam"]</span>
+                            <span>@Model.GrandTotal.ToString("N2") ₺</span>
+                        </div>
+
+                        <!-- ONAY -->
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" required id="terms">
+                            <label class="form-check-label small" for="terms">
+                                @L["Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum."]
                             </label>
                         </div>
-                    </div>
-                </div>
 
-                <button type="submit" class="btn btn-success mt-3">
-                    Siparişi Oluştur.
-                </button>
-            </form>
-        </div>
-
-        <!-- ================= SAĞ TARAF ================= -->
-        <div class="col-md-4">
-            <div class="card sticky-top" style="top:100px;">
-                <div class="card-body">
-                    <h6 class="text-warning">ÖDENECEK TUTAR</h6>
-
-                    <h3 class="fw-bold">
-                        @Model.GrandTotal.ToString("N2") ₺
-                    </h3>
-
-                    <hr />
-
-                    <div class="d-flex justify-content-between">
-                        <span>Ürünler</span>
-                        <span>@Model.ProductTotal.ToString("N2") ₺</span>
-                    </div>
-
-                    <div class="d-flex justify-content-between">
-                        <span>Kargo</span>
-                        <span>@Model.CargoPrice.ToString("N2") ₺</span>
+                        <!-- SUBMIT -->
+                        <button type="submit" class="btn btn-success w-100 mt-3">
+                            @L["Siparişi Oluştur"]
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-
-    </div>
+    </form>
 </div>

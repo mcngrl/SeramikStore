@@ -117,13 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EmptyCartAction" xml:space="preserve">
+  <data name="Alışverişe Başla" xml:space="preserve">
     <value>Start Shopping</value>
   </data>
-  <data name="EmptyCartMessage" xml:space="preserve">
+  <data name="Sepetinizde henüz ürün bulunmamaktadır." xml:space="preserve">
     <value> You don't have any items in your cart yet.</value>
   </data>
-  <data name="EmptyCartTitle" xml:space="preserve">
+  <data name="Sepetiniz Boş" xml:space="preserve">
     <value>Your Cart Is Empty</value>
+  </data>
+  <data name="Sepetim" xml:space="preserve">
+    <value>My Cart</value>
+  </data>
+  <data name="Ürün" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="Hızlı Teslimat" xml:space="preserve">
+    <value>Fast Delivery</value>
+  </data>
+  <data name="Sil" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Sepet Özeti" xml:space="preserve">
+    <value>Order Summary</value>
+  </data>
+  <data name="Ara Toplam" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="Kargo" xml:space="preserve">
+    <value>Shipping</value>
+  </data>
+  <data name="Toplam" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Alışverişi Tamamla" xml:space="preserve">
+    <value>Proceed to Checkout</value>
+  </data>
+  <data name="Teslimat Adresi" xml:space="preserve">
+    <value>Delivery Address</value>
+  </data>
+  <data name="Teslimat Adresim" xml:space="preserve">
+    <value>My Delivery Address</value>
+  </data>
+  <data name="Ekle / Değiştir" xml:space="preserve">
+    <value>Add / Edit</value>
+  </data>
+  <data name="Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum." xml:space="preserve">
+    <value>I approve the pre-information form and the distance selling contract.</value>
+  </data>
+  <data name="Siparişi Oluştur" xml:space="preserve">
+    <value>Place Order</value>
+  </data>
+  <data name="Ödenecek Tutar" xml:space="preserve">
+    <value>Amount to Pay</value>
+  </data>
+  <data name="Ürünler" xml:space="preserve">
+    <value>Products</value>
   </data>
 </root>

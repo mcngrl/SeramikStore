@@ -3,7 +3,7 @@
 @inject IStringLocalizer<CartResource> L
 
 @{
-    ViewData["Title"] = L["EmptyCartTitle"];
+    ViewData["Title"] = L["Sepetiniz Boş"];
 }
 
 <div class="container mt-5">
@@ -14,16 +14,16 @@
                     <i class="bi bi-cart-x" style="font-size:64px;color:#ccc;"></i>
                 </div>
 
-                <h4 class="mb-2">@L["EmptyCartTitle"]</h4>
+                <h4 class="mb-2">@L["Sepetiniz Boş"]</h4>
 
                 <p class="text-muted">
-                    @L["EmptyCartMessage"]
+                    @L["Sepetinizde henüz ürün bulunmamaktadır."]
                 </p>
 
                 <a asp-controller="Home"
                    asp-action="Index"
                    class="btn btn-warning mt-3">
-                    @L["EmptyCartAction"]
+                    @L["Alışverişe Başla"]
                 </a>
             </div>
         </div>

@@ -83,10 +83,12 @@
 
                     <a asp-controller="Cart"
                        asp-action="AddressDetail"
-                       class="btn btn-warning w-100 mt-3"
-                       @(Model.Items.Any() ? "" : "disabled")>
+                       class="btn btn-warning w-100 mt-3 @(Model.Items.Any() ? "" : "disabled")"
+                       tabindex="@(Model.Items.Any() ? "0" : "-1")"
+                       aria-disabled="@(Model.Items.Any() ? "false" : "true")">
                         @L["Alışverişi Tamamla"]
                     </a>
+
                 </div>
             </div>
         </div>
