@@ -221,8 +221,8 @@ namespace SeramikStore.Web.Controllers
                     IsDefault = a.IsDefault
                 }).ToList(),
 
-                SelectedAddressId = addresses
-                    .FirstOrDefault(x => x.IsDefault)?.Id ?? 0,
+                //SelectedAddressId = addresses
+                //    .FirstOrDefault(x => x.IsDefault)?.Id ?? 0,
 
 
                 ProductTotal = cartResult.Summary.TotalAmount,
@@ -231,6 +231,20 @@ namespace SeramikStore.Web.Controllers
             };
 
             return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult PaymentInfo(AddressSelectViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Address listesi tekrar doldurulmalı
+                //model.Addresses = _userAddressService.GetUserAddresses();
+                return View("AddressDetail", model);
+            }
+
+            // her şey OK
+            return RedirectToAction("Payment");
         }
 
 
