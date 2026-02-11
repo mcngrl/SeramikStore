@@ -19,10 +19,9 @@
                     <div class="card mb-3 shadow-sm">
                         <div class="card-body d-flex align-items-start">
                             <input type="radio"
-                                   name="SelectedAddressId"
+                                   asp-for="SelectedAddressId"
                                    value="@address.Id"
-                                   class="form-check-input mt-2 me-3"
-                                   @(address.IsDefault ? "checked" : "") required />
+                                   class="form-check-input mt-2 me-3" />
 
                             <div class="flex-grow-1">
                                 <strong>@address.Baslik</strong>
@@ -43,7 +42,12 @@
                         </div>
                     </div>
                 }
+                <span asp-validation-for="SelectedAddressId"
+                      class="text-danger small"></span>
             </div>
+
+
+
 
             <!-- ================= SAĞ TARAF : ÖZET ================= -->
             <div class="col-md-4">
@@ -70,11 +74,16 @@
 
                         <!-- ONAY -->
                         <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" required id="terms">
-                            <label class="form-check-label small" for="terms">
+                            <input class="form-check-input"
+                                   asp-for="TermsAccepted" />
+                            <label class="form-check-label small" asp-for="TermsAccepted">
                                 @L["Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum."]
                             </label>
                         </div>
+
+                        <span asp-validation-for="TermsAccepted"
+                              class="text-danger small"></span>
+
 
                         <!-- SUBMIT -->
                         <button type="submit" class="btn btn-success w-100 mt-3">

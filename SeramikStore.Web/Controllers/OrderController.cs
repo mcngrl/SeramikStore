@@ -106,6 +106,60 @@ namespace SeramikStore.Web.Controllers
 
             return View(vm);
         }
-
     }
-}
+
+        //    [HttpPost]
+        //    public IActionResult PaymentInfo(AddressSelectViewModel model)
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            // ❗ Adresler tekrar doldurulmalı
+        //            model.Addresses = _userAddressService.GetByUserId(
+        //                (int)HttpContext.Session.GetInt32("userId")
+        //            );
+
+        //            return View("~/Views/Cart/AddressDetail.cshtml", model);
+        //        }
+
+        //        int userId = (int)HttpContext.Session.GetInt32("userId");
+
+        //        // 🛒 Cart
+        //        var cartResult = _cartService.CartListByUserId(userId);
+
+        //        // 📦 Address
+        //        var address = _userAddressService.GetById(model.SelectedAddressId.Value);
+
+        //        // ➜ PaymentInfo ViewModel oluştur
+        //        var vm = new OrderPaymentInfoViewModel
+        //        {
+        //            Items = cartResult.Items.Select(item => new CartItem
+        //            {
+        //                ProductId = item.ProductId,
+        //                ProductName = item.ProductName,
+        //                ProductCode = item.ProductCode,
+        //                Quantity = item.Quantity,
+        //                UnitPrice = item.UnitPrice,
+        //                LineTotal = item.LineTotal
+        //            }).ToList(),
+
+        //            Address = new UserAddressViewModel
+        //            {
+        //                Id = address.Id,
+        //                Baslik = address.Baslik,
+        //                Ad = address.Ad,
+        //                Adres = address.Adres
+        //            },
+
+        //            TotalAmount = cartResult.Summary.TotalAmount,
+        //            CargoAmount = cartResult.Summary.CargoAmount,
+        //            GrandTotal = cartResult.Summary.GrandTotal,
+        //            Iban = "TR12 0006 2000 1234 5678 9012 34",
+        //            BankName = "Ziraat Bankası"
+        //        };
+
+        //        return View(vm);
+        //    }
+
+
+        //}
+    }
