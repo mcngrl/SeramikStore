@@ -11,6 +11,7 @@ namespace SeramikStore.Web.ViewModels
 
         public string Iban { get; set; }
         public string BankName { get; set; }
+        public string BankAccountHolder { get; set; }
     }
 
 }
