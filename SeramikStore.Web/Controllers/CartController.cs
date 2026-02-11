@@ -190,6 +190,9 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult AddressDetail()
         {
+   
+
+
             CartResultDto cartResult = GetCurrentCart();
             if (cartResult == null || !cartResult.Items.Any())
             {
@@ -233,33 +236,7 @@ namespace SeramikStore.Web.Controllers
             return View(vm);
         }
 
-        [HttpPost]
-        public IActionResult PaymentInfo(AddressSelectViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                // Address listesi tekrar doldurulmalı
-                //model.Addresses = _userAddressService.GetUserAddresses();
-                return View("AddressDetail", model);
-            }
 
-            // her şey OK
-            return RedirectToAction("Payment");
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddressDetail(AddressSelectViewModel vm)
-        {
-            if (vm.SelectedAddressId == 0)
-            {
-                ModelState.AddModelError("", "Lütfen bir adres seçiniz");
-                return View(vm);
-            }
-
-            return RedirectToAction("Payment");
-        }
 
     }
 }

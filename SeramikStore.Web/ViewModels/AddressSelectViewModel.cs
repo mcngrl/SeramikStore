@@ -1,3 +1,4 @@
+ï»¿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace SeramikStore.Web.ViewModels
@@ -6,11 +7,11 @@ namespace SeramikStore.Web.ViewModels
     {
         public List<UserAddressViewModel> Addresses { get; set; }
 
-        [Required(ErrorMessage = "Lütfen bir adres seçiniz")]
+        [Required(ErrorMessage = "LÃ¼tfen bir adres seÃ§iniz")]
         public int? SelectedAddressId { get; set; }
 
         [Range(typeof(bool), "true", "true",
-            ErrorMessage = "Devam edebilmek için sözleşmeyi onaylamalısınız")]
+            ErrorMessage = "Devam edebilmek iÃ§in sÃ¶zleÅŸmeyi onaylamalÄ±sÄ±nÄ±z")]
         public bool TermsAccepted { get; set; }
 
         public decimal ProductTotal { get; set; }

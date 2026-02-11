@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using SeramikStore.Services;
 using SeramikStore.Services.DTOs;
+using SeramikStore.Web.Options;
 using SeramikStore.Web.ViewModels;
+using System.Globalization;
 
 namespace SeramikStore.Web.Controllers
 {
@@ -11,14 +16,15 @@ namespace SeramikStore.Web.Controllers
         private readonly IOrderService _orderService;
         private readonly IUserAddressService _userAddressService;
         private readonly ICartService _cartService;
-
+        private readonly CompanyOptions _company;
         public OrderController(IOrderService orderService,
             IUserAddressService userAddressService,
-            ICartService cartService)
+            ICartService cartService, IOptions<CompanyOptions> companyOptions)
         {
             _orderService = orderService;
             _userAddressService = userAddressService;
             _cartService = cartService;
+            _company = companyOptions.Value;
         }
 
         public IActionResult Index()
@@ -57,109 +63,134 @@ namespace SeramikStore.Web.Controllers
             return RedirectToAction("OrderInfo", new { id = result.OrderId });
         }
 
-
-        public IActionResult PaymentInfo(int SelectedAddressId)
+        [HttpGet]
+        public IActionResult PaymentInfo()
         {
-            int userId = (int)HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("userId");
+            var cartResult = _cartService.CartListByUserId(userId.Value);
 
+            var addressId = HttpContext.Session.GetInt32("CheckoutAddressId");
 
-            // 1️⃣ Cart özet
-            var cartResult = _cartService.CartListByUserId(userId);
+            if (addressId == null)
+                return RedirectToAction("AddressDetail", "Cart");
 
-            List<CartItem> CartListItems = new List<CartItem>();
-            foreach (var item in cartResult.Items)
+            var address = _userAddressService.GetById(addressId.Value);
+
+            if (address == null || address.UserId != userId)
+                return RedirectToAction("AddressDetail", "Cart");
+
+    
+
+            var vmPayment = new OrderPaymentInfoViewModel
             {
-                CartItem ci = new CartItem();
-                ci.ProductDesc = "";
-                ci.Quantity = item.Quantity;
-                ci.UnitPrice = item.UnitPrice;
-                ci.ProductId = item.ProductId;
-                ci.ProductName = item.ProductName;
-                ci.ProductCode = item.ProductCode;
-                ci.Id = item.Id;
-                ci.LineTotal = item.LineTotal;
-                CartListItems.Add(ci);
-            }
-
-            // 2️⃣ Adres
-            var address = _userAddressService.GetById(SelectedAddressId);
-
-            UserAddressViewModel advm = new UserAddressViewModel();
-            advm.Ad = address.Ad;
-            advm.Adres = address.Adres;
-            advm.Id = address.Id;
-            advm.Baslik = address.Baslik;
-
-
-            // 3️⃣ ViewModel
-            var vm = new OrderPaymentInfoViewModel
-            {
-                Items = CartListItems,
-                Address = advm,
+                Items = cartResult.Items.Select(item => new CartItem
+                {
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    ProductCode = item.ProductCode,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice,
+                    LineTotal = item.LineTotal
+                }).ToList(),
+                Address = new UserAddressViewModel
+                {
+                    Id = address.Id,
+                    Baslik = address.Baslik,
+                    Ad = address.Ad,
+                    Adres = address.Adres
+                },
                 TotalAmount = cartResult.Summary.TotalAmount,
                 CargoAmount = cartResult.Summary.CargoAmount,
                 GrandTotal = cartResult.Summary.GrandTotal,
-
-                Iban = "TR12 0006 2000 1234 5678 9012 34",
-                BankName = "Ziraat Bankası"
+                Iban = _company.BankAccount.IBAN,
+                BankName = _company.BankAccount.BankName,
+                BankAccountHolder = _company.BankAccount.AccountHolder
             };
 
-            return View(vm);
+
+
+            return View("PaymentInfo", vmPayment);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PaymentInfo(AddressSelectPostModel model)
+        {
+            //POST içinde asla return View(...) kullanma.
+
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            var cartResult = _cartService.CartListByUserId(userId.Value);
+            var addresses = _userAddressService.GetByUserId(userId.Value);
+
+            if (!ModelState.IsValid)
+            {
+                var vm = new AddressSelectViewModel
+                {
+                    Addresses = addresses.Select(a => new UserAddressViewModel
+                    {
+                        Id = a.Id,
+                        Ad = a.Ad,
+                        Soyad = a.Soyad,
+                        Telefon = a.Telefon,
+                        Il = a.Il,
+                        Ilce = a.Ilce,
+                        Mahalle = a.Mahalle,
+                        Adres = a.Adres,
+                        Baslik = a.Baslik,
+                        IsDefault = a.IsDefault
+                    }).ToList(),
+                    ProductTotal = cartResult.Summary.TotalAmount,
+                    CargoPrice = cartResult.Summary.CargoAmount,
+                    GrandTotal = cartResult.Summary.GrandTotal
+                };
+
+                return View("~/Views/Cart/AddressDetail.cshtml", vm);
+            }
+
+            var address = _userAddressService.GetById(model.SelectedAddressId.Value);
+
+            if (address == null || address.UserId != userId)
+                return RedirectToAction("AddressDetail", "Cart");
+
+            var vmPayment = new OrderPaymentInfoViewModel
+            {
+                Items = cartResult.Items.Select(item => new CartItem
+                {
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    ProductCode = item.ProductCode,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice,
+                    LineTotal = item.LineTotal
+                }).ToList(),
+                Address = new UserAddressViewModel
+                {
+                    Id = address.Id,
+                    Baslik = address.Baslik,
+                    Ad = address.Ad,
+                    Adres = address.Adres
+                },
+                TotalAmount = cartResult.Summary.TotalAmount,
+                CargoAmount = cartResult.Summary.CargoAmount,
+                GrandTotal = cartResult.Summary.GrandTotal,
+                Iban = _company.BankAccount.IBAN,
+                BankName = _company.BankAccount.BankName,
+                BankAccountHolder = _company.BankAccount.AccountHolder
+            };
+
+            // Session'a kaydet (önemli!)
+            HttpContext.Session.SetInt32("CheckoutAddressId", address.Id);
+
+            return RedirectToAction("PaymentInfo");
+        }
+
+
     }
 
-        //    [HttpPost]
-        //    public IActionResult PaymentInfo(AddressSelectViewModel model)
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            // ❗ Adresler tekrar doldurulmalı
-        //            model.Addresses = _userAddressService.GetByUserId(
-        //                (int)HttpContext.Session.GetInt32("userId")
-        //            );
 
-        //            return View("~/Views/Cart/AddressDetail.cshtml", model);
-        //        }
-
-        //        int userId = (int)HttpContext.Session.GetInt32("userId");
-
-        //        // 🛒 Cart
-        //        var cartResult = _cartService.CartListByUserId(userId);
-
-        //        // 📦 Address
-        //        var address = _userAddressService.GetById(model.SelectedAddressId.Value);
-
-        //        // ➜ PaymentInfo ViewModel oluştur
-        //        var vm = new OrderPaymentInfoViewModel
-        //        {
-        //            Items = cartResult.Items.Select(item => new CartItem
-        //            {
-        //                ProductId = item.ProductId,
-        //                ProductName = item.ProductName,
-        //                ProductCode = item.ProductCode,
-        //                Quantity = item.Quantity,
-        //                UnitPrice = item.UnitPrice,
-        //                LineTotal = item.LineTotal
-        //            }).ToList(),
-
-        //            Address = new UserAddressViewModel
-        //            {
-        //                Id = address.Id,
-        //                Baslik = address.Baslik,
-        //                Ad = address.Ad,
-        //                Adres = address.Adres
-        //            },
-
-        //            TotalAmount = cartResult.Summary.TotalAmount,
-        //            CargoAmount = cartResult.Summary.CargoAmount,
-        //            GrandTotal = cartResult.Summary.GrandTotal,
-        //            Iban = "TR12 0006 2000 1234 5678 9012 34",
-        //            BankName = "Ziraat Bankası"
-        //        };
-
-        //        return View(vm);
-        //    }
+}
 
 
-        //}
-    }
+
