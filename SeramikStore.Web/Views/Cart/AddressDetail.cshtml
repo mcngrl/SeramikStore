@@ -75,18 +75,24 @@
                         <!-- ONAY -->
                         <div class="form-check mt-3">
                             <input class="form-check-input"
-                                   asp-for="TermsAccepted" />
+                                   asp-for="TermsAccepted" id="termsAccepted" />
                             <label class="form-check-label small" asp-for="TermsAccepted">
                                 @L["Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum."]
                             </label>
                         </div>
-
-                        <span asp-validation-for="TermsAccepted"
+                         <span asp-validation-for="TermsAccepted"
                               class="text-danger small"></span>
-
+                        <div id="formAlert"
+                             class="alert alert-warning d-none"
+                             role="alert"
+                             data-address-required="@L["Lütfen bir teslimat adresi seçiniz."].Value"
+                             data-terms-required="@L["Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız."].Value">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <span id="formAlertText"></span>
+                        </div>
 
                         <!-- SUBMIT -->
-                        <button type="submit" class="btn btn-success w-100 mt-3">
+                        <button type="submit" class="btn btn-success w-100 mt-3" id="btnSubmitPaymentInfo">
                             @L["Siparişi Oluştur"]
                         </button>
                     </div>
@@ -95,3 +101,37 @@
         </div>
     </form>
 </div>
+
+
+@section Scripts {
+    <script>
+            document.querySelector("form").addEventListener("submit", function (e) {
+            const addressSelected = document.querySelector("input[name='SelectedAddressId']:checked");
+            const termsAccepted = document.querySelector("input[name='TermsAccepted']").checked;
+
+            const alertBox = document.getElementById("formAlert");
+            const alertText = document.getElementById("formAlertText");
+
+            const addressMsg = alertBox.dataset.addressRequired;
+            const termsMsg = alertBox.dataset.termsRequired;
+
+            let messages = [];
+
+            if (!addressSelected) {
+                messages.push(addressMsg);
+            }
+
+            if (!termsAccepted) {
+                messages.push(termsMsg);
+            }
+
+            if (messages.length > 0) {
+                e.preventDefault();
+                alertText.innerHTML = messages.join("<br>");
+                alertBox.classList.remove("d-none");
+                alertBox.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        });
+
+    </script>
+}

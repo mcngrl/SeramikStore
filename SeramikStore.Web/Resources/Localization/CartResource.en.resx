@@ -174,4 +174,13 @@
   <data name="Ürünler" xml:space="preserve">
     <value>Products</value>
   </data>
+  <data name="Lütfen bir teslimat adresi seçiniz." xml:space="preserve">
+    <value>Please select a delivery address.</value>
+  </data>
+  <data name="Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız." xml:space="preserve">
+    <value>Please approve the pre-information form and sales agreement before proceeding.</value>
+  </data>
+  <data name="Sipariş Özeti" xml:space="preserve">
+    <value>Order Summary</value>
+  </data>
 </root>
