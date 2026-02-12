@@ -8,6 +8,7 @@
 
     <form asp-action="Edit" method="post">
         @Html.AntiForgeryToken()
+        <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
         <input type="hidden" asp-for="Id" />
 
         <div class="row">
