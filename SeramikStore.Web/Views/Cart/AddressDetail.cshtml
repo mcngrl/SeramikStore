@@ -9,19 +9,27 @@
 
 <div class="container mt-4">
     <h4 class="mb-3 text-primary">@L["Teslimat Adresim"]</h4>
-
     <form asp-controller="Order" asp-action="PaymentInfo" method="post">
         <div class="row">
             <!-- ================= SOL TARAF : ADRESLER ================= -->
             <div class="col-md-8">
+                <div class="text-end">
+                <a asp-controller="UserAddress"
+                   asp-action="Create"
+                   asp-route-returnUrl="@Context.Request.Path"
+                   class="btn btn-outline-primary">
+                    <i class="bi bi-plus-circle me-1"></i>
+                    @L["Yeni Adres Ekle"]
+                </a>
+                </div>
                 @foreach (var address in Model.Addresses)
                 {
-                    <div class="card mb-3 shadow-sm">
+                    <div class="card mb-3 shadow-sm address-card">
                         <div class="card-body d-flex align-items-start">
                             <input type="radio"
                                    asp-for="SelectedAddressId"
                                    value="@address.Id"
-                                   class="form-check-input mt-2 me-3" />
+                                   class="form-check-input mt-2 me-3  address-radio" />
 
                             <div class="flex-grow-1">
                                 <strong>@address.Baslik</strong>
@@ -36,8 +44,9 @@
                             <a asp-controller="UserAddress"
                                asp-action="Edit"
                                asp-route-id="@address.Id"
+                               asp-route-returnUrl="@Context.Request.Path"
                                class="btn btn-sm btn-outline-warning">
-                                @L["Ekle / Değiştir"]
+                                @L["Güncelle"]
                             </a>
                         </div>
                     </div>
@@ -75,7 +84,7 @@
                         <!-- ONAY -->
                         <div class="form-check mt-3">
                             <input class="form-check-input"
-                                   asp-for="TermsAccepted" id="termsAccepted" />
+                                   asp-for="TermsAccepted" id="TermsAccepted" />
                             <label class="form-check-label small" asp-for="TermsAccepted">
                                 @L["Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum."]
                             </label>
@@ -87,7 +96,6 @@
                              role="alert"
                              data-address-required="@L["Lütfen bir teslimat adresi seçiniz."].Value"
                              data-terms-required="@L["Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız."].Value">
-                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
                             <span id="formAlertText"></span>
                         </div>
 
@@ -127,11 +135,60 @@
 
             if (messages.length > 0) {
                 e.preventDefault();
-                alertText.innerHTML = messages.join("<br>");
+                alertText.innerHTML = messages.join("<br><br>");
                 alertBox.classList.remove("d-none");
                 alertBox.scrollIntoView({ behavior: "smooth", block: "center" });
             }
         });
 
     </script>
+
+    <script>
+        (function () {
+
+            function updateSelectedCards() {
+                document.querySelectorAll(".address-card").forEach(card => {
+                    const radio = card.querySelector(".address-radio");
+                    if (!radio) return;
+
+                    card.classList.toggle(
+                        "address-card-selected",
+                        radio.checked
+                    );
+                });
+            }
+
+            function bindCardClicks() {
+                document.querySelectorAll(".address-card").forEach(card => {
+
+                    card.addEventListener("click", function (e) {
+
+                        // Edit linkine basıldıysa seçim yapma
+                        if (e.target.closest("a")) return;
+
+                        const radio = card.querySelector(".address-radio");
+                        if (!radio) return;
+
+                        radio.checked = true;
+                        updateSelectedCards();
+                    });
+                });
+            }
+
+            // Normal ilk yükleme
+            document.addEventListener("DOMContentLoaded", function () {
+                bindCardClicks();
+                updateSelectedCards();
+            });
+
+            // 🔥 BACK / FORWARD ile gelince
+            window.addEventListener("pageshow", function () {
+                updateSelectedCards();
+            });
+
+        })();
+    </script>
+
+
+
 }

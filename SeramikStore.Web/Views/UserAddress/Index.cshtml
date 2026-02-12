@@ -3,6 +3,14 @@
 <h3>Adreslerim</h3>
 <a asp-action="Create" class="btn btn-primary mb-3">Yeni Adres</a>
 
+<a asp-controller="UserAddress"
+   asp-action="Create"
+   asp-route-returnUrl="@Context.Request.Path"
+   class="btn btn-outline-primary">
+    <i class="bi bi-plus-circle me-1"></i>
+    Yeni Adres Ekle
+</a>
+
 <table class="table table-bordered">
     <tr>
         <th>Id</th>
@@ -26,10 +34,10 @@
                    class="btn btn-sm btn-danger">Sil</a>
             </td>
             <td>
-            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                <a asp-action="Edit" asp-route-id="@item.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-sm btn-warning">
                 Adresi Düzenle
             </a>
-            </td>
+           </td>
         </tr>
     }
 </table>

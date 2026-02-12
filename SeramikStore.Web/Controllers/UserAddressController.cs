@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Web.ViewModels;
 
@@ -19,15 +20,21 @@ public class UserAddressController : Controller
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public IActionResult Create(string returnUrl = null)
     {
+        ViewBag.ReturnUrl = returnUrl;
         return View(new UserAddressViewModel());
     }
 
+
     [HttpPost]
-    public IActionResult Create(UserAddressViewModel vm)
+    public IActionResult Create(UserAddressViewModel vm, string returnUrl)
     {
-        if (!ModelState.IsValid) return View(vm);
+        if (!ModelState.IsValid)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View(vm);
+        }
 
         _service.Insert(new SeramikStore.Entities.UserAddress
         {
@@ -43,7 +50,13 @@ public class UserAddressController : Controller
             IsDefault = vm.IsDefault
         });
 
-        return RedirectToAction("Index");
+        // 🔐 Güvenlik: sadece local URL'e izin ver
+        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+        {
+        return Redirect(returnUrl);
+        }
+
+        return RedirectToAction("Index", "UserAddress");
     }
 
     public IActionResult Delete(int id)
@@ -53,8 +66,9 @@ public class UserAddressController : Controller
     }
 
     [HttpGet]
-    public IActionResult Edit(int id)
+    public IActionResult Edit(int id, string returnUrl = null)
     {
+        
         int userId = HttpContext.Session.GetInt32("userId").Value;
 
         var address = _service.GetById(id);
@@ -62,6 +76,7 @@ public class UserAddressController : Controller
         // Güvenlik: adres başka kullanıcıya ait mi?
         if (address == null || address.UserId != userId)
             return RedirectToAction("Index");
+
 
         var vm = new UserAddressViewModel
         {
@@ -77,16 +92,21 @@ public class UserAddressController : Controller
             IsDefault = address.IsDefault
         };
 
+        ViewBag.ReturnUrl = returnUrl;
+
         return View(vm);
     }
 
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(UserAddressViewModel vm)
+    public IActionResult Edit(UserAddressViewModel vm, string returnUrl)
     {
         if (!ModelState.IsValid)
+        {
+            ViewBag.ReturnUrl = returnUrl;
             return View(vm);
+        }
 
         int userId = HttpContext.Session.GetInt32("userId").Value;
 
@@ -104,6 +124,13 @@ public class UserAddressController : Controller
             Baslik = vm.Baslik,
             IsDefault = vm.IsDefault
         });
+
+
+        // 🔐 Güvenlik: sadece local URL'e izin ver
+        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+        {
+            return Redirect(returnUrl);
+        }
 
         return RedirectToAction("Index");
     }
