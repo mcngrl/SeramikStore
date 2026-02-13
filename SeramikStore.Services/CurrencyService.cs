@@ -82,59 +82,59 @@ using System.Threading.Tasks;
                 return currency;
             }
 
-            // INSERT
-            public void InsertCurrency(Currency currency)
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
+            //// INSERT
+            //public void InsertCurrency(Currency currency)
+            //{
+            //    using (SqlConnection connection = new SqlConnection(connectionString))
+            //    {
+            //        connection.Open();
 
-                    SqlCommand command = new SqlCommand("sp_Currency_Insert", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+            //        SqlCommand command = new SqlCommand("sp_Currency_Insert", connection);
+            //        command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@Code", currency.Code);
-                    command.Parameters.AddWithValue("@Name", currency.Name);
-                    command.Parameters.AddWithValue("@Symbol", currency.Symbol);
-                    command.Parameters.AddWithValue("@IsDefault", currency.IsDefault);
+            //        command.Parameters.AddWithValue("@Code", currency.Code);
+            //        command.Parameters.AddWithValue("@Name", currency.Name);
+            //        command.Parameters.AddWithValue("@Symbol", currency.Symbol);
+            //        command.Parameters.AddWithValue("@IsDefault", currency.IsDefault);
 
-                    command.ExecuteNonQuery();
-                }
-            }
+            //        command.ExecuteNonQuery();
+            //    }
+            //}
 
-            // UPDATE
-            public void UpdateCurrency(Currency currency)
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
+            //// UPDATE
+            //public void UpdateCurrency(Currency currency)
+            //{
+            //    using (SqlConnection connection = new SqlConnection(connectionString))
+            //    {
+            //        connection.Open();
 
-                    SqlCommand command = new SqlCommand("sp_Currency_Update", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+            //        SqlCommand command = new SqlCommand("sp_Currency_Update", connection);
+            //        command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@Id", currency.Id);
-                    command.Parameters.AddWithValue("@Code", currency.Code);
-                    command.Parameters.AddWithValue("@Name", currency.Name);
-                    command.Parameters.AddWithValue("@Symbol", currency.Symbol);
-                    command.Parameters.AddWithValue("@IsDefault", currency.IsDefault);
-                    command.ExecuteNonQuery();
-                }
-            }
+            //        command.Parameters.AddWithValue("@Id", currency.Id);
+            //        command.Parameters.AddWithValue("@Code", currency.Code);
+            //        command.Parameters.AddWithValue("@Name", currency.Name);
+            //        command.Parameters.AddWithValue("@Symbol", currency.Symbol);
+            //        command.Parameters.AddWithValue("@IsDefault", currency.IsDefault);
+            //        command.ExecuteNonQuery();
+            //    }
+            //}
 
-            // DELETE (Soft Delete)
-            public void DeleteCurrency(int Id)
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
+            //// DELETE (Soft Delete)
+            //public void DeleteCurrency(int Id)
+            //{
+            //    using (SqlConnection connection = new SqlConnection(connectionString))
+            //    {
+            //        connection.Open();
 
-                    SqlCommand command = new SqlCommand("sp_Currency_Delete", connection);
-                    command.CommandType = CommandType.StoredProcedure;
+            //        SqlCommand command = new SqlCommand("sp_Currency_Delete", connection);
+            //        command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@Id", Id);
+            //        command.Parameters.AddWithValue("@Id", Id);
 
-                    command.ExecuteNonQuery();
-                }
-            }
+            //        command.ExecuteNonQuery();
+            //    }
+            //}
 
         public Currency GetById(int Id)
         {

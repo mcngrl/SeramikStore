@@ -20,85 +20,85 @@ namespace SeramikStore.Web.Controllers
             return View(currencies);
         }
 
-        // CREATE - GET
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //// CREATE - GET
+        //[HttpGet]
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Currency currency)
-        {
-            if (!ModelState.IsValid)
-                return View(currency);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Create(Currency currency)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(currency);
 
-            _currencyService.InsertCurrency(currency);
-            return RedirectToAction(nameof(Index));
-        }
+        //    _currencyService.InsertCurrency(currency);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var currency = _currencyService.GetById(id);
+        //[HttpGet]
+        //public IActionResult Edit(int id)
+        //{
+        //    var currency = _currencyService.GetById(id);
 
-            if (currency == null)
-                return NotFound();
+        //    if (currency == null)
+        //        return NotFound();
 
-            return View(currency);
-        }
+        //    return View(currency);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Currency currency)
-        {
-            if (!ModelState.IsValid)
-                return View(currency);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Edit(Currency currency)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(currency);
 
-            _currencyService.UpdateCurrency(currency);
-            return RedirectToAction(nameof(Index));
-        }
+        //    _currencyService.UpdateCurrency(currency);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
 
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            var currency = _currencyService.GetById(id);
+        //[HttpGet]
+        //public IActionResult Delete(int id)
+        //{
+        //    var currency = _currencyService.GetById(id);
 
-            if (currency == null)
-                return NotFound();
+        //    if (currency == null)
+        //        return NotFound();
 
-            // Default currency silinmesin (opsiyonel ama önerilir)
-            if (currency.IsDefault)
-            {
-                TempData["Error"] = "Default currency cannot be deleted.";
-                return RedirectToAction(nameof(Index));
-            }
+        //    // Default currency silinmesin (opsiyonel ama önerilir)
+        //    if (currency.IsDefault)
+        //    {
+        //        TempData["Error"] = "Default currency cannot be deleted.";
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            return View(currency);
-        }
+        //    return View(currency);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int currencyId)
-        {
-            var currency = _currencyService.GetById(currencyId);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult DeleteConfirmed(int currencyId)
+        //{
+        //    var currency = _currencyService.GetById(currencyId);
 
-            if (currency == null)
-                return NotFound();
+        //    if (currency == null)
+        //        return NotFound();
 
-            if (currency.IsDefault)
-            {
-                TempData["Error"] = "Default currency cannot be deleted.";
-                return RedirectToAction(nameof(Index));
-            }
+        //    if (currency.IsDefault)
+        //    {
+        //        TempData["Error"] = "Default currency cannot be deleted.";
+        //        return RedirectToAction(nameof(Index));
+        //    }
 
-            _currencyService.DeleteCurrency(currencyId);
+        //    _currencyService.DeleteCurrency(currencyId);
 
-            TempData["Success"] = "Currency deleted successfully.";
-            return RedirectToAction(nameof(Index));
-        }
+        //    TempData["Success"] = "Currency deleted successfully.";
+        //    return RedirectToAction(nameof(Index));
+        //}
 
 
 

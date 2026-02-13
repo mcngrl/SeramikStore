@@ -2,7 +2,6 @@
 
 <h2>Para Birimleri</h2>
 
-<a  asp-action="Create" class="btn btn-primary">Yeni Para Birimi</a>
 
 <table class="table table-bordered mt-3">
     <thead>
@@ -11,7 +10,6 @@
             <th>Para Birimi Adı</th>
             <th>Sembol</th>
             <th>Varsayılan</th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -22,19 +20,6 @@
                 <td>@item.Name</td>
                 <td>@item.Symbol</td>
                 <td>@item.IsDefault</td>
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@item.Id"
-                       class="btn btn-sm btn-warning">
-                        Güncelle
-                    </a>
-
-                    <a asp-action="Delete"
-                       asp-route-id="@item.Id"
-                       class="btn btn-sm btn-danger">
-                        Sil
-                    </a>
-                </td>
             </tr>
         }
     </tbody>
