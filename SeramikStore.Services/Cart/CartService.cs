@@ -81,6 +81,7 @@ namespace SeramikStore.Services
                     TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
                     UserId = reader["UserId"] == DBNull.Value ? (int?)null : (int)reader["UserId"],
                     cart_id_token = reader["cart_id_token"] == DBNull.Value ? (string?)null : (string)reader["cart_id_token"],
+                    CurrencyCode = ""
                 };
             }
 
@@ -201,7 +202,8 @@ namespace SeramikStore.Services
                         UnitPrice = existing.UnitPrice,
                         Quantity = existing.Quantity,
                         TotalAmount = existing.LineTotal,
-                        UserId = userId
+                        UserId = userId,
+                        CurrencyCode ="",
                     };
 
 
@@ -222,7 +224,9 @@ namespace SeramikStore.Services
                         Quantity = anon.Quantity,
                         TotalAmount = anon.LineTotal,
                         UserId = userId,
-                        cart_id_token = null
+                        cart_id_token = null,
+                        CurrencyCode ="",
+                        
                     };
                     Update(anonToUpdate);
                 }
