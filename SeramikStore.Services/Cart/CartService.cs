@@ -36,7 +36,10 @@ namespace SeramikStore.Services
                     ProductName = reader["ProductName"].ToString(),
                     UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
                     Quantity = Convert.ToInt32(reader["Quantity"]),
-                    LineTotal = Convert.ToDecimal(reader["LineTotal"])
+                    LineTotal = Convert.ToDecimal(reader["LineTotal"]),
+                    CurrencyCode = reader["CurrencyCode"].ToString(),
+                    MainImagePath = reader["MainImagePath"].ToString(),
+
                 });
             }
 
@@ -47,7 +50,8 @@ namespace SeramikStore.Services
                 {
                     TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
                     CargoAmount = Convert.ToDecimal(reader["CargoAmount"]),
-                    GrandTotal = Convert.ToDecimal(reader["GrandTotal"])
+                    GrandTotal = Convert.ToDecimal(reader["GrandTotal"]),
+                    CurrencyCode = reader["CurrencyCode"].ToString()
                 };
             }
 
@@ -81,7 +85,8 @@ namespace SeramikStore.Services
                     TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
                     UserId = reader["UserId"] == DBNull.Value ? (int?)null : (int)reader["UserId"],
                     cart_id_token = reader["cart_id_token"] == DBNull.Value ? (string?)null : (string)reader["cart_id_token"],
-                    CurrencyCode = ""
+                    CurrencyCode = reader["CurrencyCode"].ToString()
+
                 };
             }
 
@@ -102,6 +107,7 @@ namespace SeramikStore.Services
             command.Parameters.AddWithValue("@TotalAmount", cart.TotalAmount);
             command.Parameters.AddWithValue("@UserId", cart.UserId);
             command.Parameters.AddWithValue("@cart_id_token", cart.cart_id_token);
+            command.Parameters.AddWithValue("@CurrencyCode", cart.CurrencyCode);
 
             connection.Open();
             return Convert.ToInt32(command.ExecuteScalar());
@@ -156,7 +162,10 @@ namespace SeramikStore.Services
                     ProductName = reader["ProductName"].ToString(),
                     UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
                     Quantity = Convert.ToInt32(reader["Quantity"]),
-                    LineTotal = Convert.ToDecimal(reader["LineTotal"])
+                    LineTotal = Convert.ToDecimal(reader["LineTotal"]),
+                    CurrencyCode = reader["CurrencyCode"].ToString(),
+                    MainImagePath = reader["MainImagePath"].ToString(),
+
                 });
             }
 
@@ -167,7 +176,9 @@ namespace SeramikStore.Services
                 {
                     TotalAmount = Convert.ToDecimal(reader["TotalAmount"]),
                     CargoAmount = Convert.ToDecimal(reader["CargoAmount"]),
-                    GrandTotal = Convert.ToDecimal(reader["GrandTotal"])
+                    GrandTotal = Convert.ToDecimal(reader["GrandTotal"]),
+                    CurrencyCode = reader["CurrencyCode"].ToString(),
+
                 };
             }
 
@@ -203,7 +214,7 @@ namespace SeramikStore.Services
                         Quantity = existing.Quantity,
                         TotalAmount = existing.LineTotal,
                         UserId = userId,
-                        CurrencyCode ="",
+                        CurrencyCode = existing.CurrencyCode,
                     };
 
 
@@ -225,7 +236,7 @@ namespace SeramikStore.Services
                         TotalAmount = anon.LineTotal,
                         UserId = userId,
                         cart_id_token = null,
-                        CurrencyCode ="",
+                        CurrencyCode = anon.CurrencyCode,
                         
                     };
                     Update(anonToUpdate);

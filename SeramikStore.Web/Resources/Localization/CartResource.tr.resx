@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="," xml:space="preserve">
-    <value>Alışverişe Başla</value>
-  </data>
   <data name="Sepetinizde henüz ürün bulunmamaktadır." xml:space="preserve">
     <value>Sepetinizde henüz ürün bulunmamaktadır.</value>
   </data>
@@ -188,5 +185,17 @@
   </data>
   <data name="Güncelle" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="Sipariş Tutarı" xml:space="preserve">
+    <value>Sipariş Tutarı</value>
+  </data>
+  <data name="Kargo Tutarı" xml:space="preserve">
+    <value>Kargo Tutarı</value>
+  </data>
+  <data name="Toplam Tutar" xml:space="preserve">
+    <value>Total Amount</value>
+  </data>
+  <data name="Adet" xml:space="preserve">
+    <value>Adet</value>
   </data>
 </root>

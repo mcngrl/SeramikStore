@@ -142,7 +142,8 @@ namespace SeramikStore.Web.Controllers
                 Quantity = vm.Quantity,
                 UnitPrice = product.UnitPrice,
                 cart_id_token = GetOrCreateCartId(),
-                UserId = userId
+                UserId = userId,
+                CurrencyCode = product.CurrencyCode,
             };
 
             int result = _cartservices.SaveCart(cart);

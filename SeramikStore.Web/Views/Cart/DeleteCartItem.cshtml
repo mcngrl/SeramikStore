@@ -1,54 +1,72 @@
-@using SeramikStore.Entities;
+﻿@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
+@using SeramikStore.Entities
 @model Cart
+@inject IStringLocalizer<CartResource> L
+
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = L["Sepetten Sil"];
 }
 
-<h1>Delete</h1>
+<div class="container mt-5" style="max-width:700px;">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Cart</h4>
-    <hr />
-    <dl class="row">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductCode)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProductCode)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UnitPrice)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UnitPrice)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalAmount)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TotalAmount)
-        </dd>
-    </dl>
+            <h4 class="text-danger mb-3">
+                🗑 @L["Ürünü Sepetten Kaldır"]
+            </h4>
 
-    <form asp-action="DeleteCartItem">
-        @Html.AntiForgeryToken()
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Summary">Back to List</a>
-    </form>
+            <p class="text-muted">
+                @L["Bu ürünü sepetinizden kaldırmak istediğinize emin misiniz?"]
+            </p>
+
+            <hr />
+
+            <div class="row mb-2">
+                <div class="col-5 fw-semibold">@L["Ürün Kodu"]</div>
+                <div class="col-7">@Model.ProductCode</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-5 fw-semibold">@L["Ürün Adı"]</div>
+                <div class="col-7">@Model.ProductName</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-5 fw-semibold">@L["Birim Fiyat"]</div>
+                <div class="col-7">@Model.UnitPrice.ToString("N2")</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-5 fw-semibold">@L["Adet"]</div>
+                <div class="col-7">@Model.Quantity</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-5 fw-semibold">@L["Toplam"]</div>
+                <div class="col-7 fw-bold text-danger">
+                    @Model.TotalAmount.ToString("N2")
+                </div>
+            </div>
+
+            <form asp-action="DeleteCartItem" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Summary"
+                       class="btn btn-outline-secondary">
+                        @L["Vazgeç"]
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-danger px-4">
+                        🗑 @L["Sil"]
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </div>
-
