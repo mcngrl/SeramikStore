@@ -224,8 +224,8 @@ namespace SeramikStore.Web.Controllers
                     IsDefault = a.IsDefault
                 }).ToList(),
 
-                //SelectedAddressId = addresses
-                //    .FirstOrDefault(x => x.IsDefault)?.Id ?? 0,
+                SelectedAddressId = addresses
+                    .FirstOrDefault(x => x.IsDefault)?.Id ?? 0,
 
 
                 ProductTotal = cartResult.Summary.TotalAmount,
