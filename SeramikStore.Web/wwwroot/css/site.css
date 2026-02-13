@@ -154,3 +154,29 @@ body {
     /*background-color:#f8fbff;*/
     box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
 }
+
+
+.cart-item-card {
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.cart-item-card:hover {
+    transform: translateY(-2px);
+}
+
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+    .qty-btn:hover {
+        background-color: #ff6a00;
+        color: #fff;
+        border-color: #ff6a00;
+    }

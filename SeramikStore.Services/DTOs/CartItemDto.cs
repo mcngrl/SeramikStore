@@ -10,5 +10,7 @@ namespace SeramikStore.Services.DTOs
         public int Quantity { get; set; }
         public decimal LineTotal { get; set; }
         public string cart_id_token { get; set; }
+        public string CurrencyCode { get; set; }
+        public string MainImagePath { get; set; }
     } 
 }
