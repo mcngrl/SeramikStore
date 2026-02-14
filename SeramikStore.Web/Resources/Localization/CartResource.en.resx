@@ -210,4 +210,7 @@
   <data name="Vazgeç" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Ödeme Yap" xml:space="preserve">
+    <value>Make Payment</value>
+  </data>
 </root>

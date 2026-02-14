@@ -10,7 +10,9 @@ namespace SeramikStore.Web.ViewModels
 
         public int CategoryId { get; set; }
         public decimal UnitPrice { get; set; }
+
         public int Quantity { get; set; }
         public decimal LineTotal { get; set; }
+        public string CurrencyCode { get; set; }
     }
 }
