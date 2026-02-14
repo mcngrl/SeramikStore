@@ -193,9 +193,21 @@
     <value>Shipping Amount</value>
   </data>
   <data name="Toplam Tutar" xml:space="preserve">
-    <value>Toplam Tutar</value>
+    <value>Total Amount</value>
   </data>
   <data name="Adet" xml:space="preserve">
     <value>Piece</value>
+  </data>
+  <data name="Bu ürünü sepetinizden silmek istediğinize emin misiniz?" xml:space="preserve">
+    <value>Are you sure you want to remove this product from your cart?</value>
+  </data>
+  <data name="Sepetten Sil" xml:space="preserve">
+    <value>Delete from Cart</value>
+  </data>
+  <data name="Ürün Kodu" xml:space="preserve">
+    <value>Product Code</value>
+  </data>
+  <data name="Vazgeç" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

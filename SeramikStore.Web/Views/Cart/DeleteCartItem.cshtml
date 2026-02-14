@@ -1,72 +1,111 @@
 ﻿@using Microsoft.Extensions.Localization
 @using SeramikStore.Web.Localization
-@using SeramikStore.Entities
-@model Cart
+@using System.Globalization
+@model SeramikStore.Services.DTOs.CartItemDto
 @inject IStringLocalizer<CartResource> L
 
 @{
     ViewData["Title"] = L["Sepetten Sil"];
+    var culture = CultureInfo.CurrentCulture;
 }
 
-<div class="container mt-5" style="max-width:700px;">
+<div class="container mt-5" style="max-width:720px;">
 
-    <div class="card shadow-sm border-0">
-        <div class="card-body">
+    <div class="card shadow-sm border-0 rounded-4 p-4">
 
-            <h4 class="text-danger mb-3">
-                🗑 @L["Ürünü Sepetten Kaldır"]
-            </h4>
+        <!-- Başlık -->
+        <p class="text-muted fs-5 mb-4">
+            @L["Bu ürünü sepetinizden silmek istediğinize emin misiniz?"]
+        </p>
 
-            <p class="text-muted">
-                @L["Bu ürünü sepetinizden kaldırmak istediğinize emin misiniz?"]
-            </p>
+        <!-- Ürün Kartı -->
+        <div class="d-flex align-items-center border rounded-4 p-3 product-box">
 
-            <hr />
-
-            <div class="row mb-2">
-                <div class="col-5 fw-semibold">@L["Ürün Kodu"]</div>
-                <div class="col-7">@Model.ProductCode</div>
+            <!-- Ürün Görsel -->
+            <div class="product-image">
+                <img src="@(string.IsNullOrEmpty(Model.MainImagePath) ? "/images/no-image.png" : Model.MainImagePath)"
+                     alt="@Model.ProductName" />
             </div>
 
-            <div class="row mb-2">
-                <div class="col-5 fw-semibold">@L["Ürün Adı"]</div>
-                <div class="col-7">@Model.ProductName</div>
-            </div>
-
-            <div class="row mb-2">
-                <div class="col-5 fw-semibold">@L["Birim Fiyat"]</div>
-                <div class="col-7">@Model.UnitPrice.ToString("N2")</div>
-            </div>
-
-            <div class="row mb-2">
-                <div class="col-5 fw-semibold">@L["Adet"]</div>
-                <div class="col-7">@Model.Quantity</div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-5 fw-semibold">@L["Toplam"]</div>
-                <div class="col-7 fw-bold text-danger">
-                    @Model.TotalAmount.ToString("N2")
+            <!-- Ürün Bilgi -->
+            <div class="flex-grow-1 ms-4">
+                <div class="fw-semibold text-dark mb-1">
+                    @Model.ProductName
+                </div>
+                <div class="text-muted small">
+                    @L["Ürün Kodu"]: @Model.ProductCode
                 </div>
             </div>
 
-            <form asp-action="DeleteCartItem" method="post">
-                @Html.AntiForgeryToken()
-                <input type="hidden" asp-for="Id" />
-
-                <div class="d-flex justify-content-between mt-4">
-                    <a asp-action="Summary"
-                       class="btn btn-outline-secondary">
-                        @L["Vazgeç"]
-                    </a>
-
-                    <button type="submit"
-                            class="btn btn-danger px-4">
-                        🗑 @L["Sil"]
-                    </button>
+            <!-- Sağ Alan (Adet + Fiyat) -->
+            <div class="text-end ms-4 right-area">
+                <div class="fw-semibold text-dark">
+                    @Model.Quantity @L["Adet"]
                 </div>
-            </form>
+                <div class="fw-bold fs-5 mt-2">
+                    @Model.LineTotal.ToString("N2", culture)
+                    @Model.CurrencyCode.ToString().ToUpper()
+                </div>
+            </div>
 
         </div>
+
+        <!-- Butonlar -->
+        <form asp-action="DeleteCartItem" method="post" class="mt-4">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <div class="d-flex justify-content-end gap-3">
+
+                <a asp-action="Summary"
+                   class="btn btn-outline-secondary rounded-pill px-4 d-flex align-items-center">
+                    <i class="fa-regular fa-circle-left fs-4 me-2"></i>
+                    @L["Vazgeç"]
+                </a>
+
+                <button type="submit"
+                        class="btn btn-danger rounded-pill px-4 d-flex align-items-center">
+                    <i class="fa-regular fa-trash-can me-2"></i>
+                    @L["Sil"]
+                </button>
+
+            </div>
+        </form>
+
     </div>
 </div>
+
+
+<style>
+
+    /* Ürün kutusu */
+    .product-box {
+        transition: background-color 0.2s ease;
+    }
+
+/*         .product-box:hover {
+            background-color: #fafafa;
+        } */
+
+    /* Resim sabit boyut (zıplama yok) */
+    .product-image {
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+    /* Sağ alan sabit genişlik */
+    .right-area {
+        min-width: 140px;
+    }
+
+</style>

@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityCreator", "EntityCrea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeramikStore.Contracts", "SeramikStore.Contracts\SeramikStore.Contracts.csproj", "{7762A6CE-E249-412A-ADAE-30F04CD8BC55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTMLC", "HTMLC\HTMLC.csproj", "{04F977B7-EEF7-4BF3-9A9D-A0632C6D4052}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7762A6CE-E249-412A-ADAE-30F04CD8BC55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04F977B7-EEF7-4BF3-9A9D-A0632C6D4052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04F977B7-EEF7-4BF3-9A9D-A0632C6D4052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04F977B7-EEF7-4BF3-9A9D-A0632C6D4052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04F977B7-EEF7-4BF3-9A9D-A0632C6D4052}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

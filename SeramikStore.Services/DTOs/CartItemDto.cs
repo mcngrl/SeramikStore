@@ -9,6 +9,7 @@ namespace SeramikStore.Services.DTOs
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
         public decimal LineTotal { get; set; }
+        public int? UserId { get; set; }
         public string cart_id_token { get; set; }
         public string CurrencyCode { get; set; }
         public string MainImagePath { get; set; }
