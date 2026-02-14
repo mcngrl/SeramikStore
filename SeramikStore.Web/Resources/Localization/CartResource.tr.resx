@@ -193,9 +193,21 @@
     <value>Kargo Tutarı</value>
   </data>
   <data name="Toplam Tutar" xml:space="preserve">
-    <value>Total Amount</value>
+    <value>Toplam Tutar</value>
   </data>
   <data name="Adet" xml:space="preserve">
     <value>Adet</value>
+  </data>
+  <data name="Bu ürünü sepetinizden silmek istediğinize emin misiniz?" xml:space="preserve">
+    <value>Bu ürünü sepetinizden silmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="Sepetten Sil" xml:space="preserve">
+    <value>Sepetten Sil</value>
+  </data>
+  <data name="Ürün Kodu" xml:space="preserve">
+    <value>Ürün Kodu</value>
+  </data>
+  <data name="Vazgeç" xml:space="preserve">
+    <value>Vazgeç</value>
   </data>
 </root>

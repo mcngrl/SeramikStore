@@ -14,10 +14,10 @@ namespace SeramikStore.Web.ViewModels
             ErrorMessage = "Devam edebilmek için sözleşmeyi onaylamalısınız")]
         public bool TermsAccepted { get; set; }
 
-        public decimal ProductTotal { get; set; }
-        public decimal CargoPrice { get; set; }
-        //public decimal GrandTotal => ProductTotal + CargoPrice;
-
+        public decimal TotalAmount { get; set; }
+        public decimal CargoAmount { get; set; }
         public decimal GrandTotal { get; set; }
+        public string CurrencyCode { get; set; }
+
     }
 }

@@ -141,9 +141,10 @@ namespace SeramikStore.Web.Controllers
                         Baslik = a.Baslik,
                         IsDefault = a.IsDefault
                     }).ToList(),
-                    ProductTotal = cartResult.Summary.TotalAmount,
-                    CargoPrice = cartResult.Summary.CargoAmount,
-                    GrandTotal = cartResult.Summary.GrandTotal
+                    TotalAmount = cartResult.Summary.TotalAmount,
+                    CargoAmount = cartResult.Summary.CargoAmount,
+                    GrandTotal = cartResult.Summary.GrandTotal,
+                    CurrencyCode = cartResult.Summary.CurrencyCode,
                 };
 
                 return View("~/Views/Cart/AddressDetail.cshtml", vm);

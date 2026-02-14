@@ -58,7 +58,6 @@ namespace SeramikStore.Services
             return result;
         }
 
-
         public Cart CartGetById(int cartId)
         {
             Cart cart = null;
@@ -86,6 +85,40 @@ namespace SeramikStore.Services
                     UserId = reader["UserId"] == DBNull.Value ? (int?)null : (int)reader["UserId"],
                     cart_id_token = reader["cart_id_token"] == DBNull.Value ? (string?)null : (string)reader["cart_id_token"],
                     CurrencyCode = reader["CurrencyCode"].ToString()
+
+                };
+            }
+
+            return cart;
+        }
+        public CartItemDto Cart_GetById_withImage(int cartId)
+        {
+            CartItemDto cart = null;
+
+            using SqlConnection connection = new(_connectionString);
+            using SqlCommand command = new("sp_Cart_GetById_withImage", connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@Id", cartId);
+
+            connection.Open();
+
+            using SqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                cart = new CartItemDto
+                {
+                    Id = Convert.ToInt32(reader["Id"]),
+                    ProductId = Convert.ToInt32(reader["ProductId"]),
+                    ProductCode = reader["ProductCode"].ToString(),
+                    ProductName = reader["ProductName"].ToString(),
+                    UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
+                    Quantity = Convert.ToInt32(reader["Quantity"]),
+                    LineTotal = Convert.ToDecimal(reader["TotalAmount"]),
+                    UserId = reader["UserId"] == DBNull.Value ? (int?)null : (int)reader["UserId"],
+                    cart_id_token = reader["cart_id_token"] == DBNull.Value ? (string?)null : (string)reader["cart_id_token"],
+                    CurrencyCode = reader["CurrencyCode"].ToString(),
+                    MainImagePath = reader["MainImagePath"].ToString()
 
                 };
             }

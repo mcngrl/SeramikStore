@@ -81,7 +81,7 @@ namespace SeramikStore.Web.Controllers
         {
 
 
-            var cart = _cartService.CartGetById(id);
+            var cart = _cartService.Cart_GetById_withImage(id);
             if (cart == null)
                 return RedirectToAction("Summary");
 
@@ -90,13 +90,13 @@ namespace SeramikStore.Web.Controllers
             if (userId.HasValue)
             {
                 if (cart.UserId != userId.Value)
-                    return Unauthorized();
+                    return RedirectToAction("Summary");
             }
             else
             {
                 var cartId = Request.Cookies["cart_id"];
                 if (cart.cart_id_token != cartId)
-                    return Unauthorized();
+                    return RedirectToAction("Summary");
             }
 
 
@@ -167,6 +167,8 @@ namespace SeramikStore.Web.Controllers
         {
 
             var cart = _cartService.CartGetById(id);
+
+
             if (cart == null)
                 return RedirectToAction("Summary");
 
@@ -183,6 +185,17 @@ namespace SeramikStore.Web.Controllers
                 if (cart.cart_id_token != cartId)
                     return Unauthorized();
             }
+
+            if (cart.Quantity == 1)
+            {
+                return RedirectToAction(nameof(DeleteCartItem), new { id });
+            }
+
+            if (cart.Quantity < 1)
+            {
+                return RedirectToAction("Summary");
+            }
+
             _cartService.DecreaseQuantity(id);
             return RedirectToAction("Summary");
         }
@@ -228,9 +241,10 @@ namespace SeramikStore.Web.Controllers
                     .FirstOrDefault(x => x.IsDefault)?.Id ?? 0,
 
 
-                ProductTotal = cartResult.Summary.TotalAmount,
-                CargoPrice = cartResult.Summary.CargoAmount,
+                TotalAmount = cartResult.Summary.TotalAmount,
+                CargoAmount = cartResult.Summary.CargoAmount,
                 GrandTotal = cartResult.Summary.GrandTotal,
+                CurrencyCode = cartResult.Summary.CurrencyCode
             };
 
             return View(vm);

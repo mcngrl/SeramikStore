@@ -11,6 +11,8 @@ namespace SeramikStore.Services
     public partial interface ICartService
     {
         CartResultDto CartListByUserId(int userId);
+
+        CartItemDto Cart_GetById_withImage(int cartId);
         Cart CartGetById(int cartId);
         int SaveCart(Cart cart);
         int UpdateCart(int cartId, int quantity);
