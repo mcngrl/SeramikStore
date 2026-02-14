@@ -93,6 +93,7 @@
                             <label class="form-check-label small" asp-for="TermsAccepted">
                                 @L["Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum."]
                             </label>
+                            <a asp-controller="Home" asp-action="MesafeliSatis">@L["Mesafeli Satış Sözleşmesi"]</a>
                         </div>
                          <span asp-validation-for="TermsAccepted"
                               class="text-danger small"></span>
@@ -106,7 +107,7 @@
 
                         <!-- SUBMIT -->
                         <button type="submit" class="btn btn-success w-100 mt-3" id="btnSubmitPaymentInfo">
-                            @L["Siparişi Oluştur"]
+                            @L["Ödeme Yap"]
                         </button>
                     </div>
                 </div>

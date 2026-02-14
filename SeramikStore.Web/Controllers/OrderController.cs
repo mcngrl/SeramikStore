@@ -90,18 +90,29 @@ namespace SeramikStore.Web.Controllers
                     ProductCode = item.ProductCode,
                     Quantity = item.Quantity,
                     UnitPrice = item.UnitPrice,
-                    LineTotal = item.LineTotal
+                    LineTotal = item.LineTotal,
+                    CurrencyCode = item.CurrencyCode,
+
                 }).ToList(),
                 Address = new UserAddressViewModel
                 {
                     Id = address.Id,
                     Baslik = address.Baslik,
                     Ad = address.Ad,
-                    Adres = address.Adres
+                    Soyad = address.Soyad,
+                    Adres = address.Adres,
+                    Il = address.Il,
+                    Ilce =address.Ilce,
+                    Telefon = address.Telefon
+
+
                 },
                 TotalAmount = cartResult.Summary.TotalAmount,
                 CargoAmount = cartResult.Summary.CargoAmount,
                 GrandTotal = cartResult.Summary.GrandTotal,
+                CurrencyCode = cartResult.Summary.CurrencyCode,
+
+
                 Iban = _company.BankAccount.IBAN,
                 BankName = _company.BankAccount.BankName,
                 BankAccountHolder = _company.BankAccount.AccountHolder
@@ -164,7 +175,9 @@ namespace SeramikStore.Web.Controllers
                     ProductCode = item.ProductCode,
                     Quantity = item.Quantity,
                     UnitPrice = item.UnitPrice,
-                    LineTotal = item.LineTotal
+                    LineTotal = item.LineTotal,
+                    CurrencyCode = item.CurrencyCode,
+
                 }).ToList(),
                 Address = new UserAddressViewModel
                 {
