@@ -10,8 +10,10 @@ namespace SeramikStore.Services
 {
     public interface IOrderService
     {
-        OrderCreateResultDto CreateOrder(OrderInfoDto orderInfo);
-        OrderInfoDto GetOrderById(int orderId);
-        List<OrderListItemDto> GetOrdersByUserId(int userId);
+        OrderCreateResultDto CreateOrder(OrderCreateDto orderInfo);
+        OrderDetailedDto GetDetailedOrderById(int orderId);
+        List<OrderHeaderItemDto> GetOrdersByUserId(int userId);
+
+        List<OrderAdminListItemDto> GetAllOrders();
     }
 }

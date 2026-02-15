@@ -27,18 +27,42 @@ namespace SeramikStore.Web.Controllers
             _company = companyOptions.Value;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult MyOrders()
         {
+
+
             int userId = (int)HttpContext.Session.GetInt32("userId");
             var orders = _orderService.GetOrdersByUserId(userId);
             return View(orders);
         }
+
+        [HttpGet]
+        public IActionResult CustomerOrders()
+        {
+            var role = HttpContext.Session.GetString("role");
+
+            if (role != "Admin")
+                RedirectToAction("Index", "Home");
+
+            var orders = _orderService.GetAllOrders();
+            return View(orders);
+        }
+
+        [HttpGet]
         public IActionResult OrderInfo(int id)
         {
-            var order = _orderService.GetOrderById(id);
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            var order = _orderService.GetDetailedOrderById(id);
 
             if (order == null)
-                return NotFound();
+                return RedirectToAction("Index", "Home");
+
+            if (order.UserId != userId)
+                return RedirectToAction("Index","Home");
+
+
 
             return View(order);
         }
@@ -49,7 +73,7 @@ namespace SeramikStore.Web.Controllers
             int userId = (int)HttpContext.Session.GetInt32("userId");
 
             // 1️⃣ DTO hazırla
-            OrderInfoDto orderInfo = new OrderInfoDto
+            OrderCreateDto orderInfo = new OrderCreateDto
             {
                 UserId = userId,
                 AddressId = AddressId,

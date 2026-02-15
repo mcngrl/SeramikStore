@@ -1,10 +1,10 @@
 namespace SeramikStore.Services.DTOs
 {
-    public class OrderCreateResultDto
+    public class OrderCreateDto
     {
-        public int OrderId { get; set; }
-        public string OrderStatus { get; set; }
-        public string Message { get; set; }
+        public int AddressId { get; set; }  
+        public decimal CargoAmount { get; set; }
+        public int UserId { get; set; }
     }
 
 }

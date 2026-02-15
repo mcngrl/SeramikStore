@@ -1,6 +1,6 @@
 namespace SeramikStore.Services.DTOs
 {
-    public class OrderDetailDto
+    public class OrderDetailItemDto
     {
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
@@ -9,5 +9,6 @@ namespace SeramikStore.Services.DTOs
         public int Quantity { get; set; }
         public decimal LineTotal { get; set; }
         public int DisplayNo { get; set; }
+        public string ImagePath { get; set; }
     }
 }

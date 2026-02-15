@@ -1,6 +1,6 @@
 namespace SeramikStore.Services.DTOs
 {
-    public class OrderListItemDto
+    public class OrderHeaderItemDto
     {
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }

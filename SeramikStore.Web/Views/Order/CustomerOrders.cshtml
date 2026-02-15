@@ -1,0 +1,98 @@
+﻿@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
+@using SeramikStore.Services.DTOs
+@using System.Globalization
+@model List<OrderAdminListItemDto>
+@inject IStringLocalizer<CartResource> L
+
+@{
+    ViewData["Title"] = L["Müşteri Siparişleri"];
+    var culture = CultureInfo.CurrentCulture;
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h4 class="mb-4">
+                <i class="fa-solid fa-users me-2"></i>
+                @L["Müşteri Siparişleri"]
+            </h4>
+
+            <div class="table-responsive">
+                <table class="table align-middle table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@L["Sipariş No"]</th>
+                            <th>@L["Tarih"]</th>
+                            <th>@L["Müşteri"]</th>
+                            <th>@L["E-Posta"]</th>
+                            <th class="text-end">@L["Ürün Tutarı"]</th>
+                            <th class="text-end">@L["Kargo"]</th>
+                            <th class="text-end">@L["Toplam"]</th>
+                            <th>@L["Durum"]</th>
+                            <th class="text-end">@L["Detay"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>#@item.Id</td>
+
+                                <td>
+                                    @item.OrderDate.ToString("dd.MM.yyyy HH:mm", culture)
+                                </td>
+
+                                <td>
+                                    @item.FirstName @item.LastName
+                                </td>
+
+                                <td>
+                                    @item.Email
+                                </td>
+
+                                <td class="text-end">
+                                    @item.ProductTotal.ToString("N2", culture)
+                                </td>
+
+                                <td class="text-end">
+                                    @item.CargoAmount.ToString("N2", culture)
+                                </td>
+
+                                <td class="text-end fw-bold">
+                                    @item.GrandTotal.ToString("N2", culture)
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        @item.OrderStatus
+                                    </span>
+                                </td>
+
+                                <td class="text-end">
+                                    <a asp-controller="Order"
+                                       asp-action="OrderInfo"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-dark">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-3">
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-house me-1"></i>
+                    @L["Ana Sayfa"]
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
