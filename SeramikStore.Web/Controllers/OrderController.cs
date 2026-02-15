@@ -60,6 +60,7 @@ namespace SeramikStore.Web.Controllers
             OrderCreateResultDto result = _orderService.CreateOrder(orderInfo);
 
             // 3️⃣ Başarılıysa OrderInfo sayfasına yönlendir
+            HttpContext.Session.Remove("CheckoutAddressId");
             return RedirectToAction("OrderInfo", new { id = result.OrderId });
         }
 
@@ -68,6 +69,10 @@ namespace SeramikStore.Web.Controllers
         {
             var userId = HttpContext.Session.GetInt32("userId");
             var cartResult = _cartService.CartListByUserId(userId.Value);
+
+            if (cartResult.Summary == null)
+                return RedirectToAction("Index", "Home");
+
 
             var addressId = HttpContext.Session.GetInt32("CheckoutAddressId");
 

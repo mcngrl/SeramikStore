@@ -213,4 +213,58 @@
   <data name="Ödeme Yap" xml:space="preserve">
     <value>Ödeme Yap</value>
   </data>
+  <data name="Sipariş Detayı" xml:space="preserve">
+    <value>Sipariş Detayı</value>
+  </data>
+  <data name="Birim Fiyat" xml:space="preserve">
+    <value>Birim Fiyat</value>
+  </data>
+  <data name="Miktar" xml:space="preserve">
+    <value>Miktar</value>
+  </data>
+  <data name="Genel Toplam" xml:space="preserve">
+    <value>Genel Toplam</value>
+  </data>
+  <data name="Banka Havalesi Bilgileri" xml:space="preserve">
+    <value>Banka Havalesi Bilgileri</value>
+  </data>
+  <data name="Açıklama" xml:space="preserve">
+    <value>Açıklama</value>
+  </data>
+  <data name="Tutar" xml:space="preserve">
+    <value>Tutar</value>
+  </data>
+  <data name="Banka" xml:space="preserve">
+    <value>Banka</value>
+  </data>
+  <data name="Siparişi Oluştur butonuna tıklayarak siparişinizi tamamlayabilirsiniz." xml:space="preserve">
+    <value>Siparişi Oluştur butonuna tıklayarak siparişinizi tamamlayabilirsiniz.</value>
+  </data>
+  <data name="Sipariş numaranız işlem sonrası ekranda gösterilecektir." xml:space="preserve">
+    <value>Sipariş numaranız işlem sonrası ekranda gösterilecektir.</value>
+  </data>
+  <data name="Ödemenizi banka havalesi veya EFT ile yapabilirsiniz." xml:space="preserve">
+    <value>Ödemenizi banka havalesi veya EFT ile yapabilirsiniz.</value>
+  </data>
+  <data name="Lütfen havale açıklama kısmına sipariş numaranızı yazınız." xml:space="preserve">
+    <value>Lütfen havale açıklama kısmına sipariş numaranızı yazınız.</value>
+  </data>
+  <data name="Ödemeniz onaylandıktan sonra siparişiniz kargoya verilecektir." xml:space="preserve">
+    <value>Ödemeniz onaylandıktan sonra siparişiniz kargoya verilecektir.</value>
+  </data>
+  <data name="Siparişinizin durumunu Siparişlerim menüsünden takip edebilirsiniz." xml:space="preserve">
+    <value>Siparişinizin durumunu Siparişlerim menüsünden takip edebilirsiniz.</value>
+  </data>
+  <data name="Açıklama kısmına Sipariş Numaranızı yazmayı unutmayınız." xml:space="preserve">
+    <value>Açıklama kısmına Sipariş Numaranızı yazmayı unutmayınız.</value>
+  </data>
+  <data name="IBAN" xml:space="preserve">
+    <value>IBAN</value>
+  </data>
+  <data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
+    <value>Mesafeli Satış Sözleşmesi</value>
+  </data>
+  <data name="Alıcı Adı Soyadı" xml:space="preserve">
+    <value>Alıcı Adı Soyadı</value>
+  </data>
 </root>

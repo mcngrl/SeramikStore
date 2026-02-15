@@ -213,4 +213,58 @@
   <data name="Ödeme Yap" xml:space="preserve">
     <value>Make Payment</value>
   </data>
+  <data name="Sipariş Detayı" xml:space="preserve">
+    <value>Order Details</value>
+  </data>
+  <data name="Birim Fiyat" xml:space="preserve">
+    <value>Unit Price</value>
+  </data>
+  <data name="Miktar" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="Genel Toplam" xml:space="preserve">
+    <value>Grand Total</value>
+  </data>
+  <data name="Banka Havalesi Bilgileri" xml:space="preserve">
+    <value>Bank Transfer Information</value>
+  </data>
+  <data name="Açıklama" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Tutar" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Banka" xml:space="preserve">
+    <value>Bank</value>
+  </data>
+  <data name="Siparişi Oluştur butonuna tıklayarak siparişinizi tamamlayabilirsiniz." xml:space="preserve">
+    <value>You can complete your order by clicking the Place Order button.</value>
+  </data>
+  <data name="Sipariş numaranız işlem sonrası ekranda gösterilecektir." xml:space="preserve">
+    <value>Your order number will be displayed on the screen after the transaction.</value>
+  </data>
+  <data name="Ödemenizi banka havalesi veya EFT ile yapabilirsiniz." xml:space="preserve">
+    <value>You can make your payment via bank transfer (wire transfer).</value>
+  </data>
+  <data name="Lütfen havale açıklama kısmına sipariş numaranızı yazınız." xml:space="preserve">
+    <value>Please write your order number in the transfer description.</value>
+  </data>
+  <data name="Ödemeniz onaylandıktan sonra siparişiniz kargoya verilecektir." xml:space="preserve">
+    <value>Your order will be shipped once your payment has been confirmed.</value>
+  </data>
+  <data name="Siparişinizin durumunu Siparişlerim menüsünden takip edebilirsiniz." xml:space="preserve">
+    <value>You can track the status of your order from the My Orders section.</value>
+  </data>
+  <data name="Açıklama kısmına Sipariş Numaranızı yazmayı unutmayınız." xml:space="preserve">
+    <value>Please do not forget to include your order number in the transfer description.</value>
+  </data>
+  <data name="IBAN" xml:space="preserve">
+    <value>IBAN</value>
+  </data>
+  <data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
+    <value>Distance Selling Agreement</value>
+  </data>
+  <data name="Alıcı Adı Soyadı" xml:space="preserve">
+    <value>Account Holder Name</value>
+  </data>
 </root>
