@@ -1,23 +1,226 @@
-﻿
+﻿@using Microsoft.Extensions.Localization
+@using SeramikStore.Web.Localization
+@using SeramikStore.Services.DTOs
+@using System.Globalization
+@model OrderDetailedDto
+@inject IStringLocalizer<CartResource> L
 
-<h4>Sipariş No: @Model.OrderId</h4>
-<p>Durum: <strong>@Model.OrderStatus</strong></p>
+@{
+    ViewData["Title"] = L["Sipariş Detayı"];
+    var culture = CultureInfo.CurrentCulture;
+    var currency = Model.CurrencyCode?.ToUpper();
+}
 
-<table class="table">
-    @foreach (var item in Model.Details)
-    {
-        <tr>
-            <td>@item.ProductName</td>
-            <td>@item.Quantity</td>
-            <td>@item.LineTotal</td>
-        </tr>
-    }
-</table>
+<div class="container mt-4">
+    <div class="row">
 
-<p>Ürün Toplamı: @Model.ProductTotal</p>
-<p>Kargo: @Model.CargoAmount</p>
-<h4>Genel Toplam: @Model.GrandTotal</h4>
+        <!-- SOL TARAF (GENİŞ) -->
+        <div class="col-md-8">
 
-<div class="alert alert-info">
-    Lütfen ödemeyi <strong>TRXX XXXX XXXX XXXX</strong> IBAN numarasına yapınız.
+            <!-- SİPARİŞ BİLGİ KARTI -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        <i class="fa-solid fa-receipt me-2"></i>
+                        @L["Siparişiniz Oluşturulmuştur."]
+                    </h4>
+
+                    <div class="row small">
+                        <div class="col-6 mb-2">
+                            <h4 class="mb-3">
+                            <strong>@L["Sipariş No"]: #@Model.Id</strong>
+                            </h4>
+                        </div>
+                        <div class="col-6 mb-2 text-md-end">
+                            <strong>@L["Sipariş Tarihi"]:</strong>
+                            @Model.OrderDate.ToString("dd.MM.yyyy HH:mm")
+                        </div>
+                        <div class="col-6">
+                            <h4 class="mb-3">
+                            <strong>@L["Durum"]:</strong>
+                            <span class="badge bg-secondary">@Model.OrderStatus</span>
+                            </h4>
+                        </div>
+                        <div class="col-6 text-md-end">
+                            <strong>@L["Kargo Firması"]:</strong>
+                            @(string.IsNullOrEmpty(Model.KargoSirketi)
+                                                        ? L["Henüz Belirlenmedi"]
+                                                        : Model.KargoSirketi)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- TESLİMAT ADRESİ -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+                        <i class="fa-solid fa-truck me-2"></i>
+                        @L["Teslimat Adresi"]
+                    </h5>
+
+                    @if (Model.Address != null)
+                    {
+                        <div class="border rounded-3 p-3 bg-light">
+                            <strong>@Model.Address.Ad @Model.Address.Soyad</strong><br />
+                            @Model.Address.Adres<br />
+                            @Model.Address.Ilce / @Model.Address.Il<br />
+                            @Model.Address.Telefon
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <!-- ÜRÜN LİSTESİ -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+                        <i class="fa-solid fa-cart-shopping me-2"></i>
+                        @L["Sipariş Ürünleri"]
+                    </h5>
+
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>@L["Ürün"]</th>
+                                    <th class="text-end">@L["Birim Fiyat"]</th>
+                                    <th class="text-center">@L["Miktar"]</th>
+                                    <th class="text-end">@L["Tutar"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td>@item.ProductName</td>
+                                        <td class="text-end">
+                                            @item.UnitPrice.ToString("N2", culture) @currency
+                                        </td>
+                                        <td class="text-center">
+                                            @item.Quantity @L["Adet"]
+                                        </td>
+                                        <td class="text-end">
+                                            @item.LineTotal.ToString("N2", culture) @currency
+                                        </td>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-end fw-bold">@L["Ürün Toplamı"]</th>
+                                    <th class="text-end">
+                                        @Model.ProductTotal.ToString("N2", culture) @currency
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-end fw-bold">@L["Kargo Tutarı"]</th>
+                                    <th class="text-end">
+                                        @Model.CargoAmount.ToString("N2", culture) @currency
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th class="text-end fw-bold fs-5">@L["Genel Toplam"]</th>
+                                    <th class="text-end fw-bold fs-5">
+                                        @Model.GrandTotal.ToString("N2", culture) @currency
+                                    </th>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SAĞ TARAF (DAR) -->
+        <div class="col-md-4">
+
+            <!-- KARGO TAKİP -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+                        <i class="fa-solid fa-box me-2"></i>
+                        @L["Kargo Bilgisi"]
+                    </h5>
+
+                    @if (!string.IsNullOrEmpty(Model.KargoTakipNo))
+                    {
+                        <div class="small">
+                            <p class="mb-1">
+                                <strong>@L["Kargoya Verilme Tarihi"]:</strong>
+                                @Model.KargoyaVerilmeTarihi?.ToString("dd.MM.yyyy")
+                            </p>
+                            <p class="mb-0">
+                                <strong>@L["Takip No"]:</strong>
+                                @Model.KargoTakipNo
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-muted small">
+                            @L["Siparişiniz henüz kargoya verilmedi."]
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <!-- DURUM GEÇMİŞİ -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+                        <i class="fa-solid fa-clock-rotate-left me-2"></i>
+                        @L["Durum Geçmişi"]
+                    </h5>
+
+                    @foreach (var history in Model.StatusHistory)
+                    {
+                        <div class="small mb-2">
+                            <div class="fw-semibold">@history.Aciklama</div>
+                            <div class="text-muted">
+                                @history.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <!-- ALT BUTONLAR -->
+            <div class="d-grid gap-2 mb-4">
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    @L["Ana Sayfaya Dön"]
+                </a>
+
+                <a asp-controller="Order"
+                   asp-action="MyOrders"
+                   class="btn btn-primary">
+                    @L["Siparişlerim"]
+                </a>
+            </div>
+
+        </div>
+
+    </div>
 </div>

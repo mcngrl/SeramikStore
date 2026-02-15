@@ -1,0 +1,92 @@
+﻿@model List<SeramikStore.Services.DTOs.OrderHeaderItemDto>
+
+@{
+    ViewData["Title"] = "Siparişlerim";
+}
+
+<div class="container mt-4">
+    <h3 class="mb-4">Siparişlerim</h3>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            Henüz bir siparişiniz bulunmamaktadır.
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Tarih</th>
+                    <th>Durum</th>
+                    <th>Ödeme</th>
+                    <th class="text-end">Toplam</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.OrderId</td>
+                        <td>@item.OrderDate.ToString("dd.MM.yyyy HH:mm")</td>
+                        <td>
+                            <span class="badge
+                                        @(item.OrderStatus == "PaymentWaiting" ? "bg-warning" :
+                                                                    item.OrderStatus == "Paid" ? "bg-success" :
+                                                                    "bg-danger")">
+                        @item.OrderStatus
+                    </span>
+                </td>
+                <td>@item.PaymentType</td>
+                <td class="text-end fw-bold">
+                    @item.GrandTotal.ToString("N2") ₺
+                </td>
+                <td class="text-end">
+                    <a asp-action="OrderInfo"
+                       asp-route-id="@item.OrderId"
+                       class="btn btn-sm btn-outline-primary">
+                        Detay
+                    </a>
+                </td>
+            </tr>
+                        }
+            </tbody>
+        </table>
+    }
+</div>
+
+<br />
+
+<a class="btn btn-sm btn-outline-warning rounded-pill px-3"
+   asp-action="Edit"
+   asp-route-id="1">
+    <i class="fa fa-edit me-1"></i>Edit
+</a>
+<a class="btn btn-sm btn-outline-primary rounded-pill px-3"
+   asp-action="Details"
+   asp-route-id="1">
+    <i class="fa fa-eye me-1"></i>Detail
+</a>
+<a class="btn btn-sm btn-outline-danger rounded-pill px-3"
+   asp-action="Delete"
+   asp-route-id="1">
+    <i class="fa fa-trash me-1"></i>Delete
+</a>
+<button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-4">
+    <i class="fa fa-save me-1"></i>Save
+</button>
+<a asp-action="Index" class="btn btn-sm btn-outline-dark rounded-pill px-4">
+    <i class="fa fa-times me-1"></i>Cancel
+</a>
+<a asp-action="Create" class="btn btn-sm btn-outline-success rounded-pill px-4">
+    <i class="fa fa-file me-1"></i>New
+</a>
+<a class="btn btn-sm btn-outline-info rounded-pill px-3"
+   asp-action="Details"
+   asp-route-id="1">
+    <i class="fa fa-info-circle me-1"></i>Info
+</a>
+<br />
