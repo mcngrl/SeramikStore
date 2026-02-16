@@ -119,6 +119,12 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+#if DEBUG
+app.MapControllerRoute(
+    name: "devnotes",
+    pattern: "dev-notes",
+    defaults: new { controller = "DevNotes", action = "Index" });
+#endif
 
 app.Use(async (context, next) =>
 {
