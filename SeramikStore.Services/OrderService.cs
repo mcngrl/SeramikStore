@@ -188,6 +188,7 @@ namespace SeramikStore.Services
                     ProductTotal = Convert.ToDecimal(reader["ProductTotal"]),
                     CargoAmount = Convert.ToDecimal(reader["CargoAmount"]),
                     GrandTotal = Convert.ToDecimal(reader["GrandTotal"]),
+                    CurrencyCode = reader["CurrencyCode"]?.ToString(),
                     OrderStatus = reader["OrderStatus"]?.ToString(),
 
                     UserId = Convert.ToInt32(reader["UserId"]),
