@@ -31,7 +31,6 @@ namespace SeramikStore.Web.Controllers
         public IActionResult MyOrders()
         {
 
-
             int userId = (int)HttpContext.Session.GetInt32("userId");
             var orders = _orderService.GetOrdersByUserId(userId);
             return View(orders);
@@ -48,6 +47,28 @@ namespace SeramikStore.Web.Controllers
             var orders = _orderService.GetAllOrders();
             return View(orders);
         }
+
+        [HttpGet]
+        public IActionResult OrderInfoForAdmin(int id)
+        {
+            var role = HttpContext.Session.GetString("role");
+
+            if (role != "Admin")
+                RedirectToAction("Index", "Home");
+
+            {
+                var userId = HttpContext.Session.GetInt32("userId");
+
+                var order = _orderService.GetDetailedOrderById(id);
+
+                if (order == null)
+                    return RedirectToAction("Index", "Home");
+
+    
+                return View(order);
+            }
+        } 
+        
 
         [HttpGet]
         public IActionResult OrderInfo(int id)
