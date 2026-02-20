@@ -1,270 +1,309 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
+    <!--
+      Microsoft ResX Schema
 
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
+      Version 2.0
+
+      The primary goals of this format is to allow a simple XML format
+      that is mostly human readable. The generation and parsing of the
+      various data types are done through the TypeConverter classes
+      associated with the data types.
+
+      Example:
+
+      ... ado.net/XML headers & schema ...
+      <resheader name="resmimetype">text/microsoft-resx</resheader>
+      <resheader name="version">2.0</resheader>
+      <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+      <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+      <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+      <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+      <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+          <value>[base64 mime encoded serialized .NET Framework object]</value>
+      </data>
+      <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+          <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+          <comment>This is a comment</comment>
+      </data>
+
+      There are any number of "resheader" rows that contain simple
+      name/value pairs.
+
+      Each data row contains a name, and value. The row also contains a
+      type or mimetype. Type corresponds to a .NET class that support
+      text/value conversion through the TypeConverter architecture.
+      Classes that don't support this are serialized and stored with the
+      mimetype set.
+
+      The mimetype is used for serialized objects, and tells the
+      ResXResourceReader how to depersist the object. This is currently not
+      extensible. For a given mimetype the value must be set accordingly:
+
+      Note - application/x-microsoft.net.object.binary.base64 is the format
+      that the ResXResourceWriter will generate, however the reader can
+      read any of the formats listed below.
+
+      mimetype: application/x-microsoft.net.object.binary.base64
+      value   : The object must be serialized with
+              : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+              : and then encoded with base64 encoding.
+
+      mimetype: application/x-microsoft.net.object.soap.base64
+      value   : The object must be serialized with
+              : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+              : and then encoded with base64 encoding.
+
+      mimetype: application/x-microsoft.net.object.bytearray.base64
+      value   : The object must be serialized into a byte array
+              : using a System.ComponentModel.TypeConverter
+              : and then encoded with base64 encoding.
+      -->
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+        <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string" />
+                            <xsd:attribute name="type" type="xsd:string" />
+                            <xsd:attribute name="mimetype" type="xsd:string" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string" />
+                            <xsd:attribute name="name" type="xsd:string" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
             </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="Sepetinizde henüz ürün bulunmamaktadır." xml:space="preserve">
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="Sepetinizde henüz ürün bulunmamaktadır." xml:space="preserve">
     <value> You don't have any items in your cart yet.</value>
   </data>
-  <data name="Sepetiniz Boş" xml:space="preserve">
+    <data name="Sepetiniz Boş" xml:space="preserve">
     <value>Your Cart Is Empty</value>
   </data>
-  <data name="Sepetim" xml:space="preserve">
+    <data name="Sepetim" xml:space="preserve">
     <value>My Cart</value>
   </data>
-  <data name="Ürün" xml:space="preserve">
+    <data name="Ürün" xml:space="preserve">
     <value>Item</value>
   </data>
-  <data name="Hızlı Teslimat" xml:space="preserve">
+    <data name="Hızlı Teslimat" xml:space="preserve">
     <value>Fast Delivery</value>
   </data>
-  <data name="Sil" xml:space="preserve">
+    <data name="Sil" xml:space="preserve">
     <value>Remove</value>
   </data>
-  <data name="Sepet Özeti" xml:space="preserve">
+    <data name="Sepet Özeti" xml:space="preserve">
     <value>Order Summary</value>
   </data>
-  <data name="Ara Toplam" xml:space="preserve">
+    <data name="Ara Toplam" xml:space="preserve">
     <value>Subtotal</value>
   </data>
-  <data name="Kargo" xml:space="preserve">
+    <data name="Kargo" xml:space="preserve">
     <value>Shipping</value>
   </data>
-  <data name="Toplam" xml:space="preserve">
+    <data name="Toplam" xml:space="preserve">
     <value>Total</value>
   </data>
-  <data name="Alışverişi Tamamla" xml:space="preserve">
+    <data name="Alışverişi Tamamla" xml:space="preserve">
     <value>Proceed to Checkout</value>
   </data>
-  <data name="Teslimat Adresi" xml:space="preserve">
+    <data name="Teslimat Adresi" xml:space="preserve">
     <value>Delivery Address</value>
   </data>
-  <data name="Teslimat Adresim" xml:space="preserve">
+    <data name="Teslimat Adresim" xml:space="preserve">
     <value>My Delivery Address</value>
   </data>
-  <data name="Ekle / Değiştir" xml:space="preserve">
+    <data name="Ekle / Değiştir" xml:space="preserve">
     <value>Add / Edit</value>
   </data>
-  <data name="Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum." xml:space="preserve">
+    <data name="Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum." xml:space="preserve">
     <value>I approve the pre-information form and the distance selling contract.</value>
   </data>
-  <data name="Siparişi Oluştur" xml:space="preserve">
+    <data name="Siparişi Oluştur" xml:space="preserve">
     <value>Place Order</value>
   </data>
-  <data name="Ödenecek Tutar" xml:space="preserve">
+    <data name="Ödenecek Tutar" xml:space="preserve">
     <value>Amount to Pay</value>
   </data>
-  <data name="Ürünler" xml:space="preserve">
+    <data name="Ürünler" xml:space="preserve">
     <value>Products</value>
   </data>
-  <data name="Lütfen bir teslimat adresi seçiniz." xml:space="preserve">
+    <data name="Lütfen bir teslimat adresi seçiniz." xml:space="preserve">
     <value>Please select a delivery address.</value>
   </data>
-  <data name="Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız." xml:space="preserve">
+    <data name="Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız." xml:space="preserve">
     <value>Please approve the pre-information form and sales agreement before proceeding.</value>
   </data>
-  <data name="Sipariş Özeti" xml:space="preserve">
+    <data name="Sipariş Özeti" xml:space="preserve">
     <value>Order Summary</value>
   </data>
-  <data name="Yeni Adres Ekle" xml:space="preserve">
+    <data name="Yeni Adres Ekle" xml:space="preserve">
     <value>Add New Address</value>
   </data>
-  <data name="Güncelle" xml:space="preserve">
+    <data name="Güncelle" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="Sipariş Tutarı" xml:space="preserve">
+    <data name="Sipariş Tutarı" xml:space="preserve">
     <value>Order Amount</value>
   </data>
-  <data name="Kargo Tutarı" xml:space="preserve">
+    <data name="Kargo Tutarı" xml:space="preserve">
     <value>Shipping Amount</value>
   </data>
-  <data name="Toplam Tutar" xml:space="preserve">
+    <data name="Toplam Tutar" xml:space="preserve">
     <value>Total Amount</value>
   </data>
-  <data name="Adet" xml:space="preserve">
+    <data name="Adet" xml:space="preserve">
     <value>Piece</value>
   </data>
-  <data name="Bu ürünü sepetinizden silmek istediğinize emin misiniz?" xml:space="preserve">
+    <data name="Bu ürünü sepetinizden silmek istediğinize emin misiniz?" xml:space="preserve">
     <value>Are you sure you want to remove this product from your cart?</value>
   </data>
-  <data name="Sepetten Sil" xml:space="preserve">
+    <data name="Sepetten Sil" xml:space="preserve">
     <value>Delete from Cart</value>
   </data>
-  <data name="Ürün Kodu" xml:space="preserve">
+    <data name="Ürün Kodu" xml:space="preserve">
     <value>Product Code</value>
   </data>
-  <data name="Vazgeç" xml:space="preserve">
+    <data name="Vazgeç" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="Ödeme Yap" xml:space="preserve">
+    <data name="Ödeme Yap" xml:space="preserve">
     <value>Make Payment</value>
   </data>
-  <data name="Sipariş Detayı" xml:space="preserve">
+    <data name="Sipariş Detayı" xml:space="preserve">
     <value>Order Details</value>
   </data>
-  <data name="Birim Fiyat" xml:space="preserve">
+    <data name="Birim Fiyat" xml:space="preserve">
     <value>Unit Price</value>
   </data>
-  <data name="Miktar" xml:space="preserve">
+    <data name="Miktar" xml:space="preserve">
     <value>Quantity</value>
   </data>
-  <data name="Genel Toplam" xml:space="preserve">
+    <data name="Genel Toplam" xml:space="preserve">
     <value>Grand Total</value>
   </data>
-  <data name="Banka Havalesi Bilgileri" xml:space="preserve">
+    <data name="Banka Havalesi Bilgileri" xml:space="preserve">
     <value>Bank Transfer Information</value>
   </data>
-  <data name="Açıklama" xml:space="preserve">
+    <data name="Açıklama" xml:space="preserve">
     <value>Description</value>
   </data>
-  <data name="Tutar" xml:space="preserve">
+    <data name="Tutar" xml:space="preserve">
     <value>Amount</value>
   </data>
-  <data name="Banka" xml:space="preserve">
+    <data name="Banka" xml:space="preserve">
     <value>Bank</value>
   </data>
-  <data name="Siparişi Oluştur butonuna tıklayarak siparişinizi tamamlayabilirsiniz." xml:space="preserve">
+    <data name="Siparişi Oluştur butonuna tıklayarak siparişinizi tamamlayabilirsiniz." xml:space="preserve">
     <value>You can complete your order by clicking the Place Order button.</value>
   </data>
-  <data name="Sipariş numaranız işlem sonrası ekranda gösterilecektir." xml:space="preserve">
+    <data name="Sipariş numaranız işlem sonrası ekranda gösterilecektir." xml:space="preserve">
     <value>Your order number will be displayed on the screen after the transaction.</value>
   </data>
-  <data name="Ödemenizi banka havalesi veya EFT ile yapabilirsiniz." xml:space="preserve">
+    <data name="Ödemenizi banka havalesi veya EFT ile yapabilirsiniz." xml:space="preserve">
     <value>You can make your payment via bank transfer (wire transfer).</value>
   </data>
-  <data name="Lütfen havale açıklama kısmına sipariş numaranızı yazınız." xml:space="preserve">
+    <data name="Lütfen havale açıklama kısmına sipariş numaranızı yazınız." xml:space="preserve">
     <value>Please write your order number in the transfer description.</value>
   </data>
-  <data name="Ödemeniz onaylandıktan sonra siparişiniz kargoya verilecektir." xml:space="preserve">
+    <data name="Ödemeniz onaylandıktan sonra siparişiniz kargoya verilecektir." xml:space="preserve">
     <value>Your order will be shipped once your payment has been confirmed.</value>
   </data>
-  <data name="Siparişinizin durumunu Siparişlerim menüsünden takip edebilirsiniz." xml:space="preserve">
+    <data name="Siparişinizin durumunu Siparişlerim menüsünden takip edebilirsiniz." xml:space="preserve">
     <value>You can track the status of your order from the My Orders section.</value>
   </data>
-  <data name="Açıklama kısmına Sipariş Numaranızı yazmayı unutmayınız." xml:space="preserve">
+    <data name="Açıklama kısmına Sipariş Numaranızı yazmayı unutmayınız." xml:space="preserve">
     <value>Please do not forget to include your order number in the transfer description.</value>
   </data>
-  <data name="IBAN" xml:space="preserve">
+    <data name="IBAN" xml:space="preserve">
     <value>IBAN</value>
   </data>
-  <data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
+    <data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
     <value>Distance Selling Agreement</value>
   </data>
-  <data name="Alıcı Adı Soyadı" xml:space="preserve">
+    <data name="Alıcı Adı Soyadı" xml:space="preserve">
     <value>Account Holder Name</value>
   </data>
+    <data name="Şipariş Oluşturdu." xml:space="preserve">
+    <value>Order Placed.</value>
+  </data>
+    <data name="Ödeme Bekleniyor." xml:space="preserve">
+    <value>Order Confirmed.</value>
+  </data>
+    <data name="Kargoya Verildi." xml:space="preserve">
+    <value>Shipped.</value>
+  </data>
+    <data name="Sipariş Müşteri Tarafından İptal Edildi." xml:space="preserve">
+    <value>Order Canceled by Customer.</value>
+  </data>
+    <data name="Sipariş Satıcı Tarafından İptal Edildi." xml:space="preserve">
+    <value>Order Canceled by Seller.</value>
+  </data>
+    <data name="Müşteri Siparişleri" xml:space="preserve">
+    <value>Customer Orders</value>
+  </data>
+    <data name="Sipariş No" xml:space="preserve">
+    <value>Order No</value>
+  </data>
+    <data name="Sipariş Tarihi" xml:space="preserve">
+    <value>Order Date</value>
+ </data>
+    <data name="Müşteri" xml:space="preserve">
+    <value>Customer</value>
+ </data>
+    <data name="E-Posta" xml:space="preserve">
+    <value>Email</value>
+ </data>
+    <data name="Sipariş Tutarı" xml:space="preserve">
+    <value>Order Amount</value>
+ </data>
+    <data name="Güncelle" xml:space="preserve">
+    <value>Update</value>
+ </data>
+    <data name="Ana Sayfa" xml:space="preserve">
+    <value>Homepage</value>
+ </data>
 </root>
