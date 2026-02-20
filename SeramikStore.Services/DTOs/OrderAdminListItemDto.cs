@@ -9,6 +9,7 @@
         public decimal CargoAmount { get; set; }
         public decimal GrandTotal { get; set; }
 
+        public string CurrencyCode { get; set; }
         public string OrderStatus { get; set; }
 
         // Kullanıcı Bilgisi

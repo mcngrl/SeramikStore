@@ -41,8 +41,8 @@ namespace SeramikStore.Web.Controllers
         {
             var role = HttpContext.Session.GetString("role");
 
-            if (role != "Admin")
-                RedirectToAction("Index", "Home");
+            if (role != "Admin" )
+                return RedirectToAction("Index", "Home");
 
             var orders = _orderService.GetAllOrders();
             return View(orders);
@@ -75,6 +75,9 @@ namespace SeramikStore.Web.Controllers
         {
             var userId = HttpContext.Session.GetInt32("userId");
 
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+
             var order = _orderService.GetDetailedOrderById(id);
 
             if (order == null)
@@ -82,6 +85,31 @@ namespace SeramikStore.Web.Controllers
 
             if (order.UserId != userId)
                 return RedirectToAction("Index","Home");
+
+
+
+            return View(order);
+        }
+
+        [HttpGet]
+        public IActionResult OrderStatusChange(int id)
+        {
+            var userId = HttpContext.Session.GetInt32("userId");
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+
+            var role = HttpContext.Session.GetString("role");
+
+            if (role != "Admin")
+                RedirectToAction("Index", "Home");
+
+
+            var order = _orderService.GetDetailedOrderById(id);
+
+            if (order == null)
+                return RedirectToAction("Index", "Home");
+
+
 
 
 
