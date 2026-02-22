@@ -19,6 +19,7 @@ namespace SeramikStore.Services.DTOs
         public List<OrderDetailItemDto> Items { get; set; } = new();
         public OrderAddressDto Address { get; set; }
         public List<OrderStatusHistoryDto> StatusHistory { get; set; } = new();
+
     }
 
 

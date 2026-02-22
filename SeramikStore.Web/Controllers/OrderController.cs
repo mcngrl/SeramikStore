@@ -69,7 +69,26 @@ namespace SeramikStore.Web.Controllers
             }
         } 
         
+        [HttpGet]
+        public IActionResult OrderEditForAdmin(int id)
+        {
+            var role = HttpContext.Session.GetString("role");
 
+            if (role != "Admin")
+                RedirectToAction("Index", "Home");
+
+            {
+                var userId = HttpContext.Session.GetInt32("userId");
+
+                var order = _orderService.GetDetailedOrderById(id);
+
+                if (order == null)
+                    return RedirectToAction("Index", "Home");
+
+    
+                return View(order);
+            }
+        } 
         [HttpGet]
         public IActionResult OrderInfo(int id)
         {
@@ -115,6 +134,7 @@ namespace SeramikStore.Web.Controllers
 
             return View(order);
         }
+
 
         [HttpPost]
         public IActionResult CreateOrder(int AddressId, decimal CargoAmount)
