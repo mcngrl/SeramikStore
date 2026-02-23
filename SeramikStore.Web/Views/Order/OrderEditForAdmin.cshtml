@@ -1,6 +1,6 @@
 ﻿@using Microsoft.Extensions.Localization
 @using SeramikStore.Web.Localization
-@using SeramikStore.Services.DTOs
+@using SeramikStore.Contracts.Order
 @using System.Globalization
 @model OrderDetailedDto
 @inject IStringLocalizer<CartResource> L
@@ -39,9 +39,7 @@
                                                         ? L["Henüz Belirlenmedi"]
                                                         : Model.KargoSirketi)
                         </div>
-                        <div class="col-6">
 
-                        </div>
                     </div>
 
 
@@ -161,8 +159,8 @@
                                 <tr>
                                     <th></th>
                                     <th></th>
-                                    <th class="text-end fw-bold fs-5">@L["Genel Toplam"]</th>
-                                    <th class="text-end fw-bold fs-5">
+                                    <th class="text-end fw-bold">@L["Genel Toplam"]</th>
+                                    <th class="text-end fw-bold">
                                         @Model.GrandTotal.ToString("N2", culture) @currency
                                     </th>
                                 </tr>
@@ -178,49 +176,147 @@
 
         <!-- SAĞ TARAF (DAR) -->
         <div class="col-md-4">
-            <div class="card shadow-sm mb-4">
+
+            <!-- STATÜ GÜNCELLE -->
+            <div class="card shadow-sm mb-4 border-warning">
                 <div class="card-body">
-                    <h6>
-                        <i class="fa-solid fa-gear me-2"></i>
-                        @L["Sipariş Durum Güncelle"]
+
+                    <h6 class="mb-3 text-warning fw-bold">
+                        <i class="fa-solid fa-pen-to-square me-2"></i>
+                        @L["Statü Güncelle"]
                     </h6>
 
-                    <form asp-controller="Order"
-                          asp-action="UpdateStatus"
-                          method="post">
-
+                    <!-- Güncelle Form -->
+                    <form asp-action="UpdateStatus" method="post" class="mb-3">
                         <input type="hidden" name="orderId" value="@Model.Id" />
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">
+                                @L["Mevcut Statü"]
+                            </label>
+                            <span class="badge bg-secondary">@Model.OrderStatus</span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">
+                                @L["Yeni Statü"]
+                            </label>
+                            <select name="selectedStatus" class="form-select form-select-sm">
+                                @foreach (var item in Model.NextStatusesForUpdate)
+                                {
+                                    <option value="@item.Code">
+                                        @item.Code - @item.Aciklama
+                                    </option>
+                                }
+                            </select>
+                        </div>
 
-                        <select name="newStatusCode" class="form-select mb-3">
-                            <option value="Code">Aciklama</option>
-
-                        </select>
-
-                        <button type="submit" class="btn btn-danger w-100">
-                            @L["Durumu Güncelle"]
-                        </button>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-warning btn-sm px-4">
+                                @L["Güncelle"]
+                            </button>
+                        </div>
                     </form>
+
+                    @if (Model.OrderStatusCode < 60)
+                    {
+                        <hr />
+
+                        <!-- İPTAL FORM -->
+                        <form asp-action="CancelOrder" method="post"
+                              onsubmit="return confirm('@L["Siparişi iptal etmek istediğinize emin misiniz?"]');">
+
+                            <input type="hidden" name="orderId" value="@Model.Id" />
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="fa-solid fa-ban me-1"></i>
+                                    @L["Siparişi İptal Et"]
+                                </button>
+                            </div>
+                        </form>
+                    }
+
                 </div>
             </div>
+
             <!-- ALT BUTONLAR -->
             <div class="d-grid gap-2 mb-4">
                 <a asp-controller="Home"
                    asp-action="Index"
-                   class="btn btn-outline-primary">
+                   class="btn btn-outline-primary btn-sm">
                     @L["Ana Sayfaya Dön"]
                 </a>
 
                 <a asp-controller="Order"
                    asp-action="CustomerOrders"
-                   class="btn btn-primary">
+                   class="btn btn-primary btn-sm">
                     @L["Müşteri Siparişleri"]
                 </a>
             </div>
 
             <!-- DURUM GEÇMİŞİ -->
+
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
 
+                    <h6 class="mb-4">
+                        <i class="fa-solid fa-chart-line me-2"></i>
+                        @L["Sipariş Süreci"]
+                    </h6>
+
+                    @{
+                        var allStatuses = Model.AllStatuses; // Tüm statü listesi (10-80)
+                        var history = Model.StatusHistory.ToList();
+                        var completedCodes = history.Select(x => x.).ToList();
+                        var currentCode = Model.OrderStatusCode;
+                    }
+
+                    <div class="order-progress">
+
+                        @foreach (var status in allStatuses)
+                        {
+                            var isCompleted = completedCodes.Contains((int)status.OrderStatusCode);
+                            var isCurrent = status.Code == currentCode;
+                            var historyItem = history.FirstOrDefault(x => x.Code == status.Code);
+
+                            <div class="progress-step">
+
+                                <div class="step-icon
+                             @(isCompleted ? "completed" : "pending")
+                             @(isCurrent ? "current" : "")">
+
+                                    @if (isCompleted)
+                                    {
+                                        <i class="fa-solid fa-check"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-regular fa-circle"></i>
+                                    }
+
+                                </div>
+
+                                <div class="step-label">
+                                    <div class="fw-semibold small">
+                                        @status.Aciklama
+                                    </div>
+
+                                    @if (historyItem != null)
+                                    {
+                                        <div class="text-muted very-small">
+                                            @historyItem.IslemTarihi.ToString("dd.MM HH:mm")
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
                     <h6 class="mb-3">
                         <i class="fa-solid fa-clock-rotate-left me-2"></i>
                         @L["Durum Geçmişi"]
@@ -228,13 +324,42 @@
 
                     @foreach (var history in Model.StatusHistory)
                     {
-                        <div class="small mb-2">
+                        <div class="small mb-3 pb-2 border-bottom">
                             <div class="fw-semibold">@history.Aciklama</div>
                             <div class="text-muted">
                                 @history.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
                             </div>
                         </div>
                     }
+                </div>
+            </div>
+
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h6 class="mb-4">
+                        <i class="fa-solid fa-clock-rotate-left me-2"></i>
+                        @L["Durum Geçmişi"]
+                    </h6>
+
+                    <div class="timeline">
+                        @foreach (var history in Model.StatusHistory)
+                        {
+                            var isLast = history == Model.StatusHistory.Last();
+
+                            <div class="timeline-item">
+                                <div class="timeline-dot @(isLast ? "bg-success" : "bg-secondary")"></div>
+                                <div class="timeline-content">
+                                    <div class="fw-semibold">
+                                        @history.Aciklama
+                                    </div>
+                                    <div class="text-muted small">
+                                        @history.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
 
                 </div>
             </div>
@@ -243,3 +368,38 @@
 
     </div>
 </div>
+
+
+<style>
+    .timeline {
+        position: relative;
+        padding-left: 25px;
+    }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #dee2e6;
+        }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .timeline-dot {
+        position: absolute;
+        left: -1px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+    }
+
+    .timeline-content {
+        padding-left: 20px;
+    }
+</style>

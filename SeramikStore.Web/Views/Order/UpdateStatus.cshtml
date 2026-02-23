@@ -1,0 +1,32 @@
+﻿@model List<SeramikStore.Contracts.Order.StatusOptionDto>
+
+@{
+    ViewData["Title"] = "Statü Güncelle";
+    var orderId = ViewBag.OrderId;
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4>Statü Güncelle</h4>
+
+        <form asp-action="UpdateStatus" method="post">
+            <input type="hidden" name="orderId" value="@orderId" />
+
+            <div class="mb-3">
+                <label class="form-label">Yeni Statü</label>
+                <select name="selectedStatus" class="form-select">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Code">
+                            @item.Code - @item.Aciklama
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Güncelle
+            </button>
+        </form>
+    </div>
+</div>

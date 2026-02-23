@@ -1,3 +1,4 @@
+using SeramikStore.Contracts.Order;
 using SeramikStore.Entities;
 using SeramikStore.Services.DTOs;
 using System;
@@ -13,7 +14,9 @@ namespace SeramikStore.Services
         OrderCreateResultDto CreateOrder(OrderCreateDto orderInfo);
         OrderDetailedDto GetDetailedOrderById(int orderId);
         List<OrderHeaderItemDto> GetOrdersByUserId(int userId);
-
         List<OrderAdminListItemDto> GetAllOrders();
+
+        List<StatusOptionDto> GetNextStatusesForUpdate(int orderId);
+        void UpdateOrderStatus(int orderId, int newStatusCode, int userId);
     }
 }

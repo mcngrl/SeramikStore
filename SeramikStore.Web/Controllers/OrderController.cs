@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using SeramikStore.Contracts.Order;
 using SeramikStore.Services;
-using SeramikStore.Services.DTOs;
 using SeramikStore.Web.Options;
 using SeramikStore.Web.ViewModels;
 using System.Globalization;
@@ -104,31 +104,6 @@ namespace SeramikStore.Web.Controllers
 
             if (order.UserId != userId)
                 return RedirectToAction("Index","Home");
-
-
-
-            return View(order);
-        }
-
-        [HttpGet]
-        public IActionResult OrderStatusChange(int id)
-        {
-            var userId = HttpContext.Session.GetInt32("userId");
-            if (userId is null)
-                return RedirectToAction("Index", "Home");
-
-            var role = HttpContext.Session.GetString("role");
-
-            if (role != "Admin")
-                RedirectToAction("Index", "Home");
-
-
-            var order = _orderService.GetDetailedOrderById(id);
-
-            if (order == null)
-                return RedirectToAction("Index", "Home");
-
-
 
 
 
@@ -298,7 +273,21 @@ namespace SeramikStore.Web.Controllers
             return RedirectToAction("PaymentInfo");
         }
 
+        public IActionResult UpdateStatus(int id)
+        {
+            var statuses = _orderService.GetNextStatusesForUpdate(id);
 
+            ViewBag.OrderId = id;
+            return View(statuses);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateStatus(int orderId, int selectedStatus)
+        {
+            int userId = (int)HttpContext.Session.GetInt32("userId");
+            _orderService.UpdateOrderStatus(orderId, selectedStatus, userId);
+            return RedirectToAction("CustomerOrders");
+        }
     }
 
 

@@ -1,16 +1,13 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using SeramikStore.Entities;
-using SeramikStore.Services;
-using SeramikStore.Services.DTOs;
-using System;
-using System.Collections.Generic;
+using SeramikStore.Contracts.Order;
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
+
 
 namespace SeramikStore.Services
 {
-    using Microsoft.Data.SqlClient;
-    using System.Data;
+
 
     public class OrderService : IOrderService
     {
@@ -67,6 +64,7 @@ namespace SeramikStore.Services
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             OrderDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
+                            OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
                             OrderStatus = reader["OrderStatus"]?.ToString(),
                             CargoAmount = reader.GetDecimal(reader.GetOrdinal("CargoAmount")),
                             UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
@@ -134,6 +132,10 @@ namespace SeramikStore.Services
                             });
                         }
                     }
+
+                    order.NextStatusesForUpdate = GetNextStatusesForUpdate(orderId);
+
+                    order.AllStatuses = GetAllStatus();
                 }
             }
 
@@ -157,6 +159,7 @@ namespace SeramikStore.Services
                 {
                     OrderId = reader.GetInt32(reader.GetOrdinal("Id")),
                     OrderDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
+                    OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
                     OrderStatus = reader["OrderStatus"] == DBNull.Value ? "" : reader["OrderStatus"].ToString(),
                     ProductTotal = reader.GetDecimal(reader.GetOrdinal("ProductTotal")),
                     CargoAmount = reader.GetDecimal(reader.GetOrdinal("CargoAmount")),
@@ -189,6 +192,7 @@ namespace SeramikStore.Services
                     CargoAmount = Convert.ToDecimal(reader["CargoAmount"]),
                     GrandTotal = Convert.ToDecimal(reader["GrandTotal"]),
                     CurrencyCode = reader["CurrencyCode"]?.ToString(),
+                    OrderStatusCode = Convert.ToInt32(reader["OrderStatusCode"]),
                     OrderStatus = reader["OrderStatus"]?.ToString(),
 
                     UserId = Convert.ToInt32(reader["UserId"]),
@@ -201,7 +205,75 @@ namespace SeramikStore.Services
             return list;
         }
 
+        public List<StatusOptionDto> GetNextStatusesForUpdate(int orderId)
+        {
+            var list = new List<StatusOptionDto>();
 
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand("sp_Order_GetNextStatusForUpdate", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@OrderId", orderId);
+
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new StatusOptionDto
+                        {
+                            Code = Convert.ToInt32(reader["Code"]),
+                            Aciklama = reader["Aciklama"].ToString()!
+                        });
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        public List<StatusOptionDto> GetAllStatus()
+        {
+            var list = new List<StatusOptionDto>();
+
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand("sp_Order_GetAllStatus", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new StatusOptionDto
+                        {
+                            Code = Convert.ToInt32(reader["Code"]),
+                            Aciklama = reader["Aciklama"].ToString()!
+                        });
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        public void UpdateOrderStatus(int orderId, int newStatusCode, int userId)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand("sp_Order_UpdateStatus", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@OrderId", orderId);
+                cmd.Parameters.AddWithValue("@NewStatusCode", newStatusCode);
+                cmd.Parameters.AddWithValue("@UserId", userId);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿@using Microsoft.Extensions.Localization
 @using SeramikStore.Web.Localization
-@using SeramikStore.Services.DTOs
+@using SeramikStore.Contracts.Order
 @using System.Globalization
 @model OrderDetailedDto
 @inject IStringLocalizer<CartResource> L
@@ -36,6 +36,12 @@
                             <strong>@L["Durum"]:</strong>
                             <span class="badge bg-secondary">@Model.OrderStatus</span>
                             </h4>
+                            <a asp-controller="Order"
+                               asp-action="UpdateStatus"
+                               asp-route-id="@Model.Id"
+                               class="btn btn-sm btn-outline-dark">
+                                <i class="fa-solid fa-edit"></i>
+                            </a>
                         </div>
                         <div class="col-6 text-md-end">
                             <strong>@L["Kargo Firması"]:</strong>
@@ -44,31 +50,6 @@
                                                         : Model.KargoSirketi)
                         </div>
                     </div>
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-                            <h5 class="mb-3">
-                                <i class="fa-solid fa-gear me-2"></i>
-                                Sipariş Durum Güncelle
-                            </h5>
-
-                            <form asp-controller="Order"
-                                  asp-action="UpdateStatus"
-                                  method="post">
-
-                                <input type="hidden" name="orderId" value="@Model.Id" />
-
-                                <select name="newStatusCode" class="form-select mb-3">
-                                    <option value="Code">Aciklama</option>
-
-                                </select>
-
-                                <button type="submit" class="btn btn-danger w-100">
-                                    Durumu Güncelle
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 

@@ -1,0 +1,14 @@
+namespace SeramikStore.Contracts.Order
+{
+    public class OrderHeaderItemDto
+    {
+        public int OrderId { get; set; }
+        public DateTime OrderDate { get; set; }
+        public int OrderStatusCode { get; set; }
+        public string OrderStatus { get; set; }
+        public string PaymentType { get; set; }
+        public decimal ProductTotal { get; set; }
+        public decimal CargoAmount { get; set; }
+        public decimal GrandTotal { get; set; }
+    }
+}
