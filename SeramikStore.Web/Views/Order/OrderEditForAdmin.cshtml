@@ -202,8 +202,8 @@
                             <select name="selectedStatus" class="form-select form-select-sm">
                                 @foreach (var item in Model.NextStatusesForUpdate)
                                 {
-                                    <option value="@item.Code">
-                                        @item.Code - @item.Aciklama
+                                    <option value="@item.OrderStatusCode">
+                                        @item.OrderStatusCode - @item.Aciklama
                                     </option>
                                 }
                             </select>
@@ -255,7 +255,7 @@
 
             <!-- DURUM GEÇMİŞİ -->
 
-            <div class="card shadow-sm mb-4">
+            <div class="card shadow-sm">
                 <div class="card-body">
 
                     <h6 class="mb-4">
@@ -266,51 +266,64 @@
                     @{
                         var allStatuses = Model.AllStatuses; // Tüm statü listesi (10-80)
                         var history = Model.StatusHistory.ToList();
-                        var completedCodes = history.Select(x => x.).ToList();
+                        var completedCodes = history.Select(x => x.OrderStatusCode).ToList();
                         var currentCode = Model.OrderStatusCode;
                     }
 
-                    <div class="order-progress">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
 
-                        @foreach (var status in allStatuses)
-                        {
-                            var isCompleted = completedCodes.Contains((int)status.OrderStatusCode);
-                            var isCurrent = status.Code == currentCode;
-                            var historyItem = history.FirstOrDefault(x => x.Code == status.Code);
+                            <h6 class="mb-4">
+                                <i class="fa-solid fa-chart-line me-2"></i>
+                                @L["Sipariş Süreci"]
+                            </h6>
 
-                            <div class="progress-step">
+                            @{
+                                var allStatuses = Model.AllStatuses.OrderBy(x => x.OrderStatusCode).ToList();
+                                var history = Model.StatusHistory.ToList();
+                                var completedCodes = history.Select(x => x.OrderStatusCode).ToList();
+                                var currentCode = Model.OrderStatusCode;
+                            }
 
-                                <div class="step-icon
-                             @(isCompleted ? "completed" : "pending")
-                             @(isCurrent ? "current" : "")">
+                            <div class="stepper-wrapper">
 
-                                    @if (isCompleted)
-                                    {
-                                        <i class="fa-solid fa-check"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa-regular fa-circle"></i>
-                                    }
+                                @for (int i = 0; i < allStatuses.Count; i++)
+                                {
+                                    var status = allStatuses[i];
+                                    var isCompleted = completedCodes.Contains(status.OrderStatusCode);
+                                    var isCurrent = status.OrderStatusCode == currentCode;
+                                    var historyItem = history.FirstOrDefault(x => x.OrderStatusCode == status.OrderStatusCode);
 
-                                </div>
+                                    <div class="stepper-item @(isCompleted ? "completed" : "") @(isCurrent ? "active" : "")">
 
-                                <div class="step-label">
-                                    <div class="fw-semibold small">
-                                        @status.Aciklama
-                                    </div>
-
-                                    @if (historyItem != null)
-                                    {
-                                        <div class="text-muted very-small">
-                                            @historyItem.IslemTarihi.ToString("dd.MM HH:mm")
+                                        <div class="step-counter">
+                                            @if (isCompleted)
+                                            {
+                                                <i class="fa-solid fa-check"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa-regular fa-circle"></i>
+                                            }
                                         </div>
-                                    }
-                                </div>
+
+                                        <div class="step-name">
+                                            @status.Aciklama
+
+                                            @if (historyItem != null)
+                                            {
+                                                <div class="step-date">
+                                                    @historyItem.IslemTarihi.ToString("dd.MM HH:mm")
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+                                }
 
                             </div>
-                        }
 
+                        </div>
                     </div>
 
                 </div>
@@ -322,45 +335,15 @@
                         @L["Durum Geçmişi"]
                     </h6>
 
-                    @foreach (var history in Model.StatusHistory)
+                    @foreach (var shistory in Model.StatusHistory)
                     {
                         <div class="small mb-3 pb-2 border-bottom">
-                            <div class="fw-semibold">@history.Aciklama</div>
+                            <div class="fw-semibold">@shistory.Aciklama</div>
                             <div class="text-muted">
-                                @history.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
+                                @shistory.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
                             </div>
                         </div>
                     }
-                </div>
-            </div>
-
-
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6 class="mb-4">
-                        <i class="fa-solid fa-clock-rotate-left me-2"></i>
-                        @L["Durum Geçmişi"]
-                    </h6>
-
-                    <div class="timeline">
-                        @foreach (var history in Model.StatusHistory)
-                        {
-                            var isLast = history == Model.StatusHistory.Last();
-
-                            <div class="timeline-item">
-                                <div class="timeline-dot @(isLast ? "bg-success" : "bg-secondary")"></div>
-                                <div class="timeline-content">
-                                    <div class="fw-semibold">
-                                        @history.Aciklama
-                                    </div>
-                                    <div class="text-muted small">
-                                        @history.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-
                 </div>
             </div>
 
@@ -370,36 +353,3 @@
 </div>
 
 
-<style>
-    .timeline {
-        position: relative;
-        padding-left: 25px;
-    }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 8px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background-color: #dee2e6;
-        }
-
-    .timeline-item {
-        position: relative;
-        margin-bottom: 20px;
-    }
-
-    .timeline-dot {
-        position: absolute;
-        left: -1px;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-    }
-
-    .timeline-content {
-        padding-left: 20px;
-    }
-</style>

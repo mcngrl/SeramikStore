@@ -126,7 +126,7 @@ namespace SeramikStore.Services
                         {
                             order.StatusHistory.Add(new OrderStatusHistoryDto
                             {
-                                StatusCode = reader["StatusCode"]?.ToString(),
+                                OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
                                 IslemTarihi = reader.GetDateTime(reader.GetOrdinal("IslemTarihi")),
                                 Aciklama = reader["Aciklama"]?.ToString()
                             });
@@ -223,7 +223,7 @@ namespace SeramikStore.Services
                     {
                         list.Add(new StatusOptionDto
                         {
-                            Code = Convert.ToInt32(reader["Code"]),
+                            OrderStatusCode = Convert.ToInt32(reader["Code"]),
                             Aciklama = reader["Aciklama"].ToString()!
                         });
                     }
@@ -250,7 +250,7 @@ namespace SeramikStore.Services
                     {
                         list.Add(new StatusOptionDto
                         {
-                            Code = Convert.ToInt32(reader["Code"]),
+                            OrderStatusCode = Convert.ToInt32(reader["Code"]),
                             Aciklama = reader["Aciklama"].ToString()!
                         });
                     }

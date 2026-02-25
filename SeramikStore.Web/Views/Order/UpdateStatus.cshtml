@@ -17,8 +17,8 @@
                 <select name="selectedStatus" class="form-select">
                     @foreach (var item in Model)
                     {
-                        <option value="@item.Code">
-                            @item.Code - @item.Aciklama
+                        <option value="@item.OrderStatusCode">
+                            @item.OrderStatusCode - @item.Aciklama
                         </option>
                     }
                 </select>
