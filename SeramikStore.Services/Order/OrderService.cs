@@ -128,7 +128,23 @@ namespace SeramikStore.Services
                             {
                                 OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
                                 IslemTarihi = reader.GetDateTime(reader.GetOrdinal("IslemTarihi")),
-                                Aciklama = reader["Aciklama"]?.ToString()
+                                Aciklama = reader["Aciklama"]?.ToString(),
+                                UserNameSurname = reader["UserNameSurname"]?.ToString()
+                            });
+                        }
+                    }
+
+                    // 4️⃣ HISTORY LOG
+                    if (reader.NextResult())
+                    {
+                        while (reader.Read())
+                        {
+                            order.StatusHistoryLog.Add(new OrderStatusHistoryDto
+                            {
+                                OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
+                                IslemTarihi = reader.GetDateTime(reader.GetOrdinal("IslemTarihi")),
+                                Aciklama = reader["Aciklama"]?.ToString(),
+                                UserNameSurname = reader["UserNameSurname"]?.ToString()
                             });
                         }
                     }
@@ -269,6 +285,21 @@ namespace SeramikStore.Services
                 cmd.Parameters.AddWithValue("@OrderId", orderId);
                 cmd.Parameters.AddWithValue("@NewStatusCode", newStatusCode);
                 cmd.Parameters.AddWithValue("@UserId", userId);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void CancelLastStatus(CancelLastStatusRequestDto request)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand("sp_Order_CancelLastStatus", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@OrderId", request.OrderId);
+                cmd.Parameters.AddWithValue("@UserId", request.UserId);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();

@@ -45,6 +45,62 @@
 
                 </div>
             </div>
+            <!-- SİPARİŞ SÜRECİ -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+
+                    <h6 class="mb-4">
+                        <i class="fa-solid fa-chart-line me-2"></i>
+                        @L["Sipariş Süreci"]
+                    </h6>
+
+                    @{
+                        var allStatuses = Model.AllStatuses.OrderBy(x => x.OrderStatusCode).ToList();
+                        var history = Model.StatusHistory.ToList();
+                        var completedCodes = history.Select(x => x.OrderStatusCode).ToList();
+                        var currentCode = Model.OrderStatusCode;
+                    }
+
+                    <div class="stepper-wrapper">
+
+                        @for (int i = 0; i < allStatuses.Count; i++)
+                        {
+                            var status = allStatuses[i];
+                            var isCompleted = completedCodes.Contains(status.OrderStatusCode);
+                            var isCurrent = status.OrderStatusCode == currentCode;
+                            var historyItem = history.FirstOrDefault(x => x.OrderStatusCode == status.OrderStatusCode);
+
+                            <div class="stepper-item @(isCompleted ? "completed" : "") @(isCurrent ? "active" : "")">
+
+                                <div class="step-counter">
+                                    @if (isCompleted)
+                                    {
+                                        <i class="fa-solid fa-check"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-regular fa-circle"></i>
+                                    }
+                                </div>
+
+                                <div class="step-name">
+                                    @status.Aciklama
+
+                                    @if (historyItem != null)
+                                    {
+                                        <div class="step-date">
+                                            @historyItem.IslemTarihi.ToString("dd.MM HH:mm")
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
             <!-- KARGO TAKİP -->
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
@@ -168,7 +224,6 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
 
@@ -215,7 +270,16 @@
                             </button>
                         </div>
                     </form>
+                    <form asp-action="CancelLastStatus" method="post"
+                          onsubmit="return confirm('Son statüyü geri almak istediğinize emin misiniz?');">
 
+                        <input type="hidden" name="orderId" value="@Model.Id" />
+
+                        <button type="submit" class="btn btn-outline-secondary btn-sm">
+                            <i class="fa-solid fa-rotate-left me-1"></i>
+                             @L["Son Statüyü Geri Al"]
+                        </button>
+                    </form>
                     @if (Model.OrderStatusCode < 60)
                     {
                         <hr />
@@ -258,73 +322,8 @@
             <div class="card shadow-sm">
                 <div class="card-body">
 
-                    <h6 class="mb-4">
-                        <i class="fa-solid fa-chart-line me-2"></i>
-                        @L["Sipariş Süreci"]
-                    </h6>
 
-                    @{
-                        var allStatuses = Model.AllStatuses; // Tüm statü listesi (10-80)
-                        var history = Model.StatusHistory.ToList();
-                        var completedCodes = history.Select(x => x.OrderStatusCode).ToList();
-                        var currentCode = Model.OrderStatusCode;
-                    }
 
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-body">
-
-                            <h6 class="mb-4">
-                                <i class="fa-solid fa-chart-line me-2"></i>
-                                @L["Sipariş Süreci"]
-                            </h6>
-
-                            @{
-                                var allStatuses = Model.AllStatuses.OrderBy(x => x.OrderStatusCode).ToList();
-                                var history = Model.StatusHistory.ToList();
-                                var completedCodes = history.Select(x => x.OrderStatusCode).ToList();
-                                var currentCode = Model.OrderStatusCode;
-                            }
-
-                            <div class="stepper-wrapper">
-
-                                @for (int i = 0; i < allStatuses.Count; i++)
-                                {
-                                    var status = allStatuses[i];
-                                    var isCompleted = completedCodes.Contains(status.OrderStatusCode);
-                                    var isCurrent = status.OrderStatusCode == currentCode;
-                                    var historyItem = history.FirstOrDefault(x => x.OrderStatusCode == status.OrderStatusCode);
-
-                                    <div class="stepper-item @(isCompleted ? "completed" : "") @(isCurrent ? "active" : "")">
-
-                                        <div class="step-counter">
-                                            @if (isCompleted)
-                                            {
-                                                <i class="fa-solid fa-check"></i>
-                                            }
-                                            else
-                                            {
-                                                <i class="fa-regular fa-circle"></i>
-                                            }
-                                        </div>
-
-                                        <div class="step-name">
-                                            @status.Aciklama
-
-                                            @if (historyItem != null)
-                                            {
-                                                <div class="step-date">
-                                                    @historyItem.IslemTarihi.ToString("dd.MM HH:mm")
-                                                </div>
-                                            }
-                                        </div>
-
-                                    </div>
-                                }
-
-                            </div>
-
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -335,13 +334,14 @@
                         @L["Durum Geçmişi"]
                     </h6>
 
-                    @foreach (var shistory in Model.StatusHistory)
+                    @foreach (var shistory in Model.StatusHistoryLog)
                     {
                         <div class="small mb-3 pb-2 border-bottom">
                             <div class="fw-semibold">@shistory.Aciklama</div>
                             <div class="text-muted">
                                 @shistory.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
                             </div>
+                            <div class="fw-semibold">@shistory.UserNameSurname</div>
                         </div>
                     }
                 </div>
@@ -353,3 +353,80 @@
 </div>
 
 
+<style>
+    .stepper-wrapper {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-top: 10px;
+    }
+
+    .stepper-wrapper::before {
+        content: '';
+        position: absolute;
+        top: 18px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: #dee2e6;
+        z-index: 1;
+    }
+
+    .stepper-item {
+        position: relative;
+        text-align: center;
+        flex: 1;
+        z-index: 2;
+    }
+
+    .stepper-item:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 18px;
+        right: -50%;
+        width: 100%;
+        height: 3px;
+        background-color: #dee2e6;
+        z-index: -1;
+    }
+
+    .stepper-item.completed:not(:last-child)::after {
+        background-color: #198754;
+    }
+
+    .step-counter {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 3px solid #dee2e6;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .stepper-item.completed .step-counter {
+        background-color: #198754;
+        border-color: #198754;
+        color: #fff;
+    }
+
+    .stepper-item.active .step-counter {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 4px rgba(255,193,7,.3);
+    }
+
+    .step-name {
+        margin-top: 8px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .step-date {
+        font-size: 11px;
+        color: #6c757d;
+        margin-top: 3px;
+    }
+</style>

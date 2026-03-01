@@ -22,6 +22,8 @@ namespace SeramikStore.Contracts.Order
         public OrderAddressDto Address { get; set; }
         public List<OrderStatusHistoryDto> StatusHistory { get; set; } = new();
 
+        public List<OrderStatusHistoryDto> StatusHistoryLog { get; set; } = new();
+
         public List<StatusOptionDto> NextStatusesForUpdate { get; set; } = new();
 
         public List<StatusOptionDto> AllStatuses { get; set; }  = new ();

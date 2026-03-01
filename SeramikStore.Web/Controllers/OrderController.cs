@@ -273,20 +273,35 @@ namespace SeramikStore.Web.Controllers
             return RedirectToAction("PaymentInfo");
         }
 
-        public IActionResult UpdateStatus(int id)
-        {
-            var statuses = _orderService.GetNextStatusesForUpdate(id);
+        //public IActionResult UpdateStatus(int id)
+        //{
+        //    var statuses = _orderService.GetNextStatusesForUpdate(id);
 
-            ViewBag.OrderId = id;
-            return View(statuses);
-        }
+        //    ViewBag.OrderId = id;
+        //    return View(statuses);
+        //}
 
         [HttpPost]
         public IActionResult UpdateStatus(int orderId, int selectedStatus)
         {
             int userId = (int)HttpContext.Session.GetInt32("userId");
             _orderService.UpdateOrderStatus(orderId, selectedStatus, userId);
-            return RedirectToAction("CustomerOrders");
+            return RedirectToAction("CustomerOrders", new { highlightId = orderId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CancelLastStatus(int orderId)
+        {
+            int userId = (int)HttpContext.Session.GetInt32("userId");
+
+            _orderService.CancelLastStatus(new CancelLastStatusRequestDto
+            {
+                OrderId = orderId,
+                UserId = userId
+            });
+
+            return RedirectToAction("CustomerOrders", new { highlightId = orderId });
         }
     }
 
