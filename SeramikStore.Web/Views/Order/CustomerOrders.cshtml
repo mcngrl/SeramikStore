@@ -37,7 +37,7 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
+                            <tr id="order-@item.Id">
                                 <td>#@item.Id</td>
 
                                 <td>
@@ -104,3 +104,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const highlightId = params.get("highlightId");
+
+    if (highlightId) {
+        const row = document.getElementById("order-" + highlightId);
+
+        if (row) {
+            row.scrollIntoView({ behavior: "smooth", block: "center" });
+            row.classList.add("table-warning");
+
+            // 6 saniye sonra rengi azalt
+            setTimeout(() => {
+                row.classList.remove("table-warning");
+            }, 6000);
+        }
+    }
+</script>
