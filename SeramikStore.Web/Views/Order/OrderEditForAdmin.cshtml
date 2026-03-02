@@ -17,36 +17,7 @@
 
         <!-- SOL TARAF (GENİŞ) -->
         <div class="col-md-8">
-
-            <!-- SİPARİŞ BİLGİ KARTI -->
-@*             <div class="card shadow-sm mb-4">
-                <div class="card-body">
-
-                    <div class="row small">
-                        <div class="col-6 mb-2">
-                            <strong>@L["Sipariş No"]: #@Model.Id</strong>
-                        </div>
-                        <div class="col-6 mb-2 text-md-end">
-                            <strong>@L["Sipariş Tarihi"]:</strong>
-                            @Model.OrderDate.ToString("dd.MM.yyyy HH:mm")
-                        </div>
-                        <div class="col-6">
-                            <strong>@L["Durum"]:</strong>
-                            <span class="badge bg-secondary">@Model.OrderStatus</span>
-                        </div>
-                        <div class="col-6 text-md-end">
-                            <strong>@L["Kargo Firması"]:</strong>
-                            @(string.IsNullOrEmpty(Model.KargoSirketi)
-                                                        ? L["Henüz Belirlenmedi"]
-                                                        : Model.KargoSirketi)
-                        </div>
-
-                    </div>
-
-
-                </div>
-            </div>
- *@            <!-- SİPARİŞ SÜRECİ -->
+            <!-- SİPARİŞ SÜRECİ -->
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
 
@@ -69,11 +40,17 @@
                             var status = allStatuses[i];
                             var isCompleted = completedCodes.Contains(status.OrderStatusCode);
                             var isCurrent = status.OrderStatusCode == currentCode;
+                            var isCancelled = status.OrderStatusCode == (int)OrderStatusCode.Iptal;
                             var historyItem = history.FirstOrDefault(x => x.OrderStatusCode == status.OrderStatusCode);
 
                             <div class="stepper-item @(isCompleted ? "completed" : "") @(isCurrent ? "active" : "")">
 
                                 <div class="step-counter">
+                                    @if (isCancelled)
+                                    {
+                                        <i class="fa-solid fa-xmark"></i>
+                                    }
+                                    el
                                     @if (isCompleted)
                                     {
                                         <i class="fa-solid fa-check"></i>
@@ -357,6 +334,22 @@
 
 
 <style>
+
+    .stepper-item.cancelled .step-counter {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+    }
+
+    .stepper-item.cancelled .step-name {
+        color: #dc3545;
+        font-weight: 700;
+    }
+
+    .stepper-item.cancelled::after {
+        background: repeating-linear-gradient( 45deg, #dc3545, #dc3545 5px, #ffffff 5px, #ffffff 10px );
+    }
+
     .stepper-wrapper {
         display: flex;
         justify-content: space-between;
