@@ -87,6 +87,87 @@
             });
         </script>
     }
+    @if (TempData["Info"] != null)
+    {
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="infoToast" class="toast text-bg-info" role="alert">
+                <div class="toast-header text-bg-info">
+                    <strong class="me-auto">Info</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    @TempData["Info"]
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var toastEl = document.getElementById('infoToast');
+                var toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+                toast.show();
+            });
+        </script>
+    }
+
+
+
+
+    <!-- GLOBAL CONFIRM MODAL -->
+    <div class="modal fade" id="globalConfirmModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title text-dark">
+                        Onay
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="confirmMessage" class="mb-0">
+                        Emin misiniz?
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Hayır
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-warning"
+                            id="confirmYesButton">
+                        Evet
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const confirmModal = new bootstrap.Modal(document.getElementById('globalConfirmModal'));
+            const confirmMessage = document.getElementById('confirmMessage');
+            const confirmYesButton = document.getElementById('confirmYesButton');
+
+            window.showConfirm = function (message, onConfirm) {
+                confirmMessage.innerText = message;
+
+                confirmYesButton.onclick = function () {
+                    confirmModal.hide();
+                    onConfirm();
+                };
+
+                confirmModal.show();
+            };
+        });
+    </script>
 
 </body>
 </html>

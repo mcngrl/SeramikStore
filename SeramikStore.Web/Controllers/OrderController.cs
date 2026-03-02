@@ -285,8 +285,19 @@ namespace SeramikStore.Web.Controllers
         public IActionResult UpdateStatus(int orderId, int selectedStatus)
         {
             int userId = (int)HttpContext.Session.GetInt32("userId");
-            _orderService.UpdateOrderStatus(orderId, selectedStatus, userId);
-            return RedirectToAction("CustomerOrders", new { highlightId = orderId });
+            var rRes = _orderService.UpdateOrderStatus(orderId, selectedStatus, userId);
+            if (rRes.IsSuccess)
+            {
+                TempData["Success"] = "Durum güncellendi.";
+                return RedirectToAction("CustomerOrders", new { highlightId = orderId });
+            }
+            else
+            {
+                TempData["Info"] = "Herhangi bir değişiklik yapılmadı.";
+                return RedirectToAction("OrderEditForAdmin", new { id = orderId });
+            }
+
+
         }
 
         [HttpPost]

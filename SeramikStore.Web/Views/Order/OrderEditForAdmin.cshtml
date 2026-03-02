@@ -2,6 +2,7 @@
 @using SeramikStore.Web.Localization
 @using SeramikStore.Contracts.Order
 @using System.Globalization
+@using SeramikStore.Entities.Enums
 @model OrderDetailedDto
 @inject IStringLocalizer<CartResource> L
 
@@ -18,7 +19,7 @@
         <div class="col-md-8">
 
             <!-- SİPARİŞ BİLGİ KARTI -->
-            <div class="card shadow-sm mb-4">
+@*             <div class="card shadow-sm mb-4">
                 <div class="card-body">
 
                     <div class="row small">
@@ -45,7 +46,7 @@
 
                 </div>
             </div>
-            <!-- SİPARİŞ SÜRECİ -->
+ *@            <!-- SİPARİŞ SÜRECİ -->
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
 
@@ -231,87 +232,95 @@
 
         <!-- SAĞ TARAF (DAR) -->
         <div class="col-md-4">
+        <div class="card shadow-sm mb-4 border-warning">
+            <div class="card-body">
 
-            <!-- STATÜ GÜNCELLE -->
-            <div class="card shadow-sm mb-4 border-warning">
-                <div class="card-body">
+                <form asp-action="UpdateStatus" method="post">
 
-                    <h6 class="mb-3 text-warning fw-bold">
-                        <i class="fa-solid fa-pen-to-square me-2"></i>
-                        @L["Statü Güncelle"]
-                    </h6>
-
-                    <!-- Güncelle Form -->
-                    <form asp-action="UpdateStatus" method="post" class="mb-3">
-                        <input type="hidden" name="orderId" value="@Model.Id" />
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">
-                                @L["Mevcut Statü"]
-                            </label>
-                            <span class="badge bg-secondary">@Model.OrderStatus</span>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">
-                                @L["Yeni Statü"]
-                            </label>
-                            <select name="selectedStatus" class="form-select form-select-sm">
-                                @foreach (var item in Model.NextStatusesForUpdate)
-                                {
-                                    <option value="@item.OrderStatusCode">
-                                        @item.OrderStatusCode - @item.Aciklama
-                                    </option>
-                                }
-                            </select>
+                        <!-- Sipariş No -->
+                        <div class="row-cols-md-6">
+                            <strong>@L["Sipariş No"]:</strong> #@Model.Id
                         </div>
 
-                        <div class="d-flex justify-content-end">
+                        <!-- Sipariş Tarihi -->
+                        <div class="row-cols-md-6">
+                            <strong>@L["Sipariş Tarihi"]:</strong>
+                            @Model.OrderDate.ToString("dd.MM.yyyy HH:mm")
+                        </div>
+                    
+                        <div class="d-flex justify-content align-items-center gap-1"> 
+                        
+                                <strong class="mb-0">@L["Durum"]:</strong>
+
+                                <select name="selectedStatus"
+                                        class="form-select form-select-sm">
+                                        
+                                    @foreach (var item in Model.NextStatusesForUpdate)
+                                    {
+                                        <option value="@item.OrderStatusCode"
+                                                selected="@(item.OrderStatusCode == Model.OrderStatusCode)">
+                                            @item.Aciklama
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+
+
+                        <!-- Güncelle Buton -->
+                        <div class="col-12 text-end mt-2">
+                            <input type="hidden" name="orderId" value="@Model.Id" />
                             <button type="submit" class="btn btn-warning btn-sm px-4">
                                 @L["Güncelle"]
                             </button>
                         </div>
-                    </form>
-                    <form asp-action="CancelLastStatus" method="post"
-                          onsubmit="return confirm('Son statüyü geri almak istediğinize emin misiniz?');">
 
-                        <input type="hidden" name="orderId" value="@Model.Id" />
 
-                        <button type="submit" class="btn btn-outline-secondary btn-sm">
-                            <i class="fa-solid fa-rotate-left me-1"></i>
-                             @L["Son Statüyü Geri Al"]
-                        </button>
-                    </form>
-                    @if (Model.OrderStatusCode < 60)
-                    {
-                        <hr />
+                </form>
 
-                        <!-- İPTAL FORM -->
-                        <form asp-action="CancelOrder" method="post"
-                              onsubmit="return confirm('@L["Siparişi iptal etmek istediğinize emin misiniz?"]');">
 
+                @if (Model.OrderStatusCode > (int)OrderStatusCode.OdemeBekleniyor)
+                {
+                <hr />
+
+                <form id="cancelLastStatusForm" asp-action="CancelLastStatus" method="post">
+                    <input type="hidden" name="orderId" value="@Model.Id" />
+
+                    <button type="button"
+                            class="btn btn-outline-secondary btn-sm"
+                            onclick="showConfirm('Son statüyü geri almak istediğinize emin misiniz?', function() { document.getElementById('cancelLastStatusForm').submit(); });">
+                        <i class="fa-solid fa-rotate-left me-1"></i>
+                        Son Statüyü Geri Al
+                    </button>
+                </form>
+
+
+                }
+                 
+                @if (Model.OrderStatusCode != (int)OrderStatusCode.Iptal)
+                {
+                    <hr />
+
+                        <form id="cancelOrderForm" asp-action="UpdateStatus" method="post">
                             <input type="hidden" name="orderId" value="@Model.Id" />
+                            <input type="text" name="selectedStatus" value="@((int)OrderStatusCode.Iptal)" />
 
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                    <i class="fa-solid fa-ban me-1"></i>
-                                    @L["Siparişi İptal Et"]
-                                </button>
-                            </div>
+                            <button type="button"
+                                    class="btn btn-outline-danger btn-sm"
+                                    onclick="showConfirm('Siparişi iptal etmek istediğinize emin misiniz?', function() { document.getElementById('cancelOrderForm').submit(); });">
+                                <i class="fa-solid fa-ban me-1"></i>
+                                Siparişi İptal Et
+                            </button>
                         </form>
-                    }
+                }
 
-                </div>
             </div>
-
+        </div>
             <!-- ALT BUTONLAR -->
             <div class="d-grid gap-2 mb-4">
-                <a asp-controller="Home"
-                   asp-action="Index"
-                   class="btn btn-outline-primary btn-sm">
-                    @L["Ana Sayfaya Dön"]
-                </a>
-
                 <a asp-controller="Order"
                    asp-action="CustomerOrders"
+                   asp-route-highlightId="@Model.Id"
                    class="btn btn-primary btn-sm">
                     @L["Müşteri Siparişleri"]
                 </a>
@@ -319,14 +328,6 @@
 
             <!-- DURUM GEÇMİŞİ -->
 
-            <div class="card shadow-sm">
-                <div class="card-body">
-
-
-
-
-                </div>
-            </div>
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h6 class="mb-3">
@@ -348,9 +349,11 @@
             </div>
 
         </div>
+        </div>
+
 
     </div>
-</div>
+
 
 
 <style>
