@@ -17,7 +17,8 @@ namespace SeramikStore.Services
         List<OrderAdminListItemDto> GetAllOrders();
 
         List<StatusOptionDto> GetNextStatusesForUpdate(int orderId);
-        void UpdateOrderStatus(int orderId, int newStatusCode, int userId);
+        OrderStatusUpdateResultDto UpdateOrderStatus(int orderId, int newStatusCode, int userId);
         void CancelLastStatus(CancelLastStatusRequestDto request);
+
     }
 }

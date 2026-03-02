@@ -276,7 +276,7 @@ namespace SeramikStore.Services
             return list;
         }
 
-        public void UpdateOrderStatus(int orderId, int newStatusCode, int userId)
+        public OrderStatusUpdateResultDto UpdateOrderStatus(int orderId, int newStatusCode, int userId)
         {
             using (var conn = new SqlConnection(_connectionString))
             using (var cmd = new SqlCommand("sp_Order_UpdateStatus", conn))
@@ -287,8 +287,23 @@ namespace SeramikStore.Services
                 cmd.Parameters.AddWithValue("@UserId", userId);
 
                 conn.Open();
-                cmd.ExecuteNonQuery();
-            }
+                using SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return new OrderStatusUpdateResultDto
+                    {
+                        Result = Convert.ToInt32(reader["RESULT"]),
+                    };
+                }
+                else
+                {
+                    return new OrderStatusUpdateResultDto
+                    {
+                        Result = 0
+                    };
+                }
+
+           }
         }
 
         public void CancelLastStatus(CancelLastStatusRequestDto request)
