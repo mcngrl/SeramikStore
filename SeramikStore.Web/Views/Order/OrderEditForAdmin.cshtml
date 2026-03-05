@@ -27,52 +27,72 @@
                     </h6>
 
                     @{
-                        var allStatuses = Model.AllStatuses.OrderBy(x => x.OrderStatusCode).ToList();
-                        var history = Model.StatusHistory.ToList();
-                        var completedCodes = history.Select(x => x.OrderStatusCode).ToList();
+                        var ProcessStatuses = Model.StatusProcess.OrderBy(x => x.RowOrderNo).ToList();
                         var currentCode = Model.OrderStatusCode;
+                        var isCancelled = currentCode == (int)OrderStatusCode.Iptal;
                     }
-
+                    @if (isCancelled)
+                    {
+                        <div class="alert alert-danger text-center fw-bold mb-4">
+                            ❌ SİPARİŞ İPTAL EDİLDİ
+                        </div>
+                    }
                     <div class="stepper-wrapper">
 
-                        @for (int i = 0; i < allStatuses.Count; i++)
+                        @for (int i = 0; i < ProcessStatuses.Count; i++)
                         {
-                            var status = allStatuses[i];
-                            var isCompleted = completedCodes.Contains(status.OrderStatusCode);
-                            var isCurrent = status.OrderStatusCode == currentCode;
-                            var isCancelled = status.OrderStatusCode == (int)OrderStatusCode.Iptal;
-                            var historyItem = history.FirstOrDefault(x => x.OrderStatusCode == status.OrderStatusCode);
+                            var ProcessStatusItem = ProcessStatuses[i];
+                            var isCompleted = ProcessStatusItem.isCompleted;
+                            var isCurrent = ProcessStatusItem.isLast;
 
-                            <div class="stepper-item @(isCompleted ? "completed" : "") @(isCurrent ? "active" : "")">
+                             <div class="stepper-item @(isCompleted ? "completed" : "") @(isCurrent ? "active" : ""))">
 
-                                <div class="step-counter">
-                                    @if (isCancelled)
-                                    {
-                                        <i class="fa-solid fa-xmark"></i>
-                                    }
-                                    el
-                                    @if (isCompleted)
-                                    {
-                                        <i class="fa-solid fa-check"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa-regular fa-circle"></i>
-                                    }
+                                    <div class="step-counter">
+                                        @if (isCompleted)
+                                        {
+                                            @if (ProcessStatusItem.OrderStatusCode == (int)OrderStatusCode.Iptal)
+                                            {
+                                                <i class="fa-solid fa-cancel"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa-solid fa-check"></i>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @if (isCancelled)
+                                            {
+                                                <i class="fa-solid fa-cancel"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa-regular fa-circle"></i>
+
+                                            }
+
+                                        }
+
+                                    </div>
+
+                                    <div class="step-name">
+
+                                        @ProcessStatusItem.Aciklama
+                                        @ProcessStatusItem.OrderStatusCode
+
+                                        @if (isCompleted)
+                                        {
+                                            <div class="step-date">
+                                                @(ProcessStatusItem?.IslemTarihi?.ToString("dd.MM HH:mm") ?? "-")
+                                            </div>
+                                        }
+
+
+
+                                    </div>
+
                                 </div>
-
-                                <div class="step-name">
-                                    @status.Aciklama
-
-                                    @if (historyItem != null)
-                                    {
-                                        <div class="step-date">
-                                            @historyItem.IslemTarihi.ToString("dd.MM HH:mm")
-                                        </div>
-                                    }
-                                </div>
-
-                            </div>
+                            
                         }
 
                     </div>
@@ -312,7 +332,7 @@
                         @L["Durum Geçmişi"]
                     </h6>
 
-                    @foreach (var shistory in Model.StatusHistoryLog)
+                    @foreach (var shistory in Model.StatusHistory)
                     {
                         <div class="small mb-3 pb-2 border-bottom">
                             <div class="fw-semibold">@shistory.Aciklama</div>
@@ -334,6 +354,9 @@
 
 
 <style>
+    .cancelled-wrapper::before {
+        background-color: #dc3545 !important;
+    }
 
     .stepper-item.cancelled .step-counter {
         background-color: #dc3545;
@@ -345,6 +368,13 @@
         color: #dc3545;
         font-weight: 700;
     }
+
+    /* Eğer sipariş iptalse tüm çizgi kırmızı */
+    .cancelled-wrapper .stepper-item.completed .step-counter {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+ 
 
     .stepper-item.cancelled::after {
         background: repeating-linear-gradient( 45deg, #dc3545, #dc3545 5px, #ffffff 5px, #ffffff 10px );

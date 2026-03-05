@@ -75,7 +75,6 @@ namespace SeramikStore.Services
                             KargoyaVerilmeTarihi = reader["KargoyaVerilmeTarihi"] as DateTime?,
                             KargoTakipNo = reader["KargoTakipNo"]?.ToString(),
                             Items = new List<OrderDetailItemDto>(),
-                            StatusHistory = new List<OrderStatusHistoryDto>()
                         };
                     }
 
@@ -119,39 +118,12 @@ namespace SeramikStore.Services
                         }
                     }
 
-                    // 4️⃣ STATUS HISTORY
-                    if (reader.NextResult())
-                    {
-                        while (reader.Read())
-                        {
-                            order.StatusHistory.Add(new OrderStatusHistoryDto
-                            {
-                                OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
-                                IslemTarihi = reader.GetDateTime(reader.GetOrdinal("IslemTarihi")),
-                                Aciklama = reader["Aciklama"]?.ToString(),
-                                UserNameSurname = reader["UserNameSurname"]?.ToString()
-                            });
-                        }
-                    }
-
-                    // 4️⃣ HISTORY LOG
-                    if (reader.NextResult())
-                    {
-                        while (reader.Read())
-                        {
-                            order.StatusHistoryLog.Add(new OrderStatusHistoryDto
-                            {
-                                OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
-                                IslemTarihi = reader.GetDateTime(reader.GetOrdinal("IslemTarihi")),
-                                Aciklama = reader["Aciklama"]?.ToString(),
-                                UserNameSurname = reader["UserNameSurname"]?.ToString()
-                            });
-                        }
-                    }
-
+                    //STATUS PROCESS
+                    order.StatusProcess = GetStatusProcess(orderId);
+                    //STATUS HISTORY
+                    order.StatusHistory = GetStatusHistory(orderId);
+                    //NEXT STATUSF
                     order.NextStatusesForUpdate = GetNextStatusesForUpdate(orderId);
-
-                    order.AllStatuses = GetAllStatus();
                 }
             }
 
@@ -249,25 +221,28 @@ namespace SeramikStore.Services
             return list;
         }
 
-        public List<StatusOptionDto> GetAllStatus()
+
+        public List<OrderStatusHistoryDto> GetStatusHistory(int orderId)
         {
-            var list = new List<StatusOptionDto>();
+            var list = new List<OrderStatusHistoryDto>();
 
             using (var conn = new SqlConnection(_connectionString))
-            using (var cmd = new SqlCommand("sp_Order_GetAllStatus", conn))
+            using (var cmd = new SqlCommand("sp_Order_GetStatusHistory", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-
+                cmd.Parameters.AddWithValue("@OrderId", orderId);
                 conn.Open();
 
                 using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        list.Add(new StatusOptionDto
+                        list.Add(new OrderStatusHistoryDto
                         {
-                            OrderStatusCode = Convert.ToInt32(reader["Code"]),
-                            Aciklama = reader["Aciklama"].ToString()!
+                            OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
+                            IslemTarihi = reader.GetDateTime(reader.GetOrdinal("IslemTarihi")),
+                            Aciklama = reader["Aciklama"]?.ToString(),
+                            UserNameSurname = reader["UserNameSurname"]?.ToString()
                         });
                     }
                 }
@@ -275,6 +250,42 @@ namespace SeramikStore.Services
 
             return list;
         }
+
+        public List<OrderStatusProcessDto> GetStatusProcess(int orderId)
+        {
+            var list = new List<OrderStatusProcessDto>();
+
+            using (var conn = new SqlConnection(_connectionString))
+            using (var cmd = new SqlCommand("sp_Order_GetStatusProcess", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@OrderId", orderId);
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new OrderStatusProcessDto
+                        {
+                            RowOrderNo = reader.GetInt32(reader.GetOrdinal("RowOrderNo")),
+                            Faz = reader["Faz"]?.ToString(),
+                            OrderStatusCode = reader.GetInt32(reader.GetOrdinal("Code")),
+                            IslemTarihi = reader.GetDateTime(reader.GetOrdinal("IslemTarihi")),
+                            Aciklama = reader["Aciklama"]?.ToString(),
+                            UserNameSurname = reader["UserNameSurname"]?.ToString(),
+                            isLast = reader.GetBoolean(reader.GetOrdinal("IsLast")),
+                            isCompleted = reader.GetBoolean(reader.GetOrdinal("IsCompleted")),
+                            
+                        });
+                    }
+                }
+            }
+
+            return list;
+        }
+
+
 
         public OrderStatusUpdateResultDto UpdateOrderStatus(int orderId, int newStatusCode, int userId)
         {
