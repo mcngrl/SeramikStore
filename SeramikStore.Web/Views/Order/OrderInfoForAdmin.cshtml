@@ -192,12 +192,12 @@
                         @L["Durum Geçmişi"]
                     </h5>
 
-                    @foreach (var history in Model.StatusHistory)
+                    @foreach (var history in Model.StatusProcess)
                     {
                         <div class="small mb-2">
                             <div class="fw-semibold">@history.Aciklama</div>
                             <div class="text-muted">
-                                @history.IslemTarihi.ToString("dd.MM.yyyy HH:mm")
+                                @(history?.IslemTarihi?.ToString("dd.MM HH:mm") ?? "-")
                             </div>
                         </div>
                     }

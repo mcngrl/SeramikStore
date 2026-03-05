@@ -20,13 +20,11 @@ namespace SeramikStore.Contracts.Order
         // Child Collections
         public List<OrderDetailItemDto> Items { get; set; } = new();
         public OrderAddressDto Address { get; set; }
+        public List<OrderStatusProcessDto> StatusProcess { get; set; } = new();
+
         public List<OrderStatusHistoryDto> StatusHistory { get; set; } = new();
 
-        public List<OrderStatusHistoryDto> StatusHistoryLog { get; set; } = new();
-
         public List<StatusOptionDto> NextStatusesForUpdate { get; set; } = new();
-
-        public List<StatusOptionDto> AllStatuses { get; set; }  = new ();
 
     }
 }
