@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SeramikStore.Services;
 
 
-namespace TheWebApiProject.Controllers
+
+namespace FlutterTest.Controllers
 {
     
 
@@ -13,12 +13,7 @@ namespace TheWebApiProject.Controllers
     public class TestController : ControllerBase
     {
 
-        private readonly IOrderService _orderService;
-
-        public TestController(IOrderService orderService)
-        {
-            _orderService = orderService;
-        }
+      
         // GET: api/Test
         [HttpGet]
         //curl -X GET https://localhost:7039/api/Test
@@ -27,7 +22,7 @@ namespace TheWebApiProject.Controllers
             //var orders = _orderService.GetAllOrders();
 
             //return Ok(orders);
-            return Ok("GET - Veri getirildi");
+            return Ok("GET - Veri getirildicccc");
         }
 
         // GET: api/Test/5
