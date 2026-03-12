@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelToResx", "ExcelToResx\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheWebApiProject", "TheWebApiProject\TheWebApiProject.csproj", "{C16373F4-4791-4627-93C6-AD29C3B5691F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterTest", "FlutterTest\FlutterTest.csproj", "{83C68B29-E925-4941-8966-634DFE8886DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{C16373F4-4791-4627-93C6-AD29C3B5691F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C16373F4-4791-4627-93C6-AD29C3B5691F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C16373F4-4791-4627-93C6-AD29C3B5691F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83C68B29-E925-4941-8966-634DFE8886DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C68B29-E925-4941-8966-634DFE8886DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C68B29-E925-4941-8966-634DFE8886DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C68B29-E925-4941-8966-634DFE8886DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
