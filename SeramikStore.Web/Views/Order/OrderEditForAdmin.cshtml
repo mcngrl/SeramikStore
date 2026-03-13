@@ -300,7 +300,7 @@
 
                         <form id="cancelOrderForm" asp-action="UpdateStatus" method="post">
                             <input type="hidden" name="orderId" value="@Model.Id" />
-                            <input type="text" name="selectedStatus" value="@((int)OrderStatusCode.Iptal)" />
+                            <input type="hidden" name="selectedStatus" value="@((int)OrderStatusCode.Iptal)" />
 
                             <button type="button"
                                     class="btn btn-outline-danger btn-sm"
