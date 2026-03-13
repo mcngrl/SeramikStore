@@ -30,7 +30,7 @@
                             <th class="text-end">@L["Sipariş Tutarı"]</th>
                             <th class="text-end">@L["Kargo Tutarı"]</th>
                             <th class="text-end">@L["Toplam Tutar"]</th>
-                            <th>@L["Durum"]</th>
+                            <th>@L["Sipariş Durumu"]</th>
                             <th class="text-end">@L["Güncelle"]</th>
                         </tr>
                     </thead>
@@ -76,14 +76,6 @@
                                        asp-route-id="@item.Id"
                                        class="btn btn-sm btn-outline-dark">
                                         <i class="fa-solid fa-edit"></i>
-                                    </a>
-                                </td>
-                                <td class="text-end">
-                                    <a asp-controller="Order"
-                                       asp-action="OrderInfoForAdmin"
-                                       asp-route-id="@item.Id"
-                                       class="btn btn-sm btn-outline-dark">
-                                        <i class="fa-regular fa-eye"></i>
                                     </a>
                                 </td>
                             </tr>

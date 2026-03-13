@@ -48,27 +48,7 @@ namespace SeramikStore.Web.Controllers
             return View(orders);
         }
 
-        [HttpGet]
-        public IActionResult OrderInfoForAdmin(int id)
-        {
-            var role = HttpContext.Session.GetString("role");
 
-            if (role != "Admin")
-                RedirectToAction("Index", "Home");
-
-            {
-                var userId = HttpContext.Session.GetInt32("userId");
-
-                var order = _orderService.GetDetailedOrderById(id);
-
-                if (order == null)
-                    return RedirectToAction("Index", "Home");
-
-    
-                return View(order);
-            }
-        } 
-        
         [HttpGet]
         public IActionResult OrderEditForAdmin(int id)
         {

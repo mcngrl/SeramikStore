@@ -303,4 +303,7 @@
   <data name="Son Durumu Geri Al" xml:space="preserve">
     <value>Son Durumu Geri Al</value>
   </data>
+  <data name="Sipariş Durumu" xml:space="preserve">
+    <value>Sipariş Durumu</value>
+  </data>
 </root>

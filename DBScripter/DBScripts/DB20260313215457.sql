@@ -1317,9 +1317,9 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT t1.Id,t1.ProductId,t1.ProductCode,t1.ProductName,t1.UnitPrice,t1.Quantity,t1.TotalAmount,t1.UserId,t1.cart_id_token,t1.CurrencyCode,
-	t2.ImagePath AS MainImagePath
+    t2.ImagePath AS MainImagePath
     FROM [dbo].[Cart] t1
-	LEFT OUTER JOIN [dbo].[ProductImage] t2 on t1.ProductId = t2.ProductId and t2.IsMain = 1
+    LEFT OUTER JOIN [dbo].[ProductImage] t2 on t1.ProductId = t2.ProductId and t2.IsMain = 1
     WHERE t1.[Id] = @Id
       AND IsActive = 1
 END
@@ -1515,8 +1515,8 @@ BEGIN
         t2.UnitPrice * t1.Quantity AS LineTotal,
         UserId,
         t1.cart_id_token,
-		t1.CurrencyCode,
-		t3.ImagePath MainImagePath
+        t1.CurrencyCode,
+        t3.ImagePath MainImagePath
     FROM [Cart] t1
     LEFT OUTER JOIN [Product] t2 on t1.ProductId = t2.Id
     LEFT OUTER JOIN [ProductImage] t3 on t1.ProductId = t3.ProductId  and t3.IsMain=1
@@ -1579,10 +1579,10 @@ BEGIN
         UserId,
         t1.cart_id_token,
         t1.CurrencyCode,
-		t3.ImagePath MainImagePath
+        t3.ImagePath MainImagePath
     FROM [Cart] t1
     LEFT OUTER JOIN [Product] t2 on t1.ProductId = t2.Id
-	LEFT OUTER JOIN [ProductImage] t3 on t1.ProductId = t3.ProductId  and t3.IsMain=1
+    LEFT OUTER JOIN [ProductImage] t3 on t1.ProductId = t3.ProductId  and t3.IsMain=1
     WHERE t1.UserId = @UserId
       AND t1.Quantity > 0;
 
@@ -1703,7 +1703,7 @@ CREATE PROCEDURE [dbo].[sp_Cart_Save]
     @TotalAmount decimal(9,2),
     @UserId int = NULL,
     @cart_id_token nvarchar(200) = NULL,
-	@CurrencyCode nvarchar(10)
+    @CurrencyCode nvarchar(10)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -1734,7 +1734,7 @@ BEGIN
     ELSE
     BEGIN
    
-		SELECT @TotalAmount =  @Quantity * @UnitPrice
+        SELECT @TotalAmount =  @Quantity * @UnitPrice
 
         INSERT INTO Cart
         (
@@ -1748,7 +1748,7 @@ BEGIN
             InsertDate,
             IsActive,
             cart_id_token,
-			CurrencyCode
+            CurrencyCode
         )
         VALUES
         (
@@ -1762,7 +1762,7 @@ BEGIN
             GETDATE(),
             1,
             @cart_id_token,
-			@CurrencyCode
+            @CurrencyCode
         );
 
         SELECT SCOPE_IDENTITY() AS CartId;
@@ -2405,23 +2405,23 @@ IF OBJECT_ID('dbo.sp_Order_CancelLastStatus', 'P') IS NOT NULL
 GO
 Create   PROCEDURE [dbo].[sp_Order_CancelLastStatus]
     @OrderId INT,
-	@UserId INT
+    @UserId INT
 AS
 BEGIN
 
-	DECLARE @LastOrderStatusId int
+    DECLARE @LastOrderStatusId int
 
-	SELECT TOP 1 
-	@LastOrderStatusId = Id
-	FROM [OrderStatus] 
-	WHERE OrderId = @OrderId
-	and Iptal =0
-	ORDER BY IslemTarihi DESC;
+    SELECT TOP 1 
+    @LastOrderStatusId = Id
+    FROM [OrderStatus] 
+    WHERE OrderId = @OrderId
+    and Iptal =0
+    ORDER BY IslemTarihi DESC;
 
     UPDATE OrderStatus 
-	SET Iptal=1 , IptalTarihi = GETDATE(), IptalUserid =@UserId
-	WHERE Id = @LastOrderStatusId
-	 
+    SET Iptal=1 , IptalTarihi = GETDATE(), IptalUserid =@UserId
+    WHERE Id = @LastOrderStatusId
+     
 END
 
 
@@ -2446,13 +2446,13 @@ BEGIN
     BEGIN TRY
         BEGIN TRAN;
 
-		DECLARE @CurrencyCode nvarchar(10)
-		SELECT 
-		TOP 1 @CurrencyCode = t1.CurrencyCode
-		FROM [Cart] t1
-		WHERE t1.UserId = @UserId
-		AND t1.Quantity > 0
-		GROUP BY t1.CurrencyCode;
+        DECLARE @CurrencyCode nvarchar(10)
+        SELECT 
+        TOP 1 @CurrencyCode = t1.CurrencyCode
+        FROM [Cart] t1
+        WHERE t1.UserId = @UserId
+        AND t1.Quantity > 0
+        GROUP BY t1.CurrencyCode;
 
         DECLARE @OrderId INT;
 
@@ -2463,7 +2463,7 @@ BEGIN
             AddressId,
             OrderDate,
             CargoAmount,
-			CurrencyCode
+            CurrencyCode
         )
         VALUES
         (
@@ -2471,7 +2471,7 @@ BEGIN
             @AddressId,
             GETDATE(),
             @CargoAmount,
-			@CurrencyCode
+            @CurrencyCode
         );
 
         SET @OrderId = SCOPE_IDENTITY();
@@ -2507,21 +2507,21 @@ BEGIN
         -- 3️⃣ Cart temizleme (istersen soft yaparız)
         DELETE FROM Cart WHERE UserId = @UserId;
 
-		INSERT INTO [dbo].[OrderStatus]
+        INSERT INTO [dbo].[OrderStatus]
            ([OrderId]
            ,[StatusCode]
            ,[IslemTarihi]
            ,[IslemUserid]
-		   ,[Iptal])
-		SELECT @OrderId,10,GETDATE(),@UserId,0
+           ,[Iptal])
+        SELECT @OrderId,10,GETDATE(),@UserId,0
 
-		INSERT INTO [dbo].[OrderStatus]
+        INSERT INTO [dbo].[OrderStatus]
            ([OrderId]
            ,[StatusCode]
           ,[IslemTarihi]
            ,[IslemUserid]
-		   ,[Iptal])
-		SELECT @OrderId,20,  DATEADD(SECOND, 1, GETDATE()) ,@UserId,0
+           ,[Iptal])
+        SELECT @OrderId,20,  DATEADD(SECOND, 1, GETDATE()) ,@UserId,0
 
         COMMIT;
 
@@ -2639,33 +2639,33 @@ CREATE PROCEDURE [dbo].[sp_Order_GetDetailedInfoById]
 AS
 BEGIN
     SET NOCOUNT ON;
-	DECLARE @LastStatuAciklama nvarchar(50)
-	DECLARE @LastStatuCode int
+    DECLARE @LastStatuAciklama nvarchar(50)
+    DECLARE @LastStatuCode int
 
-		SELECT TOP 1 
-		@LastStatuAciklama =t2.Aciklama,
-		@LastStatuCode = t2.Code
-		FROM [OrderStatus] t1
-		LEFT JOIN [Status] t2 ON t1.StatusCode = t2.Code
-		WHERE t1.OrderId = @OrderId
-		and t1.Iptal =0
-		ORDER BY t1.IslemTarihi DESC;
+        SELECT TOP 1 
+        @LastStatuAciklama =t2.Aciklama,
+        @LastStatuCode = t2.Code
+        FROM [OrderStatus] t1
+        LEFT JOIN [Status] t2 ON t1.StatusCode = t2.Code
+        WHERE t1.OrderId = @OrderId
+        and t1.Iptal =0
+        ORDER BY t1.IslemTarihi DESC;
 
     -- Header
     SELECT
         oh.Id,
         oh.OrderDate,
-		@LastStatuCode AS OrderStatusCode,
+        @LastStatuCode AS OrderStatusCode,
         @LastStatuAciklama AS OrderStatus,
         oh.CargoAmount,
         oh.UserId,
-		oh.CurrencyCode,
+        oh.CurrencyCode,
         (SELECT SUM(LineTotal) FROM OrderDetail WHERE OrderId = oh.Id) AS ProductTotal,
         (SELECT SUM(LineTotal) FROM OrderDetail WHERE OrderId = oh.Id) + oh.CargoAmount AS GrandTotal,
-		oh.KargoSirketi,
-		oh.KargoyaVerilmeTarihi,
-		oh.KargoTakipNo
-	FROM OrderHeader oh 
+        oh.KargoSirketi,
+        oh.KargoyaVerilmeTarihi,
+        oh.KargoTakipNo
+    FROM OrderHeader oh 
     WHERE oh.Id = @OrderId;
 
     -- Detail
@@ -2677,47 +2677,47 @@ BEGIN
         t1.Quantity,
         t1.LineTotal,
         t1.DisplayNo,
-		t2.ImagePath 
+        t2.ImagePath 
     FROM OrderDetail t1
-	LEFT OUTER JOIN ProductImage t2 on t1.ProductId = t2.ProductId  and t2.IsMain =1
+    LEFT OUTER JOIN ProductImage t2 on t1.ProductId = t2.ProductId  and t2.IsMain =1
     WHERE OrderId = @OrderId
     ORDER BY DisplayNo;
 
-	-- Teslimat Adresi
-	SELECT 
-		Ad,
-		Soyad,
-		Telefon,
-		Mahalle,
-		Adres,
-		Ilce,
-		Il
-	FROM UserAddress 
-	WHERE Id IN (SELECT TOP 1 AddressId  FROM OrderHeader WHERE Id= @OrderId )
+    -- Teslimat Adresi
+    SELECT 
+        Ad,
+        Soyad,
+        Telefon,
+        Mahalle,
+        Adres,
+        Ilce,
+        Il
+    FROM UserAddress 
+    WHERE Id IN (SELECT TOP 1 AddressId  FROM OrderHeader WHERE Id= @OrderId )
 
-	-- Aktif Geçmiş Durum Listesi
-	SELECT [StatusCode] AS OrderStatusCode ,[IslemTarihi],t2.Aciklama,t3.FirstName + ' ' + t3.LastName AS UserNameSurname
-	FROM [OrderStatus] t1
-	LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
-	LEFT OUTER JOIN [User] t3 on t1.IslemUserid = t3.Id
-	WHERE OrderId = @OrderId 
-	AND t1.Iptal = 0
-	Order by IslemTarihi Desc
+    -- Aktif Geçmiş Durum Listesi
+    SELECT [StatusCode] AS OrderStatusCode ,[IslemTarihi],t2.Aciklama,t3.FirstName + ' ' + t3.LastName AS UserNameSurname
+    FROM [OrderStatus] t1
+    LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
+    LEFT OUTER JOIN [User] t3 on t1.IslemUserid = t3.Id
+    WHERE OrderId = @OrderId 
+    AND t1.Iptal = 0
+    Order by IslemTarihi Desc
 
-	-- History Log
-	SELECT  t1.[StatusCode] AS OrderStatusCode, t1.IslemTarihi,t2.Aciklama,t3.FirstName + ' ' + t3.LastName AS UserNameSurname
-	FROM [OrderStatus] t1
-	LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
-	LEFT OUTER JOIN [User] t3 on t1.IslemUserid = t3.Id
-	WHERE t1.OrderId = @OrderId
-	UNION ALL
-	SELECT  t1.[StatusCode] AS OrderStatusCode,t1.IptalTarihi,t2.Aciklama + ' (Statü geri alındı.)' , t3.FirstName + ' ' + t3.LastName AS UserNameSurname
-	FROM [OrderStatus] t1
-	LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
-	LEFT OUTER JOIN [User] t3 on t1.IptalUserid = t3.Id
-	WHERE t1.OrderId = @OrderId and t1.Iptal = 1
-	Order by IslemTarihi ASC
-	
+    -- History Log
+    SELECT  t1.[StatusCode] AS OrderStatusCode, t1.IslemTarihi,t2.Aciklama,t3.FirstName + ' ' + t3.LastName AS UserNameSurname
+    FROM [OrderStatus] t1
+    LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
+    LEFT OUTER JOIN [User] t3 on t1.IslemUserid = t3.Id
+    WHERE t1.OrderId = @OrderId
+    UNION ALL
+    SELECT  t1.[StatusCode] AS OrderStatusCode,t1.IptalTarihi,t2.Aciklama + ' (Statü geri alındı.)' , t3.FirstName + ' ' + t3.LastName AS UserNameSurname
+    FROM [OrderStatus] t1
+    LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
+    LEFT OUTER JOIN [User] t3 on t1.IptalUserid = t3.Id
+    WHERE t1.OrderId = @OrderId and t1.Iptal = 1
+    Order by IslemTarihi ASC
+    
 
 
 END
@@ -2743,7 +2743,7 @@ BEGIN
     SELECT TOP 1 @CurrentStatus = StatusCode
     FROM OrderStatus
     WHERE OrderId = @OrderId
-	and Iptal = 0
+    and Iptal = 0
     ORDER BY IslemTarihi DESC;
 
     -- Eğer hiç statü yoksa çık
@@ -2776,18 +2776,18 @@ CREATE   PROCEDURE [dbo].[sp_Order_GetStatusLogHistory]
 BEGIN
     SET NOCOUNT ON;
 
-	SELECT  t1.[StatusCode] AS OrderStatusCode, t1.IslemTarihi,t2.Aciklama,t3.FirstName + ' ' + t3.LastName AS UserNameSurname
-	FROM [OrderStatus] t1
-	LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
-	LEFT OUTER JOIN [User] t3 on t1.IslemUserid = t3.Id
-	WHERE t1.OrderId = @OrderId
-	UNION ALL
-	SELECT  t1.[StatusCode] AS OrderStatusCode,t1.IptalTarihi,t2.Aciklama + ' (Statü geri alındı.)' , t3.FirstName + ' ' + t3.LastName AS UserNameSurname
-	FROM [OrderStatus] t1
-	LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
-	LEFT OUTER JOIN [User] t3 on t1.IptalUserid = t3.Id
-	WHERE t1.OrderId = @OrderId and t1.Iptal = 1
-	Order by IslemTarihi ASC
+    SELECT  t1.[StatusCode] AS OrderStatusCode, t1.IslemTarihi,t2.Aciklama,t3.FirstName + ' ' + t3.LastName AS UserNameSurname
+    FROM [OrderStatus] t1
+    LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
+    LEFT OUTER JOIN [User] t3 on t1.IslemUserid = t3.Id
+    WHERE t1.OrderId = @OrderId
+    UNION ALL
+    SELECT  t1.[StatusCode] AS OrderStatusCode,t1.IptalTarihi,t2.Aciklama + ' (Statü geri alındı.)' , t3.FirstName + ' ' + t3.LastName AS UserNameSurname
+    FROM [OrderStatus] t1
+    LEFT OUTER JOIN [Status] t2 on t1.StatusCode = t2.Code
+    LEFT OUTER JOIN [User] t3 on t1.IptalUserid = t3.Id
+    WHERE t1.OrderId = @OrderId and t1.Iptal = 1
+    Order by IslemTarihi ASC
 END
 
 
@@ -2804,49 +2804,49 @@ CREATE   PROCEDURE [dbo].[sp_Order_GetStatusProcess]
 BEGIN
     SET NOCOUNT ON;
 
-		DECLARE @IptalStatusCode INT = 80;
+        DECLARE @IptalStatusCode INT = 80;
 
-		WITH StatusCTE AS (
-			SELECT
-				Faz =
-					CASE
-						WHEN t1.Code <> @IptalStatusCode AND t2.Id IS NOT NULL THEN '01_COMPLETED'
-						WHEN t1.Code = @IptalStatusCode AND t2.Id IS NOT NULL THEN '02_CANCELLED'
-						WHEN t1.Code <> @IptalStatusCode AND t2.Id IS  NULL THEN '03_NOTCOMPLETED'
-						WHEN t1.Code = @IptalStatusCode AND t2.Id IS  NULL THEN 'NA'
-					END,
-				t1.Code,
-				t1.Aciklama,
-				t2.Id as OrderStatusId,
-				ISNULL(t2.IslemTarihi,'') IslemTarihi,
-				ISNULL(t3.FirstName + ' ' + t3.LastName,'') AS UserNameSurname
-			FROM [Status] t1
-			LEFT JOIN OrderStatus t2  
-				ON t1.Code = t2.StatusCode  
-			   AND t2.OrderId = @OrderId  
-			   AND t2.Iptal = 0
-			LEFT OUTER JOIN [User] t3 
-				ON t2.IslemUserid = t3.Id
-		)
-		SELECT 
-			  CONVERT(int,ROW_NUMBER() OVER (ORDER BY Faz, Code)) AS RowOrderNo,  
-				*,
-			   CASE 
-				   WHEN IslemTarihi IS NOT NULL 
-						AND IslemTarihi = (SELECT MAX(IslemTarihi) 
-										   FROM StatusCTE 
-										   WHERE IslemTarihi IS NOT NULL)
-				   THEN Convert(bit,'True')
-				   ELSE Convert(bit,'False')
-			   END AS IsLast,
-			   CASE
-				WHEN OrderStatusId IS NOT NULL
-								   THEN Convert(bit,'True')
-								   ELSE Convert(bit,'False')
-								   END AS IsCompleted
-		FROM StatusCTE
-		WHERE Faz <> 'NA'
-		ORDER BY Faz, Code;
+        WITH StatusCTE AS (
+            SELECT
+                Faz =
+                    CASE
+                        WHEN t1.Code <> @IptalStatusCode AND t2.Id IS NOT NULL THEN '01_COMPLETED'
+                        WHEN t1.Code = @IptalStatusCode AND t2.Id IS NOT NULL THEN '02_CANCELLED'
+                        WHEN t1.Code <> @IptalStatusCode AND t2.Id IS  NULL THEN '03_NOTCOMPLETED'
+                        WHEN t1.Code = @IptalStatusCode AND t2.Id IS  NULL THEN 'NA'
+                    END,
+                t1.Code,
+                t1.Aciklama,
+                t2.Id as OrderStatusId,
+                ISNULL(t2.IslemTarihi,'') IslemTarihi,
+                ISNULL(t3.FirstName + ' ' + t3.LastName,'') AS UserNameSurname
+            FROM [Status] t1
+            LEFT JOIN OrderStatus t2  
+                ON t1.Code = t2.StatusCode  
+               AND t2.OrderId = @OrderId  
+               AND t2.Iptal = 0
+            LEFT OUTER JOIN [User] t3 
+                ON t2.IslemUserid = t3.Id
+        )
+        SELECT 
+              CONVERT(int,ROW_NUMBER() OVER (ORDER BY Faz, Code)) AS RowOrderNo,  
+                *,
+               CASE 
+                   WHEN IslemTarihi IS NOT NULL 
+                        AND IslemTarihi = (SELECT MAX(IslemTarihi) 
+                                           FROM StatusCTE 
+                                           WHERE IslemTarihi IS NOT NULL)
+                   THEN Convert(bit,'True')
+                   ELSE Convert(bit,'False')
+               END AS IsLast,
+               CASE
+                WHEN OrderStatusId IS NOT NULL
+                                   THEN Convert(bit,'True')
+                                   ELSE Convert(bit,'False')
+                                   END AS IsCompleted
+        FROM StatusCTE
+        WHERE Faz <> 'NA'
+        ORDER BY Faz, Code;
 
 END
 
@@ -2867,16 +2867,16 @@ SELECT
     oh.Id,
     oh.OrderDate,
     oh.CargoAmount,
-	ISNULL(SUM(od.LineTotal),0) AS ProductTotal,
-	ISNULL(CargoAmount,0) AS CargoAmount,
-	ISNULL(SUM(od.LineTotal),0) + oh.CargoAmount AS GrandTotal,
-	os.LastStatusCode AS OrderStatusCode,
+    ISNULL(SUM(od.LineTotal),0) AS ProductTotal,
+    ISNULL(CargoAmount,0) AS CargoAmount,
+    ISNULL(SUM(od.LineTotal),0) + oh.CargoAmount AS GrandTotal,
+    os.LastStatusCode AS OrderStatusCode,
     os.LastStatusAciklama AS OrderStatus,
-	oh.UserId,
-	oh.CurrencyCode,
-	us.FirstName,
-	us.LastName,
-	us.Email
+    oh.UserId,
+    oh.CurrencyCode,
+    us.FirstName,
+    us.LastName,
+    us.Email
 FROM OrderHeader oh
 LEFT OUTER JOIN OrderDetail od ON oh.Id = od.OrderId
 LEFT OUTER JOIN [User] us ON oh.UserId = us.Id
@@ -2886,7 +2886,7 @@ OUTER APPLY (
     FROM OrderStatus t1
     LEFT JOIN Status t2 ON t1.StatusCode = t2.Code
     WHERE t1.OrderId = oh.Id
-	AND Iptal = 0
+    AND Iptal = 0
     ORDER BY t1.IslemTarihi DESC
 ) os
 
@@ -2895,13 +2895,13 @@ GROUP BY
     oh.Id,
     oh.OrderDate,
     oh.CargoAmount,
-	os.LastStatusCode,
+    os.LastStatusCode,
     os.LastStatusAciklama,
-	oh.UserId,
-	oh.CurrencyCode,
-	us.FirstName,
-	us.LastName,
-	us.Email
+    oh.UserId,
+    oh.CurrencyCode,
+    us.FirstName,
+    us.LastName,
+    us.Email
 
 ORDER BY oh.OrderDate DESC;
 
@@ -2935,10 +2935,10 @@ SELECT
     oh.Id,
     oh.OrderDate,
     oh.CargoAmount,
-	ISNULL(SUM(od.LineTotal),0) AS ProductTotal,
-	ISNULL(CargoAmount,0) AS CargoAmount,
-	ISNULL(SUM(od.LineTotal),0) + oh.CargoAmount AS GrandTotal,
-	os.LastStatusCode AS OrderStatusCode,
+    ISNULL(SUM(od.LineTotal),0) AS ProductTotal,
+    ISNULL(CargoAmount,0) AS CargoAmount,
+    ISNULL(SUM(od.LineTotal),0) + oh.CargoAmount AS GrandTotal,
+    os.LastStatusCode AS OrderStatusCode,
     os.LastStatusAciklama AS OrderStatus
 FROM OrderHeader oh
 LEFT OUTER JOIN OrderDetail od ON oh.Id = od.OrderId
@@ -2948,7 +2948,7 @@ OUTER APPLY (
     FROM OrderStatus t1
     LEFT JOIN Status t2 ON t1.StatusCode = t2.Code
     WHERE t1.OrderId = oh.Id
-	and t1.Iptal =0
+    and t1.Iptal =0
     ORDER BY t1.IslemTarihi DESC
 ) os
 
@@ -2958,9 +2958,9 @@ GROUP BY
     oh.Id,
     oh.OrderDate,
     oh.CargoAmount,
-	os.LastStatusCode,
+    os.LastStatusCode,
     os.LastStatusAciklama
-	
+    
 
 ORDER BY oh.OrderDate DESC;
 
@@ -2987,7 +2987,7 @@ GO
 CREATE   PROCEDURE [dbo].[sp_Order_UpdateStatus]
     @OrderId INT,
     @NewStatusCode INT,
-	@UserId INT
+    @UserId INT
 AS
 BEGIN
 
@@ -2997,20 +2997,20 @@ BEGIN
     SELECT TOP 1 @CurrentStatus = StatusCode
     FROM OrderStatus
     WHERE OrderId = @OrderId
-	and Iptal = 0
+    and Iptal = 0
     ORDER BY IslemTarihi DESC;
 
-	IF (@CurrentStatus = @NewStatusCode )
-	BEGIN
-	   SELECT 0 AS RESULT
-	END
-	ELSE
-	BEGIN
-	    INSERT INTO OrderStatus (OrderId, StatusCode, IslemTarihi,IslemUserid,Iptal)
-		VALUES (@OrderId, @NewStatusCode, GETDATE(),@UserId,0)
+    IF (@CurrentStatus = @NewStatusCode )
+    BEGIN
+       SELECT 0 AS RESULT
+    END
+    ELSE
+    BEGIN
+        INSERT INTO OrderStatus (OrderId, StatusCode, IslemTarihi,IslemUserid,Iptal)
+        VALUES (@OrderId, @NewStatusCode, GETDATE(),@UserId,0)
 
-		SELECT 1 AS RESULT
-	END
+        SELECT 1 AS RESULT
+    END
 
 END
 
