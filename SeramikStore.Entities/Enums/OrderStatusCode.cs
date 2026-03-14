@@ -8,11 +8,11 @@ namespace SeramikStore.Entities.Enums
 {
     public enum OrderStatusCode
     {
-        SiparisOluþturdu = 10,
+        SiparisOlusturdu = 10,
         OdemeBekleniyor =20,
-        OdemeAlýndý =30,
+        OdemeAlindi =30,
         SiparisOnaylandi=40,
-        SiparisHazýrlanýyor=50,
+        SiparisHazirlaniyor=50,
         KargoyaVerildi=60,
         TeslimEdildi =70,
         Iptal=80

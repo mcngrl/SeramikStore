@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SeramikStore.Contracts.Order;
+using SeramikStore.Entities.Enums;
 using System.Data;
 using System.Reflection.Metadata.Ecma335;
 
@@ -124,6 +125,8 @@ namespace SeramikStore.Services
                     order.StatusHistory = GetStatusHistory(orderId);
                     //NEXT STATUSF
                     order.NextStatusesForUpdate = GetNextStatusesForUpdate(orderId);
+
+                    order.ThisOrderCanBeCanceledByCustomer = CanCancel((OrderStatusCode)order.OrderStatusCode);
                 }
             }
 
@@ -333,6 +336,15 @@ namespace SeramikStore.Services
                 cmd.ExecuteNonQuery();
             }
         }
+
+        public bool CanCancel(OrderStatusCode status)
+        {
+            return status == OrderStatusCode.SiparisOlusturdu
+                || status == OrderStatusCode.OdemeBekleniyor
+                || status == OrderStatusCode.OdemeAlindi
+                || status == OrderStatusCode.SiparisOnaylandi;
+        }
+
     }
 }
 

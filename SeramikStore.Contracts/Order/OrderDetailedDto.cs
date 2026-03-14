@@ -26,6 +26,8 @@ namespace SeramikStore.Contracts.Order
 
         public List<StatusOptionDto> NextStatusesForUpdate { get; set; } = new();
 
+        public bool ThisOrderCanBeCanceledByCustomer { get; set; }
+
     }
 }
 
