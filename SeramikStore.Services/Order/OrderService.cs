@@ -152,6 +152,8 @@ namespace SeramikStore.Services
                     ProductTotal = reader.GetDecimal(reader.GetOrdinal("ProductTotal")),
                     CargoAmount = reader.GetDecimal(reader.GetOrdinal("CargoAmount")),
                     GrandTotal = reader.GetDecimal(reader.GetOrdinal("GrandTotal")),
+                    CurrencyCode = reader["CurrencyCode"]?.ToString(),
+
                 });
             }
 

@@ -100,34 +100,34 @@
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
-                                    <i class="fas fa-id-card"></i> Kullanıcı Bilgilerim
+                                    <i class="fas fa-id-card"></i>@C["Kullanıcı Bilgilerim"]
                                 </a>
                             </li>
 
                             <li>
                                 <a class="dropdown-item" asp-controller="Account" asp-action="MyProfile">
-                                    <i class="fas fa-id-card"></i> MyProfile
+                                    <i class="fas fa-id-card"></i>@C["MyProfile"]
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" asp-controller="UserAddress" asp-action="Index">
-                                    <i class="fas fa-id-card"></i> Adreslerim
+                                    <i class="fas fa-id-card"></i>@C["Adreslerim"]
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" asp-controller="Order" asp-action="MyOrders">
-                                    <i class="fas fa-box"></i> Siparişlerim
+                                <a class="dropdown-item" asp-controller="Order" asp-action="OrderList">
+                                    <i class="fas fa-box"></i>@C["Siparişlerim"]
                                 </a>
                             </li>
                             <li>
                                 <a class="dropdown-item" asp-controller="Cart" asp-action="Summary">
-                                    <i class="fas fa-shopping-cart"></i> Sepetim  @await Component.InvokeAsync("Cart")
+                                    <i class="fas fa-shopping-cart"></i>@C["Sepetim"] @await Component.InvokeAsync("Cart")
                                 </a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item text-danger" asp-controller="Account" asp-action="Logout">
-                                    <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+                                    <i class="fas fa-sign-out-alt"></i>@C["Çıkış Yap"]
                                 </a>
                             </li>
                         </ul>

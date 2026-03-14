@@ -28,7 +28,7 @@ namespace SeramikStore.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult MyOrders()
+        public IActionResult OrderList()
         {
 
             int userId = (int)HttpContext.Session.GetInt32("userId");
