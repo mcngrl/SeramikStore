@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SeramikStore.Contracts.Order;
+using SeramikStore.Entities.Enums;
 using SeramikStore.Services;
 using SeramikStore.Web.Options;
 using SeramikStore.Web.ViewModels;
@@ -253,13 +254,7 @@ namespace SeramikStore.Web.Controllers
             return RedirectToAction("PaymentInfo");
         }
 
-        //public IActionResult UpdateStatus(int id)
-        //{
-        //    var statuses = _orderService.GetNextStatusesForUpdate(id);
 
-        //    ViewBag.OrderId = id;
-        //    return View(statuses);
-        //}
 
         [HttpPost]
         public IActionResult UpdateStatus(int orderId, int selectedStatus)
@@ -277,8 +272,41 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("OrderEditForAdmin", new { id = orderId });
             }
 
+        }
+
+        [HttpPost]
+        public IActionResult CancelMyOrder(int orderId)
+        {
+           
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+
+            var order = _orderService.GetDetailedOrderById(orderId);
+
+            if (order == null)
+                return RedirectToAction("Index", "Home");
+
+            if (order.UserId != userId)
+                return RedirectToAction("Index", "Home");
+
+
+            var rRes = _orderService.UpdateOrderStatus(orderId, (int)OrderStatusCode.Iptal, (int)userId);
+            if (rRes.IsSuccess)
+            {
+                TempData["Success"] = "Durum güncellendi.";
+                return RedirectToAction("OrderList", new { highlightId = orderId });
+            }
+            else
+            {
+                TempData["Info"] = "Herhangi bir değişiklik yapılmadı.";
+                return RedirectToAction("OrderInfo", new { id = orderId });
+            }
 
         }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
