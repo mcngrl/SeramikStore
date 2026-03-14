@@ -291,19 +291,26 @@ namespace SeramikStore.Web.Controllers
             if (order.UserId != userId)
                 return RedirectToAction("Index", "Home");
 
+            var cancancel = _orderService.CanCancel((OrderStatusCode)order.OrderStatusCode);
 
-            var rRes = _orderService.UpdateOrderStatus(orderId, (int)OrderStatusCode.Iptal, (int)userId);
-            if (rRes.IsSuccess)
-            {
-                TempData["Success"] = "Durum güncellendi.";
-                return RedirectToAction("OrderList", new { highlightId = orderId });
-            }
-            else
+            if (cancancel == false)
             {
                 TempData["Info"] = "Herhangi bir değişiklik yapılmadı.";
                 return RedirectToAction("OrderInfo", new { id = orderId });
             }
 
+
+            var rRes = _orderService.UpdateOrderStatus(orderId, (int)OrderStatusCode.Iptal, (int)userId);
+            if (rRes.IsSuccess)
+            {
+                TempData["Success"] = "Sipariş İptal Edildi";
+            }
+            else
+            {
+                TempData["Info"] = "Sipariş İptal Edilemez.";
+               
+            }
+            return RedirectToAction("OrderInfo", new { id = orderId });
         }
 
 

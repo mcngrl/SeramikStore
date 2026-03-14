@@ -1,5 +1,6 @@
 using SeramikStore.Contracts.Order;
 using SeramikStore.Entities;
+using SeramikStore.Entities.Enums;
 using SeramikStore.Services.DTOs;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,10 @@ namespace SeramikStore.Services
         void CancelLastStatus(CancelLastStatusRequestDto request);
         List<OrderStatusProcessDto> GetStatusProcess(int orderId);
         List<OrderStatusHistoryDto> GetStatusHistory(int orderId);
-        
+
+        bool CanCancel(OrderStatusCode status);
+
+
 
     }
 }

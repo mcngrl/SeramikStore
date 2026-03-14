@@ -256,11 +256,11 @@
                         </div>
 
 
-                    @if (Model.OrderStatusCode != (int)OrderStatusCode.Iptal)
+                    @if (Model.ThisOrderCanBeCanceledByCustomer)
                     {
                         <hr />
 
-                        <form id="cancelOrderForm" asp-action="UpdateStatus" method="post">
+                        <form id="cancelOrderForm" asp-action="CancelMyOrder" method="post">
                             <input type="hidden" name="orderId" value="@Model.Id" />
 
                             <button type="button"
