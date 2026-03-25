@@ -103,6 +103,10 @@ public class ReturnService : IReturnService
                 {
                     list.Add(new ReturnCreateItemDto
                     {
+                        OrderId = (int)reader["OrderId"],
+                        OrderDetailId = (int)reader["OrderDetailId"],
+                        ProductId = (int)reader["ProductId"],
+
                         ProductCode = reader["ProductCode"]?.ToString(),
                         ProductName = reader["ProductName"]?.ToString(),
                         ProductDesc = reader["ProductDesc"]?.ToString(),

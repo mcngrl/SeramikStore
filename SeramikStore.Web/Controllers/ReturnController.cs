@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -38,7 +38,10 @@ namespace SeramikStore.Web.Controllers
 
             int userId = (int)HttpContext.Session.GetInt32("userId");
             var returns = _returnService.GetReturnsByOrderId(id,userId);
-            return View(returns);
+            var m = new ReturnList();
+            m.OrderId = id;
+            m.Headers = returns;
+            return View(m);
         }
 
 
@@ -46,8 +49,10 @@ namespace SeramikStore.Web.Controllers
         public IActionResult NewReturn(int id)
         { 
             int userId = (int)HttpContext.Session.GetInt32("userId");
-            var orders= _returnService.GetOrderForNewReturn(id, userId);
-            return View(orders);
+            var m = new ReturnCreateViewDto();
+            m.OrderId = id;
+            m.Items = _returnService.GetOrderForNewReturn(id, userId);
+            return View(m);
         }
 
         [HttpPost]

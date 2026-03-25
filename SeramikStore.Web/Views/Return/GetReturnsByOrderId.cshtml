@@ -1,5 +1,8 @@
 ﻿@using SeramikStore.Contracts.Return
-@model List<ReturnHeaderDto>
+@model ReturnList;
+@{
+    List<ReturnHeaderDto> TheList = Model.Headers;
+}
 
 <div class="container mt-4">
 
@@ -14,13 +17,13 @@
             <div class="d-grid gap-2 mb-4">
                 <a asp-controller="Return"
                    asp-action="NewReturn"
-                   asp-route-Id="@Model[0].OrderId"
+                   asp-route-Id="@Model.OrderId"
                    class="btn btn-primary btn-sm">
                    Yeni İade Talebi
                 </a>
             </div>
 
-            @if (!Model.Any())
+            @if (TheList.Count() == 0)
             {
                 <div class="alert alert-info">
                     Bu sipariş için iade talebi bulunmamaktadır.
@@ -28,7 +31,7 @@
             }
             else
             {
-                @foreach (var ret in Model)
+                @foreach (var ret in TheList)
                 {
                     <div class="border rounded-3 p-3 mb-4 bg-light">
 
