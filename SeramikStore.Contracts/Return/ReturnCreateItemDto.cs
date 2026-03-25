@@ -3,6 +3,9 @@ namespace SeramikStore.Contracts.Return
 {
     public class ReturnCreateItemDto
     {
+        public int OrderId { get; set; }
+        public int OrderDetailId { get; set; }
+        public int ProductId { get; set; }
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
         public string ProductDesc { get; set; }
@@ -19,6 +22,7 @@ namespace SeramikStore.Contracts.Return
         public string CurrencyCode { get; set; }
 
         // kullanıcı girecek
-        public int SelectedReturnQuantity { get; set; }
+        public int ReturnQuantity { get; set; }
+
     }
 }
