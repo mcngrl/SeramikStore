@@ -91,6 +91,28 @@ namespace SeramikStore.Web.Controllers
             return View(order);
         }
 
+        [HttpGet]
+        public IActionResult OrderInfoN(int id)
+        {
+            var userId = HttpContext.Session.GetInt32("userId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+
+            var order = _orderService.GetDetailedOrderById(id);
+
+            if (order == null)
+                return RedirectToAction("Index", "Home");
+
+            if (order.UserId != userId)
+                return RedirectToAction("Index", "Home");
+
+
+
+            return View(order);
+        }
+
+
 
         [HttpPost]
         public IActionResult CreateOrder(int AddressId, decimal CargoAmount)
