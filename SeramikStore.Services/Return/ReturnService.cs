@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using SeramikStore.Contracts.Return;
 using SeramikStore.Services;
 using System.Data;
@@ -13,7 +14,7 @@ public class ReturnService : IReturnService
         _connectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
-    public List<ReturnHeaderDto> GetReturnsByOrderId(int orderId)
+    public List<ReturnHeaderDto> GetReturnsByOrderId(int orderId, int userId)
     {
         var headers = new List<ReturnHeaderDto>();
         var details = new List<ReturnDetailDto>();
@@ -23,6 +24,7 @@ public class ReturnService : IReturnService
         {
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@OrderId", orderId);
+            cmd.Parameters.AddWithValue("@UserId", userId);
 
             conn.Open();
 
@@ -81,4 +83,82 @@ public class ReturnService : IReturnService
 
         return headers;
     }
+
+    public List<ReturnCreateItemDto> GetOrderForNewReturn(int orderId, int userId)
+    {
+        var list = new List<ReturnCreateItemDto>();
+
+        using (var conn = new SqlConnection(_connectionString))
+        using (var cmd = new SqlCommand("sp_Order_GetForNewReturn", conn))
+        {
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@OrderId", orderId);
+            cmd.Parameters.AddWithValue("@UserId", userId);
+
+            conn.Open();
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    list.Add(new ReturnCreateItemDto
+                    {
+                        ProductCode = reader["ProductCode"]?.ToString(),
+                        ProductName = reader["ProductName"]?.ToString(),
+                        ProductDesc = reader["ProductDesc"]?.ToString(),
+                        UnitPrice = (decimal)reader["UnitPrice"],
+                        Quantity = (int)reader["Quantity"],
+                        LineTotal = (decimal)reader["LineTotal"],
+                        DisplayNo = (int)reader["DisplayNo"],
+                        ImagePath = reader["ImagePath"]?.ToString(),
+
+                        LineReturnQuantityTotal = (int)reader["LineReturnQuantityTotal"],
+                        LineReturnPriceTotal = (decimal)reader["LineReturnPriceTotal"],
+                        AvaliableQuatityForReturn = (int)reader["AvaliableQuatityForReturn"],
+                        CurrencyCode = reader["CurrencyCode"]?.ToString()
+                    });
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public (int Result, string Message) CreateReturn(ReturnCreateDto model)
+    {
+        using var conn = new SqlConnection(_connectionString);
+        using var cmd = new SqlCommand("sp_Return_Create", conn);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.AddWithValue("@OrderId", model.OrderId);
+        cmd.Parameters.AddWithValue("@UserId", model.UserId);
+        cmd.Parameters.AddWithValue("@Reason", model.Reason ?? (object)DBNull.Value);
+
+        // JSON serialize
+        var jsonItems = JsonConvert.SerializeObject(
+            model.Items.Select(x => new
+            {
+                x.OrderDetailId,
+                x.ReturnQuantity
+            })
+        );
+
+        cmd.Parameters.AddWithValue("@Items", jsonItems);
+
+        conn.Open();
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            int result = reader.GetInt32(reader.GetOrdinal("Result"));
+            string message = reader["Message"]?.ToString();
+
+            return (result, message);
+        }
+
+        return (-99, "Bilinmeyen hata");
+    }
+
 }
