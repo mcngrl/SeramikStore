@@ -13,6 +13,12 @@ namespace SeramikStore.Services
 {
     public interface IReturnService
     {
-        List<ReturnHeaderDto> GetReturnsByOrderId(int orderId);
+        List<ReturnHeaderDto> GetReturnsByOrderId(int orderId, int userId);
+
+        List<ReturnCreateItemDto> GetOrderForNewReturn(int orderId, int userId);
+
+ 
+       (int Result, string Message) CreateReturn(ReturnCreateDto model);
+        
     }
 }

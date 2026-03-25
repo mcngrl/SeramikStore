@@ -306,4 +306,7 @@
   <data name="Sipariş Durumu" xml:space="preserve">
     <value>Order Status</value>
   </data>
+  <data name="İade Taleplerim" xml:space="preserve">
+    <value>My Return Requests</value>
+  </data>
 </root>

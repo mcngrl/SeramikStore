@@ -306,4 +306,7 @@
   <data name="Sipariş Durumu" xml:space="preserve">
     <value>Sipariş Durumu</value>
   </data>
+  <data name="İade Taleplerim" xml:space="preserve">
+    <value>İade Taleplerim</value>
+  </data>
 </root>

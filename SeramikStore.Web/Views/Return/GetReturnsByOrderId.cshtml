@@ -1,0 +1,97 @@
+﻿@using SeramikStore.Contracts.Return
+@model List<ReturnHeaderDto>
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h5 class="mb-4">
+                <i class="fa-solid fa-rotate-left me-2"></i>
+                İade Talepleri
+            </h5>
+
+            <div class="d-grid gap-2 mb-4">
+                <a asp-controller="Return"
+                   asp-action="NewReturn"
+                   asp-route-Id="@Model[0].OrderId"
+                   class="btn btn-primary btn-sm">
+                   Yeni İade Talebi
+                </a>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">
+                    Bu sipariş için iade talebi bulunmamaktadır.
+                </div>
+            }
+            else
+            {
+                @foreach (var ret in Model)
+                {
+                    <div class="border rounded-3 p-3 mb-4 bg-light">
+
+                        <!-- HEADER -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <strong>İade No:</strong> #@ret.Id <br />
+                                <small class="text-muted">
+                                    @ret.ReturnRequestDate.ToString("dd.MM.yyyy HH:mm")
+                                </small>
+                            </div>
+
+                            <span class="badge bg-warning text-dark">
+                                İade Talebi
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong>İade Sebebi:</strong>
+                            <div class="text-muted">@ret.Reason</div>
+                        </div>
+
+                        <!-- DETAIL -->
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Ürün</th>
+                                        <th class="text-center">İade Adet</th>
+                                        <th class="text-end">Birim Fiyat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ret.Details)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="fw-semibold">
+                                                    @item.ProductName
+                                                </div>
+                                                <div class="text-muted small">
+                                                    @item.ProductCode
+                                                </div>
+                                            </td>
+
+                                            <td class="text-center">
+                                                @item.ReturnQuantity
+                                            </td>
+
+                                            <td class="text-end">
+                                                @item.ReturnUnitPrice.ToString("N2")
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+
+</div>

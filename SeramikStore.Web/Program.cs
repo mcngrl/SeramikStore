@@ -74,6 +74,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserAddressService, UserAddressService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPotansiyelService, PotansiyelService>();
+builder.Services.AddScoped<IReturnService, ReturnService>();
+
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings"));
 
