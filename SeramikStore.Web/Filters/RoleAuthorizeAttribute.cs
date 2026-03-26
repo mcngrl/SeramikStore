@@ -16,8 +16,8 @@ namespace SeramikStore.Web.Filters
         {
             var session = context.HttpContext.Session;
 
-            var userId = session.GetInt32("userId");
-            var userRole = session.GetString("role");
+            var userId = session.GetInt32("session_UserId");
+            var userRole = session.GetString("session_RoleName");
 
             // Login değilse
             

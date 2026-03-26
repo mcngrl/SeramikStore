@@ -32,7 +32,7 @@ namespace SeramikStore.Web.Controllers
         public IActionResult OrderList()
         {
 
-            int userId = (int)HttpContext.Session.GetInt32("userId");
+            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
             var orders = _orderService.GetOrdersByUserId(userId);
             return View(orders);
         }
@@ -40,7 +40,7 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult CustomerOrders()
         {
-            var role = HttpContext.Session.GetString("role");
+            var role = HttpContext.Session.GetString("session_RoleName");
 
             if (role != "Admin" )
                 return RedirectToAction("Index", "Home");
@@ -53,13 +53,13 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult OrderEditForAdmin(int id)
         {
-            var role = HttpContext.Session.GetString("role");
+            var role = HttpContext.Session.GetString("session_RoleName");
 
             if (role != "Admin")
                 RedirectToAction("Index", "Home");
 
             {
-                var userId = HttpContext.Session.GetInt32("userId");
+                var userId = HttpContext.Session.GetInt32("session_UserId");
 
                 var order = _orderService.GetDetailedOrderById(id);
 
@@ -73,7 +73,7 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult OrderInfo(int id)
         {
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
 
             if (userId is null)
                 return RedirectToAction("Index", "Home");
@@ -94,7 +94,7 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult OrderInfoN(int id)
         {
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
 
             if (userId is null)
                 return RedirectToAction("Index", "Home");
@@ -117,7 +117,7 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult CreateOrder(int AddressId, decimal CargoAmount)
         {
-            int userId = (int)HttpContext.Session.GetInt32("userId");
+            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
 
             // 1️⃣ DTO hazırla
             OrderCreateDto orderInfo = new OrderCreateDto
@@ -138,7 +138,7 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult PaymentInfo()
         {
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
             var cartResult = _cartService.CartListByUserId(userId.Value);
 
             if (cartResult.Summary == null)
@@ -206,7 +206,7 @@ namespace SeramikStore.Web.Controllers
         {
             //POST içinde asla return View(...) kullanma.
 
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
 
             var cartResult = _cartService.CartListByUserId(userId.Value);
             var addresses = _userAddressService.GetByUserId(userId.Value);
@@ -281,7 +281,7 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult UpdateStatus(int orderId, int selectedStatus)
         {
-            int userId = (int)HttpContext.Session.GetInt32("userId");
+            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
             var rRes = _orderService.UpdateOrderStatus(orderId, selectedStatus, userId);
             if (rRes.IsSuccess)
             {
@@ -300,7 +300,7 @@ namespace SeramikStore.Web.Controllers
         public IActionResult CancelMyOrder(int orderId)
         {
            
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
 
             if (userId is null)
                 return RedirectToAction("Index", "Home");
@@ -341,7 +341,7 @@ namespace SeramikStore.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CancelLastStatus(int orderId)
         {
-            int userId = (int)HttpContext.Session.GetInt32("userId");
+            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
 
             _orderService.CancelLastStatus(new CancelLastStatusRequestDto
             {

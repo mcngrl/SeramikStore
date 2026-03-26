@@ -130,7 +130,7 @@ app.MapControllerRoute(
 
 app.Use(async (context, next) =>
 {
-    if (!context.Session.Keys.Contains("userId"))
+    if (!context.Session.Keys.Contains("session_UserId"))
     {
         if (context.Request.Cookies.TryGetValue("remember_me", out var token))
         {
@@ -140,9 +140,11 @@ app.Use(async (context, next) =>
 
             if (user != null && user.RememberMeExpire > DateTime.UtcNow)
             {
-                context.Session.SetInt32("userId", user.Id);
-                context.Session.SetString("userName", user.Email);
-                context.Session.SetString("role", user.RoleName);
+                context.Session.SetInt32("session_UserId", user.Id);
+                context.Session.SetString("session_UserFullName", user.FullName);
+                context.Session.SetString("session_RoleName", user.RoleName);
+                context.Session.SetString("session_Email", user.Email);
+                context.Session.SetString("session_Avatar", user.Avatar);
             }
         }
     }

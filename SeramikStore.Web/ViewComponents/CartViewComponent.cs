@@ -19,7 +19,7 @@ namespace SeramikStore.Web.ViewComponents
             int count = 0;
 
             // ✅ LOGIN OLMUŞ KULLANICI
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
             if (userId.HasValue && userId.Value > 0)
             {
 

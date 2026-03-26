@@ -34,7 +34,7 @@ namespace SeramikStore.Web.Controllers
         }
         private CartResultDto GetCurrentCart()
         {
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
             CartResultDto cartResult;
 
             if (userId.HasValue)
@@ -85,7 +85,7 @@ namespace SeramikStore.Web.Controllers
             if (cart == null)
                 return RedirectToAction("Summary");
 
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
 
             if (userId.HasValue)
             {
@@ -113,7 +113,7 @@ namespace SeramikStore.Web.Controllers
             if (dbCart == null)
                 return RedirectToAction("Summary");
 
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
             if (userId.HasValue)
             {
                 if (dbCart.UserId != userId.Value)
@@ -145,7 +145,7 @@ namespace SeramikStore.Web.Controllers
             if (cart == null)
                 return RedirectToAction("Summary");
 
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
 
             if (userId.HasValue)
             {
@@ -172,7 +172,7 @@ namespace SeramikStore.Web.Controllers
             if (cart == null)
                 return RedirectToAction("Summary");
 
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
 
             if (userId.HasValue)
             {
@@ -212,7 +212,7 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("EmptyCart");
             }
 
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
             if (!userId.HasValue)
             {
                 return RedirectToAction("Login", "Account",

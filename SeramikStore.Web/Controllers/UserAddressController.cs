@@ -38,7 +38,7 @@ public class UserAddressController : Controller
 
         _service.Insert(new SeramikStore.Entities.UserAddress
         {
-            UserId = HttpContext.Session.GetInt32("userId").Value,
+            UserId = HttpContext.Session.GetInt32("session_UserId").Value,
             Ad = vm.Ad,
             Soyad = vm.Soyad,
             Telefon = vm.Telefon,
@@ -69,7 +69,7 @@ public class UserAddressController : Controller
     public IActionResult Edit(int id, string returnUrl = null)
     {
         
-        int userId = HttpContext.Session.GetInt32("userId").Value;
+        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
 
         var address = _service.GetById(id);
 
@@ -108,7 +108,7 @@ public class UserAddressController : Controller
             return View(vm);
         }
 
-        int userId = HttpContext.Session.GetInt32("userId").Value;
+        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
 
         _service.Update(new SeramikStore.Entities.UserAddress
         {
