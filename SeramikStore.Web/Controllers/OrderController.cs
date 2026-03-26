@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SeramikStore.Contracts.Order;
+using SeramikStore.Contracts.Return;
 using SeramikStore.Entities.Enums;
 using SeramikStore.Services;
 using SeramikStore.Web.Options;
@@ -18,14 +19,18 @@ namespace SeramikStore.Web.Controllers
         private readonly IUserAddressService _userAddressService;
         private readonly ICartService _cartService;
         private readonly CompanyOptions _company;
+        private readonly IReturnService _returnService;
         public OrderController(IOrderService orderService,
             IUserAddressService userAddressService,
-            ICartService cartService, IOptions<CompanyOptions> companyOptions)
+            ICartService cartService, 
+            IOptions<CompanyOptions> companyOptions,
+            IReturnService returnService)
         {
             _orderService = orderService;
             _userAddressService = userAddressService;
             _cartService = cartService;
             _company = companyOptions.Value;
+            _returnService = returnService;
         }
 
         [HttpGet]
@@ -86,9 +91,14 @@ namespace SeramikStore.Web.Controllers
             if (order.UserId != userId)
                 return RedirectToAction("Index","Home");
 
+            var returns = _returnService.GetReturnsByOrderId(id, (int)userId);
+            var m = new ReturnList();
+            m.OrderId = id;
+            m.Headers = returns;
 
+            order.returnList = m; // order nesnesine
 
-            return View(order);
+             return View(order);
         }
 
         [HttpGet]

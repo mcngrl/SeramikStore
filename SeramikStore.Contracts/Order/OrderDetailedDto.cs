@@ -1,4 +1,6 @@
 
+using SeramikStore.Contracts.Return;
+
 namespace SeramikStore.Contracts.Order
 {
     public class OrderDetailedDto
@@ -28,6 +30,7 @@ namespace SeramikStore.Contracts.Order
 
         public bool ThisOrderCanBeCanceledByCustomer { get; set; }
 
+        public ReturnList returnList { get; set; }
     }
 }
 

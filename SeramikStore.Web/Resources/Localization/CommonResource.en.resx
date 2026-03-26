@@ -159,4 +159,16 @@
   <data name="Kayıt Ol" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="Siparişlerim" xml:space="preserve">
+    <value>My Orders</value>
+  </data>
+  <data name="Adreslerim" xml:space="preserve">
+    <value>My Addresses</value>
+  </data>
+  <data name="Hesabım" xml:space="preserve">
+    <value>My Account</value>
+  </data>
+  <data name="Sepetim" xml:space="preserve">
+    <value>My Cart</value>
+  </data>
 </root>

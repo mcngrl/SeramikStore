@@ -48,7 +48,7 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult NewReturn(int id)
         { 
-            int userId = (int)HttpContext.Session.GetInt32("userId");
+            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
             var m = new ReturnCreateViewDto();
             m.OrderId = id;
             m.Items = _returnService.GetOrderForNewReturn(id, userId);
@@ -58,7 +58,7 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult CreateReturn(ReturnCreateDto model)
         {
-            model.UserId = (int)HttpContext.Session.GetInt32("userId");
+            model.UserId = (int)HttpContext.Session.GetInt32("session_UserId");
 
             var result = _returnService.CreateReturn(model);
 
@@ -71,7 +71,7 @@ namespace SeramikStore.Web.Controllers
                 TempData["Error"] = result.Message;
             }
 
-            return RedirectToAction("GetReturnsByOrderId", new { id = model.OrderId });
+            return RedirectToAction("OrderInfo","Order", new { id = model.OrderId });
         }
     }
 

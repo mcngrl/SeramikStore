@@ -14,7 +14,9 @@ public class UserAddressController : Controller
 
     public IActionResult Index()
     {
-        int userId = HttpContext.Session.GetInt32("userId").Value;
+        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
+
+        
         var list = _service.GetByUserId(userId);
         return View(list);
     }

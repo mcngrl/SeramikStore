@@ -148,13 +148,7 @@ public class AccountController : Controller
         return View("EmailConfirmResult", _L["Email başarıyla doğrulandı"].Value);
     }
 
-    [HttpGet]
-    public IActionResult MyProfile()
-    {
-
-        return View();
-    }
-
+    
     [HttpGet]
     public IActionResult Profile()
     {

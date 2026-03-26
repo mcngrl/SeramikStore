@@ -1,68 +1,36 @@
 ﻿@using Microsoft.Extensions.Localization
+@using SeramikStore.Contracts.Return
 @using SeramikStore.Web.Localization
 @using SeramikStore.Contracts.Order
 @using System.Globalization
 @using SeramikStore.Entities.Enums
 @model OrderDetailedDto
 @inject IStringLocalizer<CartResource> L
-@inject IStringLocalizer<CommonResource> C
-
 
 @{
     ViewData["Title"] = L["Sipariş Detayı"];
     var culture = CultureInfo.CurrentCulture;
     var currency = Model.CurrencyCode?.ToUpper();
+
+    List<ReturnHeaderDto> TheReturnList = Model.returnList.Headers;
 }
-@{
-    var userName = Context.Session.GetString("session_UserFullName");
-    var sessionAvatar = Context.Session.GetString("session_Avatar");
-}
+
 
 <div class="container mt-4">
     <div class="row">
 
         <!-- SOL TARAF (DAR) -->
         <div class="col-md-2">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-
-                    <div class="avatar mb-2">@sessionAvatar</div>
-                    <div class="fw-semibold">@userName</div>
-                    <small class="text-muted">Premium üyesi</small>
-                    <small class="text-muted">Sol Taraf</small>
-
-                    <hr />
-
-                    <div class="list-group text-left">
-                        <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Order" asp-action="OrderList">
-                           @C["Siparişlerim"]
-                        </a>
-                        <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="UserAddress" asp-action="Index">
-                            @C["Adreslerim"]
-                        </a>
-                        <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Account" asp-action="Profile">
-                            @C["Kullanıcı Bilgilerim"]
-                        </a>
-                        <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Cart" asp-action="Summary">
-                            <i class="fas fa-shopping-cart"></i>@C["Sepetim"] @await Component.InvokeAsync("Cart")
-                        </a>
-                    </div>
-                    <hr />
-                    <a class="btn btn-outline-danger btn-sm w-100" asp-controller="Account" asp-action="Logout">
-                        <i class="fas fa-sign-out-alt"></i>@C["Çıkış Yap"]
-                    </a>
-
-                </div>
-            </div>
+            <partial name="_LeftMenu" />
         </div>
 
         <!-- ORTA TARAF (GENİŞ) -->
         <div class="col-md-7">
             <!-- SİPARİŞ SÜRECİ -->
-            <div class="card shadow-sm mb-4">
+            <div class="card shadow-sm mb-1">
                 <div class="card-body">
 
-                    <h6 class="mb-4">
+                    <h6 class="mb-2">
                         <i class="fa-solid fa-chart-line me-2"></i>
                         @L["Sipariş Süreci"]
                     </h6>
@@ -75,7 +43,7 @@
                     @if (isCancelled)
                     {
                         <div class="alert alert-danger text-center fw-bold mb-4">
-                            ❌ SİPARİŞ İPTAL EDİLDİ
+                            @L["Sipariş İptal Edildi"]
                         </div>
                     }
                     <div class="stepper-wrapper">
@@ -119,7 +87,7 @@
 
                                     <div class="step-name">
 
-                                        @ProcessStatusItem.Aciklama
+                                        @L[ProcessStatusItem.Aciklama]
 
                                         @if (isCompleted)
                                         {
@@ -140,45 +108,11 @@
 
                 </div>
             </div>
-            <!-- KARGO TAKİP -->
-            @*           <div class="card shadow-sm mb-4">
+           <!-- TESLİMAT ADRESİ -->
+            <div class="card shadow-sm mb-1">
                 <div class="card-body">
 
-                    <h6 class="mb-3">
-                        <i class="fa-solid fa-box me-2"></i>
-                        @L["Kargo Bilgisi"]
-                    </h6>
-
-                    @if (!string.IsNullOrEmpty(Model.KargoTakipNo))
-                    {
-                        <div class="small">
-                            <p class="mb-1">
-                                <strong>@L["Kargoya Verilme Tarihi"]:</strong>
-                                @Model.KargoyaVerilmeTarihi?.ToString("dd.MM.yyyy")
-                            </p>
-                            <p class="mb-0">
-                                <strong>@L["Takip No"]:</strong>
-                                @Model.KargoTakipNo
-                            </p>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="text-muted small">
-                            @L["Siparişiniz henüz kargoya verilmedi."]
-                        </div>
-                    }
-
-                </div>
-            </div>
- *@
-
-
-            <!-- TESLİMAT ADRESİ -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-body">
-
-                    <h6 class="mb-3">
+                    <h6 class="mb-1">
                         <i class="fa-solid fa-truck me-2"></i>
                         @L["Teslimat Adresi"]
                     </h6>
@@ -197,10 +131,10 @@
             </div>
 
             <!-- ÜRÜN LİSTESİ -->
-            <div class="card shadow-sm">
+            <div class="card shadow-sm mb-1">
                 <div class="card-body">
 
-                    <h6 class="mb-3">
+                    <h6 class="mb-1">
                         <i class="fa-solid fa-cart-shopping me-2"></i>
                         @L["Sipariş Ürünleri"]
                     </h6>
@@ -276,6 +210,79 @@
                 </div>
             </div>
 
+            <!-- İADE TALEPLERİ -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+
+                    <h6 class="mb-1">
+                        <i class="fa-solid fa-cart-shopping me-2"></i>
+                        @L["İade Talepleri"]
+                    </h6>
+                @foreach (var ret in TheReturnList)
+                {
+                    <div class="border rounded-3 p-3 mb-4 bg-light">
+
+                        <!-- HEADER -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <strong>İade No:</strong> #@ret.Id <br />
+                                <small class="text-muted">
+                                    @ret.ReturnRequestDate.ToString("dd.MM.yyyy HH:mm")
+                                </small>
+                            </div>
+
+                            <span class="badge bg-warning text-dark">
+                                İade Talebi
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong>İade Sebebi:</strong>
+                            <div class="text-muted">@ret.Reason</div>
+                        </div>
+
+                        <!-- DETAIL -->
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Ürün</th>
+                                        <th class="text-center">İade Adet</th>
+                                        <th class="text-end">Birim Fiyat</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in ret.Details)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="fw-semibold">
+                                                    @item.ProductName
+                                                </div>
+                                                <div class="text-muted small">
+                                                    @item.ProductCode
+                                                </div>
+                                            </td>
+
+                                            <td class="text-center">
+                                                @item.ReturnQuantity
+                                            </td>
+
+                                            <td class="text-end">
+                                                @item.ReturnUnitPrice.ToString("N2")
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                }
+
+                </div>
+            </div>
+
         </div>
 
         <!-- SAĞ TARAF (DAR) -->
@@ -315,7 +322,7 @@
 
                 </div>
             </div>
-            <!-- ALT BUTONLAR -->
+@*             <!-- ALT BUTONLAR -->
             <div class="d-grid gap-2 mb-4">
                 <a asp-controller="Order"
                    asp-action="OrderList"
@@ -323,7 +330,7 @@
                    class="btn btn-primary btn-sm">
                     @L["Siparişlerim"]
                 </a>
-            </div>
+            </div> *@
 
             <!-- ALT BUTONLAR -->
             <div class="d-grid gap-2 mb-4">
@@ -332,6 +339,14 @@
                    asp-route-Id="@Model.Id"
                    class="btn btn-primary btn-sm">
                     @L["İade Taleplerim"]
+                </a>
+            </div>
+            <div class="d-grid gap-2 mb-4">
+                <a asp-controller="Return"
+                   asp-action="NewReturn"
+                   asp-route-Id="@Model.Id"
+                   class="btn btn-primary btn-sm">
+                    Yeni İade Talebi
                 </a>
             </div>
 
@@ -495,33 +510,3 @@
 
 </style>
 
-<style>
-    .avatar {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: #dc3545;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        margin: auto;
-    }
-
-    .return-card {
-        background: #f8f9fa;
-        transition: 0.2s;
-    }
-
-        .return-card:hover {
-            background: #eef1f5;
-        }
-
-    /* mobil */
-    @@media (max-width: 768px) {
-        .col-md-3, .col-md-6 {
-            width: 100%;
-        }
-    }
-</style>
