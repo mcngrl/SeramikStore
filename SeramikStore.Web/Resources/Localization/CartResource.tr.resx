@@ -267,20 +267,20 @@
   <data name="Alıcı Adı Soyadı" xml:space="preserve">
     <value>Alıcı Adı Soyadı</value>
   </data>
-  <data name="Şipariş Oluşturdu." xml:space="preserve">
-    <value>Şipariş Oluşturdu.</value>
+  <data name="Şipariş Oluşturdu" xml:space="preserve">
+    <value>Şipariş Oluşturdu</value>
   </data>
-  <data name="Ödeme Bekleniyor." xml:space="preserve">
-    <value>Ödeme Bekleniyor.</value>
+  <data name="Ödeme Bekleniyor" xml:space="preserve">
+    <value>Ödeme Bekleniyor</value>
   </data>
-  <data name="Kargoya Verildi." xml:space="preserve">
-    <value>Kargoya Verildi.</value>
+  <data name="Kargoya Verildi" xml:space="preserve">
+    <value>Kargoya Verildi</value>
   </data>
-  <data name="Sipariş Müşteri Tarafından İptal Edildi." xml:space="preserve">
-    <value>Order Canceled by Customer.</value>
+  <data name="Sipariş Müşteri Tarafından İptal Edildi" xml:space="preserve">
+    <value>Sipariş Müşteri Tarafından İptal Edildi</value>
   </data>
-  <data name="Sipariş Satıcı Tarafından İptal Edildi." xml:space="preserve">
-    <value>Sipariş Satıcı Tarafından İptal Edildi.</value>
+  <data name="Sipariş Satıcı Tarafından İptal Edildi" xml:space="preserve">
+    <value>Sipariş Satıcı Tarafından İptal Edildi</value>
   </data>
   <data name="Müşteri Siparişleri" xml:space="preserve">
     <value>Müşteri Siparişleri</value>
@@ -308,5 +308,29 @@
   </data>
   <data name="İade Taleplerim" xml:space="preserve">
     <value>İade Taleplerim</value>
+  </data>
+  <data name="Sipariş Süreci" xml:space="preserve">
+    <value>Sipariş Süreci</value>
+  </data>
+  <data name="Sipariş Ürünleri" xml:space="preserve">
+    <value>Sipariş Ürünleri</value>
+  </data>
+  <data name="Sipariş İptal Edildi" xml:space="preserve">
+    <value>Sipariş İptal Edildi</value>
+  </data>
+  <data name="Ödeme Alındı" xml:space="preserve">
+    <value>Ödeme Alındı</value>
+  </data>
+  <data name="Sipariş Onaylandı" xml:space="preserve">
+    <value>Sipariş Onaylandı</value>
+  </data>
+  <data name="Sipariş Hazırlanıyor" xml:space="preserve">
+    <value>Sipariş Hazırlanıyor</value>
+  </data>
+  <data name="Teslim Edildi" xml:space="preserve">
+    <value>Teslim Edildi</value>
+  </data>
+  <data name="Ürün Toplamı" xml:space="preserve">
+    <value>Ürün Toplamı</value>
   </data>
 </root>

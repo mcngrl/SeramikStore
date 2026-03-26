@@ -11,77 +11,89 @@
 }
 
 <div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-body">
+    <div class="row">
+        <div class="col-md-2">
+            <partial name="_LeftMenu" />
+         </div>
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
 
-            <h4 class="mb-4">
-                <i class="fa-solid fa-users me-2"></i>
-                @L["Siparişlerim"]
-            </h4>
+                    <h4 class="mb-4">
+                        <i class="fa-solid fa-users me-2"></i>
+                        @L["Siparişlerim"]
+                    </h4>
 
-            <div class="table-responsive">
-                <table class="table align-middle table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>@L["Sipariş No"]</th>
-                            <th>@L["Sipariş Tarihi"]</th>
-                            <th class="text-end">@L["Sipariş Tutarı"]</th>
-                            <th class="text-end">@L["Kargo Tutarı"]</th>
-                            <th class="text-end">@L["Toplam Tutar"]</th>
-                            <th>@L["Sipariş Durumu"]</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr class="clickable-row" >
-                                <td>
-                                    <a class="row-link"
-                                       asp-controller="Order"
-                                       asp-action="OrderInfo"
-                                       asp-route-id="@item.OrderId"></a>
-                                    #@item.OrderId
-                                 </td>
+                    <div class="table-responsive">
+                        <table class="table align-middle table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>@L["Sipariş No"]</th>
+                                    <th>@L["Sipariş Tarihi"]</th>
+                                    <th class="text-end">@L["Sipariş Tutarı"]</th>
+                                    <th class="text-end">@L["Kargo Tutarı"]</th>
+                                    <th class="text-end">@L["Toplam Tutar"]</th>
+                                    <th>@L["Sipariş Durumu"]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="clickable-row">
+                                        <td>
+                                            <a class="row-link"
+                                               asp-controller="Order"
+                                               asp-action="OrderInfo"
+                                               asp-route-id="@item.OrderId"></a>
+                                            #@item.OrderId
+                                        </td>
 
-                                <td>
-                                    @item.OrderDate.ToString("dd.MM.yyyy HH:mm", culture)
-                                </td>
+                                        <td>
+                                            @item.OrderDate.ToString("dd.MM.yyyy HH:mm", culture)
+                                        </td>
 
-                                <td class="text-end">
-                                    @item.ProductTotal.ToString("N2", culture) @item.CurrencyCode
-                                </td>
+                                        <td class="text-end">
+                                            @item.ProductTotal.ToString("N2", culture) @item.CurrencyCode
+                                        </td>
 
-                                <td class="text-end">
-                                    @item.CargoAmount.ToString("N2", culture) @item.CurrencyCode
-                                </td>
+                                        <td class="text-end">
+                                            @item.CargoAmount.ToString("N2", culture) @item.CurrencyCode
+                                        </td>
 
-                                <td class="text-end fw-bold">
-                                    @item.GrandTotal.ToString("N2", culture) @item.CurrencyCode
-                                </td>
+                                        <td class="text-end fw-bold">
+                                            @item.GrandTotal.ToString("N2", culture) @item.CurrencyCode
+                                        </td>
 
-                                <td>
-                                    <span class="badge bg-secondary">
-                                        @L[item.OrderStatus]
-                                    </span>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                        <td>
+                                            <span class="badge bg-secondary">
+                                                @L[item.OrderStatus]
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3">
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            <i class="fa-solid fa-house me-1"></i>
+                            @L["Ana Sayfa"]
+                        </a>
+                    </div>
+
+                </div>
             </div>
-
-            <div class="mt-3">
-                <a asp-controller="Home"
-                   asp-action="Index"
-                   class="btn btn-outline-secondary">
-                    <i class="fa-solid fa-house me-1"></i>
-                    @L["Ana Sayfa"]
-                </a>
-            </div>
-
         </div>
-    </div>
+        <div class="col-md-3">
+            
+        </div>
+     </div>
 </div>
+
+
 
 <script>
     const params = new URLSearchParams(window.location.search);
