@@ -5,59 +5,18 @@
 @using SeramikStore.Entities.Enums
 @model OrderDetailedDto
 @inject IStringLocalizer<CartResource> L
-@inject IStringLocalizer<CommonResource> C
-
 
 @{
     ViewData["Title"] = L["Sipariş Detayı"];
     var culture = CultureInfo.CurrentCulture;
     var currency = Model.CurrencyCode?.ToUpper();
 }
-@{
-    var userName = Context.Session.GetString("session_UserFullName");
-    var sessionAvatar = Context.Session.GetString("session_Avatar");
-}
 
 <div class="container mt-4">
     <div class="row">
 
-        <!-- SOL TARAF (DAR) -->
-        <div class="col-md-2">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-
-                    <div class="avatar mb-2">@sessionAvatar</div>
-                    <div class="fw-semibold">@userName</div>
-                    <small class="text-muted">Premium üyesi</small>
-                    <small class="text-muted">Sol Taraf</small>
-
-                    <hr />
-
-                    <div class="list-group text-left">
-                        <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Order" asp-action="OrderList">
-                           @C["Siparişlerim"]
-                        </a>
-                        <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="UserAddress" asp-action="Index">
-                            @C["Adreslerim"]
-                        </a>
-                        <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Account" asp-action="Profile">
-                            @C["Kullanıcı Bilgilerim"]
-                        </a>
-                        <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Cart" asp-action="Summary">
-                            <i class="fas fa-shopping-cart"></i>@C["Sepetim"] @await Component.InvokeAsync("Cart")
-                        </a>
-                    </div>
-                    <hr />
-                    <a class="btn btn-outline-danger btn-sm w-100" asp-controller="Account" asp-action="Logout">
-                        <i class="fas fa-sign-out-alt"></i>@C["Çıkış Yap"]
-                    </a>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- ORTA TARAF (GENİŞ) -->
-        <div class="col-md-7">
+        <!-- SOL TARAF (GENİŞ) -->
+        <div class="col-md-8">
             <!-- SİPARİŞ SÜRECİ -->
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
@@ -279,7 +238,7 @@
         </div>
 
         <!-- SAĞ TARAF (DAR) -->
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card shadow-sm mb-4 border-warning">
                 <div class="card-body">
 
@@ -493,35 +452,4 @@
         }
     }
 
-</style>
-
-<style>
-    .avatar {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: #dc3545;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        margin: auto;
-    }
-
-    .return-card {
-        background: #f8f9fa;
-        transition: 0.2s;
-    }
-
-        .return-card:hover {
-            background: #eef1f5;
-        }
-
-    /* mobil */
-    @@media (max-width: 768px) {
-        .col-md-3, .col-md-6 {
-            width: 100%;
-        }
-    }
 </style>

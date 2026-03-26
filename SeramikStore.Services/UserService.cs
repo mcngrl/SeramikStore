@@ -148,6 +148,8 @@ public class UserService : IUserService
             Id = Convert.ToInt32(dr["Id"]),
             FirstName = dr["FirstName"].ToString(),
             LastName = dr["LastName"].ToString(),
+            FullName = dr["FullName"].ToString(),
+            Avatar = dr["Avatar"].ToString(),
             Email = dr["Email"].ToString(),
             PasswordHash = dr["PasswordHash"].ToString(),
             PhoneNumber = dr["PhoneNumber"]?.ToString(),

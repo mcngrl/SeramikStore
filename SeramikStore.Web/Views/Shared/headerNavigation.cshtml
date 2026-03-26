@@ -28,7 +28,7 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Home" asp-action="About">@C["Hakkımızda"]</a>
                 </li>
-                @if (HttpContextAccessor.HttpContext.Session.GetString("role") == "Admin")
+                @if (HttpContextAccessor.HttpContext.Session.GetString("session_RoleName") == "Admin")
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="accountDropdown"
@@ -71,7 +71,7 @@
                     </a>
                 </li>
                 @{
-                    var userName = Context.Session.GetString("userName");
+                    var userName = Context.Session.GetString("session_UserFullName");
                 }
 
                 @if (string.IsNullOrEmpty(userName))

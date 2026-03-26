@@ -90,7 +90,7 @@ namespace SeramikStore.Web.Controllers
         }
 
 
-        //[CheckSession("userName")]
+        //[CheckSession("session_UserFullName")]
         [HttpPost]
         public IActionResult Cart(ProductDetail vm)
         {
@@ -132,7 +132,7 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var userId = HttpContext.Session.GetInt32("userId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
 
             Cart cart = new Cart
             {

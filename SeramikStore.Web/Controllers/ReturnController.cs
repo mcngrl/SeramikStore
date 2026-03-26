@@ -36,7 +36,7 @@ namespace SeramikStore.Web.Controllers
         public IActionResult GetReturnsByOrderId(int id)
         {
 
-            int userId = (int)HttpContext.Session.GetInt32("userId");
+            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
             var returns = _returnService.GetReturnsByOrderId(id,userId);
             var m = new ReturnList();
             m.OrderId = id;

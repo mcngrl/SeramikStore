@@ -158,7 +158,7 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Profile()
     {
-        int userId = HttpContext.Session.GetInt32("userId").Value;
+        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
         var user = _userService.GetById(userId);
 
         var vm = new ProfileViewModel
@@ -182,7 +182,7 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Profile(ProfileViewModel vm, string FormType)
     {
-        int userId = HttpContext.Session.GetInt32("userId").Value;
+        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
 
         if (FormType == "Profile")
         {
@@ -252,8 +252,8 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    //[CheckSession("userName")]
-     public IActionResult Login(LoginViewModel vm)
+    //[CheckSession("session_UserFullName")]
+    public IActionResult Login(LoginViewModel vm)
     {
 
         if (!ModelState.IsValid)
@@ -272,9 +272,12 @@ public class AccountController : Controller
             ModelState.AddModelError("", _L["Email adresinizi doğrulamanız gerekiyor"].Value);
             return View(vm);
         }
-        HttpContext.Session.SetString("userName", user.Email);
-        HttpContext.Session.SetString("role", user.RoleName);
-        HttpContext.Session.SetInt32("userId", user.Id);
+
+        HttpContext.Session.SetInt32("session_UserId", user.Id);
+        HttpContext.Session.SetString("session_UserFullName", user.FullName);
+        HttpContext.Session.SetString("session_RoleName", user.RoleName);
+        HttpContext.Session.SetString("session_Email", user.Email);
+        HttpContext.Session.SetString("session_Avatar", user.Avatar);
 
         // 🛒 ANON SEPET VAR MI?
         if (Request.Cookies.TryGetValue("cart_id", out var cartToken))
