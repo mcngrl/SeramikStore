@@ -10,6 +10,7 @@ namespace SeramikStore.Contracts.Return
         public int ProductId { get; set; }
         public decimal ReturnUnitPrice { get; set; }
         public int ReturnQuantity { get; set; }
+        public decimal ReturnLineTotal { get; set; }
 
         // OrderDetail
         public int? OrderId { get; set; }
