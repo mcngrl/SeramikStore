@@ -65,7 +65,9 @@ public class ReturnService : IReturnService
                             OrderUnitPrice = reader["OrderUnitPrice"] as decimal?,
                             Quantity = reader["Quantity"] as int?,
                             LineTotal = reader["LineTotal"] as decimal?,
-                            DisplayNo = reader["DisplayNo"] as int?
+                            DisplayNo = reader["DisplayNo"] as int?,
+                            ImagePath = reader["ImagePath"]?.ToString(),
+                            CurrencyCode = reader["CurrencyCode"]?.ToString()
                         });
                     }
                 }

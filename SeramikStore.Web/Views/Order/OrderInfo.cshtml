@@ -181,6 +181,7 @@
                                                                 alt="@item.ProductName">
                                                     </div>
                                                     <div class="product-info">
+                                                        <div class="product-code">@item.ProductCode</div>
                                                         <div class="product-name">@item.ProductName</div>
                                                     </div>
                                                 </div>
@@ -291,6 +292,16 @@
                                         {
                                             <tr>
                                                 <td>
+                                                        <div class="product-cell">
+                                                            <div class="product-img">
+                                                                <img src="@(string.IsNullOrEmpty(item.ImagePath) ? "/images/no-image.png" : item.ImagePath)"
+                                                                     alt="@item.ProductName">
+                                                            </div>
+                                                            <div class="product-info">
+                                                                <div class="product-name">@item.ProductName</div>
+                                                            </div>
+                                                        </div>
+
                                                     <div class="fw-semibold">
                                                         @item.ProductName
                                                     </div>
@@ -300,11 +311,11 @@
                                                 </td>
 
                                                 <td class="text-center">
-                                                    @item.ReturnQuantity
-                                                </td>
+                                                        @item.ReturnQuantity @L["Adet"]
+                                                 </td>
 
                                                 <td class="text-end">
-                                                    @item.ReturnUnitPrice.ToString("N2")
+                                                        @item.ReturnUnitPrice.ToString("N2") @item.CurrencyCode.ToString().ToUpper()
                                                 </td>
                                             </tr>
                                         }
@@ -516,6 +527,18 @@
         font-weight: 600;
         font-size: 14px;
         line-height: 1.3;
+    }
+
+    .product-code {
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 1.3;
+    }
+
+    .table thead th {
+        font-weight: 500; /* 400 = normal, 500 = medium (öneririm) */
+        font-size: 13px; /* biraz küçültürsen daha zarif olur */
+        color: #6c757d; /* hafif gri = daha soft görünüm */
     }
 
     /* mobil */
