@@ -16,9 +16,12 @@ namespace SeramikStore.Contracts.Return
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
         public string ProductDesc { get; set; }
+        
         public decimal? OrderUnitPrice { get; set; }
         public int? Quantity { get; set; }
         public decimal? LineTotal { get; set; }
         public int? DisplayNo { get; set; }
+        public string ImagePath { get; set; }
+        public string CurrencyCode { get; set; }
     }
 }
