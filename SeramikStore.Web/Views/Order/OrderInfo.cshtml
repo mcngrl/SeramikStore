@@ -198,31 +198,31 @@
                                         </tr>
                                     }
 
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th class="text-end fw-bold">@L["Ürün Toplamı"]</th>
-                                        <th class="text-end">
+                                    <tr class="border-white">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-end fw-semibold py-0">@L["Ürün Toplamı"]</td>
+                                        <td class="text-end fw-semibold py-0">
                                             @Model.ProductTotal.ToString("N2", culture) @currency
-                                        </th>
+                                        </td>
                                     </tr>
 
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th class="text-end fw-bold">@L["Kargo Tutarı"]</th>
-                                        <th class="text-end">
+                                    <tr class="border-white">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-end fw-semibold py-0">@L["Kargo Tutarı"]</td>
+                                        <td class="text-end fw-semibold py-0">
                                             @Model.CargoAmount.ToString("N2", culture) @currency
-                                        </th>
+                                        </td>
                                     </tr>
 
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th class="text-end fw-bold">@L["Genel Toplam"]</th>
-                                        <th class="text-end fw-bold">
+                                    <tr class="border-white">
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-end fw-semibold py-0">@L["Genel Toplam"]</td>
+                                        <td class="text-end fw-semibold py-0">
                                             @Model.GrandTotal.ToString("N2", culture) @currency
-                                        </th>
+                                        </td>
                                     </tr>
 
                                 </tbody>
@@ -256,9 +256,75 @@
                     <div class="collapse" id="ReturnListCollapse">
                     @foreach (var ret in TheReturnList)
                     {
-                        <div class="border rounded-3 p-3 mb-4 bg-light">
 
-                            <!-- HEADER -->
+                            <div class="border rounded-3 p-3 mb-4 bg-light">
+
+                                <!-- HEADER -->
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <strong>İade No:</strong> #@ret.Id
+                                        <span class="ms-3 text-muted small">
+                                            @ret.ReturnRequestDate.ToString("dd.MM.yyyy HH:mm")
+                                        </span>
+                                    </div>
+
+                                    <span class="badge bg-warning text-dark">
+                                        İade Talebi
+                                    </span>
+                                </div>
+
+                                <!-- SEBEP -->
+                                <div class="mb-2">
+                                    <strong>İade Sebebi:</strong>
+                                    <div class="text-muted small">@ret.Reason</div>
+                                </div>
+
+                                <!-- HEADER ROW (artık daha minimal) -->
+                                <div class="d-flex text-muted small border-bottom pb-1 mb-2">
+                                    <div class="flex-grow-1">@L["Ürün"]</div>
+                                    <div style="width:140px" class="text-end">@L["Birim Fiyat"]</div>
+                                    <div style="width:100px" class="text-center">@L["Miktar"]</div>
+                                    <div style="width:140px" class="text-end">@L["Tutar"]</div>
+                                </div>
+
+                                <!-- DATA -->
+                                @foreach (var item in ret.Details)
+                                {
+                                    <div class="d-flex align-items-center py-0 border-bottom small">
+
+                                        <!-- ÜRÜN -->
+                                        <div class="flex-grow-1 d-flex align-items-center">
+                                            <img src="@(string.IsNullOrEmpty(item.ImagePath) ? "/images/no-image.png" : item.ImagePath)"
+                                                 style="width:40px;height:40px;object-fit:cover;border-radius:6px;margin-right:10px;" />
+
+                                            <div>
+                                                <div class="text-muted small">@item.ProductCode</div>
+                                                <div>@item.ProductName</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- FİYAT -->
+                                        <div style="width:140px" class="text-end">
+                                            @item.ReturnUnitPrice.ToString("N2") @item.CurrencyCode.ToString().ToUpper()
+                                        </div>
+
+                                        <!-- MİKTAR -->
+                                        <div style="width:100px" class="text-center">
+                                            @item.ReturnQuantity @L["Adet"]
+                                        </div>
+
+                                        <!-- TUTAR -->
+                                        <div style="width:140px" class="text-end">
+                                            @item.ReturnLineTotal.ToString("N2") @item.CurrencyCode.ToString().ToUpper()
+                                        </div>
+
+                                    </div>
+                                }
+
+                            </div>
+@*                         <div class="border rounded-3 p-3 mb-4 bg-light">
+
+                                <!-- İADE HEADER -->
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <div>
                                     <strong>İade No:</strong> #@ret.Id <br />
@@ -277,45 +343,42 @@
                                 <div class="text-muted">@ret.Reason</div>
                             </div>
 
-                            <!-- DETAIL -->
+                            <!-- İADE  DETAIL -->
                             <div class="table-responsive">
-                                <table class="table table-sm align-middle">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>Ürün</th>
-                                            <th class="text-center">İade Adet</th>
-                                            <th class="text-end">Birim Fiyat</th>
-                                        </tr>
-                                    </thead>
+                                <table class="table align-middle">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>@L["Ürün"]</th>
+                                                <th class="text-end">@L["Birim Fiyat"]</th>
+                                                <th class="text-center">@L["Miktar"]</th>
+                                                <th class="text-end">@L["Tutar"]</th>
+                                            </tr>
+                                        </thead>
                                     <tbody>
                                         @foreach (var item in ret.Details)
                                         {
                                             <tr>
-                                                <td>
+                                                    <td>
                                                         <div class="product-cell">
                                                             <div class="product-img">
                                                                 <img src="@(string.IsNullOrEmpty(item.ImagePath) ? "/images/no-image.png" : item.ImagePath)"
                                                                      alt="@item.ProductName">
                                                             </div>
                                                             <div class="product-info">
+                                                                <div class="product-code">@item.ProductCode</div>
                                                                 <div class="product-name">@item.ProductName</div>
                                                             </div>
                                                         </div>
-
-                                                    <div class="fw-semibold">
-                                                        @item.ProductName
-                                                    </div>
-                                                    <div class="text-muted small">
-                                                        @item.ProductCode
-                                                    </div>
-                                                </td>
-
+                                                    </td>
+                                                    <td class="text-end">
+                                                        @item.ReturnUnitPrice.ToString("N2") @item.CurrencyCode.ToString().ToUpper()
+                                                    </td>
                                                 <td class="text-center">
                                                         @item.ReturnQuantity @L["Adet"]
                                                  </td>
 
                                                 <td class="text-end">
-                                                        @item.ReturnUnitPrice.ToString("N2") @item.CurrencyCode.ToString().ToUpper()
+                                                        @item.ReturnLineTotal.ToString("N2") @item.CurrencyCode.ToString().ToUpper()
                                                 </td>
                                             </tr>
                                         }
@@ -323,7 +386,7 @@
                                 </table>
                             </div>
 
-                        </div>
+                        </div> *@
                     }
 
                     </div>

@@ -57,6 +57,7 @@ public class ReturnService : IReturnService
                             ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
                             ReturnUnitPrice = reader.GetDecimal(reader.GetOrdinal("ReturnUnitPrice")),
                             ReturnQuantity = reader.GetInt32(reader.GetOrdinal("ReturnQuantity")),
+                            ReturnLineTotal = reader.GetDecimal(reader.GetOrdinal("ReturnLineTotal")),
 
                             OrderId = reader["OrderId"] as int?,
                             ProductCode = reader["ProductCode"]?.ToString(),
