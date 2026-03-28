@@ -1,5 +1,4 @@
 ﻿@using SeramikStore.Contracts.Return
-
 @model ReturnCreateViewDto
 
 <div class="container mt-4">
@@ -10,75 +9,99 @@
                 <i class="fa-solid fa-rotate-left me-2"></i>
                 Yeni İade Talebi
             </h5>
-
+            <span asp-validation-for="Items" class="text-danger"></span>
             <form asp-action="CreateReturn" method="post">
-
-                <!-- OrderId -->
                 <input type="hidden" asp-for="OrderId" />
 
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Ürün</th>
-                                <th class="text-center">Sipariş Adet</th>
-                                <th class="text-center">İade Edilen</th>
-                                <th class="text-center">Kalan</th>
-                                <th class="text-center">İade Adedi</th>
-                            </tr>
-                        </thead>
+                <div class="row g-3">
+                    @for (int i = 0; i < Model.Items.Count; i++)
+                    {
+                        var item = Model.Items[i];
 
-                        <tbody>
-                            @for (int i = 0; i < Model.Items.Count; i++)
-                            {
-                                var item = Model.Items[i];
+                        <div class="col-12">
+                            <div class="border rounded p-3 d-flex align-items-center justify-content-between">
+                                
+                                <!-- SOL: Ürün -->
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="@(string.IsNullOrEmpty(item.ImagePath) ? "/images/no-image.png" : item.ImagePath)"
+                                         style="width:60px;height:60px;object-fit:cover;border-radius:8px;" />
 
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img src="@(string.IsNullOrEmpty(item.ImagePath) ? "/images/no-image.png" : item.ImagePath)"
-                                                 style="width:50px;height:50px;object-fit:cover;border-radius:6px;" />
-
-                                            <div>
-                                                <div class="fw-semibold">@item.ProductName</div>
-                                                <small class="text-muted">@item.ProductCode</small>
-                                            </div>
+                                    <div>
+                                        <div style="font-weight:500">@item.ProductName</div>
+                                        <small class="text-muted">@item.ProductCode</small>
+                                        <div class="text-success small mt-1">
+                                            Kalan: @item.AvaliableQuatityForReturn adet
                                         </div>
-                                    </td>
+                                    </div>
+                                </div>
 
-                                    <td class="text-center">@item.Quantity</td>
+                                <!-- SAĞ: Aksiyon -->
+                                <div class="text-center">
 
-                                    <td class="text-center text-danger">
-                                        @item.LineReturnQuantityTotal
-                                    </td>
+                                    <div class="d-flex align-items-center gap-2 justify-content-center mb-1">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary"
+                                                onclick="decrease(@i)">
+                                            -
+                                        </button>
 
-                                    <td class="text-center text-success">
-                                        @item.AvaliableQuatityForReturn
-                                    </td>
-
-                                    <td class="text-center">
                                         <input type="number"
+                                               id="qty-@i"
                                                asp-for="Items[@i].ReturnQuantity"
                                                class="form-control form-control-sm text-center"
+                                               style="width:60px"
                                                min="0"
-                                               max="@item.AvaliableQuatityForReturn" />
+                                               max="@item.AvaliableQuatityForReturn" 
+                                               />
 
-                                        <!-- 🔥 KRİTİK -->
-                                        <input type="hidden" asp-for="Items[@i].OrderDetailId" />
-                                        <input type="hidden" asp-for="Items[@i].ProductId" />
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-secondary"
+                                                onclick="increase(@i, @item.AvaliableQuatityForReturn)">
+                                            +
+                                        </button>
+                                    </div>
+
+                                    <button type="button"
+                                            class="btn btn-link btn-sm p-0"
+                                            onclick="setMax(@i, @item.AvaliableQuatityForReturn)">
+                                        Tümünü İade Et
+                                    </button>
+
+                                    <!-- hidden -->
+                                    <input type="hidden" asp-for="Items[@i].OrderDetailId" />
+                                    <input type="hidden" asp-for="Items[@i].ProductId" />
+
+                                </div>
+
+                            </div>
+                        </div>
+                    }
                 </div>
 
-                <!-- Reason -->
-                <div class="mt-3">
+                <div class="mt-4">
                     <label class="form-label">İade Sebebi</label>
-                    <textarea asp-for="Reason"
+                    
+                    <select asp-for="Reason"  id="reasonSelect" class="form-select mb-2" onchange="toggleCustomReason()">
+                        <option value="">Seçiniz</option>
+                        <option>Ürün hasarlı geldi</option>
+                        <option>Yanlış ürün gönderildi</option>
+                        <option>Beklentimi karşılamadı</option>
+                        <option>Açıklamayla uyuşmuyor</option>
+                        <option>Geç teslim edildi</option>
+                        <option>Siparişi yanlış verdim</option>
+                        <option>Sebep belirtmek istemiyorum</option>
+                        <option value="other">Diğer</option>
+                    </select>
+                    <span asp-validation-for="Reason" class="text-danger"></span>
+                   
+                    <textarea id="customReason"
+                              asp-for="Reason"
                               class="form-control"
-                              rows="3"></textarea>
+                              rows="3"
+                              placeholder="Lütfen açıklayınız..."
+                              style="display:none;">
+                   </textarea>
+
                 </div>
 
                 <!-- Submit -->
@@ -93,3 +116,43 @@
         </div>
     </div>
 </div>
+
+
+<script>
+   function increase(i, max) {
+        let el = document.getElementById("qty-" + i);
+        let val = parseInt(el.value || 0);
+
+         el.value = val + 1;
+        if (val < max) el.value = val + 1; 
+    }
+
+    function decrease(i) {
+        let el = document.getElementById("qty-" + i);
+        let val = parseInt(el.value || 0);
+        if (val > 0) el.value = val - 1;
+    }
+
+    function setMax(i, max) {
+        document.getElementById("qty-" + i).value = max;
+    }
+
+
+</script>
+
+<script>
+    function toggleCustomReason() {
+    var select = document.getElementById("reasonSelect");
+    var textarea = document.getElementById("customReason");
+
+    if (select.value === "other") {
+        textarea.style.display = "block";
+        textarea.value = "";
+    } else {
+        textarea.style.display = "none";
+        textarea.value = select.value;
+    }
+
+
+    }
+</script>

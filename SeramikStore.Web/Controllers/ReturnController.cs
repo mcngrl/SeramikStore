@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -58,6 +58,39 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult CreateReturn(ReturnCreateDto model)
         {
+            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
+
+            if (!model.Items.Any(x => x.ReturnQuantity > 0))
+            {
+                ModelState.AddModelError("Items", "En az bir ürün için iade adedi girilmelidir.");
+            }
+
+            if (model.Reason == "other")
+            {
+                ModelState.AddModelError("Reason", "Diğer seçeneği seçildiğinde açıklama girilmelidir.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+              
+
+                var vm = new ReturnCreateViewDto
+                {
+                    OrderId = model.OrderId,
+                    Items = _returnService.GetOrderForNewReturn(model.OrderId, userId)
+                };
+
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => $"<li>{e.ErrorMessage}</li>")
+                    .ToList();
+
+                TempData["Required"] = $"<ul class='mb-0'>{string.Join("", errors)}</ul>";
+
+
+                return View("NewReturn", vm);
+            }
+
             model.UserId = (int)HttpContext.Session.GetInt32("session_UserId");
 
             var result = _returnService.CreateReturn(model);
@@ -65,13 +98,26 @@ namespace SeramikStore.Web.Controllers
             if (result.Result > 0)
             {
                 TempData["Success"] = result.Message;
+                return RedirectToAction("OrderInfo", "Order", new { id = model.OrderId });
             }
             else
             {
+
+
+                var vm = new ReturnCreateViewDto
+                {
+                    OrderId = model.OrderId,
+                    Items = _returnService.GetOrderForNewReturn(model.OrderId, userId)
+                };
+
+
                 TempData["Error"] = result.Message;
+
+
+                return View("NewReturn", vm);
             }
 
-            return RedirectToAction("OrderInfo","Order", new { id = model.OrderId });
+            
         }
     }
 

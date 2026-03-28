@@ -339,10 +339,10 @@ namespace SeramikStore.Services
 
         public bool CanCancel(OrderStatusCode status)
         {
-            return status == OrderStatusCode.SiparisOlusturdu
-                || status == OrderStatusCode.OdemeBekleniyor
-                || status == OrderStatusCode.OdemeAlindi
-                || status == OrderStatusCode.SiparisOnaylandi;
+            return status == OrderStatusCode.OrderCreated
+                || status == OrderStatusCode.PaymentPending
+                || status == OrderStatusCode.PaymentReceived
+                || status == OrderStatusCode.OrderApproved;
         }
 
     }
