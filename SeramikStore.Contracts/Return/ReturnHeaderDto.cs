@@ -8,7 +8,8 @@ namespace SeramikStore.Contracts.Return
         public DateTime ReturnRequestDate { get; set; }
         public int OrderId { get; set; }
         public string Reason { get; set; }
-
+        public int StatusForReturnCode { get; set; }
+        public string StatusForReturnDesc { get; set; }
         public List<ReturnDetailDto> Details { get; set; } = new();
     }
 }

@@ -101,28 +101,6 @@ namespace SeramikStore.Web.Controllers
              return View(order);
         }
 
-        [HttpGet]
-        public IActionResult OrderInfoN(int id)
-        {
-            var userId = HttpContext.Session.GetInt32("session_UserId");
-
-            if (userId is null)
-                return RedirectToAction("Index", "Home");
-
-            var order = _orderService.GetDetailedOrderById(id);
-
-            if (order == null)
-                return RedirectToAction("Index", "Home");
-
-            if (order.UserId != userId)
-                return RedirectToAction("Index", "Home");
-
-
-
-            return View(order);
-        }
-
-
 
         [HttpPost]
         public IActionResult CreateOrder(int AddressId, decimal CargoAmount)
@@ -332,7 +310,7 @@ namespace SeramikStore.Web.Controllers
             }
 
 
-            var rRes = _orderService.UpdateOrderStatus(orderId, (int)OrderStatusCode.Iptal, (int)userId);
+            var rRes = _orderService.UpdateOrderStatus(orderId, (int)OrderStatusCode.Cancelled, (int)userId);
             if (rRes.IsSuccess)
             {
                 TempData["Success"] = "Sipariş İptal Edildi";

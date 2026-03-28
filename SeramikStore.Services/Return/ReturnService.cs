@@ -39,7 +39,10 @@ public class ReturnService : IReturnService
                         UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                         ReturnRequestDate = reader.GetDateTime(reader.GetOrdinal("ReturnRequestDate")),
                         OrderId = reader.GetInt32(reader.GetOrdinal("OrderId")),
-                        Reason = reader["Reason"]?.ToString()
+                        
+                        Reason = reader["Reason"]?.ToString(),
+                        StatusForReturnCode = reader.GetInt32(reader.GetOrdinal("StatusForReturnCode")),
+                        StatusForReturnDesc = reader["StatusForReturnDesc"]?.ToString()
                     });
                 }
 

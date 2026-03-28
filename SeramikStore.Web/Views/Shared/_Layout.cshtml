@@ -87,6 +87,7 @@
             });
         </script>
     }
+    
     @if (TempData["Info"] != null)
     {
         <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -110,6 +111,28 @@
         </script>
     }
 
+    @if (TempData["Required"] != null)
+    {
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="RequiredToast" class="toast text-bg-danger" role="alert">
+                <div class="toast-header text-bg-danger">
+                    <strong class="me-auto">Lütfen kontrol edin</strong>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    @Html.Raw(TempData["Required"])
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var toastEl = document.getElementById('RequiredToast');
+                var toast = new bootstrap.Toast(toastEl, { delay: 5000 });
+                toast.show();
+            });
+        </script>
+    }
 
 
 

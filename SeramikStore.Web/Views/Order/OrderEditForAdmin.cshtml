@@ -29,7 +29,7 @@
                     @{
                         var ProcessStatuses = Model.StatusProcess.OrderBy(x => x.RowOrderNo).ToList();
                         var currentCode = Model.OrderStatusCode;
-                        var isCancelled = currentCode == (int)OrderStatusCode.Iptal;
+                        var isCancelled = currentCode == (int)OrderStatusCode.Cancelled;
                     }
                     @if (isCancelled)
                     {
@@ -45,7 +45,7 @@
                             var ProcessStatusItem = ProcessStatuses[i];
                             var isCompleted = ProcessStatusItem.isCompleted;
                             var isCurrent = ProcessStatusItem.isLast;
-                            var isLastCancelledStep = (ProcessStatusItem.OrderStatusCode == (int)OrderStatusCode.Iptal);
+                            var isLastCancelledStep = (ProcessStatusItem.OrderStatusCode == (int)OrderStatusCode.Cancelled);
 
                             @if (isCancelled && (isCompleted == false))
                             {
@@ -286,7 +286,7 @@
                 </form>
 
 
-                @if (Model.OrderStatusCode > (int)OrderStatusCode.OdemeBekleniyor)
+                @if (Model.OrderStatusCode > (int)OrderStatusCode.PaymentPending)
                 {
                 <hr />
 
@@ -303,14 +303,14 @@
 
 
                 }
-                 
-                @if (Model.OrderStatusCode != (int)OrderStatusCode.Iptal)
+
+                    @if (Model.OrderStatusCode != (int)OrderStatusCode.Cancelled)
                 {
                     <hr />
 
                         <form id="cancelOrderForm" asp-action="UpdateStatus" method="post">
                             <input type="hidden" name="orderId" value="@Model.Id" />
-                            <input type="hidden" name="selectedStatus" value="@((int)OrderStatusCode.Iptal)" />
+                            <input type="hidden" name="selectedStatus" value="@((int)OrderStatusCode.Cancelled)" />
 
                             <button type="button"
                                     class="btn btn-outline-danger btn-sm"
