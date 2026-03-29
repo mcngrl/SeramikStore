@@ -9,11 +9,11 @@ public static class ViewWriter
     {
         return new()
         {
-            { "Index.generated.cshtml",  GenerateIndex(entity, viewModelNamespace, cols) },
-            { "Create.generated.cshtml", GenerateCreate(entity, viewModelNamespace, cols) },
-            { "Edit.generated.cshtml",   GenerateEdit(entity, viewModelNamespace, cols) },
-            { "Delete.generated.cshtml", GenerateDelete(entity, viewModelNamespace, cols) },
-            { "Detail.generated.cshtml", GenerateDetails(entity, viewModelNamespace, cols) }
+            { "Index.cshtml",  GenerateIndex(entity, viewModelNamespace, cols) },
+            { "Create.cshtml", GenerateCreate(entity, viewModelNamespace, cols) },
+            { "Edit.cshtml",   GenerateEdit(entity, viewModelNamespace, cols) },
+            { "Delete.cshtml", GenerateDelete(entity, viewModelNamespace, cols) },
+            { "Detail.cshtml", GenerateDetails(entity, viewModelNamespace, cols) }
         };
     }
 
@@ -168,15 +168,17 @@ public static class ViewWriter
                      !c.IsIsActive()))
         {
 
-            var inputType = ResolveInputType(c);
+            //var inputType = ResolveInputType(c);
 
-            sb.AppendLine($"""
-    <div class="mb-3">
-        <label asp-for="{c.Name}" class="form-label"></label>
-        <input asp-for="{c.Name}" type="{inputType}" class="form-control" />
-        <span asp-validation-for="{c.Name}" class="text-danger"></span>
-    </div>
-""");
+            sb.AppendLine(ResolveInputHtml(c));
+
+//            sb.AppendLine($"""
+//    <div class="mb-3">
+//        <label asp-for="{c.Name}" class="form-label"></label>
+//        <input asp-for="{c.Name}" type="{inputType}" class="form-control" />
+//        <span asp-validation-for="{c.Name}" class="text-danger"></span>
+//    </div>
+//""");
         }
 
         sb.AppendLine("""
@@ -221,15 +223,7 @@ public static class ViewWriter
                      c.Name != "Id"))
         {
 
-            var inputType = ResolveInputType(c);
-
-            sb.AppendLine($"""
-    <div class="mb-3">
-        <label asp-for="{c.Name}" class="form-label"></label>
-          <input asp-for="{c.Name}" type="{inputType}" class="form-control" />
-        <span asp-validation-for="{c.Name}" class="text-danger"></span>
-    </div>
-""");
+            sb.AppendLine(ResolveInputHtml(c));
         }
 
         sb.AppendLine("""
@@ -344,6 +338,72 @@ public static class ViewWriter
             return "checkbox";
 
         return "text";
+    }
+    static string ResolveInputHtml(DbColumn c)
+    {
+        var type = SqlTypeMapper.Map(c.SqlType);
+
+        // DATE
+        if (type.ClrType == "DateOnly")
+        {
+            return $"""
+<div class="mb-3">
+    <label asp-for="{c.Name}" class="form-label"></label>
+    <input asp-for="{c.Name}" type="date" class="form-control" />
+    <span asp-validation-for="{c.Name}" class="text-danger"></span>
+</div>
+""";
+        }
+
+        // DATETIME
+        if (type.ClrType == "DateTime" || type.ClrType == "DateTimeOffset")
+        {
+            return $"""
+<div class="mb-3">
+    <label asp-for="{c.Name}" class="form-label"></label>
+    <input asp-for="{c.Name}" type="datetime-local" class="form-control" />
+    <span asp-validation-for="{c.Name}" class="text-danger"></span>
+</div>
+""";
+        }
+
+        // 🔥 BOOL (asıl konu)
+        if (type.ClrType == "bool")
+        {
+            // ✅ NULLABLE → SELECT
+            if (c.IsNullable)
+            {
+                return $"""
+<div class="mb-3">
+    <label asp-for="{c.Name}" class="form-label"></label>
+    <select asp-for="{c.Name}" class="form-select">
+        <option value="">Seçiniz</option>
+        <option value="true">Evet</option>
+        <option value="false">Hayır</option>
+    </select>
+    <span asp-validation-for="{c.Name}" class="text-danger"></span>
+</div>
+""";
+            }
+
+            // ✅ NOT NULL → CHECKBOX
+            return $"""
+<div class="form-check mt-3">
+    <input asp-for="{c.Name}" class="form-check-input" />
+    <label asp-for="{c.Name}" class="form-check-label"></label>
+    <span asp-validation-for="{c.Name}" class="text-danger"></span>
+</div>
+""";
+        }
+
+        // DEFAULT
+        return $"""
+<div class="mb-3">
+    <label asp-for="{c.Name}" class="form-label"></label>
+    <input asp-for="{c.Name}" type="text" class="form-control" />
+    <span asp-validation-for="{c.Name}" class="text-danger"></span>
+</div>
+""";
     }
 
 }
