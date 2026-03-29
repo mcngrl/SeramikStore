@@ -15,6 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Localization\ReasonResource.en.resx">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Localization\ReasonResource.tr.resx">
+      <SubType>Designer</SubType>
+      <Generator></Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Localization\AccountResource.en.resx">
       <SubType>Designer</SubType>
       <Generator></Generator>
@@ -56,6 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Reason\" />
     <Folder Include="wwwroot\lib\fontawesome\css\" />
     <Folder Include="wwwroot\lib\fontawesome\webfonts\" />
   </ItemGroup>

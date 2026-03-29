@@ -20,7 +20,12 @@ if (string.IsNullOrWhiteSpace(connectionString))
 string projectRoot = Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
 
 string scriptsFolder = Path.Combine(projectRoot, "DBScripts");
-string fileName = $"DB{DateTime.Now:yyyyMMddHHmmss}.sql";
+
+
+string fileNameReaderable = $"__{DateTime.Now:dd-MM-yy__HH-mm}";
+
+string fileName = $"DB{DateTime.Now:yyyyMMddHHmmss}{fileNameReaderable}.sql";
+
 
 string outputFile = Path.Combine(scriptsFolder, fileName);
 
