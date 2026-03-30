@@ -1,5 +1,6 @@
-﻿@using SeramikStore.Contracts.Return
-@model ReturnCreateViewDto
+﻿@using SeramikStore.Web.ViewModels.Return
+
+@model ReturnCreateViewModel
 
 <div class="container mt-4">
     <div class="card shadow-sm">
@@ -79,28 +80,28 @@
                 </div>
 
                 <div class="mt-4">
-                    <label class="form-label">İade Sebebi</label>
-                    
-                    <select asp-for="Reason"  id="reasonSelect" class="form-select mb-2" onchange="toggleCustomReason()">
-                        <option value="">Seçiniz</option>
-                        <option>Ürün hasarlı geldi</option>
-                        <option>Yanlış ürün gönderildi</option>
-                        <option>Beklentimi karşılamadı</option>
-                        <option>Açıklamayla uyuşmuyor</option>
-                        <option>Geç teslim edildi</option>
-                        <option>Siparişi yanlış verdim</option>
-                        <option>Sebep belirtmek istemiyorum</option>
-                        <option value="other">Diğer</option>
-                    </select>
-                    <span asp-validation-for="Reason" class="text-danger"></span>
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-4">
+                            <label>İade Sebebi</label>
+                            <select asp-for="ReasonId"
+                                    asp-items="Model.Reasons"
+                                    class="form-select"></select>
+                            <span asp-validation-for="ReasonId" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <label>İade Açıklama</label>
+                            <textarea id="customReason"
+                                      asp-for="Reasondesc"
+                                      class="form-control"
+                                      rows="3"
+                                      maxlength="499">
+                            </textarea>
+                        </div>
+                    </div>
+                     
+                    <span asp-validation-for="Reasondesc" class="text-danger"></span>
                    
-                    <textarea id="customReason"
-                              asp-for="Reason"
-                              class="form-control"
-                              rows="3"
-                              placeholder="Lütfen açıklayınız..."
-                              style="display:none;">
-                   </textarea>
+
 
                 </div>
 
@@ -140,19 +141,3 @@
 
 </script>
 
-<script>
-    function toggleCustomReason() {
-    var select = document.getElementById("reasonSelect");
-    var textarea = document.getElementById("customReason");
-
-    if (select.value === "other") {
-        textarea.style.display = "block";
-        textarea.value = "";
-    } else {
-        textarea.style.display = "none";
-        textarea.value = select.value;
-    }
-
-
-    }
-</script>
