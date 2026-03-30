@@ -1,4 +1,6 @@
 
+using SeramikStore.Contracts.Reason;
+
 namespace SeramikStore.Contracts.Return
 {
     public class ReturnHeaderDto
@@ -7,7 +9,7 @@ namespace SeramikStore.Contracts.Return
         public int UserId { get; set; }
         public DateTime ReturnRequestDate { get; set; }
         public int OrderId { get; set; }
-        public string Reason { get; set; }
+        public ReasonDto ReturnReason { get; set; }
         public int StatusForReturnCode { get; set; }
         public string StatusForReturnDesc { get; set; }
         public List<ReturnDetailDto> Details { get; set; } = new();

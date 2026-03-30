@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeramikStore.Contracts.Reason;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,10 +12,7 @@ namespace SeramikStore.Contracts.Return
     {
         public int OrderId { get; set; }
         public int UserId { get; set; }
-
-        [Required(ErrorMessage = "İade sebebi zorunludur.")]
-        public string Reason { get; set; }
-
+        public ReasonDto ReturnReason { get; set; }
         public List<ReturnItemDto> Items { get; set; } = new();
 
     //    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

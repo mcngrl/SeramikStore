@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SeramikStore.Contracts.Order;
+using SeramikStore.Contracts.Reason;
 using SeramikStore.Contracts.Return;
 using SeramikStore.Entities.Enums;
 using SeramikStore.Services;
 using SeramikStore.Web.Options;
 using SeramikStore.Web.ViewModels;
+using SeramikStore.Web.ViewModels.Return;
 using System.Globalization;
 
 namespace SeramikStore.Web.Controllers
@@ -15,16 +19,19 @@ namespace SeramikStore.Web.Controllers
     public class ReturnController : Controller
     {
         private readonly IReturnService _returnService;
+        private readonly IReasonService _reasonService;
         private readonly IOrderService _orderService;
         private readonly IUserAddressService _userAddressService;
         private readonly ICartService _cartService;
         private readonly CompanyOptions _company;
         public ReturnController(
             IReturnService returnService,
+            IReasonService reasonService,
             IOrderService orderService,
             IUserAddressService userAddressService,
             ICartService cartService, IOptions<CompanyOptions> companyOptions)
         {
+            _reasonService = reasonService;
             _returnService = returnService;
             _orderService = orderService;
             _userAddressService = userAddressService;
@@ -47,16 +54,15 @@ namespace SeramikStore.Web.Controllers
 
         [HttpGet]
         public IActionResult NewReturn(int id)
-        { 
+        {
             int userId = (int)HttpContext.Session.GetInt32("session_UserId");
-            var m = new ReturnCreateViewDto();
-            m.OrderId = id;
-            m.Items = _returnService.GetOrderForNewReturn(id, userId);
+            ReturnCreateViewModel m = EmptyReturnCreateVM(id, userId);
             return View(m);
+                  
         }
 
         [HttpPost]
-        public IActionResult CreateReturn(ReturnCreateDto model)
+        public IActionResult CreateReturn(ReturnCreateViewModel model)
         {
             int userId = (int)HttpContext.Session.GetInt32("session_UserId");
 
@@ -64,21 +70,36 @@ namespace SeramikStore.Web.Controllers
             {
                 ModelState.AddModelError("Items", "En az bir ürün için iade adedi girilmelidir.");
             }
-
-            if (model.Reason == "other")
+     
+            if (model.ReasonId == 0)
             {
-                ModelState.AddModelError("Reason", "Diğer seçeneği seçildiğinde açıklama girilmelidir.");
+
+                ModelState.AddModelError("ReasonId", "İade sebebi seçiniz.");
+                //if(model.ReturnReason.IsCustom==true)
+                //{ 
+                //    if (string.IsNullOrWhiteSpace(model.ReturnReason.Reasondesc))
+                //    {
+                //        ModelState.AddModelError("ReasonDesc", "Diğer seçeneği seçildiğinde açıklama girilmelidir.");
+                //    }
+                //}
+            }
+            else
+            {
+                ReasonDto selectedReason = _reasonService.GetById(model.ReasonId);
+                if (selectedReason == null)
+                {
+                    ModelState.AddModelError("ReasonId", "Geçersiz iade sebebi seçimi.");
+                }
+                else if (selectedReason.IsCustom == true && string.IsNullOrWhiteSpace(model.Reasondesc))
+                {
+                    ModelState.AddModelError("Reasondesc", selectedReason.Reasondesc + " seçeneği seçildiğinde açıklama girilmelidir.");
+                }
             }
 
             if (!ModelState.IsValid)
             {
-              
 
-                var vm = new ReturnCreateViewDto
-                {
-                    OrderId = model.OrderId,
-                    Items = _returnService.GetOrderForNewReturn(model.OrderId, userId)
-                };
+                ReturnCreateViewModel vm = EmptyReturnCreateVM(model.OrderId, userId);
 
                 var errors = ModelState.Values
                     .SelectMany(v => v.Errors)
@@ -91,9 +112,23 @@ namespace SeramikStore.Web.Controllers
                 return View("NewReturn", vm);
             }
 
-            model.UserId = (int)HttpContext.Session.GetInt32("session_UserId");
+            ReturnCreateDto mo = new ReturnCreateDto
+            {
+                OrderId = model.OrderId,
+                UserId = userId,
+                ReturnReason = new ReasonDto
+                {
+                    Id = model.ReasonId,
+                    Reasondesc = model.Reasondesc
+                },
+                Items = model.Items.Select(x => new ReturnItemDto
+                {
+                    OrderDetailId = x.OrderDetailId,
+                    ReturnQuantity = x.ReturnQuantity
+                }).ToList()
+            };
 
-            var result = _returnService.CreateReturn(model);
+            var result = _returnService.CreateReturn(mo);
 
             if (result.Result > 0)
             {
@@ -102,22 +137,38 @@ namespace SeramikStore.Web.Controllers
             }
             else
             {
-
-
-                var vm = new ReturnCreateViewDto
-                {
-                    OrderId = model.OrderId,
-                    Items = _returnService.GetOrderForNewReturn(model.OrderId, userId)
-                };
-
-
+                var vm = EmptyReturnCreateVM(model.OrderId, userId);
                 TempData["Error"] = result.Message;
-
-
                 return View("NewReturn", vm);
             }
-
             
+        }
+
+        public ReturnCreateViewModel EmptyReturnCreateVM(int orderid, int userId)
+        {
+            var m = new ReturnCreateViewModel();
+            m.OrderId = orderid;
+            m.Reasondesc = "";
+            m.ReasonId = 0;
+
+            m.Items = _returnService.GetOrderForNewReturn(orderid, userId);
+            m.Reasons = new List<SelectListItem>
+{
+            new SelectListItem
+            {
+                Value = "0",
+                Text = "Lütfen Seçiniz"
+            }
+}
+            .Concat(_reasonService.List()
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = $"{x.Id} - {x.Reasondesc}"
+                }))
+            .ToList();
+
+            return m;
         }
     }
 

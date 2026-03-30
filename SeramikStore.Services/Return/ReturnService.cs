@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using SeramikStore.Contracts.Reason;
 using SeramikStore.Contracts.Return;
 using SeramikStore.Services;
 using System.Data;
@@ -33,17 +34,26 @@ public class ReturnService : IReturnService
                 // 1️⃣ HEADER
                 while (reader.Read())
                 {
-                    headers.Add(new ReturnHeaderDto
+
+                    ReturnHeaderDto r = new ReturnHeaderDto
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("Id")),
                         UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                         ReturnRequestDate = reader.GetDateTime(reader.GetOrdinal("ReturnRequestDate")),
                         OrderId = reader.GetInt32(reader.GetOrdinal("OrderId")),
-                        
-                        Reason = reader["Reason"]?.ToString(),
                         StatusForReturnCode = reader.GetInt32(reader.GetOrdinal("StatusForReturnCode")),
                         StatusForReturnDesc = reader["StatusForReturnDesc"]?.ToString()
-                    });
+                    };
+
+                    r.ReturnReason = new ReasonDto
+                    {
+                        Id = reader.GetInt32(reader.GetOrdinal("ReasonId")),
+                        Reasondesc = reader["ReasonDesc"]?.ToString()
+                    };
+
+
+                    headers.Add(r);                       
+                       
                 }
 
                 // 2️⃣ DETAIL
@@ -88,6 +98,8 @@ public class ReturnService : IReturnService
         }
 
         return headers;
+
+
     }
 
     public List<ReturnCreateItemDto> GetOrderForNewReturn(int orderId, int userId)
@@ -143,7 +155,8 @@ public class ReturnService : IReturnService
 
         cmd.Parameters.AddWithValue("@OrderId", model.OrderId);
         cmd.Parameters.AddWithValue("@UserId", model.UserId);
-        cmd.Parameters.AddWithValue("@Reason", model.Reason ?? (object)DBNull.Value);
+        cmd.Parameters.AddWithValue("@ReasonId", model.ReturnReason.Id);
+        cmd.Parameters.AddWithValue("@ReasonDesc", model.ReturnReason.Reasondesc);
 
         // JSON serialize
         var jsonItems = JsonConvert.SerializeObject(
