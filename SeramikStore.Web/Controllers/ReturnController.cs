@@ -111,7 +111,10 @@ namespace SeramikStore.Web.Controllers
 
                 return View("NewReturn", vm);
             }
-
+            if (string.IsNullOrWhiteSpace(model.Reasondesc))
+            {
+                model.Reasondesc = string.Empty;
+            }
             ReturnCreateDto mo = new ReturnCreateDto
             {
                 OrderId = model.OrderId,
@@ -133,6 +136,8 @@ namespace SeramikStore.Web.Controllers
             if (result.Result > 0)
             {
                 TempData["Success"] = result.Message;
+                TempData["LastReturnId"] = result.Result;
+
                 return RedirectToAction("OrderInfo", "Order", new { id = model.OrderId });
             }
             else
