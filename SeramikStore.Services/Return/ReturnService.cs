@@ -48,10 +48,10 @@ public class ReturnService : IReturnService
                     r.ReturnReason = new ReasonDto
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("ReasonId")),
-                        Reasondesc = reader["ReasonDesc"]?.ToString()
+                        Reasondesc = reader["Reasondesc"]?.ToString()
                     };
 
-
+                    r.ManuelDescriptionForReason = reader["ManuelDescriptionForReason"]?.ToString();
                     headers.Add(r);                       
                        
                 }
