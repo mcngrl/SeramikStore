@@ -245,27 +245,52 @@
                     </h6>
 
                     <div class="@(TempData["LastReturnId"] != null ? "show" : "collapse")" id="ReturnListCollapse">
+
+                        <div class="d-flex justify-content-end mb-4">
+                            <a asp-controller="Return"
+                               asp-action="NewReturn"
+                               asp-route-Id="@Model.Id"
+                               class="btn btn-primary btn-sm">
+                                Yeni İade Talebi
+                            </a>
+                        </div>
+
                     @foreach (var ret in TheReturnList)
                     {
                             <div class="card shadow-sm border-2 mb-4 rounded-4">
                                 <div class="card-body p-4">
-
+      
                                     <!-- HEADER -->
                                     <div class="d-flex justify-content-between align-items-start mb-3">
 
-                                        <div>
+@*                                         <div>
                                             <div class="fw-semibold">
                                                 Talep No: <span class="text-primary">@ret.Id</span>
                                             </div>
                                             <small class="text-muted">
                                                 Talep Tarihi: @ret.ReturnRequestDate.ToString("dd MMM yyyy • HH:mm")
                                             </small>
+                                        </div> *@
+
+                                        <div class="fw-semibold d-flex align-items-center gap-2">
+                                            Talep No:
+                                            <span class="badge rounded-pill px-3 py-2 fw-medium bg-warning-subtle text-warning-emphasis">@ret.Id</span>
+
+                                            <a asp-controller="Return"
+                                               asp-action="Cancel"
+                                               asp-route-id="@ret.Id"
+                                               class="text-danger ms-2"
+                                               title="Talebi İptal Et"
+                                               onclick="return showConfirm('Bu iade talebini iptal etmek istediğinize emin misiniz?'});">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
                                         </div>
 
                                         <span class="badge rounded-pill px-3 py-2 fw-medium bg-warning-subtle text-warning-emphasis">
                                             <i class="bi bi-arrow-return-left me-1"></i>
                                             @L[ret.StatusForReturnDesc]
                                         </span>
+
                                     </div>
 
                                     <!-- REASON -->
@@ -418,9 +443,6 @@
         <div class="col-md-3">
             <div class="card shadow-sm mb-4 border-warning">
                 <div class="card-body">
-
-
-
                     <!-- Sipariş No -->
                     <div class="row-cols-md-6">
                         <strong>@L["Sipariş No"]:</strong> #@Model.Id
@@ -452,22 +474,17 @@
                 </div>
             </div>
             <!-- ALT BUTONLAR -->
-            <div class="d-grid gap-2 mb-4">
+@*             <div class="d-grid gap-2 mb-4">
                 <a asp-controller="Return"
                    asp-action="GetReturnsByOrderId"
                    asp-route-Id="@Model.Id"
                    class="btn btn-primary btn-sm">
                     @L["İade Taleplerim"]
                 </a>
-            </div>
-            <div class="d-grid gap-2 mb-4">
-                <a asp-controller="Return"
-                   asp-action="NewReturn"
-                   asp-route-Id="@Model.Id"
-                   class="btn btn-primary btn-sm">
-                    Yeni İade Talebi
-                </a>
-            </div>
+            </div> *@
+
+
+
 
         </div>
     </div>
