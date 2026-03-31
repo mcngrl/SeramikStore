@@ -149,6 +149,36 @@ namespace SeramikStore.Web.Controllers
             
         }
 
+
+
+        [HttpPost]
+        public IActionResult CancelMyReturn(int ReturnHeaderid, int OrderId)
+        {
+
+            var userId = HttpContext.Session.GetInt32("session_UserId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+
+
+
+            var res = _returnService.CancelReturn(ReturnHeaderid, (int)userId);
+
+            if (res.Result > 0)
+            {
+                TempData["Success"] = res.Message;
+                TempData["LastReturnId"] = res.Result;
+            }
+            else
+            {
+                TempData["Error"] = res.Message;
+            }
+
+            return RedirectToAction("OrderInfo", "Order", new { id = OrderId });
+
+
+
+        }
         public ReturnCreateViewModel EmptyReturnCreateVM(int orderid, int userId)
         {
             var m = new ReturnCreateViewModel();

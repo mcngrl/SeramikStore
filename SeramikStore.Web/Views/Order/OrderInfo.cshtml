@@ -274,16 +274,27 @@
 
                                         <div class="fw-semibold d-flex align-items-center gap-2">
                                             Talep No:
-                                            <span class="badge rounded-pill px-3 py-2 fw-medium bg-warning-subtle text-warning-emphasis">@ret.Id</span>
+                                            <span class="badge rounded-pill px-3 py-2 fw-medium bg-warning-subtle text-warning-emphasis" id="return-row-@ret.Id">@ret.Id</span>
 
-                                            <a asp-controller="Return"
-                                               asp-action="Cancel"
-                                               asp-route-id="@ret.Id"
-                                               class="text-danger ms-2"
-                                               title="Talebi İptal Et"
-                                               onclick="return showConfirm('Bu iade talebini iptal etmek istediğinize emin misiniz?'});">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
+
+                                            @if (ret.StatusForReturnCode != (int)ReturnStatusCode.ReturnCancelled)
+                                            {
+                                              <form id="cancelReturnForm@@ret.Id" asp-controller="Return" asp-action="CancelMyReturn" method="post">
+                                                <input type="hidden" name="ReturnHeaderid" value="@ret.Id" />
+                                                <input type="hidden" name="OrderId" value="@ret.OrderId" />
+
+                                                <button type="button"
+                                                        class="btn btn-outline-danger btn-sm"
+                                                        onclick="showConfirm('İade Talebini iptal etmek istediğinize emin misiniz?', function() { document.getElementById('cancelReturnForm@@ret.Id').submit(); });">
+                                                    <i class="fa-solid fa-ban me-1"></i>
+                                                    @L["İade Talebini İptal Et"]
+                                                </button>
+                                            </form> 
+
+                                            }
+
+
+
                                         </div>
 
                                         <span class="badge rounded-pill px-3 py-2 fw-medium bg-warning-subtle text-warning-emphasis">
@@ -675,6 +686,35 @@
     handleCollapse('TeslimatAdresiCollapse', 'arrowIconT');
 </script>
 
+<style>
+    .highlight-animate {
+        animation: highlightFade 3s ease;
+        box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+    }
+
+    @@keyframes highlightFade {
+        0%
+
+    {
+        background-color: #fff3cd;
+        transform: scale(1.05);
+        box-shadow: 0 0 10px 3px rgba(255, 193, 7, 0.6);
+    }
+
+    50% {
+        background-color: #fff3cd;
+        transform: scale(1.08);
+        box-shadow: 0 0 15px 5px rgba(255, 193, 7, 0.8);
+    }
+
+    100% {
+        background-color: transparent;
+        transform: scale(1);
+        box-shadow: none;
+    }
+
+    }
+</style>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -691,12 +731,17 @@
                 row.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
                 // highlight efekti
-                row.classList.add("bg-warning-subtle");
+                //row.classList.add("bg-warning-subtle");
+                row.classList.add("highlight-animate");
 
                 setTimeout(() => {
-                    row.classList.remove("bg-warning-subtle");
+                    row.classList.remove("highlight-animate");
                 }, 3000);
             }
         }
     });
+
+
+
+
 </script>
