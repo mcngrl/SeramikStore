@@ -184,4 +184,28 @@ public class ReturnService : IReturnService
         return (-99, "Bilinmeyen hata");
     }
 
+    public (int Result, string Message) CancelReturn(int returnHeaderId, int userId)
+    {
+        using var conn = new SqlConnection(_connectionString);
+        using var cmd = new SqlCommand("sp_Return_Cancel", conn);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.AddWithValue("@ReturnHeaderId", returnHeaderId);
+        cmd.Parameters.AddWithValue("@UserId", userId);
+
+        conn.Open();
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            int result = reader.GetInt32(reader.GetOrdinal("Result"));
+            string message = reader["Message"]?.ToString();
+
+            return (result, message);
+        }
+
+        return (-99, "Bilinmeyen hata");
+    }
 }

@@ -19,6 +19,8 @@ namespace SeramikStore.Services
 
  
        (int Result, string Message) CreateReturn(ReturnCreateDto model);
-        
+
+       (int Result, string Message) CancelReturn(int returnHeaderId, int userId);
+
     }
 }
