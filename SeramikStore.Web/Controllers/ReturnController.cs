@@ -57,6 +57,11 @@ namespace SeramikStore.Web.Controllers
         {
             int userId = (int)HttpContext.Session.GetInt32("session_UserId");
             ReturnCreateViewModel m = EmptyReturnCreateVM(id, userId);
+            if (m.Items == null || m.Items.Count == 0)
+            {
+                TempData["Error"] = "Bu sipariş için iade edilebilecek ürün bulunmamaktadır.";
+                return RedirectToAction("OrderInfo", "Order", new { id });
+            }
             return View(m);
                   
         }
@@ -66,7 +71,12 @@ namespace SeramikStore.Web.Controllers
         {
             int userId = (int)HttpContext.Session.GetInt32("session_UserId");
 
-            if (!model.Items.Any(x => x.ReturnQuantity > 0))
+
+            if (model.Items==null)
+            {
+                ModelState.AddModelError("Items", "İade edilebilecek ürün yok.");
+            }
+            else if (!model.Items.Any(x => x.ReturnQuantity > 0))
             {
                 ModelState.AddModelError("Items", "En az bir ürün için iade adedi girilmelidir.");
             }

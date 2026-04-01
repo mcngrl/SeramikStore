@@ -1,6 +1,8 @@
-﻿@using SeramikStore.Web.ViewModels.Return
+﻿@using SeramikStore.Web.Localization
+@using SeramikStore.Web.ViewModels.Return
 
 @model ReturnCreateViewModel
+@inject IStringLocalizer<CartResource> L
 
 <div class="container mt-4">
     <div class="card shadow-sm">
@@ -8,7 +10,7 @@
 
             <h5 class="mb-4">
                 <i class="fa-solid fa-rotate-left me-2"></i>
-                Yeni İade Talebi
+                @L["Yeni İade Talebi"]
             </h5>
             <span asp-validation-for="Items" class="text-danger"></span>
             <form asp-action="CreateReturn" method="post">
@@ -31,7 +33,7 @@
                                         <div style="font-weight:500">@item.ProductName</div>
                                         <small class="text-muted">@item.ProductCode</small>
                                         <div class="text-success small mt-1">
-                                            Kalan: @item.AvaliableQuatityForReturn adet
+                                            @L["İade Edilebilir Miktar"]: @item.AvaliableQuatityForReturn @L["Adet"]
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +67,7 @@
                                     <button type="button"
                                             class="btn btn-link btn-sm p-0"
                                             onclick="setMax(@i, @item.AvaliableQuatityForReturn)">
-                                        Tümünü İade Et
+                                        @L["Tümünü İade Et"];
                                     </button>
 
                                     <!-- hidden -->
