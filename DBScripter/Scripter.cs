@@ -50,6 +50,13 @@ class Scripter
 
         WriteStoredProcedures(conn, writer);
 
+        writer.WriteLine();
+        writer.WriteLine("-- ===============================");
+        writer.WriteLine("-- VIEWS");
+        writer.WriteLine("-- ===============================");
+
+        WriteViews(conn, writer);
+
         conn.Close();
 
     }
@@ -314,4 +321,49 @@ PRIMARY KEY CLUSTERED ({string.Join(", ", columns)})
 GO");
     }
 
+    static void WriteViews(SqlConnection conn, TextWriter writer)
+    {
+        string sql = @"
+        SELECT 
+            s.name AS SchemaName,
+            v.name AS ViewName,
+            m.definition
+        FROM sys.views v
+        JOIN sys.schemas s ON v.schema_id = s.schema_id
+        JOIN sys.sql_modules m ON v.object_id = m.object_id
+        ORDER BY s.name, v.name";
+
+        using var cmd = new SqlCommand(sql, conn);
+        using var rdr = cmd.ExecuteReader();
+
+        while (rdr.Read())
+        {
+            string schema = rdr["SchemaName"].ToString();
+            string name = rdr["ViewName"].ToString();
+            string def = rdr["definition"].ToString();
+
+            writer.WriteLine($"-- {schema}.{name}");
+
+            writer.WriteLine($@"
+IF OBJECT_ID('{schema}.{name}', 'V') IS NOT NULL
+    DROP VIEW [{schema}].[{name}]
+GO");
+
+            string trimmed = def.TrimStart();
+
+            if (trimmed.StartsWith("CREATE OR ALTER", StringComparison.OrdinalIgnoreCase))
+            {
+                def = def.Replace("CREATE OR ALTER", "CREATE", StringComparison.OrdinalIgnoreCase);
+            }
+            else if (trimmed.StartsWith("ALTER", StringComparison.OrdinalIgnoreCase))
+            {
+                int index = def.IndexOf("ALTER", StringComparison.OrdinalIgnoreCase);
+                def = def.Remove(index, 5).Insert(index, "CREATE");
+            }
+
+            writer.WriteLine(def);
+            writer.WriteLine("GO");
+            writer.WriteLine();
+        }
+    }
 }
