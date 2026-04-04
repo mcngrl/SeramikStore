@@ -43,8 +43,12 @@ namespace SeramikStore.Web.Controllers
         public IActionResult GetReturnsByOrderId(int id)
         {
 
-            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
-            var returns = _returnService.GetReturnsByOrderId(id,userId);
+            var userId = HttpContext.Session.GetInt32("session_UserId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+
+            var returns = _returnService.GetReturnsByOrderId(id,userId.Value);
             var m = new ReturnList();
             m.OrderId = id;
             m.Headers = returns;
@@ -55,8 +59,12 @@ namespace SeramikStore.Web.Controllers
         [HttpGet]
         public IActionResult NewReturn(int id)
         {
-            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
-            ReturnCreateViewModel m = EmptyReturnCreateVM(id, userId);
+
+            var userId = HttpContext.Session.GetInt32("session_UserId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+            ReturnCreateViewModel m = EmptyReturnCreateVM(id, userId.Value);
             if (m.Items == null || m.Items.Count == 0)
             {
                 TempData["Error"] = "Bu sipariş için iade edilebilecek ürün bulunmamaktadır.";
@@ -69,7 +77,10 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult CreateReturn(ReturnCreateViewModel model)
         {
-            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
+            var userId = HttpContext.Session.GetInt32("session_UserId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
 
 
             if (model.Items==null)
@@ -109,7 +120,7 @@ namespace SeramikStore.Web.Controllers
             if (!ModelState.IsValid)
             {
 
-                ReturnCreateViewModel vm = EmptyReturnCreateVM(model.OrderId, userId);
+                ReturnCreateViewModel vm = EmptyReturnCreateVM(model.OrderId, userId.Value);
 
                 var errors = ModelState.Values
                     .SelectMany(v => v.Errors)
@@ -128,7 +139,7 @@ namespace SeramikStore.Web.Controllers
             ReturnCreateDto mo = new ReturnCreateDto
             {
                 OrderId = model.OrderId,
-                UserId = userId,
+                UserId = userId.Value,
                 ReturnReason = new ReasonDto
                 {
                     Id = model.ReasonId,
@@ -152,7 +163,7 @@ namespace SeramikStore.Web.Controllers
             }
             else
             {
-                var vm = EmptyReturnCreateVM(model.OrderId, userId);
+                var vm = EmptyReturnCreateVM(model.OrderId, userId.Value);
                 TempData["Error"] = result.Message;
                 return View("NewReturn", vm);
             }

@@ -37,8 +37,14 @@ namespace SeramikStore.Web.Controllers
         public IActionResult OrderList()
         {
 
-            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
-            var orders = _orderService.GetOrdersByUserId(userId);
+
+
+            var userId = HttpContext.Session.GetInt32("session_UserId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+
+            var orders = _orderService.GetOrdersByUserId(userId.Value);
             return View(orders);
         }
 
@@ -105,12 +111,16 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult CreateOrder(int AddressId, decimal CargoAmount)
         {
-            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
+
+            var userId = HttpContext.Session.GetInt32("session_UserId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
 
             // 1️⃣ DTO hazırla
             OrderCreateDto orderInfo = new OrderCreateDto
             {
-                UserId = userId,
+                UserId = userId.Value,
                 AddressId = AddressId,
                 CargoAmount = CargoAmount
             };
@@ -269,8 +279,13 @@ namespace SeramikStore.Web.Controllers
         [HttpPost]
         public IActionResult UpdateStatus(int orderId, int selectedStatus)
         {
-            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
-            var rRes = _orderService.UpdateOrderStatus(orderId, selectedStatus, userId);
+
+            var userId = HttpContext.Session.GetInt32("session_UserId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
+
+            var rRes = _orderService.UpdateOrderStatus(orderId, selectedStatus, userId.Value);
             if (rRes.IsSuccess)
             {
                 TempData["Success"] = "Durum güncellendi.";
@@ -329,12 +344,16 @@ namespace SeramikStore.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CancelLastStatus(int orderId)
         {
-            int userId = (int)HttpContext.Session.GetInt32("session_UserId");
+
+            var userId = HttpContext.Session.GetInt32("session_UserId");
+
+            if (userId is null)
+                return RedirectToAction("Index", "Home");
 
             _orderService.CancelLastStatus(new CancelLastStatusRequestDto
             {
                 OrderId = orderId,
-                UserId = userId
+                UserId = userId.Value
             });
 
             return RedirectToAction("CustomerOrders", new { highlightId = orderId });

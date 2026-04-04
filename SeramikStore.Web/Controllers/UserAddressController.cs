@@ -14,10 +14,14 @@ public class UserAddressController : Controller
 
     public IActionResult Index()
     {
-        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
 
-        
-        var list = _service.GetByUserId(userId);
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
+
+
+        var list = _service.GetByUserId(userId.Value);
         return View(list);
     }
 
@@ -38,9 +42,14 @@ public class UserAddressController : Controller
             return View(vm);
         }
 
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
+
         _service.Insert(new SeramikStore.Entities.UserAddress
         {
-            UserId = HttpContext.Session.GetInt32("session_UserId").Value,
+            UserId = userId.Value,
             Ad = vm.Ad,
             Soyad = vm.Soyad,
             Telefon = vm.Telefon,
@@ -70,13 +79,15 @@ public class UserAddressController : Controller
     [HttpGet]
     public IActionResult Edit(int id, string returnUrl = null)
     {
-        
-        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
+
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
 
         var address = _service.GetById(id);
 
         // Güvenlik: adres başka kullanıcıya ait mi?
-        if (address == null || address.UserId != userId)
+        if (address == null || address.UserId != userId.Value)
             return RedirectToAction("Index");
 
 
@@ -110,12 +121,14 @@ public class UserAddressController : Controller
             return View(vm);
         }
 
-        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
 
         _service.Update(new SeramikStore.Entities.UserAddress
         {
             Id = vm.Id,
-            UserId = userId,
+            UserId = userId.Value,
             Ad = vm.Ad,
             Soyad = vm.Soyad,
             Telefon = vm.Telefon,

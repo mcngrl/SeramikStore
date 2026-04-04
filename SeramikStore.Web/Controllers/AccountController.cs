@@ -152,8 +152,16 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult Profile()
     {
-        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
-        var user = _userService.GetById(userId);
+   
+
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
+
+
+
+        var user = _userService.GetById(userId.Value);
 
         var vm = new ProfileViewModel
         {
@@ -176,7 +184,10 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Profile(ProfileViewModel vm, string FormType)
     {
-        int userId = HttpContext.Session.GetInt32("session_UserId").Value;
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
 
         if (FormType == "Profile")
         {
@@ -187,7 +198,7 @@ public class AccountController : Controller
 
             _userService.Update(new UserDto
             {
-                Id = userId,
+                Id = userId.Value,
                 FirstName = vm.Profile.FirstName,
                 LastName = vm.Profile.LastName,
                 PhoneNumber = vm.Profile.PhoneNumber,
@@ -206,7 +217,7 @@ public class AccountController : Controller
                 return View(vm);
 
             bool result = _userService.ChangePassword(
-                userId,
+                userId.Value,
                 vm.Password.CurrentPassword,
                 vm.Password.NewPassword
             );
@@ -218,7 +229,7 @@ public class AccountController : Controller
                     _L["Şu anki şifre hatalı"].Value    
                 );
 
-                var user = _userService.GetById(userId);
+                var user = _userService.GetById(userId.Value);
                 vm.Profile = new ProfileInfoViewModel
                 {
                     Id = user.Id,
