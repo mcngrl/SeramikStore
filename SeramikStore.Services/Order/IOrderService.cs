@@ -23,7 +23,7 @@ namespace SeramikStore.Services
         List<OrderStatusProcessDto> GetStatusProcess(int orderId);
         List<OrderStatusHistoryDto> GetStatusHistory(int orderId);
 
-        bool CanCancel(OrderStatusCode status);
+        bool OrderCanCancelbyCustomer(OrderStatusCode status);
 
 
 

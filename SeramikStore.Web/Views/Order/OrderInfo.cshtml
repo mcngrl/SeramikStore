@@ -245,15 +245,18 @@
                     </h6>
 
                     <div class="@(TempData["LastReturnId"] != null ? "show" : "collapse")" id="ReturnListCollapse">
+                        @if(@Model.ThisOrderIsReturnableByCustomer)
+                        {
+                            <div class="d-flex justify-content-end mb-4">
+                                <a asp-controller="Return"
+                                   asp-action="NewReturn"
+                                   asp-route-Id="@Model.Id"
+                                   class="btn btn-primary btn-sm">
+                                    Yeni İade Talebi
+                                </a>
+                            </div>
+                        }
 
-                        <div class="d-flex justify-content-end mb-4">
-                            <a asp-controller="Return"
-                               asp-action="NewReturn"
-                               asp-route-Id="@Model.Id"
-                               class="btn btn-primary btn-sm">
-                                Yeni İade Talebi
-                            </a>
-                        </div>
 
                     @foreach (var ret in TheReturnList)
                     {
@@ -441,9 +444,6 @@
 
                         </div>  *@
                     }
-                        <div class="border rounded-3 p-3 mb-4 bg-light text-end fw-semibold">
-                           @*  @L["İade Toplamı"]: @Model.ProductTotal.ToString("N2", culture) @currency *@
-                        </div>
                     </div>
 
                 </div>

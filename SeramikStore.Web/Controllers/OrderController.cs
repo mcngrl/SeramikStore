@@ -20,17 +20,20 @@ namespace SeramikStore.Web.Controllers
         private readonly ICartService _cartService;
         private readonly CompanyOptions _company;
         private readonly IReturnService _returnService;
+        private readonly IOrderReturnManager _orderReturnManager;
         public OrderController(IOrderService orderService,
             IUserAddressService userAddressService,
             ICartService cartService, 
             IOptions<CompanyOptions> companyOptions,
-            IReturnService returnService)
+            IReturnService returnService,
+            IOrderReturnManager orderReturnManager)
         {
             _orderService = orderService;
             _userAddressService = userAddressService;
             _cartService = cartService;
             _company = companyOptions.Value;
             _returnService = returnService;
+            _orderReturnManager = orderReturnManager;
         }
 
         [HttpGet]
@@ -90,6 +93,7 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("Index", "Home");
 
             var order = _orderService.GetDetailedOrderById(id);
+            order.ThisOrderIsReturnableByCustomer = _orderReturnManager.IsOrderReturnable(id, userId.Value);
 
             if (order == null)
                 return RedirectToAction("Index", "Home");
@@ -316,7 +320,7 @@ namespace SeramikStore.Web.Controllers
             if (order.UserId != userId)
                 return RedirectToAction("Index", "Home");
 
-            var cancancel = _orderService.CanCancel((OrderStatusCode)order.OrderStatusCode);
+            var cancancel = _orderService.OrderCanCancelbyCustomer((OrderStatusCode)order.OrderStatusCode);
 
             if (cancancel == false)
             {

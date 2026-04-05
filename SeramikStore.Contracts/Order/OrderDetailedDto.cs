@@ -29,6 +29,7 @@ namespace SeramikStore.Contracts.Order
         public List<StatusOptionDto> NextStatusesForUpdate { get; set; } = new();
 
         public bool ThisOrderCanBeCanceledByCustomer { get; set; }
+        public bool ThisOrderIsReturnableByCustomer { get; set; }
 
         public ReturnList returnList { get; set; }
     }

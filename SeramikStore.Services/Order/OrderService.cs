@@ -126,7 +126,8 @@ namespace SeramikStore.Services
                     //NEXT STATUSF
                     order.NextStatusesForUpdate = GetNextStatusesForUpdate(orderId);
 
-                    order.ThisOrderCanBeCanceledByCustomer = CanCancel((OrderStatusCode)order.OrderStatusCode);
+                    order.ThisOrderCanBeCanceledByCustomer = OrderCanCancelbyCustomer((OrderStatusCode)order.OrderStatusCode);
+
                 }
             }
 
@@ -337,14 +338,13 @@ namespace SeramikStore.Services
             }
         }
 
-        public bool CanCancel(OrderStatusCode status)
+        public bool OrderCanCancelbyCustomer(OrderStatusCode status)
         {
             return status == OrderStatusCode.OrderCreated
-                || status == OrderStatusCode.PaymentPending
-                || status == OrderStatusCode.PaymentReceived
-                || status == OrderStatusCode.OrderApproved;
+                || status == OrderStatusCode.PaymentPending;
         }
 
+  
     }
 }
 

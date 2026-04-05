@@ -15,7 +15,7 @@ namespace SeramikStore.Services
     {
         List<ReturnHeaderDto> GetReturnsByOrderId(int orderId, int userId);
 
-        List<ReturnCreateItemDto> GetOrderForNewReturn(int orderId, int userId);
+        (List<ReturnCreateItemDto> OrderItems, OrderStatusCode theOrderStatusCode) GetOrderForNewReturn(int orderId, int userId);
 
  
        (int Result, string Message) CreateReturn(ReturnCreateDto model);
