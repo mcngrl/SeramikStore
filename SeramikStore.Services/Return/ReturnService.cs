@@ -1,8 +1,11 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using SeramikStore.Contracts.Order;
 using SeramikStore.Contracts.Reason;
 using SeramikStore.Contracts.Return;
+using SeramikStore.Entities;
+using SeramikStore.Entities.Enums;
 using SeramikStore.Services;
 using System.Data;
 
@@ -102,9 +105,10 @@ public class ReturnService : IReturnService
 
     }
 
-    public List<ReturnCreateItemDto> GetOrderForNewReturn(int orderId, int userId)
+    public (List<ReturnCreateItemDto> OrderItems, OrderStatusCode theOrderStatusCode) GetOrderForNewReturn(int orderId, int userId)
     {
-        var list = new List<ReturnCreateItemDto>();
+        List<ReturnCreateItemDto> list = new List<ReturnCreateItemDto>();
+        OrderStatusCode theresultOrderStatusCode = OrderStatusCode.NotAssigned ;
 
         using (var conn = new SqlConnection(_connectionString))
         using (var cmd = new SqlCommand("sp_Order_GetForNewReturn", conn))
@@ -140,11 +144,25 @@ public class ReturnService : IReturnService
                         CurrencyCode = reader["CurrencyCode"]?.ToString()
                     });
                 }
+
+                if (reader.NextResult())
+                {
+                    if (reader.Read())
+                    {
+                        theresultOrderStatusCode  = (OrderStatusCode)reader.GetInt32(reader.GetOrdinal("OrderStatusCode"));
+
+                    }
+                }
             }
+
+            
+
         }
 
-        return list;
+        return (list, theresultOrderStatusCode);
     }
+
+
 
     public (int Result, string Message) CreateReturn(ReturnCreateDto model)
     {

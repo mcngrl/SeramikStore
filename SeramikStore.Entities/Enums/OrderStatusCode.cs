@@ -9,6 +9,7 @@ namespace SeramikStore.Entities.Enums
 
     public enum OrderStatusCode
     {
+        NotAssigned = 0,          //  SiparisDurumuAtanmadi
         OrderCreated = 10,          //  SiparisOlusturdu
         PaymentPending = 20,          //  OdemeBekleniyor
         PaymentReceived = 30,          //  OdemeAlindi

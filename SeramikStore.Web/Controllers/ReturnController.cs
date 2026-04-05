@@ -21,6 +21,7 @@ namespace SeramikStore.Web.Controllers
         private readonly IReturnService _returnService;
         private readonly IReasonService _reasonService;
         private readonly IOrderService _orderService;
+        private readonly IOrderReturnManager _orderReturnManager;
         private readonly IUserAddressService _userAddressService;
         private readonly ICartService _cartService;
         private readonly CompanyOptions _company;
@@ -29,7 +30,7 @@ namespace SeramikStore.Web.Controllers
             IReasonService reasonService,
             IOrderService orderService,
             IUserAddressService userAddressService,
-            ICartService cartService, IOptions<CompanyOptions> companyOptions)
+            ICartService cartService, IOptions<CompanyOptions> companyOptions, IOrderReturnManager orderReturnManager)
         {
             _reasonService = reasonService;
             _returnService = returnService;
@@ -37,6 +38,7 @@ namespace SeramikStore.Web.Controllers
             _userAddressService = userAddressService;
             _cartService = cartService;
             _company = companyOptions.Value;
+            _orderReturnManager = orderReturnManager;
         }
 
         [HttpGet]
@@ -55,7 +57,6 @@ namespace SeramikStore.Web.Controllers
             return View(m);
         }
 
-
         [HttpGet]
         public IActionResult NewReturn(int id)
         {
@@ -64,12 +65,15 @@ namespace SeramikStore.Web.Controllers
 
             if (userId is null)
                 return RedirectToAction("Index", "Home");
-            ReturnCreateViewModel m = EmptyReturnCreateVM(id, userId.Value);
-            if (m.Items == null || m.Items.Count == 0)
+
+            if (_orderReturnManager.IsOrderReturnable(id, userId.Value) == false)
             {
                 TempData["Error"] = "Bu sipariş için iade edilebilecek ürün bulunmamaktadır.";
                 return RedirectToAction("OrderInfo", "Order", new { id });
             }
+
+            ReturnCreateViewModel m = EmptyReturnCreateVM(id, userId.Value);
+
             return View(m);
                   
         }
@@ -170,8 +174,6 @@ namespace SeramikStore.Web.Controllers
             
         }
 
-
-
         [HttpPost]
         public IActionResult CancelMyReturn(int ReturnHeaderid, int OrderId)
         {
@@ -206,8 +208,8 @@ namespace SeramikStore.Web.Controllers
             m.OrderId = orderid;
             m.Reasondesc = "";
             m.ReasonId = 0;
-
-            m.Items = _returnService.GetOrderForNewReturn(orderid, userId);
+            var result = _returnService.GetOrderForNewReturn(orderid, userId);
+            m.Items = result.OrderItems;
             m.Reasons = new List<SelectListItem>
 {
             new SelectListItem

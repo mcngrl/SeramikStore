@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SeramikStore.Contracts.Reason;
 using SeramikStore.Contracts.Return;
+using SeramikStore.Entities.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -34,6 +35,7 @@ namespace SeramikStore.Web.ViewModels.Return
 
         [ValidateNever]
         public List<SelectListItem> Reasons { get; set; }
+
 
     }
 }
