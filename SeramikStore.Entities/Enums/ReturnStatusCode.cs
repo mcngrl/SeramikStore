@@ -9,12 +9,10 @@ namespace SeramikStore.Entities.Enums
 
     public enum ReturnStatusCode
     {
-        RequestUnderReview = 110,     // Talebiniz Değerlendiriliyor
-        ReturnApproved = 120,         // İade Talebiniz Kabul Edildi
-        ReturnRejected = 130,         // İade Talebiniz Reddedildi
-        RefundCompleted = 140,        // Geri Ödeme Gerçekleşti
-        GiftVoucherIssued = 150,      // Hediye Kuponu Tanımlandı
-        ReturnCancelled = 180         // İade Talebiniz İptal Edildi
+        NotAssigned = 0,
+        AwaitingReturnShipment = 110,   // İade kargosunun gönderilmesi bekleniyor
+        Completed = 120,                // Süreç tamamlandı
+        Cancelled = 180,                // İade iptal edildi
     }
 }
 
