@@ -1,3 +1,4 @@
+using SeramikStore.Contracts.Return;
 using SeramikStore.Entities.Enums;
 using SeramikStore.Services;
 using System;
@@ -28,6 +29,36 @@ public class OrderReturnManager : IOrderReturnManager
 
 
         return IsReturnableByCustomer;
+    }
+
+
+    public void MarkCanceleableReturns(List<ReturnHeaderDto> list)
+    {
+        bool hasFinalReturn = list.Any(x => x.IsFinalReturnForOrder);
+
+        if (hasFinalReturn)
+        {
+            foreach (var item in list)
+            {
+                item.IsCancelable = false;
+                if (item.IsFinalReturnForOrder && item.StatusForReturnCode != (int)ReturnStatusCode.Cancelled)
+                {
+                    item.IsCancelable = true;
+                }
+            }
+        }
+        else
+        {
+            foreach (var item in list)
+            {
+                item.IsCancelable = false;
+                if (item.StatusForReturnCode != (int)ReturnStatusCode.Cancelled)
+                {
+                    item.IsCancelable = true;
+                }
+            }
+        }
+
     }
 
 }

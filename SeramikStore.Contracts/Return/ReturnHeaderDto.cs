@@ -16,7 +16,16 @@ namespace SeramikStore.Contracts.Return
         public string BankName { get; set; }
         public string IBAN   { get; set; }
         public string AccountHolderName { get; set; }
-       
+
+        public decimal ReturnProductTotal { get; set; }
+        public decimal ReturnCargoAmount { get; set; }
+        public decimal ReturnGrandTotal { get; set; }
+
+        public string CurrencyCode { get; set; }
+
+        public bool IsFinalReturnForOrder { get; set; }
+
+        public bool IsCancelable { get; set; }
         public List<ReturnDetailDto> Details { get; set; } = new();
     }
 }

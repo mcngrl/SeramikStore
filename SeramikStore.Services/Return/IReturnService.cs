@@ -22,5 +22,7 @@ namespace SeramikStore.Services
 
        (int Result, string Message) CancelReturn(int returnHeaderId, int userId);
 
+        void UpdateReturnCargoAmount(int returnHeaderId, bool IsFinalReturnForOrder);
+
     }
 }
