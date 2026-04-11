@@ -144,6 +144,9 @@ namespace SeramikStore.Web.Controllers
             {
                 OrderId = model.OrderId,
                 UserId = userId.Value,
+                AccountHolderName = model.AccountHolderName,
+                BankName = model.BankName,
+                IBAN = model.IBAN,
                 ReturnReason = new ReasonDto
                 {
                     Id = model.ReasonId,
@@ -208,6 +211,9 @@ namespace SeramikStore.Web.Controllers
             m.OrderId = orderid;
             m.Reasondesc = "";
             m.ReasonId = 0;
+            m.AccountHolderName = "";
+            m.IBAN = "";
+            m.BankName = "";
             var result = _returnService.GetOrderForNewReturn(orderid, userId);
             m.Items = result.OrderItems;
             m.Reasons = new List<SelectListItem>

@@ -45,7 +45,10 @@ public class ReturnService : IReturnService
                         ReturnRequestDate = reader.GetDateTime(reader.GetOrdinal("ReturnRequestDate")),
                         OrderId = reader.GetInt32(reader.GetOrdinal("OrderId")),
                         StatusForReturnCode = reader.GetInt32(reader.GetOrdinal("StatusForReturnCode")),
-                        StatusForReturnDesc = reader["StatusForReturnDesc"]?.ToString()
+                        StatusForReturnDesc = reader["StatusForReturnDesc"]?.ToString(),
+                        BankName = reader["BankName"]?.ToString(),
+                        IBAN = reader["IBAN"]?.ToString(),
+                        AccountHolderName = reader["AccountHolderName"]?.ToString()
                     };
 
                     r.ReturnReason = new ReasonDto
@@ -175,6 +178,9 @@ public class ReturnService : IReturnService
         cmd.Parameters.AddWithValue("@UserId", model.UserId);
         cmd.Parameters.AddWithValue("@ReasonId", model.ReturnReason.Id);
         cmd.Parameters.AddWithValue("@ReasonDesc", model.ReturnReason.Reasondesc);
+        cmd.Parameters.AddWithValue("@BankName", model.BankName);
+        cmd.Parameters.AddWithValue("@IBAN", model.IBAN);
+        cmd.Parameters.AddWithValue("@AccountHolderName", model.AccountHolderName);
 
         // JSON serialize
         var jsonItems = JsonConvert.SerializeObject(

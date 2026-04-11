@@ -13,6 +13,9 @@ namespace SeramikStore.Contracts.Return
         public string ManuelDescriptionForReason { get; set; }
         public int StatusForReturnCode { get; set; }
         public string StatusForReturnDesc { get; set; }
+        public string BankName { get; set; }
+        public string IBAN   { get; set; }
+        public string AccountHolderName { get; set; }
        
         public List<ReturnDetailDto> Details { get; set; } = new();
     }
