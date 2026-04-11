@@ -8,6 +8,7 @@ using SeramikStore.Entities;
 using SeramikStore.Entities.Enums;
 using SeramikStore.Services;
 using System.Data;
+using System.Numerics;
 
 public class ReturnService : IReturnService
 {
@@ -48,7 +49,13 @@ public class ReturnService : IReturnService
                         StatusForReturnDesc = reader["StatusForReturnDesc"]?.ToString(),
                         BankName = reader["BankName"]?.ToString(),
                         IBAN = reader["IBAN"]?.ToString(),
-                        AccountHolderName = reader["AccountHolderName"]?.ToString()
+                        AccountHolderName = reader["AccountHolderName"]?.ToString(),
+                        CurrencyCode = reader["CurrencyCode"]?.ToString(),
+                        ReturnCargoAmount = reader.GetDecimal(reader.GetOrdinal("ReturnCargoAmount")),
+                        ReturnProductTotal = reader.GetDecimal(reader.GetOrdinal("ReturnProductTotal")),
+                        ReturnGrandTotal = reader.GetDecimal(reader.GetOrdinal("ReturnGrandTotal")),
+                        IsFinalReturnForOrder = reader.GetBoolean(reader.GetOrdinal("IsFinalReturnForOrder")),
+                        IsCancelable = false
                     };
 
                     r.ReturnReason = new ReasonDto
@@ -102,6 +109,7 @@ public class ReturnService : IReturnService
                 .OrderBy(x => x.DisplayNo)
                 .ToList();
         }
+
 
         return headers;
 
@@ -231,5 +239,18 @@ public class ReturnService : IReturnService
         }
 
         return (-99, "Bilinmeyen hata");
+    }
+
+    public void UpdateReturnCargoAmount(int returnHeaderId, bool IsFinalReturnForOrder)
+    {
+        using var conn = new SqlConnection(_connectionString);
+        using var cmd = new SqlCommand("sp_Return_UpdateReturnCargoAmount", conn);
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.Add("@ReturnHeaderId", SqlDbType.Int).Value = returnHeaderId;
+        cmd.Parameters.Add("@IsFinalReturnForOrder", SqlDbType.Bit).Value = IsFinalReturnForOrder;
+
+        conn.Open();
+        cmd.ExecuteNonQuery();
     }
 }

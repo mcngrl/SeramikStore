@@ -1,3 +1,4 @@
+using SeramikStore.Contracts.Return;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace SeramikStore.Services
     public interface IOrderReturnManager
     {
         bool IsOrderReturnable(int orderId, int userId);
+
+        void MarkCanceleableReturns(List<ReturnHeaderDto> list);
 
     }
 }

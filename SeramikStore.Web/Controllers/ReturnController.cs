@@ -13,6 +13,7 @@ using SeramikStore.Web.Options;
 using SeramikStore.Web.ViewModels;
 using SeramikStore.Web.ViewModels.Return;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace SeramikStore.Web.Controllers
 {
@@ -41,21 +42,6 @@ namespace SeramikStore.Web.Controllers
             _orderReturnManager = orderReturnManager;
         }
 
-        [HttpGet]
-        public IActionResult GetReturnsByOrderId(int id)
-        {
-
-            var userId = HttpContext.Session.GetInt32("session_UserId");
-
-            if (userId is null)
-                return RedirectToAction("Index", "Home");
-
-            var returns = _returnService.GetReturnsByOrderId(id,userId.Value);
-            var m = new ReturnList();
-            m.OrderId = id;
-            m.Headers = returns;
-            return View(m);
-        }
 
         [HttpGet]
         public IActionResult NewReturn(int id)
@@ -95,7 +81,30 @@ namespace SeramikStore.Web.Controllers
             {
                 ModelState.AddModelError("Items", "En az bir ürün için iade adedi girilmelidir.");
             }
-     
+
+            if (string.IsNullOrWhiteSpace(model.BankName))
+            {
+                ModelState.AddModelError("BankName", "Banka Adı giriniz.");
+            }
+ 
+            var ibanRegex = new Regex(@"^TR\d{24}$");
+
+            if (string.IsNullOrWhiteSpace(model.IBAN))
+            {
+                ModelState.AddModelError("IBAN", "IBAN giriniz.");
+            }
+            else if (!ibanRegex.IsMatch(model.IBAN.Replace(" ", "")))
+            {
+                ModelState.AddModelError("IBAN", "Geçerli bir IBAN giriniz.");
+            }
+
+            if (string.IsNullOrWhiteSpace(model.AccountHolderName))
+            {
+                ModelState.AddModelError("AccountHolderName", "Hesap Sahibi Adı Soyadı giriniz.");
+            }
+
+
+
             if (model.ReasonId == 0)
             {
 
@@ -156,15 +165,21 @@ namespace SeramikStore.Web.Controllers
                 {
                     OrderDetailId = x.OrderDetailId,
                     ReturnQuantity = x.ReturnQuantity
-                }).ToList()
-            };
+                }).ToList(),
+                
+                          };
 
             var result = _returnService.CreateReturn(mo);
 
             if (result.Result > 0)
             {
+                int newReturnId = result.Result;
                 TempData["Success"] = result.Message;
                 TempData["LastReturnId"] = result.Result;
+
+               bool IsFinalReturnForOrder = !_orderReturnManager.IsOrderReturnable(model.OrderId, userId.Value);
+
+                _returnService.UpdateReturnCargoAmount(newReturnId, IsFinalReturnForOrder);
 
                 return RedirectToAction("OrderInfo", "Order", new { id = model.OrderId });
             }
@@ -186,6 +201,16 @@ namespace SeramikStore.Web.Controllers
             if (userId is null)
                 return RedirectToAction("Index", "Home");
 
+
+            var returns = _returnService.GetReturnsByOrderId(OrderId, (int)userId);
+
+            _orderReturnManager.MarkCanceleableReturns(returns);
+
+            if (!returns.Any(x => x.Id == ReturnHeaderid && x.IsCancelable))
+            {
+                TempData["Error"] = "Bu iade iptal edilemez.";
+                return RedirectToAction("OrderInfo", "Order", new { id = OrderId });
+            }
 
 
             var res = _returnService.CancelReturn(ReturnHeaderid, (int)userId);

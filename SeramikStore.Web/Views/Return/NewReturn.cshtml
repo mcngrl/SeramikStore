@@ -4,148 +4,195 @@
 @model ReturnCreateViewModel
 @inject IStringLocalizer<CartResource> L
 
+
 <div class="container mt-4">
     <form asp-action="CreateReturn" method="post">
     <div class="row">
         <div class="col-md-2">
             <partial name="_LeftMenu" />
         </div>
-        
-            <div class="col-md-7">
-            <div class="card shadow-sm">
-                <div class="card-body">
+        <div class="col-md-10">
+                <div class="row">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h7 class="mb-4">
+                                @L["Yeni İade Talebi"]
+                            </h7>
+                            <div class="row">
+                            <div class="col-md-8">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <span asp-validation-for="Items" class="text-danger"></span>
 
-                    <h7 class="mb-4">
-                        <i class="fa-solid fa-rotate-left me-2"></i>
-                        @L["Yeni İade Talebi"]
-                    </h7>
-                    <span asp-validation-for="Items" class="text-danger"></span>
+                                            <input type="hidden" asp-for="OrderId" />
 
-                        <input type="hidden" asp-for="OrderId" />
+                                            <div class="row g-1">
+                                                @for (int i = 0; i < Model.Items.Count; i++)
+                                                {
+                                                    var item = Model.Items[i];
 
-                        <div class="row g-1">
-                            @for (int i = 0; i < Model.Items.Count; i++)
-                            {
-                                var item = Model.Items[i];
+                                                    <div class="col-12">
+                                                        <div class="border rounded p-1 d-flex align-items-center justify-content-between">
 
-                                <div class="col-12">
-                                    <div class="border rounded p-1 d-flex align-items-center justify-content-between">
+                                                            <!-- SOL: Ürün -->
+                                                            <div class="d-flex align-items-center gap-3">
+                                                                <img src="@(string.IsNullOrEmpty(item.ImagePath) ? "/images/no-image.png" : item.ImagePath)"
+                                                                     style="width:60px;height:60px;object-fit:cover;border-radius:8px;" />
 
-                                        <!-- SOL: Ürün -->
-                                        <div class="d-flex align-items-center gap-3">
-                                            <img src="@(string.IsNullOrEmpty(item.ImagePath) ? "/images/no-image.png" : item.ImagePath)"
-                                                 style="width:60px;height:60px;object-fit:cover;border-radius:8px;" />
+                                                                <div>
+                                                                    <div style="font-weight:500">@item.ProductName</div>
+                                                                    <small class="text-muted">@item.ProductCode</small>
+                                                                    <div class="text-success small mt-1">
+                                                                        @L["İade Edilebilir Miktar"]: @item.AvaliableQuatityForReturn @L["Adet"]
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
-                                            <div>
-                                                <div style="font-weight:500">@item.ProductName</div>
-                                                <small class="text-muted">@item.ProductCode</small>
-                                                <div class="text-success small mt-1">
-                                                    @L["İade Edilebilir Miktar"]: @item.AvaliableQuatityForReturn @L["Adet"]
+                                                            <!-- SAĞ: Aksiyon -->
+                                                            <div class="text-center">
+
+                                                                <div class="d-flex align-items-center gap-2 justify-content-center mb-1">
+                                                                    <button type="button"
+                                                                            class="btn btn-sm btn-outline-secondary"
+                                                                            onclick="decrease(@i)">
+                                                                        -
+                                                                    </button>
+
+                                                                    <input type="number"
+                                                                           id="qty-@i"
+                                                                           asp-for="Items[@i].ReturnQuantity"
+                                                                           class="form-control form-control-sm text-center"
+                                                                           style="width:60px"
+                                                                           min="0"
+                                                                           max="@item.AvaliableQuatityForReturn" />
+
+                                                                    <button type="button"
+                                                                            class="btn btn-sm btn-outline-secondary"
+                                                                            onclick="increase(@i, @item.AvaliableQuatityForReturn)">
+                                                                        +
+                                                                    </button>
+                                                                </div>
+
+                                                                <button type="button"
+                                                                        class="btn btn-link btn-sm p-0"
+                                                                        onclick="setMax(@i, @item.AvaliableQuatityForReturn)">
+                                                                    @L["Tümünü İade Et"];
+                                                                </button>
+
+                                                                <!-- hidden -->
+                                                                <input type="hidden" asp-for="Items[@i].OrderDetailId" />
+                                                                <input type="hidden" asp-for="Items[@i].ProductId" />
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                            <div class="mt-1">
+                                                <div class="row mb-3 align-items-center">
+                                                    <div class="col-md-4">
+                                                        <label>İade Sebebi</label>
+                                                        <select asp-for="ReasonId"
+                                                                asp-items="Model.Reasons"
+                                                                class="form-select"></select>
+                                                        <span asp-validation-for="ReasonId" class="text-danger"></span>
+                                                    </div>
+                                                    <div>
+                                                        <label>İade Açıklama</label>
+                                                        <textarea id="customReason"
+                                                                  asp-for="Reasondesc"
+                                                                  class="form-control"
+                                                                  rows="3"
+                                                                  maxlength="499">
+                                                </textarea>
+                                                    </div>
+                               
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <!-- SAĞ: Aksiyon -->
-                                        <div class="text-center">
+                                                <span asp-validation-for="Reasondesc" class="text-danger"></span>
 
-                                            <div class="d-flex align-items-center gap-2 justify-content-center mb-1">
-                                                <button type="button"
-                                                        class="btn btn-sm btn-outline-secondary"
-                                                        onclick="decrease(@i)">
-                                                    -
-                                                </button>
 
-                                                <input type="number"
-                                                       id="qty-@i"
-                                                       asp-for="Items[@i].ReturnQuantity"
-                                                       class="form-control form-control-sm text-center"
-                                                       style="width:60px"
-                                                       min="0"
-                                                       max="@item.AvaliableQuatityForReturn" />
 
-                                                <button type="button"
-                                                        class="btn btn-sm btn-outline-secondary"
-                                                        onclick="increase(@i, @item.AvaliableQuatityForReturn)">
-                                                    +
-                                                </button>
                                             </div>
 
-                                            <button type="button"
-                                                    class="btn btn-link btn-sm p-0"
-                                                    onclick="setMax(@i, @item.AvaliableQuatityForReturn)">
-                                                @L["Tümünü İade Et"];
-                                            </button>
+                                            <!-- Submit -->
+  
 
-                                            <!-- hidden -->
-                                            <input type="hidden" asp-for="Items[@i].OrderDetailId" />
-                                            <input type="hidden" asp-for="Items[@i].ProductId" />
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-                        </div>
-
-                        <div class="mt-1">
-                            <div class="row mb-3 align-items-center">
-                                <div class="col-md-4">
-                                    <label>İade Sebebi</label>
-                                    <select asp-for="ReasonId"
-                                            asp-items="Model.Reasons"
-                                            class="form-select"></select>
-                                    <span asp-validation-for="ReasonId" class="text-danger"></span>
-                                </div>
-                                <div>
-                                    <label>İade Açıklama</label>
-                                    <textarea id="customReason"
-                                              asp-for="Reasondesc"
-                                              class="form-control"
-                                              rows="3"
-                                              maxlength="499">
-                            </textarea>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-4">
-                                        <label>@L["Banka Adı"]</label>
-                                        <input asp-for="BankName" class="form-control" />
-                                        <span asp-validation-for="BankName" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label>@L["IBAN"]</label>
-                                        <input asp-for="IBAN" class="form-control" maxlength="34" />
-                                        <span asp-validation-for="IBAN" class="text-danger"></span>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <label>@L["Hesap Sahibi"]</label>
-                                        <input asp-for="AccountHolderName" class="form-control" />
-                                        <span asp-validation-for="AccountHolderName" class="text-danger"></span>
+                    
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body">
+                                            <div class="row-md-4">
+                                                <label>@L["Banka Adı"]</label>
 
-                            <span asp-validation-for="Reasondesc" class="text-danger"></span>
+                                                <input list="bankalar"
+                                                       asp-for="BankName"
+                                                       class="form-control"
+                                                       placeholder="Banka seçin veya yazın" />
+                                                    <datalist id="bankalar">
+                                                    <option value="Akbank"></option>
+                                                    <option value="Anadolubank"></option>
+                                                    <option value="Burgan Bank"></option>
+                                                    <option value="DenizBank"></option>
+                                                    <option value="Fibabanka"></option>
+                                                    <option value="Garanti BBVA"></option>
+                                                    <option value="Halkbank"></option>
+                                                    <option value="HSBC"></option>
+                                                    <option value="ING Bank"></option>
+                                                    <option value="İş Bankası"></option>
+                                                    <option value="Kuveyt Türk"></option>
+                                                    <option value="Odeabank"></option>
+                                                    <option value="QNB Finansbank"></option>
+                                                    <option value="Türkiye Finans"></option>
+                                                    <option value="VakıfBank"></option>
+                                                    <option value="Yapı Kredi"></option>
+                                                    <option value="Ziraat Bankası"></option>
+                                                    </datalist>
+                                               
+                                                <span asp-validation-for="BankName" class="text-danger"></span>
+
+                                        
+                                            </div>
+
+                                            <div class="row-md-4">
+                                                    <label>@L["IBAN"]</label>
+                                                <input id="ibanInput"
+                                                       asp-for="IBAN"
+                                                       class="form-control"
+                                                       maxlength="32"
+                                                       oninput="formatIBAN()" />
+
+                                                <span id="ibanError" class="text-danger"></span>
+                                                    <span asp-validation-for="IBAN" class="text-danger"></span>
 
 
 
+                                                </div>
+
+                                            <div class="row-md-4">
+                                                    <label>@L["Hesap Sahibi Adı Soyadı"]</label>
+                                                    <input asp-for="AccountHolderName" class="form-control" />
+                                                    <span asp-validation-for="AccountHolderName" class="text-danger"></span>
+                                                </div>
+                                            <div class="text-end mt-3">
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fa-solid fa-check me-1"></i>
+                                                    @L["İade Talebi Oluştur"]
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            </div>
                         </div>
-
-                        <!-- Submit -->
-                        <div class="text-end mt-3">
-                            <button type="submit" class="btn btn-danger">
-                                <i class="fa-solid fa-check me-1"></i>
-                                İade Talebi Oluştur
-                            </button>
-                        </div>
-
-                    
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-3"></div>
-
+          </div>
      </div>
      </form>
 </div>
@@ -171,5 +218,56 @@
     }
 
 
+</script>
+
+<script>
+    function validateIBAN() {
+        let input = document.getElementById("ibanInput");
+        let error = document.getElementById("ibanError");
+
+        let val = input.value.replace(/\s/g, "").toUpperCase();
+
+        if (!val.startsWith("TR")) {
+            error.innerText = "IBAN TR ile başlamalı";
+            return;
+        }
+
+        if (val.length > 0 && val.length < 26) {
+            error.innerText = "IBAN 26 karakter olmalı";
+            return;
+        }
+
+        if (!/^TR\d{24}$/.test(val) && val.length === 26) {
+            error.innerText = "Geçersiz IBAN formatı";
+            return;
+        }
+
+        error.innerText = "";
+    }
+</script>
+
+<script>
+    function formatIBAN() {
+        let input = document.getElementById("ibanInput");
+
+        // boşlukları kaldır + büyük harf yap
+        let val = input.value.replace(/\s/g, "").toUpperCase();
+
+        // sadece harf + rakam
+        val = val.replace(/[^A-Z0-9]/g, "");
+
+        // TR ile başlasın
+        if (!val.startsWith("TR")) {
+            val = "TR" + val.replace(/^TR/, "");
+        }
+
+        // max 26 karakter
+        val = val.substring(0, 26);
+
+        // 4'lü gruplara böl
+        let formatted = val.match(/.{1,4}/g)?.join(" ") || "";
+
+        input.value = formatted;
+    }
 </script>
 

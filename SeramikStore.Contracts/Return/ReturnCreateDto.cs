@@ -21,5 +21,7 @@ namespace SeramikStore.Contracts.Return
         public List<ReturnItemDto> Items { get; set; } = new();
 
 
+
+
     }
 }

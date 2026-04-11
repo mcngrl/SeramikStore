@@ -102,6 +102,9 @@ namespace SeramikStore.Web.Controllers
                 return RedirectToAction("Index","Home");
 
             var returns = _returnService.GetReturnsByOrderId(id, (int)userId);
+
+            _orderReturnManager.MarkCanceleableReturns(returns);
+
             var m = new ReturnList();
             m.OrderId = id;
             m.Headers = returns;
