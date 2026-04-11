@@ -266,14 +266,18 @@
                                     <!-- HEADER -->
                                     <div class="d-flex justify-content-between align-items-start mb-3">
 
-@*                                         <div>
+                                        <div>
                                             <div class="fw-semibold">
-                                                Talep No: <span class="text-primary">@ret.Id</span>
+                                                @L["Banka"] <span class="text-primary">@ret.BankName</span>
                                             </div>
-                                            <small class="text-muted">
-                                                Talep Tarihi: @ret.ReturnRequestDate.ToString("dd MMM yyyy • HH:mm")
-                                            </small>
-                                        </div> *@
+                                            <div class="fw-semibold">
+                                                @L["IBAN"] <span class="text-primary">@ret.IBAN</span>
+                                            </div>
+                                            <div class="fw-semibold">
+                                                @L["Hesap Sahibi"] <span class="text-primary">@ret.AccountHolderName</span>
+                                            </div>
+
+                                        </div> 
 
                                         <div class="fw-semibold d-flex align-items-center gap-2">
                                             Talep No:

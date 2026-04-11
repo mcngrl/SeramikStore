@@ -1,4 +1,4 @@
-﻿using SeramikStore.Contracts.Reason;
+using SeramikStore.Contracts.Reason;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,15 +12,14 @@ namespace SeramikStore.Contracts.Return
     {
         public int OrderId { get; set; }
         public int UserId { get; set; }
+
+        public required string BankName { get; set; }
+        public required string IBAN { get; set; }
+        public required string AccountHolderName { get; set; }
+
         public ReasonDto ReturnReason { get; set; }
         public List<ReturnItemDto> Items { get; set; } = new();
 
-    //    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    //    {
-    //        if (!Items.Any(x => x.ReturnQuantity > 0))
-    //        {
-    //            yield return new ValidationResult("En az bir ürün için iade adedi girilmelidir.");
-    //        }
-    //    }
+
     }
 }

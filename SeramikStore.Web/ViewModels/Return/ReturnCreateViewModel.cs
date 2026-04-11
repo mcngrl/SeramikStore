@@ -31,6 +31,15 @@ namespace SeramikStore.Web.ViewModels.Return
         public string Reasondesc { get; set; }
 
         [ValidateNever]
+        public string BankName { get; set; }
+
+        [ValidateNever]
+        public  string IBAN { get; set; }
+
+        [ValidateNever]
+        public  string AccountHolderName { get; set; }
+
+        [ValidateNever]
         public List<ReturnCreateItemDto> Items { get; set; }
 
         [ValidateNever]
