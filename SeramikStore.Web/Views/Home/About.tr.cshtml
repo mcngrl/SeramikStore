@@ -1,0 +1,82 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
+    ViewData["Title"] = "Hakkında";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+            <h1 class="mb-4 text-center">Hakkında</h1>
+
+            <p>
+                Ben @Company.Value.ContactPerson Boya, Baskı ve Desen bölümü mezunuyum ve özellikle serigrafi alanında uzmanlaştım.
+
+                Kendi tasarımlarım doğrultusunda stoneware ürünler üretiyor ve bunları kendi sitem üzerinden kullanıcılarla buluşturuyorum. Her ürün, tasarım aşamasından üretimine kadar özenle hazırlanır.
+            </p>
+
+            <p>
+                Stoneware, yüksek sıcaklıkta pişirilen, dayanıklı ve uzun ömürlü bir seramik türüdür. Klasik seramiklere göre daha sağlam, porselene göre ise daha doğal ve karakteristik bir dokuya sahiptir. Bu özelliği sayesinde hem estetik hem de günlük kullanım için ideal bir seçenektir.
+
+                Ürettiğim her parçada sade, doğal ve işlevsel bir tasarım anlayışını benimsiyorum.
+            </p>
+
+            <h7>Stoneware nedir?</h7>
+            <p>
+                Stoneware, yüksek sıcaklıkta pişirilen bir seramik türüdür.
+                Bu yüksek ısı sayesinde ürünler çok daha yoğun, sert ve dayanıklı hale gelir.
+                Gözeneksiz yapıya yakın olduğu için su emme oranı düşüktür; bu da onu günlük kullanım için oldukça uygun yapar.
+            </p>
+
+            <h7>Seramik ve porselenden farkı</h7>
+
+            <p>
+                <strong>Klasik seramik (earthenware)</strong><br>
+                Daha düşük sıcaklıkta pişer, daha gözeneklidir ve kırılmaya karşı daha hassastır.
+            </p>
+
+            <p>
+                <strong>Porselen (porcelain)</strong><br>
+                Çok yüksek sıcaklıkta pişer, daha ince ve yarı saydam olabilir, genelde daha “şık” ve narin görünür.
+            </p>
+
+            <p>
+                <strong>Stoneware</strong><br>
+                 İkisinin ortasında bir yerde:
+            </p>
+
+            <ul>
+                <li>Seramiğe göre daha dayanıklı</li>
+                <li>Porselene göre daha doğal ve mat dokulu</li>
+                <li>Günlük kullanım için çok daha pratik</li>
+            </ul>
+
+            <h7>Avantajları</h7>
+            <ul>
+                <li>Isıya dayanıklıdır (fırın, mikrodalga uyumlu olabilir)</li>
+                <li>Çizilmeye ve darbelere karşı daha dirençlidir</li>
+                <li>Uzun ömürlüdür</li>
+                <li>El yapımı ürünlerde çok estetik ve doğal görünür</li>
+            </ul>
+
+            <h7>Neden tercih ediliyor?</h7>
+            <p>
+                Stoneware özellikle son yıllarda el yapımı ürün trendi ve doğal, minimal tasarım anlayışı nedeniyle çok tercih edilmektedir.
+                Çünkü her parça biraz farklıdır; bu da ürünleri daha özgün kılar.
+            </p>
+
+            <p class="fw-bold">
+                @Company.Value.Email
+            </p>
+
+            <p class="fw-bold">
+                 @Company.Value.Phone
+            </p>
+
+            <p class="fw-bold">
+                 @Company.Value.Address
+            </p>
+
+        </div>
+    </div>
+</div>
