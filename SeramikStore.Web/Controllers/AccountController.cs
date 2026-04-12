@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Humanizer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
@@ -11,6 +12,8 @@ using SeramikStore.Web.Options;
 using SeramikStore.Web.ViewModels;
 using SeramikStore.Web.ViewModels.Account;
 using System.Globalization;
+using System.Net;
+using System.Net.Mail;
 
 public class AccountController : Controller
 {
@@ -21,9 +24,12 @@ public class AccountController : Controller
     private readonly IStringLocalizer<EmailResource> _emailL;
     private readonly CompanyOptions _company;
 
+    private readonly EmailSettings _settings;
+
     public AccountController(IUserService userService, IEmailService emailService,
         IStringLocalizer<AccountResource> L, ICartService cartService,
-        IStringLocalizer<EmailResource> emailL, IOptions<CompanyOptions> companyOptions)
+        IStringLocalizer<EmailResource> emailL, IOptions<CompanyOptions> companyOptions,
+        IOptions<EmailSettings> settings)
     {
         _userService = userService;
         _emailService = emailService;
@@ -31,6 +37,7 @@ public class AccountController : Controller
         _cartService = cartService;
         _emailL = emailL;
         _company = companyOptions.Value;
+        _settings = settings.Value;
     }
 
     // REGISTER – GET
@@ -113,6 +120,7 @@ public class AccountController : Controller
             {
                 // LOG AL ama kullanıcıyı bekletme
                 //_logger.LogError(ex, "Email gönderilemedi");
+                TempData["Error"] = ex.Message;
             }
         });
 
@@ -147,8 +155,48 @@ public class AccountController : Controller
 
         return View("EmailConfirmResult", _L["Email başarıyla doğrulandı"].Value);
     }
+    [HttpGet]
+    public async Task<IActionResult> TestEmail(int id)
+    {
 
-    
+        string r = "";
+        try
+        {
+        using var message = new MailMessage
+        {
+            From = new MailAddress(_settings.FromEmailAdress, _settings.FromName),
+            Subject = "subject" + id.ToString(),
+            Body = "htmlBody",
+            IsBodyHtml = true
+        };
+
+        message.To.Add("mehmetcangurel@gmail.com");
+
+        using var client = new SmtpClient(_settings.Host, _settings.Port)
+        {
+            Credentials = new NetworkCredential(
+                _settings.UserName,
+                _settings.Password
+            ),
+            EnableSsl = _settings.EnableSsl,
+            Timeout = 10000 // ⬅️ 10 saniye timeout (çok önemli)
+        };
+
+      
+            await client.SendMailAsync(message);
+            r = "OK";
+        }
+        catch (Exception e)
+        {
+
+            r = e.ToString();
+        }
+        
+
+        string result = r + "<br>_settings.Host" + _settings.Host + "<br>; _settings.Port" + _settings.Port + "<br>; _settings.EnableSsl" + _settings.EnableSsl;
+        return Content(result);
+    }
+
     [HttpGet]
     public IActionResult Profile()
     {
