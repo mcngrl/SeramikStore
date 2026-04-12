@@ -8,6 +8,7 @@ namespace SeramikStore.Contracts.Order
         // Header
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
         public string OrderStatus { get; set; }
         public int OrderStatusCode { get; set; }
         public decimal CargoAmount { get; set; }

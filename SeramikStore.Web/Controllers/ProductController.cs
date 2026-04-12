@@ -190,7 +190,7 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult Delete(int id)
     {
-        var product = _productService.ProductGetById(id);
+        SeramikStore.Services.DTOs.ProductDetailDto product = _productService.ProductGetById(id);
         if (product == null)
             return NotFound();
 
