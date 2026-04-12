@@ -45,20 +45,17 @@
 
                 <small class="text-muted">Ürün Kodu: <strong>@Model.ProductCode</strong></small>
 
-                <h2 class="mt-2 fw-bold">@Model.ProductName</h2>
+                <h6 class="mt-2 fw-bold">@Model.ProductName</h6>
 
                 <!-- FİYAT -->
                 <div class="my-3">
-                    <span class="fs-3 fw-bold text-danger">
+                    <span class="fs-6 fw-bold text-danger">
                         @Model.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
                         @Model.CurrencyCode
                     </span>
                 </div>
 
-                <!-- KARGO -->
-                <div class="alert alert-success py-2">
-                    🚚 <strong>Kargo Ücretsiz</strong>
-                </div>
+
 
                 <!-- ADET + SEPET -->
                 <form asp-action="Cart" method="post" class="mt-3">

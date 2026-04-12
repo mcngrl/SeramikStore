@@ -116,10 +116,11 @@ public class ReturnService : IReturnService
 
     }
 
-    public (List<ReturnCreateItemDto> OrderItems, OrderStatusCode theOrderStatusCode) GetOrderForNewReturn(int orderId, int userId)
+    public (List<ReturnCreateItemDto> OrderItems, OrderStatusCode theOrderStatusCode, bool IsReturnPeriodValid) GetOrderForNewReturn(int orderId, int userId)
     {
         List<ReturnCreateItemDto> list = new List<ReturnCreateItemDto>();
         OrderStatusCode theresultOrderStatusCode = OrderStatusCode.NotAssigned ;
+        bool IsInReturnPeriod = false;
 
         using (var conn = new SqlConnection(_connectionString))
         using (var cmd = new SqlCommand("sp_Order_GetForNewReturn", conn))
@@ -164,13 +165,18 @@ public class ReturnService : IReturnService
 
                     }
                 }
+
+                if (reader.NextResult() && reader.Read())
+                {
+                    IsInReturnPeriod = reader["IsReturnable"] as bool? ?? false;
+                }
             }
 
             
 
         }
 
-        return (list, theresultOrderStatusCode);
+        return (list, theresultOrderStatusCode, IsInReturnPeriod);
     }
 
 

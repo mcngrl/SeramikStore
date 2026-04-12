@@ -65,6 +65,7 @@ namespace SeramikStore.Services
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             OrderDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
+                            DeliveryDate = reader["DeliveryDate"] == DBNull.Value? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("DeliveryDate")),
                             OrderStatusCode = reader.GetInt32(reader.GetOrdinal("OrderStatusCode")),
                             OrderStatus = reader["OrderStatus"]?.ToString(),
                             CargoAmount = reader.GetDecimal(reader.GetOrdinal("CargoAmount")),

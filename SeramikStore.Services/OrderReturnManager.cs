@@ -22,7 +22,8 @@ public class OrderReturnManager : IOrderReturnManager
 
         bool IsReturnableByCustomer = true;
 
-        if (result.OrderItems == null || result.OrderItems.Count == 0 || result.theOrderStatusCode != OrderStatusCode.Delivered)
+        if (result.OrderItems == null || result.OrderItems.Count == 0 || 
+            result.theOrderStatusCode != OrderStatusCode.Delivered  || result.IsReturnPeriodValid == false)
         {
             IsReturnableByCustomer = false;
         }

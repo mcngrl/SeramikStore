@@ -88,7 +88,7 @@
                                         @if (isCompleted)
                                         {
                                             <div class="step-date">
-                                                @(ProcessStatusItem?.IslemTarihi?.ToString("dd.MM HH:mm") ?? "-")
+                                                @(ProcessStatusItem?.IslemTarihi?.ToString("dd.MM.yyyy HH:mm") ?? "-")
                                             </div>
                                         }
 
@@ -243,18 +243,19 @@
                     </h6>
 
                     <div class="@(TempData["LastReturnId"] != null ? "show" : "collapse")" id="ReturnListCollapse">
-                        @if(@Model.ThisOrderIsReturnableByCustomer)
-                        {
+              
                             <div class="d-flex justify-content-end mb-4">
+                            @if (@Model.ThisOrderIsReturnableByCustomer)
+                            {
                                 <a asp-controller="Return"
                                    asp-action="NewReturn"
                                    asp-route-Id="@Model.Id"
                                    class="btn btn-primary btn-sm">
                                     Yeni İade Talebi
                                 </a>
+                            }
                             </div>
-                        }
-
+                     
 
                     @foreach (var ret in TheReturnList)
                     {
@@ -405,6 +406,14 @@
                         <strong>@L["Sipariş Tarihi"]:</strong>
                         @Model.OrderDate.ToString("dd.MM.yyyy HH:mm")
                     </div>
+                    <!-- Sipariş Tarihi -->
+                    @if (Model.DeliveryDate.HasValue)
+                    {
+                        <div class="row-md-6">
+                            <strong>@L["Teslimat Tarihi"]:</strong>
+                            @Model.DeliveryDate.Value.ToString("dd.MM.yyyy HH:mm")
+                        </div>
+                    }
 
 
                     @if (Model.ThisOrderCanBeCanceledByCustomer)

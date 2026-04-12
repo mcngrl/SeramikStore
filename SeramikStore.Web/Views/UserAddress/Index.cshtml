@@ -1,26 +1,6 @@
 ﻿@model List<SeramikStore.Entities.UserAddress>
 
 
-@* 
-
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-2">
-            <partial name="_LeftMenu" />
-        </div>
-        <div class="col-md-7">
-            <div class="card shadow-sm">
-                <div class="card-body">
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-        </div>
-    </div>
-</div>
-
-*@
 
 <div class="container mt-4">
     <div class="row">
@@ -43,8 +23,6 @@
 
                     <table class="table table-bordered">
                         <tr>
-                            <th>Id</th>
-                            <th>UserId</th>
                             <th>Başlık</th>
                             <th>Adres</th>
                             <th>Varsayılan</th>
@@ -54,8 +32,6 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.Id</td>
-                                <td>@item.UserId</td>
                                 <td>@item.Baslik</td>
                                 <td>@item.Adres</td>
                                 <td>@(item.IsDefault ? "Evet" : "Hayır")</td>
