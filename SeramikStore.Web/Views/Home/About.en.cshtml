@@ -1,0 +1,69 @@
+@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
+    ViewData["Title"] = "About";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <h1 class="mb-4 text-center">About</h1>
+            <p>
+                I am @Company.Value.ContactPerson, a graduate of the Painting, Printing and Pattern Design department, specializing in serigraphy.
+                I design and produce stoneware products and offer them through my own website. Each piece is carefully crafted, from the design stage to the final product.
+            </p>
+            <p>
+                Stoneware is a type of ceramic fired at high temperatures, making it highly durable and long-lasting. Compared to traditional ceramics, it is stronger; compared to porcelain, it has a more natural and distinctive texture. This makes it both aesthetically pleasing and suitable for everyday use.
+                In every piece I create, I aim for a simple, natural, and functional design approach.
+            </p>
+
+            <h5>What is Stoneware?</h5>
+            <p>
+                Stoneware is a type of ceramic fired at high temperatures .
+                This high firing temperature makes the products denser, harder, and more durable.
+                Its near non-porous structure results in low water absorption, making it ideal for daily use.
+            </p>
+
+            <h5>Difference from Ceramic and Porcelain</h5>
+            <p>
+                <strong>Earthenware (traditional ceramic)</strong><br>
+                Fired at lower temperatures, more porous, and more fragile.
+            </p>
+            <p>
+                <strong>Porcelain</strong><br>
+                Fired at very high temperatures, finer and sometimes translucent, usually more delicate in appearance.
+            </p>
+            <p>
+                <strong>Stoneware</strong><br>
+                Positioned between the two:
+            </p>
+            <ul>
+                <li>More durable than ceramic</li>
+                <li>More natural and matte compared to porcelain</li>
+                <li>Highly practical for everyday use</li>
+            </ul>
+
+            <h5>Advantages</h5>
+            <ul>
+                <li>Heat resistant (can be suitable for oven and microwave)</li>
+                <li>More resistant to scratches and impacts</li>
+                <li>Long-lasting</li>
+                <li>Provides a natural and aesthetic look, especially in handmade products</li>
+            </ul>
+
+            <h5>Why is it preferred?</h5>
+            <p>
+                Stoneware has become increasingly popular in recent years due to the rise of handmade products and the demand for natural, minimal design.
+                Each piece is slightly unique, making every product more original.
+            </p>
+
+            <p class="fw-bold">
+                @Company.Value.Email
+            </p>
+            <p class="fw-bold">
+                @Company.Value.Phone
+            </p>
+            <p class="fw-bold">
+                @Company.Value.Address
+            </p>
+        </div>
+    </div>
+</div>

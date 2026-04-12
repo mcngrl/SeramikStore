@@ -9,6 +9,8 @@ namespace SeramikStore.Web.Options
         public string LogoUrl { get; set; }
         public string WebsiteUrl { get; set; }
 
+        public string ContactPerson { get; set; }
+
         public SocialMediaOptions SocialMedia { get; set; }
         public BankAccountOptions BankAccount { get; set; }
     }
