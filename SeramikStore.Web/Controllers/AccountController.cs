@@ -203,7 +203,7 @@ public class AccountController : Controller
 
             r = e.ToString();
         }
-        
+    
 
         string result = r + "<br>_settings.Host" + _settings.Host + "<br>; _settings.Port" + _settings.Port + "<br>; _settings.EnableSsl" + _settings.EnableSsl;
         return Content(result);
@@ -408,59 +408,77 @@ public class AccountController : Controller
     {
         try
         {
-            if (!ModelState.IsValid)
-                return View(model);
+        if (!ModelState.IsValid)
+            return View(model);
 
-            var user = _userService.GetByEmail(model.Email);
-            if (user == null || !user.IsEmailConfirmed)
+        var user = _userService.GetByEmail(model.Email);
+        if (user == null || !user.IsEmailConfirmed)
+        {
+            // güvenlik: kullanıcı var mı yok mu söyleme
+            return View("ForgotPasswordConfirmation");
+        }
+
+        var token = Guid.NewGuid().ToString("N");
+        _userService.SetResetPasswordToken(user.Id, token, DateTime.UtcNow.AddHours(1));
+
+        var resetLink = Url.Action(
+            "ResetPassword",
+            "Account",
+            new { email = model.Email, token },
+            Request.Scheme
+        );
+
+
+        var templatePath = Path.Combine(
+       Directory.GetCurrentDirectory(),
+       "EmailTemplates",
+       "ResetPassword.html"
+   );
+
+        var template = System.IO.File.ReadAllText(templatePath);
+
+        var body = template
+            .Replace("{{Title}}", _emailL["ResetPasswordTitle"])
+            .Replace("{{Intro}}", _emailL["ResetPasswordIntro"])
+            .Replace("{{Button}}", _emailL["ResetPasswordButton"])
+            .Replace("{{Expire}}", _emailL["ResetPasswordExpire"])
+            .Replace("{{Ignore}}", _emailL["ResetPasswordIgnore"])
+            .Replace("{{Company}}", _company.Name)
+            .Replace("{{Link}}", resetLink);
+
+        _ = Task.Run(async () =>
+        {
+            try
             {
-                // güvenlik: kullanıcı var mı yok mu söyleme
-                return View("ForgotPasswordConfirmation");
+                await _emailService.SendAsync(
+                    model.Email,
+                    _emailL["ResetPasswordSubject"],
+                    body
+                );
             }
-
-            var token = Guid.NewGuid().ToString("N");
-            _userService.SetResetPasswordToken(user.Id, token, DateTime.UtcNow.AddHours(1));
-
-            var resetLink = Url.Action(
-                "ResetPassword",
-                "Account",
-                new { email = model.Email, token },
-                Request.Scheme
-            );
+            catch
+            {
+                // log
+            }
+        });
 
 
-            var templatePath = Path.Combine(
-           Directory.GetCurrentDirectory(),
-           "EmailTemplates",
-           "ResetPassword.html"
-            );
 
-            var template = System.IO.File.ReadAllText(templatePath);
-
-            var body = template
-                .Replace("{{Title}}", _emailL["ResetPasswordTitle"])
-                .Replace("{{Intro}}", _emailL["ResetPasswordIntro"])
-                .Replace("{{Button}}", _emailL["ResetPasswordButton"])
-                .Replace("{{Expire}}", _emailL["ResetPasswordExpire"])
-                .Replace("{{Ignore}}", _emailL["ResetPasswordIgnore"])
-                .Replace("{{Company}}", _company.Name)
-                .Replace("{{Link}}", resetLink);
-
-            //_ = Task.Run(async () =>
-            //{
-            //    try
-            //    {
-            //        await _emailService.SendAsync(
-            //            model.Email,
+        //_ = Task.Run(async () =>
+        //{
+        //    try
+        //    {
+        //        await _emailService.SendAsync(
+        //            model.Email,
             //            _emailL["ResetPasswordSubject"],
             //            body
-            //        );
-            //    }
+        //        );
+        //    }
             //    catch
             //    {
             //        // log
             //    }
-            //});
+        //});
 
             await _emailService.SendAsync(
             model.Email,
@@ -470,8 +488,8 @@ public class AccountController : Controller
 
 
 
-            return View("ForgotPasswordConfirmation");
-        }
+        return View("ForgotPasswordConfirmation");
+    }
         catch (Exception ex)
         {
             return Content(ex.ToString()); // 🔥 gerçek hatayı gösterir

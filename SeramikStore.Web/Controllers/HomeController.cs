@@ -72,8 +72,8 @@ namespace SeramikStore.Web.Controllers
         {
             try
             {
-                return View();
-            }
+            return View();
+        }
             catch (Exception ex)
             {
                 return Content(ex.ToString());
@@ -84,8 +84,8 @@ namespace SeramikStore.Web.Controllers
         {
             try
             {
-                return View();
-            }
+            return View();
+        }
             catch (Exception ex)
             {
                 return Content(ex.ToString());
@@ -95,8 +95,8 @@ namespace SeramikStore.Web.Controllers
         {
             try
             {
-                return View();
-            }
+            return View();
+        }
             catch (Exception ex)
             {
                 return Content(ex.ToString());
@@ -107,8 +107,8 @@ namespace SeramikStore.Web.Controllers
         {
             try
             {
-                return View();
-            }
+            return View();
+        }
             catch (Exception ex)
             {
                 return Content(ex.ToString());
