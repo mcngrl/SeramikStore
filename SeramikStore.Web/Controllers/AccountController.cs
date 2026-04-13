@@ -155,6 +155,18 @@ public class AccountController : Controller
 
         return View("EmailConfirmResult", _L["Email başarıyla doğrulandı"].Value);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> TestEmail2(int id)
+    {
+
+        await _emailService.SendAsync("mehmetcangurel@gmail.com",
+         _emailL["ResetPasswordSubject"],
+         "Test email body " + id.ToString());
+
+        return Content("OK");
+    }
+
     [HttpGet]
     public async Task<IActionResult> TestEmail(int id)
     {
@@ -394,77 +406,79 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
     {
-        if (!ModelState.IsValid)
-            return View(model);
-
-        var user = _userService.GetByEmail(model.Email);
-        if (user == null || !user.IsEmailConfirmed)
+        try
         {
-            // güvenlik: kullanıcı var mı yok mu söyleme
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = _userService.GetByEmail(model.Email);
+            if (user == null || !user.IsEmailConfirmed)
+            {
+                // güvenlik: kullanıcı var mı yok mu söyleme
+                return View("ForgotPasswordConfirmation");
+            }
+
+            var token = Guid.NewGuid().ToString("N");
+            _userService.SetResetPasswordToken(user.Id, token, DateTime.UtcNow.AddHours(1));
+
+            var resetLink = Url.Action(
+                "ResetPassword",
+                "Account",
+                new { email = model.Email, token },
+                Request.Scheme
+            );
+
+
+            var templatePath = Path.Combine(
+           Directory.GetCurrentDirectory(),
+           "EmailTemplates",
+           "ResetPassword.html"
+            );
+
+            var template = System.IO.File.ReadAllText(templatePath);
+
+            var body = template
+                .Replace("{{Title}}", _emailL["ResetPasswordTitle"])
+                .Replace("{{Intro}}", _emailL["ResetPasswordIntro"])
+                .Replace("{{Button}}", _emailL["ResetPasswordButton"])
+                .Replace("{{Expire}}", _emailL["ResetPasswordExpire"])
+                .Replace("{{Ignore}}", _emailL["ResetPasswordIgnore"])
+                .Replace("{{Company}}", _company.Name)
+                .Replace("{{Link}}", resetLink);
+
+            //_ = Task.Run(async () =>
+            //{
+            //    try
+            //    {
+            //        await _emailService.SendAsync(
+            //            model.Email,
+            //            _emailL["ResetPasswordSubject"],
+            //            body
+            //        );
+            //    }
+            //    catch
+            //    {
+            //        // log
+            //    }
+            //});
+
+            await _emailService.SendAsync(
+            model.Email,
+            _emailL["ResetPasswordSubject"],
+            body
+            );
+
+
+
             return View("ForgotPasswordConfirmation");
         }
-
-        var token = Guid.NewGuid().ToString("N");
-        _userService.SetResetPasswordToken(user.Id, token, DateTime.UtcNow.AddHours(1));
-
-        var resetLink = Url.Action(
-            "ResetPassword",
-            "Account",
-            new { email = model.Email, token },
-            Request.Scheme
-        );
-
-
-        var templatePath = Path.Combine(
-       Directory.GetCurrentDirectory(),
-       "EmailTemplates",
-       "ResetPassword.html"
-   );
-
-        var template = System.IO.File.ReadAllText(templatePath);
-
-        var body = template
-            .Replace("{{Title}}", _emailL["ResetPasswordTitle"])
-            .Replace("{{Intro}}", _emailL["ResetPasswordIntro"])
-            .Replace("{{Button}}", _emailL["ResetPasswordButton"])
-            .Replace("{{Expire}}", _emailL["ResetPasswordExpire"])
-            .Replace("{{Ignore}}", _emailL["ResetPasswordIgnore"])
-            .Replace("{{Company}}", _company.Name)
-            .Replace("{{Link}}", resetLink);
-
-        _ = Task.Run(async () =>
+        catch (Exception ex)
         {
-            try
-            {
-                await _emailService.SendAsync(
-                    model.Email,
-                    _emailL["ResetPasswordSubject"],
-                    body
-                );
-            }
-            catch
-            {
-                // log
-            }
-        });
-
-
-
-        //_ = Task.Run(async () =>
-        //{
-        //    try
-        //    {
-        //        await _emailService.SendAsync(
-        //            model.Email,
-        //            "Şifre Sıfırlama",
-        //            $"<a href='{resetLink}'>Şifremi sıfırla</a>"
-        //        );
-        //    }
-        //    catch { /* log */ }
-        //});
-
-        return View("ForgotPasswordConfirmation");
+            return Content(ex.ToString()); // 🔥 gerçek hatayı gösterir
+        }
     }
+        
+        
 
     [HttpGet]
     public IActionResult ResetPassword(string email, string token)

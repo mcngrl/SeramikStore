@@ -69,4 +69,10 @@
     <Folder Include="wwwroot\lib\fontawesome\webfonts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="EmailTemplates\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

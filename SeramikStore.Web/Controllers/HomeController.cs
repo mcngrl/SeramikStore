@@ -70,21 +70,49 @@ namespace SeramikStore.Web.Controllers
         }
         public IActionResult KVKK()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
         }
 
         public IActionResult About()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
         }
         public IActionResult Privacy()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
         }
 
         public IActionResult UyelikSozlesmesi()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
         }
 
 
