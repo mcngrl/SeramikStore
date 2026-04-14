@@ -291,4 +291,19 @@ public class UserService : IUserService
         con.Open();
         cmd.ExecuteNonQuery();
     }
+
+    public void ResendConfirmationEmail(string Email, string token, DateTime expire)
+    {
+        using var conn = new SqlConnection(_connectionString);
+        using var cmd = new SqlCommand("sp_User_ResendConfirmationEmail", conn);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+
+        cmd.Parameters.AddWithValue("@Email", Email);
+        cmd.Parameters.AddWithValue("@EmailConfirmToken", token);
+        cmd.Parameters.AddWithValue("@EmailConfirmTokenExpire", expire);
+
+        conn.Open();
+        cmd.ExecuteNonQuery();
+    }
 }

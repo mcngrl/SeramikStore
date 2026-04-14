@@ -129,6 +129,69 @@ public class AccountController : Controller
         return RedirectToAction("Login", "Account");
     }
 
+
+    [HttpPost]
+    public async Task<IActionResult> ResendConfirmationEmail(ResendConfirmationEmailViewModel model)
+    {
+ 
+        if (_userService.IsEmailExists(model.Email) == false)
+        {
+            string str = string.Format(_L["Email {0} bulunamadı"].Value, model.Email);
+            TempData["Error"] = str;
+            return RedirectToAction("Login", "Account");
+        }
+
+        var token = Guid.NewGuid().ToString("N");
+        var EmailConfirmTokenExpire = DateTime.UtcNow.AddHours(24);
+
+
+        _userService.ResendConfirmationEmail(model.Email, token, EmailConfirmTokenExpire);
+
+        var confirmLink = Url.Action(
+        "ConfirmEmail",
+        "Account",
+        new { token, email = model.Email },
+        Request.Scheme
+        );
+
+        try
+            {
+
+                var culture = CultureInfo.CurrentUICulture;
+
+                var template = System.IO.File.ReadAllText(
+                    Path.Combine(Directory.GetCurrentDirectory(),
+                    "EmailTemplates", "EmailConfirm.html"));
+
+                var body = template
+                    .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
+                    .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
+                    .Replace("{{Button}}", _emailL["EmailConfirmButton"])
+                    .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
+                    .Replace("{{Footer}}", _emailL["EmailFooter"])
+                    .Replace("{{Company}}", _company.Name)
+                    .Replace("{{Link}}", confirmLink);
+
+                await _emailService.SendAsync(
+                    model.Email,
+                    _emailL["EmailConfirmSubject"],
+                    body
+                );
+
+
+            }
+            catch (Exception ex)
+            {
+                // LOG AL ama kullanıcıyı bekletme
+                //_logger.LogError(ex, "Email gönderilemedi");
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Login", "Account");
+        }
+
+        TempData["Success"] = string.Format(_L["Eğer email sistemde kayıtlıysa link gönderildi. {0}"].Value, model.Email);
+        return RedirectToAction("Login", "Account");
+    }
+
     [HttpGet]
     public IActionResult ConfirmEmail(string email, string token)
     {
@@ -328,13 +391,13 @@ public class AccountController : Controller
 
         if (user == null)
         {
-            ModelState.AddModelError(string.Empty, _L["Kullanıcı adı veya şifre hatalı"].Value);
+            ModelState.AddModelError("kullanicisifrehatasi", _L["Kullanıcı adı veya şifre hatalı"].Value);
             return View(vm);
         }
 
         if (!user.IsEmailConfirmed)
         {
-            ModelState.AddModelError("", _L["Email adresinizi doğrulamanız gerekiyor"].Value);
+            ModelState.AddModelError("emaildogrulama", _L["Email adresinizi doğrulamanız gerekiyor"].Value);
             return View(vm);
         }
 

@@ -18,4 +18,6 @@ public interface IUserService
     void SetRememberMeToken(int userId, string token, DateTime expire);
     UserDto GetByRememberMeToken(string token);
     void ClearRememberMeToken(string token);
+    void ResendConfirmationEmail(string Email, string token, DateTime expire);
+
 }
