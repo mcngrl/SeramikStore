@@ -7,6 +7,9 @@
 @inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
 @* <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
 <nav class="navbar navbar-expand-lg bg-primary>*@
+@{
+    var isConfirmed = Context.Session.GetString("session_IsEmailConfirmed") == "True";
+}
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <!-- LOGO -->
@@ -115,9 +118,18 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
-                                    @C["Hesabım"]
-                                </a>
+                                    @if (isConfirmed)
+                                    {
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
+                                        <i class="bi bi-check-circle-fill"></i>@C["Hesabım"]
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
+                                            <i class="bi bi-exclamation-triangle-fill"></i>@C["Hesabım"]
+                                        </a>
+                                    }
                             </li>
                             <li>
                                 <a class="dropdown-item" asp-controller="Cart" asp-action="Summary">

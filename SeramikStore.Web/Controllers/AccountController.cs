@@ -192,6 +192,69 @@ public class AccountController : Controller
         return RedirectToAction("Login", "Account");
     }
 
+
+    [HttpPost]
+    public async Task<IActionResult> ResendConfirmationEmail2()
+    {
+
+        var emailadres = HttpContext.Session.GetString("session_Email");
+
+        if (string.IsNullOrEmpty(emailadres))
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+        var token = Guid.NewGuid().ToString("N");
+        var EmailConfirmTokenExpire = DateTime.UtcNow.AddHours(24);
+
+
+        _userService.ResendConfirmationEmail(emailadres, token, EmailConfirmTokenExpire);
+
+        var confirmLink = Url.Action(
+        "ConfirmEmail",
+        "Account",
+        new { token, email = emailadres },
+        Request.Scheme
+        );
+
+        try
+        {
+
+            var culture = CultureInfo.CurrentUICulture;
+
+            var template = System.IO.File.ReadAllText(
+                Path.Combine(Directory.GetCurrentDirectory(),
+                "EmailTemplates", "EmailConfirm.html"));
+
+            var body = template
+                .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
+                .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
+                .Replace("{{Button}}", _emailL["EmailConfirmButton"])
+                .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
+                .Replace("{{Footer}}", _emailL["EmailFooter"])
+                .Replace("{{Company}}", _company.Name)
+                .Replace("{{Link}}", confirmLink);
+
+            await _emailService.SendAsync(
+                emailadres,
+                _emailL["EmailConfirmSubject"],
+                body
+            );
+
+
+        }
+        catch (Exception ex)
+        {
+            // LOG AL ama kullanıcıyı bekletme
+            //_logger.LogError(ex, "Email gönderilemedi");
+            TempData["Error"] = ex.Message;
+            return RedirectToAction("Profile", "Account");
+        }
+
+        TempData["Success"] = string.Format(_L["Eğer email sistemde kayıtlıysa link gönderildi. {0}"].Value, emailadres);
+        return RedirectToAction("Profile", "Account");
+    }
+
     [HttpGet]
     public IActionResult ConfirmEmail(string email, string token)
     {
@@ -395,17 +458,18 @@ public class AccountController : Controller
             return View(vm);
         }
 
-        if (!user.IsEmailConfirmed)
-        {
-            ModelState.AddModelError("emaildogrulama", _L["Email adresinizi doğrulamanız gerekiyor"].Value);
-            return View(vm);
-        }
+        //if (!user.IsEmailConfirmed)
+        //{
+        //    ModelState.AddModelError("emaildogrulama", _L["Email adresinizi doğrulamanız gerekiyor"].Value);
+        //    return View(vm);
+        //}
 
         HttpContext.Session.SetInt32("session_UserId", user.Id);
         HttpContext.Session.SetString("session_UserFullName", user.FullName);
         HttpContext.Session.SetString("session_RoleName", user.RoleName);
         HttpContext.Session.SetString("session_Email", user.Email);
         HttpContext.Session.SetString("session_Avatar", user.Avatar);
+        HttpContext.Session.SetString("session_IsEmailConfirmed", user.IsEmailConfirmed.ToString());
 
         // 🛒 ANON SEPET VAR MI?
         if (Request.Cookies.TryGetValue("cart_id", out var cartToken))

@@ -1,5 +1,6 @@
-﻿@model SeramikStore.Web.ViewModels.ProfileViewModel
-
+﻿@using SeramikStore.Web.Localization
+@model SeramikStore.Web.ViewModels.ProfileViewModel
+@inject IStringLocalizer<AccountResource> L
 @{
     ViewData["Title"] = "Profilim";
 }
@@ -12,7 +13,7 @@
         <div class="col-md-7">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3 class="mb-4">Profilim</h3>
+                    <h6 class="mb-4">Profilim</h6>
 
                     @if (TempData["Success"] != null)
                     {
@@ -21,17 +22,58 @@
                         </div>
                     }
 
-                    <!-- ================= PROFİL BİLGİLERİ ================= -->
+
+                    @{
+                        var isConfirmed = Context.Session.GetString("session_IsEmailConfirmed") == "True";
+                        var email = Context.Session.GetString("session_Email");
+                    }
+
                     <div class="card mb-4">
+                        <div class="card-header">
+                            <strong>Email Adresi Doğrulama</strong>
+                        </div>
+                        <div class="card-body">
+                            <div class="row align-items-center">
+
+                                @if (isConfirmed)
+                                {
+                                    <div class="col-md-6 mb-3 text-success">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        @email
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-6 mb-3 text-warning">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        @email Email Adresi henüz doğrulanmamış.
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <form asp-action="ResendConfirmationEmail2" asp-controller="Account" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-warning">
+                                                @L["Doğrula"]
+                                            </button>
+                                        </form>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                   <div class="card mb-4">
                         <div class="card-header">
                             <strong>Kişisel Bilgiler</strong>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body">    
                             <form asp-action="Profile" method="post">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="FormType" value="Profile" />
-
-                                <div class="row">
+                                   @Html.AntiForgeryToken()
+                            <input type="hidden" name="FormType" value="Profile" />
+                             <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label asp-for="Profile.FirstName"></label>
                                         <input asp-for="Profile.FirstName" class="form-control" />
@@ -58,12 +100,16 @@
                                         <label asp-for="Profile.BirthDate"></label>
                                         <input asp-for="Profile.BirthDate" class="form-control" type="date" />
                                     </div>
+                                    <div class="col-md-12 mb-3">
+                                        <button type="submit" class="btn btn-primary">
+                                            @L["Bilgileri Güncelle"]
+                                        </button>
+                                    </div>
                                 </div>
+                                </form>
+                                
 
-                                <button type="submit" class="btn btn-primary">
-                                    Bilgileri Güncelle
-                                </button>
-                            </form>
+                           
                         </div>
                     </div>
 

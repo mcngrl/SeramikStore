@@ -146,6 +146,7 @@ app.Use(async (context, next) =>
                 context.Session.SetString("session_RoleName", user.RoleName);
                 context.Session.SetString("session_Email", user.Email);
                 context.Session.SetString("session_Avatar", user.Avatar);
+                context.Session.SetString("session_IsEmailConfirmed", user.IsEmailConfirmed.ToString());
             }
         }
     }
