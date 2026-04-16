@@ -188,7 +188,7 @@ public class AccountController : Controller
                 return RedirectToAction("Login", "Account");
         }
 
-        TempData["Success"] = string.Format(_L["Eğer email sistemde kayıtlıysa link gönderildi. {0}"].Value, model.Email);
+        TempData["Success"] = string.Format(_L["Email adresinize gönderilen bağlantıya tıklayarak doğrulama yapınız. {0}"].Value, model.Email);
         return RedirectToAction("Login", "Account");
     }
 
@@ -251,7 +251,7 @@ public class AccountController : Controller
             return RedirectToAction("Profile", "Account");
         }
 
-        TempData["Success"] = string.Format(_L["Eğer email sistemde kayıtlıysa link gönderildi. {0}"].Value, emailadres);
+        TempData["Success"] = string.Format(_L["Email adresinize gönderilen bağlantıya tıklayarak doğrulama yapınız. {0}"].Value, emailadres);
         return RedirectToAction("Profile", "Account");
     }
 
@@ -382,17 +382,40 @@ public class AccountController : Controller
             if (!ModelState.IsValid)
                 return View(vm);
 
-            _userService.Update(new UserDto
+            UserDto TheUser = new UserDto
             {
                 Id = userId.Value,
                 FirstName = vm.Profile.FirstName,
                 LastName = vm.Profile.LastName,
                 PhoneNumber = vm.Profile.PhoneNumber,
-                BirthDate = vm.Profile.BirthDate
-            });
+                BirthDate = vm.Profile.BirthDate,
+                Email = vm.Profile.Email
+            };
 
-            TempData["Success"] = _L["Profil bilgileri güncellendi"].Value;
+            var result= _userService.Update(TheUser);
+
+            var user = _userService.GetById(userId.Value);
+
+
+            HttpContext.Session.SetInt32("session_UserId", user.Id);
+            HttpContext.Session.SetString("session_UserFullName", user.FullName);
+            HttpContext.Session.SetString("session_Email", user.Email);
+            HttpContext.Session.SetString("session_Avatar", user.Avatar);
+            HttpContext.Session.SetString("session_IsEmailConfirmed", user.IsEmailConfirmed.ToString());
+
+
+
+            if (result.Result == 1 || result.Result == 2)
+            {
+                TempData["Success"] = result.Message.ToString();
+            }
+            else
+            {
+                TempData["Error"] = result.Message.ToString().FormatWith(TheUser.Email);
+            }
+
             return RedirectToAction("Profile");
+
         }
 
         if (FormType == "Password")

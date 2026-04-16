@@ -1,10 +1,10 @@
-﻿using SeramikStore.Entities;
+using SeramikStore.Entities;
 using SeramikStore.Services.DTOs;
 
 public interface IUserService
 {
     void Insert(UserDto user, string plainPassword);
-    void Update(UserDto user);
+    (int Result, string Message) Update(UserDto user);
     void Delete(int id);
     List<UserDto> GetAll();
     UserDto GetById(int id);

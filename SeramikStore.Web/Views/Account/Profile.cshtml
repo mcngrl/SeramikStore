@@ -14,15 +14,6 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h6 class="mb-4">Profilim</h6>
-
-                    @if (TempData["Success"] != null)
-                    {
-                        <div class="alert alert-success">
-                            @TempData["Success"]
-                        </div>
-                    }
-
-
                     @{
                         var isConfirmed = Context.Session.GetString("session_IsEmailConfirmed") == "True";
                         var email = Context.Session.GetString("session_Email");
@@ -88,7 +79,7 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label asp-for="Profile.Email"></label>
-                                        <input asp-for="Profile.Email" class="form-control" readonly />
+                                        <input asp-for="Profile.Email" class="form-control" />
                                     </div>
 
                                     <div class="col-md-6 mb-3">

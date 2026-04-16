@@ -85,7 +85,7 @@ public class UserService : IUserService
         return dr.Read() ? MapUser(dr) : null;
     }
 
-    public void Update(UserDto user)
+    public (int Result, string Message) Update(UserDto user)
     {
         using SqlConnection con = new(_connectionString);
         using SqlCommand cmd = new("sp_User_Update", con);
@@ -100,7 +100,21 @@ public class UserService : IUserService
 
 
         con.Open();
-        cmd.ExecuteNonQuery();
+
+
+        using var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            int result = reader.GetInt32(reader.GetOrdinal("Result"));
+            string message = reader["Message"]?.ToString();
+
+            return (result, message);
+        }
+        else
+        {
+            return (0, "Error");
+        }
     }
 
     public void Delete(int id)
