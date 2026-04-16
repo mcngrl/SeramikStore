@@ -23,6 +23,11 @@ namespace SeramikStore.Web
         // TODO: [] Ürün tablosuna stok miktarı eklenecek. Stok miktarının üzerinde miktar sepete eklenemeyecek.
         // TODO: [] Çerez yönetimi metni
         // TODO: [] Hakkında Sayfası
-        //ABC
+        // TODO: [0] Anasayfa tasarımı düzenlenecek
+        // TODO: [0] Kullanıcı emaillini değişitirebilmeli
+        // TODO: [0] Sipariş verirken email doğrulaması yapılmalı
+        // TODO: [0] Üyeliksi Siparişi verebilmeli
+
     }
 }
+

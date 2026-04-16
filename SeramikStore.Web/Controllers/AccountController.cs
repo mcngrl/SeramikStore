@@ -471,6 +471,8 @@ public class AccountController : Controller
         HttpContext.Session.SetString("session_Avatar", user.Avatar);
         HttpContext.Session.SetString("session_IsEmailConfirmed", user.IsEmailConfirmed.ToString());
 
+
+
         // 🛒 ANON SEPET VAR MI?
         if (Request.Cookies.TryGetValue("cart_id", out var cartToken))
         {

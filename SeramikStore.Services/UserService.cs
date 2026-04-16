@@ -96,6 +96,8 @@ public class UserService : IUserService
         cmd.Parameters.AddWithValue("@LastName", user.LastName);
         cmd.Parameters.AddWithValue("@PhoneNumber", user.PhoneNumber ?? (object)DBNull.Value);
         cmd.Parameters.AddWithValue("@BirthDate", user.BirthDate ?? (object)DBNull.Value);
+        cmd.Parameters.AddWithValue("@Email", user.Email);
+
 
         con.Open();
         cmd.ExecuteNonQuery();
