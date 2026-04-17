@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using SeramikStore.Entities;
 using SeramikStore.Services;
 using SeramikStore.Services.DTOs;
@@ -234,7 +235,7 @@ public class AccountController : Controller
             var body = template
                 .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
                 .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
-                .Replace("{{Button}}", _emailL["EmailConfirmButton"])
+                .Replace("{{Button}}", _emailL["{0}"].Value.ToString().FormatWith(ConfirmCode))
                 .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
                 .Replace("{{Footer}}", _emailL["EmailFooter"])
                 .Replace("{{Company}}", _company.Name)
@@ -242,7 +243,7 @@ public class AccountController : Controller
 
             await _emailService.SendAsync(
                 emailadres,
-                _emailL["EmailConfirmSubject"],
+                _emailL["Kodunuz: {0}"].Value.ToString().FormatWith(ConfirmCode),
                 body
             );
 
@@ -253,12 +254,85 @@ public class AccountController : Controller
             // LOG AL ama kullanıcıyı bekletme
             //_logger.LogError(ex, "Email gönderilemedi");
             TempData["Error"] = ex.Message;
-            return RedirectToAction("Profile", "Account");
+            return RedirectToAction("ConfirmEmailStart", "Account");
         }
 
         TempData["Success"] = string.Format(_L["Email adresinize gönderilen bağlantıya tıklayarak doğrulama yapınız. {0}"].Value, emailadres);
+        return RedirectToAction("VerifyEmail", "Account");
+    }
+
+    [HttpGet]
+    public IActionResult ConfirmEmailStart()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult VerifyEmail()
+    {
+        var model = new VerifyEmailViewModel
+        {
+            Email = HttpContext.Session.GetString("session_Email")
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult VerifyEmailCode(VerifyEmailViewModel model)
+    {
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+
+        if (userId == null)
+            return RedirectToAction("Login");
+
+
+        if (model.Email == null)
+        {
+            return RedirectToAction("Login");
+        }
+
+        var user = _userService.GetByEmail(model.Email);
+
+        if (user == null)
+        {
+            TempData["Error"] = string.Format(_L["Email adresinize gönderilen bağlantıya tıklayarak doğrulama yapınız. {0}"].Value, model.Email);
+            return View("VerifyEmail", new VerifyEmailViewModel { Email = model.Email , Code = model.Code });
+        }
+        if (user.Id != (int)userId)
+        {
+            TempData["Error"] = _L["E-Posta ile giriş yapan kullanıcı uyuşmuyor. {0}"].Value.ToString().FormatWith(model.Email);
+            return View("VerifyEmail", new VerifyEmailViewModel { Email = model.Email, Code = model.Code });
+        }
+        if (user.IsEmailConfirmed)
+        {
+            TempData["Error"] = _L["Email zaten doğrulanmış"].Value;
+            return View("VerifyEmail", new VerifyEmailViewModel { Email = model.Email, Code = model.Code });
+        }
+
+        if (user.EmailConfirmCode != model.Code)
+        {
+            TempData["Error"] = _L["Geçersiz doğrulama linki"].Value;
+            return View("VerifyEmail", new VerifyEmailViewModel { Email = model.Email, Code = model.Code });
+        }
+
+
+        if (user.EmailConfirmCodeExpire < DateTime.UtcNow)
+        {
+            TempData["Error"] = _L["Doğrulama linkinin süresi dolmuş"].Value;
+            return View("VerifyEmail", new VerifyEmailViewModel { Email = model.Email, Code = model.Code });
+        }
+
+
+        _userService.ConfirmEmail(user.Id);
+
+        var updated_user = _userService.GetById(user.Id);
+        SetSessionVariables(updated_user);
+
+        TempData["Success"] = _L["Email başarıyla doğrulandı"].Value;
         return RedirectToAction("Profile", "Account");
     }
+
 
     [HttpGet]
     public IActionResult ConfirmEmail(string email, string ConfirmCode)
@@ -405,18 +479,11 @@ public class AccountController : Controller
                 Email = vm.Profile.Email
             };
 
-            var result= _userService.Update(TheUser);
+            var result = _userService.Update(TheUser);
 
             var user = _userService.GetById(userId.Value);
 
-
-            HttpContext.Session.SetInt32("session_UserId", user.Id);
-            HttpContext.Session.SetString("session_UserFullName", user.FullName);
-            HttpContext.Session.SetString("session_Email", user.Email);
-            HttpContext.Session.SetString("session_Avatar", user.Avatar);
-            HttpContext.Session.SetString("session_IsEmailConfirmed", user.IsEmailConfirmed.ToString());
-
-
+            SetSessionVariables(user);
 
             if (result.Result == 1 || result.Result == 2)
             {
@@ -472,6 +539,16 @@ public class AccountController : Controller
         return View(vm);
     }
 
+    private void SetSessionVariables(UserDto user)
+    {
+        HttpContext.Session.SetInt32("session_UserId", user.Id);
+        HttpContext.Session.SetString("session_UserFullName", user.FullName);
+        HttpContext.Session.SetString("session_Email", user.Email);
+        HttpContext.Session.SetString("session_Avatar", user.Avatar);
+        HttpContext.Session.SetString("session_IsEmailConfirmed", user.IsEmailConfirmed.ToString());
+        HttpContext.Session.SetString("session_RoleName", user.RoleName);
+    }
+
     [HttpGet]
     public IActionResult Login()            
     {
@@ -502,10 +579,10 @@ public class AccountController : Controller
 
         HttpContext.Session.SetInt32("session_UserId", user.Id);
         HttpContext.Session.SetString("session_UserFullName", user.FullName);
-        HttpContext.Session.SetString("session_RoleName", user.RoleName);
         HttpContext.Session.SetString("session_Email", user.Email);
         HttpContext.Session.SetString("session_Avatar", user.Avatar);
         HttpContext.Session.SetString("session_IsEmailConfirmed", user.IsEmailConfirmed.ToString());
+        HttpContext.Session.SetString("session_RoleName", user.RoleName);
 
 
 
