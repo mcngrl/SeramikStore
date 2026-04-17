@@ -38,8 +38,10 @@ public class UserService : IUserService
         cmd.Parameters.AddWithValue("@AcceptKvkk", user.AcceptKvkk);
         cmd.Parameters.AddWithValue("@AgreementAcceptedIp", user.AgreementAcceptedIp); 
         cmd.Parameters.AddWithValue("@IsEmailConfirmed", user.IsEmailConfirmed); 
-        cmd.Parameters.AddWithValue("@EmailConfirmToken", user.EmailConfirmToken); 
-        cmd.Parameters.AddWithValue("@EmailConfirmTokenExpire", user.EmailConfirmTokenExpire); 
+        cmd.Parameters.AddWithValue("@EmailConfirmCode", user.EmailConfirmCode); 
+        cmd.Parameters.AddWithValue("@EmailConfirmCodeExpire", user.EmailConfirmCodeExpire);
+        cmd.Parameters.AddWithValue("@EmailConfirmAttemptCount", user.EmailConfirmAttemptCount); 
+        cmd.Parameters.AddWithValue("@EmailConfirmLastSentAt", user.EmailConfirmLastSentAt);
 
         con.Open();
         cmd.ExecuteNonQuery();
@@ -174,8 +176,12 @@ public class UserService : IUserService
             RoleId = Convert.ToInt32(dr["RoleId"]),
             RoleName = dr["RoleName"].ToString(),
             IsEmailConfirmed = Convert.ToBoolean(dr["IsEmailConfirmed"]),
-            EmailConfirmToken = dr["EmailConfirmToken"].ToString(),
-            EmailConfirmTokenExpire = dr["EmailConfirmTokenExpire"] as DateTime?,
+            EmailConfirmCode = dr["EmailConfirmCode"].ToString(),
+            EmailConfirmCodeExpire = dr["EmailConfirmCodeExpire"] as DateTime?,
+            EmailConfirmAttemptCount = Convert.ToInt32(dr["EmailConfirmAttemptCount"]),
+            EmailConfirmLastSentAt = dr["EmailConfirmLastSentAt"] as DateTime?,
+
+
             ResetPasswordToken = dr["ResetPasswordToken"].ToString(),
             ResetPasswordTokenExpire = dr["ResetPasswordTokenExpire"] as DateTime?,
             RememberMeToken = dr["RememberMeToken"].ToString(),
@@ -308,7 +314,7 @@ public class UserService : IUserService
         cmd.ExecuteNonQuery();
     }
 
-    public void ResendConfirmationEmail(string Email, string token, DateTime expire)
+    public void ResendConfirmationEmail(string Email, string ConfirmCode, DateTime CodeExpire, int AttemptCount, DateTime LastSentAt)
     {
         using var conn = new SqlConnection(_connectionString);
         using var cmd = new SqlCommand("sp_User_ResendConfirmationEmail", conn);
@@ -316,8 +322,11 @@ public class UserService : IUserService
         cmd.CommandType = CommandType.StoredProcedure;
 
         cmd.Parameters.AddWithValue("@Email", Email);
-        cmd.Parameters.AddWithValue("@EmailConfirmToken", token);
-        cmd.Parameters.AddWithValue("@EmailConfirmTokenExpire", expire);
+        cmd.Parameters.AddWithValue("@EmailConfirmCode", ConfirmCode);
+        cmd.Parameters.AddWithValue("@EmailConfirmCodeExpire", CodeExpire);
+        cmd.Parameters.AddWithValue("@EmailConfirmAttemptCount", AttemptCount);
+        cmd.Parameters.AddWithValue("@EmailConfirmLastSentAt", LastSentAt);
+
 
         conn.Open();
         cmd.ExecuteNonQuery();

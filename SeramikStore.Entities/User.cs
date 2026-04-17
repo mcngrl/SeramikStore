@@ -15,8 +15,10 @@ namespace SeramikStore.Entities
         public DateTime AgreementAcceptedAt { get; set; }
         public string AgreementAcceptedIp { get; set; }
         public bool IsEmailConfirmed { get; set; }
-        public string EmailConfirmToken { get; set; }
-        public DateTime? EmailConfirmTokenExpire { get; set; }
+        public string EmailConfirmCode { get; set; }
+        public DateTime? EmailConfirmCodeExpire { get; set; }
+        public int EmailConfirmAttemptCount { get; set; }
+        public DateTime? EmailConfirmLastSentAt { get; set; }
 
     }
 }

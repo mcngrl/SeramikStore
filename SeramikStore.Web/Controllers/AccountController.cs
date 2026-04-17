@@ -59,7 +59,8 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var token = Guid.NewGuid().ToString("N");
+
+        var ConfirmCode = new Random().Next(100000, 999999).ToString();
 
         var user = new UserDto
         {
@@ -70,8 +71,10 @@ public class AccountController : Controller
             BirthDate = model.BirthDate,
             IsActive = true,
             IsEmailConfirmed = false,
-            EmailConfirmToken = token,
-            EmailConfirmTokenExpire = DateTime.UtcNow.AddHours(24),
+            EmailConfirmCode = ConfirmCode,
+            EmailConfirmCodeExpire = DateTime.UtcNow.AddMinutes(10),
+            EmailConfirmAttemptCount =0,
+            EmailConfirmLastSentAt = DateTime.UtcNow,
             RoleId = 2,
             AcceptKvkk = model.AcceptKvkk,
             AcceptMembershipAgreement = model.AcceptMembershipAgreement,
@@ -83,7 +86,7 @@ public class AccountController : Controller
         var confirmLink = Url.Action(
             "ConfirmEmail",
             "Account",
-            new { token, email = model.Email },
+            new { ConfirmCode, email = model.Email },
             Request.Scheme
         );
 
@@ -141,16 +144,16 @@ public class AccountController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        var token = Guid.NewGuid().ToString("N");
-        var EmailConfirmTokenExpire = DateTime.UtcNow.AddHours(24);
+        //var token = Guid.NewGuid().ToString("N");
+        var ConfirmCode = new Random().Next(100000, 999999).ToString();
+        var EmailConfirmCodeExpire = DateTime.UtcNow.AddMinutes(10);
 
-
-        _userService.ResendConfirmationEmail(model.Email, token, EmailConfirmTokenExpire);
+        _userService.ResendConfirmationEmail(model.Email, ConfirmCode, EmailConfirmCodeExpire,0,DateTime.UtcNow);
 
         var confirmLink = Url.Action(
         "ConfirmEmail",
         "Account",
-        new { token, email = model.Email },
+        new { ConfirmCode, email = model.Email },
         Request.Scheme
         );
 
@@ -204,18 +207,20 @@ public class AccountController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        var token = Guid.NewGuid().ToString("N");
-        var EmailConfirmTokenExpire = DateTime.UtcNow.AddHours(24);
+        var ConfirmCode = new Random().Next(100000, 999999).ToString();
+        var EmailConfirmCodeExpire = DateTime.UtcNow.AddMinutes(10);
 
-
-        _userService.ResendConfirmationEmail(emailadres, token, EmailConfirmTokenExpire);
+        _userService.ResendConfirmationEmail(emailadres, ConfirmCode, EmailConfirmCodeExpire,0,DateTime.UtcNow);
 
         var confirmLink = Url.Action(
         "ConfirmEmail",
         "Account",
-        new { token, email = emailadres },
+        new { ConfirmCode, email = emailadres },
         Request.Scheme
         );
+
+        // TODO: [] Debug amaçlı, silinecek
+        System.Diagnostics.Debug.WriteLine(confirmLink);
 
         try
         {
@@ -256,25 +261,33 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public IActionResult ConfirmEmail(string email, string token)
+    public IActionResult ConfirmEmail(string email, string ConfirmCode)
     {
         if (email == null)
         {
             return RedirectToAction("Login");
         }
 
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
+
         var user = _userService.GetByEmail(email);
 
         if (user == null)
             return View("EmailConfirmResult", _L["Kullanıcı bulunamadı"].Value);
 
+        if (user.Id != (int)userId)
+            return View("EmailConfirmResult", _L["E-Posta ile giriş yapan kullanıcı uyuşmuyor. {0}"].Value.ToString().FormatWith(email));
+
         if (user.IsEmailConfirmed)
             return View("EmailConfirmResult", _L["Email zaten doğrulanmış"].Value);
 
-        if (user.EmailConfirmToken != token)
+        if (user.EmailConfirmCode != ConfirmCode)
             return View("EmailConfirmResult", _L["Geçersiz doğrulama linki"].Value);
 
-        if (user.EmailConfirmTokenExpire < DateTime.UtcNow)
+        if (user.EmailConfirmCodeExpire < DateTime.UtcNow)
             return View("EmailConfirmResult", _L["Doğrulama linkinin süresi dolmuş"].Value);
 
         _userService.ConfirmEmail(user.Id);
