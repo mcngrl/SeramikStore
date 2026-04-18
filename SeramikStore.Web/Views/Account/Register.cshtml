@@ -7,7 +7,7 @@
     ViewData["Title"] = @L["Üye Ol"];
     string currentLang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
 }
-
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-6">
@@ -82,7 +82,7 @@
                     <button class="btn btn-outline-secondary"
                             type="button"
                             id="toggleConfirmPassword">
-                        👁️
+                            <i class="bi bi-eye"></i>
                     </button>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
     <partial name="_ValidationScriptsPartial" />
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+@* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script> *@
 
 <script>
     const phoneInput = document.getElementById("phoneNumber");

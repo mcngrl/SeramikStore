@@ -25,7 +25,7 @@ namespace SeramikStore.Web
         // TODO: [] Hakkında Sayfası
         // TODO: [0] Anasayfa tasarımı düzenlenecek
         // TODO: [X] Kullanıcı emaillini değişitirebilmeli
-        // TODO: [0] Sipariş verirken email doğrulaması yapılmalı
+        // TODO: [X] Sipariş verirken email doğrulaması yapılmalı
         // TODO: [0] Üyeliksi Siparişi verebilmeli
         // TODO: [0] Kulanıcı spam doğruam atamamak için reCAPTCHA eklenmeli. 2 dka bir tekrar deneme hakkı verilmeli.
 

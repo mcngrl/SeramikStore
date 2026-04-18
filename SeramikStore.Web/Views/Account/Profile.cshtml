@@ -13,7 +13,7 @@
         <div class="col-md-7">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h6 class="mb-4">Profilim</h6>
+                    <h4 class="mb-2">Profilim</h4>
                     @{
                         var isConfirmed = Context.Session.GetString("session_IsEmailConfirmed") == "True";
                         var email = Context.Session.GetString("session_Email");
@@ -21,29 +21,29 @@
 
                     <div class="card mb-4">
                         <div class="card-header">
-                            <strong>Email Adresi Doğrulama...</strong>
+                            <strong>@L["Email Adresi"]</strong>
                         </div>
                         <div class="card-body">
                             <div class="row align-items-center">
 
                                 @if (isConfirmed)
                                 {
-                                    <div class="col-md-6 mb-3 text-success">
+                                    <div class="col-md-12 mb-3 text-primary">
                                         <i class="bi bi-check-circle-fill"></i>
                                         @email
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="col-md-6 mb-3 text-warning">
+                                    <div class="col-md-12 mb-3 text-info">
                                         <i class="bi bi-exclamation-triangle-fill"></i>
                                         @email Email Adresi henüz doğrulanmamış.
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <form asp-action="ResendConfirmationEmail2" asp-controller="Account" method="post">
+                                    <div class="col-md-12 mb-1">
+                                        <form asp-action="ResendConfEmail" asp-controller="Account" method="post">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-warning">
+                                            <button type="submit" class="btn btn-outline-info">
                                                 @L["Doğrula"]
                                             </button>
                                         </form>
@@ -61,7 +61,7 @@
                             <strong>Kişisel Bilgiler</strong>
                         </div>
                         <div class="card-body">    
-                            <form asp-action="Profile" method="post">
+                            <form asp-action="Profile" method="post" id="profileForm">
                                    @Html.AntiForgeryToken()
                             <input type="hidden" name="FormType" value="Profile" />
                              <div class="row">
@@ -80,6 +80,7 @@
                                     <div class="col-md-6 mb-3">
                                         <label asp-for="Profile.Email"></label>
                                         <input asp-for="Profile.Email" class="form-control" />
+                                        <input type="hidden" id="originalEmail" value="@Model.Profile.Email" />
                                     </div>
 
                                     <div class="col-md-6 mb-3">
@@ -92,7 +93,7 @@
                                         <input asp-for="Profile.BirthDate" class="form-control" type="date" />
                                     </div>
                                     <div class="col-md-12 mb-3">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-outline-info">
                                             @L["Bilgileri Güncelle"]
                                         </button>
                                     </div>
@@ -138,7 +139,7 @@
                                     <span asp-validation-for="Password.ConfirmNewPassword" class="text-danger"></span>
                                 </div>
 
-                                <button type="submit" class="btn btn-warning">
+                                <button type="submit" class="btn btn-outline-info">
                                     Şifreyi Değiştir
                                 </button>
                             </form>
@@ -151,7 +152,57 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="emailConfirmModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
+            <div class="modal-header">
+                <h5 class="modal-title">@L["Email Değişikliği"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                @L["Yeni Email için doğrulama yapılması gerekecek. Email adresinizi değiştirmek istediğinize emin misiniz? "]
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    @L["İptal"]
+                </button>
+                <button type="button" class="btn btn-outline-primary" id="confirmEmailChange">
+                    @L["Evet, değiştir"]
+                    
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<script>
+    const form = document.getElementById("profileForm");
+    const originalEmail = document.getElementById("originalEmail").value;
+    let allowSubmit = false;
+
+    form.addEventListener("submit", function (e) {
+
+        if (allowSubmit) return;
+
+        const newEmail = document.querySelector("input[name='Profile.Email']").value;
+
+        if (originalEmail !== newEmail) {
+            e.preventDefault();
+
+            const modal = new bootstrap.Modal(document.getElementById('emailConfirmModal'));
+            modal.show();
+
+            document.getElementById("confirmEmailChange").onclick = function () {
+                allowSubmit = true;
+                form.submit();
+            };
+        }
+    });
+</script>

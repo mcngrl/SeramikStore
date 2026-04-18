@@ -121,10 +121,13 @@
     <value>Verify Your Email</value>
   </data>
   <data name="EmailConfirmSubject" xml:space="preserve">
-    <value>Email Verification</value>
+    <value>Your verification code: {0}</value>
   </data>
   <data name="EmailConfirmIntro" xml:space="preserve">
-    <value> Please click the button below to activate your account.</value>
+    <value>Your verification code</value>
+  </data>
+  <data name="EmailConfirmInfo" xml:space="preserve">
+    <value>This code can only be used once. It expires in 10 minutes.</value>
   </data>
   <data name="EmailConfirmButton" xml:space="preserve">
     <value> Verify Email Address</value>

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SeramikStore.Contracts.Order;
 using SeramikStore.Contracts.Return;
+using SeramikStore.Entities;
 using SeramikStore.Entities.Enums;
 using SeramikStore.Services;
 using SeramikStore.Web.Options;
@@ -123,6 +124,16 @@ namespace SeramikStore.Web.Controllers
 
             if (userId is null)
                 return RedirectToAction("Index", "Home");
+
+            var isEmailConfirmed = HttpContext.Session.GetString("session_IsEmailConfirmed");
+
+            if (isEmailConfirmed != "True")
+            {
+                TempData["Error"] = "Sipariş verebilmek için email adresinizi doğrulamalısınız.";
+                return RedirectToAction("Profile", "Account");
+            }
+        
+        
 
             // 1️⃣ DTO hazırla
             OrderCreateDto orderInfo = new OrderCreateDto

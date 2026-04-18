@@ -121,10 +121,13 @@
     <value>Email Doğrulama</value>
   </data>
   <data name="EmailConfirmSubject" xml:space="preserve">
-    <value>Email Doğrulama</value>
+    <value>Doğrulama kodunuz: {0}</value>
   </data>
   <data name="EmailConfirmIntro" xml:space="preserve">
-    <value>Hesabınızı aktifleştirmek için aşağıdaki butona tıklayın.</value>
+    <value>Doğrulama kodunuz</value>
+  </data>
+  <data name="EmailConfirmInfo" xml:space="preserve">
+    <value>Bu kod yalnızca bir kez kullanılabilir. Kullanım süresi 10 dakika içinde dolar.</value>
   </data>
   <data name="EmailConfirmButton" xml:space="preserve">
     <value>Email Adresimi Doğrula</value>

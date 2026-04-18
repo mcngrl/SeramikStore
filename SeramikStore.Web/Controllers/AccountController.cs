@@ -74,7 +74,7 @@ public class AccountController : Controller
             IsEmailConfirmed = false,
             EmailConfirmCode = ConfirmCode,
             EmailConfirmCodeExpire = DateTime.UtcNow.AddMinutes(10),
-            EmailConfirmAttemptCount =0,
+            EmailConfirmAttemptCount = 0,
             EmailConfirmLastSentAt = DateTime.UtcNow,
             RoleId = 2,
             AcceptKvkk = model.AcceptKvkk,
@@ -91,173 +91,89 @@ public class AccountController : Controller
             Request.Scheme
         );
 
-        
-        _ = Task.Run(async () =>
-        {
-            try
-            {
+        SendEmail(model.Email, ConfirmCode);
 
-                var culture = CultureInfo.CurrentUICulture;
-
-                var template = System.IO.File.ReadAllText(
-                    Path.Combine(Directory.GetCurrentDirectory(),
-                    "EmailTemplates", "EmailConfirm.html"));
-
-                var body = template
-                    .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
-                    .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
-                    .Replace("{{Button}}", _emailL["EmailConfirmButton"])
-                    .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
-                    .Replace("{{Footer}}", _emailL["EmailFooter"])
-                    .Replace("{{Company}}", _company.Name)
-                    .Replace("{{Link}}", confirmLink);
-
-                await _emailService.SendAsync(
-                    model.Email,
-                    _emailL["EmailConfirmSubject"],
-                    body
-                );
-
-
-           }
-            catch (Exception ex)
-            {
-                // LOG AL ama kullanıcıyı bekletme
-                //_logger.LogError(ex, "Email gönderilemedi");
-                TempData["Error"] = ex.Message;
-            }
-        });
-
+        var new_user = _userService.GetByEmail(model.Email);
+        SetSessionVariables(new_user);
 
         TempData["Success"] = _L["Kayıt başarılı. Email adresinizi doğrulayın."].Value;
-        return RedirectToAction("Login", "Account");
+        return RedirectToAction("VerifyEmail", "Account");
+
+
     }
 
 
+
     [HttpPost]
-    public async Task<IActionResult> ResendConfirmationEmail(ResendConfirmationEmailViewModel model)
+    public async Task<IActionResult> ResendConfEmail()
     {
+
+        var emailaddress = HttpContext.Session.GetString("session_Email");
+
+        if (string.IsNullOrEmpty(emailaddress))
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
+         var user = _userService.GetByEmail(emailaddress);
+
+        if (user == null)
+        {
+            TempData["Error"] = string.Format(_L["{0} Adresi ile kayıtlı kullanıcı bulunamadı."].Value, emailaddress);
+            return View("VerifyEmail", new VerifyEmailViewModel { Email = emailaddress });
+        }
+
+        var now = DateTime.UtcNow;
+
+        // 🔥  1 dakika kuralı
+        if (user.EmailConfirmLastSentAt.HasValue &&
+            user.EmailConfirmLastSentAt.Value.AddMinutes(1) > now)
+        {
+            TempData["Error"] = _L["Doğrulama kodu 1 dakika sonra tekrar gönderilebilir."].Value;
+            return View("VerifyEmail", new VerifyEmailViewModel { Email = emailaddress });
+        }
+
+
+        // 🔥 2️ günlük limit (10 adet)
+        if (user.EmailConfirmLastSentAt.HasValue &&
+            user.EmailConfirmLastSentAt.Value.Date == now.Date &&
+            user.EmailConfirmAttemptCount >= 10)
+        {
+            TempData["Error"] = _L["Bugün maksimum doğrulama isteğine ulaştınız. Yarın tekrar deneyiniz."].Value;
+            return View("VerifyEmail", new VerifyEmailViewModel { Email = emailaddress });
+        }
+
+        // 🔥 3️ yeni günse count sıfırla
+        int attemptCount = user.EmailConfirmAttemptCount;
+
+        if (!user.EmailConfirmLastSentAt.HasValue ||
+            user.EmailConfirmLastSentAt.Value.Date != now.Date)
+        {
+            attemptCount = 0;
+        }
+
+        attemptCount++;
+
+        var ConfirmCode = new Random().Next(100000, 999999).ToString();
+        var EmailConfirmCodeExpire = DateTime.UtcNow.AddMinutes(10);
+
+
+
+        _userService.ResendConfirmationEmail(emailaddress, ConfirmCode, EmailConfirmCodeExpire, attemptCount, DateTime.UtcNow);
+
+        var confirmLink = Url.Action(
+        "ConfirmEmail",
+        "Account",
+        new { ConfirmCode, email = emailaddress },
+        Request.Scheme
+        );
+
+        //System.Diagnostics.Debug.WriteLine(confirmLink);
+
+        SendEmail(emailaddress, ConfirmCode);
  
-        if (_userService.IsEmailExists(model.Email) == false)
-        {
-            string str = string.Format(_L["Email {0} bulunamadı"].Value, model.Email);
-            TempData["Error"] = str;
-            return RedirectToAction("Login", "Account");
-        }
 
-        //var token = Guid.NewGuid().ToString("N");
-        var ConfirmCode = new Random().Next(100000, 999999).ToString();
-        var EmailConfirmCodeExpire = DateTime.UtcNow.AddMinutes(10);
-
-        _userService.ResendConfirmationEmail(model.Email, ConfirmCode, EmailConfirmCodeExpire,0,DateTime.UtcNow);
-
-        var confirmLink = Url.Action(
-        "ConfirmEmail",
-        "Account",
-        new { ConfirmCode, email = model.Email },
-        Request.Scheme
-        );
-
-        try
-            {
-
-                var culture = CultureInfo.CurrentUICulture;
-
-                var template = System.IO.File.ReadAllText(
-                    Path.Combine(Directory.GetCurrentDirectory(),
-                    "EmailTemplates", "EmailConfirm.html"));
-
-                var body = template
-                    .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
-                    .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
-                    .Replace("{{Button}}", _emailL["EmailConfirmButton"])
-                    .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
-                    .Replace("{{Footer}}", _emailL["EmailFooter"])
-                    .Replace("{{Company}}", _company.Name)
-                    .Replace("{{Link}}", confirmLink);
-
-                await _emailService.SendAsync(
-                    model.Email,
-                    _emailL["EmailConfirmSubject"],
-                    body
-                );
-
-
-            }
-            catch (Exception ex)
-            {
-                // LOG AL ama kullanıcıyı bekletme
-                //_logger.LogError(ex, "Email gönderilemedi");
-                TempData["Error"] = ex.Message;
-                return RedirectToAction("Login", "Account");
-        }
-
-        TempData["Success"] = string.Format(_L["Email adresinize gönderilen bağlantıya tıklayarak doğrulama yapınız. {0}"].Value, model.Email);
-        return RedirectToAction("Login", "Account");
-    }
-
-
-    [HttpPost]
-    public async Task<IActionResult> ResendConfirmationEmail2()
-    {
-
-        var emailadres = HttpContext.Session.GetString("session_Email");
-
-        if (string.IsNullOrEmpty(emailadres))
-        {
-            return RedirectToAction("Login", "Account");
-        }
-
-        var ConfirmCode = new Random().Next(100000, 999999).ToString();
-        var EmailConfirmCodeExpire = DateTime.UtcNow.AddMinutes(10);
-
-        _userService.ResendConfirmationEmail(emailadres, ConfirmCode, EmailConfirmCodeExpire,0,DateTime.UtcNow);
-
-        var confirmLink = Url.Action(
-        "ConfirmEmail",
-        "Account",
-        new { ConfirmCode, email = emailadres },
-        Request.Scheme
-        );
-
-        // TODO: [] Debug amaçlı, silinecek
-        System.Diagnostics.Debug.WriteLine(confirmLink);
-
-        try
-        {
-
-            var culture = CultureInfo.CurrentUICulture;
-
-            var template = System.IO.File.ReadAllText(
-                Path.Combine(Directory.GetCurrentDirectory(),
-                "EmailTemplates", "EmailConfirm.html"));
-
-            var body = template
-                .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
-                .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
-                .Replace("{{Button}}", _emailL["{0}"].Value.ToString().FormatWith(ConfirmCode))
-                .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
-                .Replace("{{Footer}}", _emailL["EmailFooter"])
-                .Replace("{{Company}}", _company.Name)
-                .Replace("{{Link}}", confirmLink);
-
-            await _emailService.SendAsync(
-                emailadres,
-                _emailL["Kodunuz: {0}"].Value.ToString().FormatWith(ConfirmCode),
-                body
-            );
-
-
-        }
-        catch (Exception ex)
-        {
-            // LOG AL ama kullanıcıyı bekletme
-            //_logger.LogError(ex, "Email gönderilemedi");
-            TempData["Error"] = ex.Message;
-            return RedirectToAction("ConfirmEmailStart", "Account");
-        }
-
-        TempData["Success"] = string.Format(_L["Email adresinize gönderilen bağlantıya tıklayarak doğrulama yapınız. {0}"].Value, emailadres);
+        TempData["Success"] = string.Format(_L["Email adresinize gönderilen bağlantıya tıklayarak doğrulama yapınız. {0}"].Value, emailaddress);
         return RedirectToAction("VerifyEmail", "Account");
     }
 
@@ -270,6 +186,11 @@ public class AccountController : Controller
     [HttpGet]
     public IActionResult VerifyEmail()
     {
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
+
         var model = new VerifyEmailViewModel
         {
             Email = HttpContext.Session.GetString("session_Email")
@@ -279,7 +200,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public IActionResult VerifyEmailCode(VerifyEmailViewModel model)
+    public IActionResult VerifyEmail(VerifyEmailViewModel model)
     {
         var userId = HttpContext.Session.GetInt32("session_UserId");
 
@@ -369,58 +290,6 @@ public class AccountController : Controller
         return View("EmailConfirmResult", _L["Email başarıyla doğrulandı"].Value);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> TestEmail2(int id)
-    {
-
-        await _emailService.SendAsync("mehmetcangurel@gmail.com",
-         _emailL["ResetPasswordSubject"],
-         "Test email body " + id.ToString());
-
-        return Content("OK");
-    }
-
-    [HttpGet]
-    public async Task<IActionResult> TestEmail(int id)
-    {
-
-        string r = "";
-        try
-        {
-        using var message = new MailMessage
-        {
-            From = new MailAddress(_settings.FromEmailAdress, _settings.FromName),
-            Subject = "subject" + id.ToString(),
-            Body = "htmlBody",
-            IsBodyHtml = true
-        };
-
-        message.To.Add("mehmetcangurel@gmail.com");
-
-        using var client = new SmtpClient(_settings.Host, _settings.Port)
-        {
-            Credentials = new NetworkCredential(
-                _settings.UserName,
-                _settings.Password
-            ),
-            EnableSsl = _settings.EnableSsl,
-            Timeout = 10000 // ⬅️ 10 saniye timeout (çok önemli)
-        };
-
-      
-            await client.SendMailAsync(message);
-            r = "OK";
-        }
-        catch (Exception e)
-        {
-
-            r = e.ToString();
-        }
-    
-
-        string result = r + "<br>_settings.Host" + _settings.Host + "<br>; _settings.Port" + _settings.Port + "<br>; _settings.EnableSsl" + _settings.EnableSsl;
-        return Content(result);
-    }
 
     [HttpGet]
     public IActionResult Profile()
@@ -478,6 +347,7 @@ public class AccountController : Controller
                 BirthDate = vm.Profile.BirthDate,
                 Email = vm.Profile.Email
             };
+
 
             var result = _userService.Update(TheUser);
 
@@ -785,6 +655,44 @@ public class AccountController : Controller
     public IActionResult AccessDenied()
     {
         return View("AccessDenied", _L["Bu sayfayı görüntüleme yetkiniz yok."].Value);
+    }
+
+    private void SendEmail(string emailaddress, string ConfirmCode)
+    {
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+
+                var culture = CultureInfo.CurrentUICulture;
+
+                var template = System.IO.File.ReadAllText(
+                Path.Combine(Directory.GetCurrentDirectory(),
+                        "EmailTemplates", "EmailConfirm.html"));
+
+                var body = template
+                    .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
+                    .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
+                    .Replace("{{Info}}", _emailL["EmailConfirmInfo"])
+                    .Replace("{{logo}}", _company.LogoUrl)
+                    .Replace("{{Button}}", _emailL["{0}"].Value.ToString().FormatWith(ConfirmCode))
+                    .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
+                    .Replace("{{Footer}}", _emailL["EmailFooter"])
+                    .Replace("{{Company}}", _company.Name)
+                    .Replace("{{Code}}", ConfirmCode);
+
+                await _emailService.SendAsync(
+                    emailaddress,
+                    _emailL["EmailConfirmSubject"].Value.ToString().FormatWith(ConfirmCode),
+                    body);
+            }
+            catch (Exception ex)
+            {
+                // LOG AL ama kullanıcıyı bekletme
+                //_logger.LogError(ex, "Email gönderilemedi");
+                TempData["Error"] = ex.Message;
+            }
+        });
     }
 
 }

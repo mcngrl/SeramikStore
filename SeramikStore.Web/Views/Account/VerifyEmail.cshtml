@@ -17,13 +17,10 @@
             <div class="card shadow-sm">
                 <div class="card-body">
 
-                    <h5 class="mb-3">Email Adresi Doğrulama</h5>
-
-                    <div class="alert alert-info">
-                        @Model.Email adresine gönderilen 6 haneli kodu giriniz.
-                    </div>
-
-                    <form asp-action="VerifyEmailCode" asp-controller="Account" method="post">
+                    <h6 class="mb-3">
+                        @String.Format(@L["{0} adresine gönderilen 6 haneli kodu giriniz."].ToString(), Model.Email)
+                    </h6>
+                    <form asp-action="VerifyEmail" asp-controller="Account" method="post">
                         @Html.AntiForgeryToken()
 
                         <div class="mb-3">
@@ -45,7 +42,7 @@
 
                     <hr />
 
-                    <form asp-action="ResendConfirmationEmail2" method="post">
+                    <form asp-action="ResendConfEmail" method="post">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-link">
                             Kodu tekrar gönder
