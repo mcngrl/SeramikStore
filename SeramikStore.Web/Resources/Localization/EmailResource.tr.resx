@@ -129,6 +129,9 @@
   <data name="EmailConfirmInfo" xml:space="preserve">
     <value>Bu kod yalnızca bir kez kullanılabilir. Kullanım süresi 10 dakika içinde dolar.</value>
   </data>
+  <data name="ResetPasswordInfo" xml:space="preserve">
+    <value>Bu bağlantı 1 saat boyunca geçerlidir. Eğer bu isteği siz yapmadıysanız bu emaili yok sayabilirsiniz.</value>
+  </data>
   <data name="EmailConfirmButton" xml:space="preserve">
     <value>Email Adresimi Doğrula</value>
   </data>
@@ -142,10 +145,10 @@
     <value>Şifre Sıfırlama</value>
   </data>
   <data name="ResetPasswordSubject" xml:space="preserve">
-    <value>Şifre Sıfırlama</value>
+    <value>Bağlantınız</value>
   </data>
   <data name="ResetPasswordIntro" xml:space="preserve">
-    <value> Şifrenizi sıfırlamak için aşağıdaki butona tıklayın.</value>
+    <value>Şifrenizi sıfırlamak için aşağıdaki bağlantıya tıklayın.</value>
   </data>
   <data name="ResetPasswordButton" xml:space="preserve">
     <value>Şifremi Sıfırla</value>

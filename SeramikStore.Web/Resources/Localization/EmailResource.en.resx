@@ -129,6 +129,9 @@
   <data name="EmailConfirmInfo" xml:space="preserve">
     <value>This code can only be used once. It expires in 10 minutes.</value>
   </data>
+  <data name="ResetPasswordInfo" xml:space="preserve">
+    <value>This link is valid for 1 hour. If you did not make this request, you can ignore this email.</value>
+  </data>
   <data name="EmailConfirmButton" xml:space="preserve">
     <value> Verify Email Address</value>
   </data>
@@ -142,10 +145,10 @@
     <value>Reset Your Password</value>
   </data>
   <data name="ResetPasswordSubject" xml:space="preserve">
-    <value>Reset Password</value>
+    <value>Your Link</value>
   </data>
   <data name="ResetPasswordIntro" xml:space="preserve">
-    <value>Click the button below to reset your password.</value>
+    <value>Click the link below to reset your password.</value>
   </data>
   <data name="ResetPasswordButton" xml:space="preserve">
     <value>Reset My Password</value>
