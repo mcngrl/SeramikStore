@@ -153,6 +153,9 @@
   <data name="ResetPasswordButton" xml:space="preserve">
     <value>Reset My Password</value>
   </data>
+  <data name="ResetPasswordLinkText" xml:space="preserve">
+    <value>Reset My Password</value>
+  </data>
   <data name="ResetPasswordExpire" xml:space="preserve">
     <value>This link is valid for 1 hour.</value>
   </data>

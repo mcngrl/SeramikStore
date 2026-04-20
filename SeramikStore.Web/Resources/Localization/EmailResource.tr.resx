@@ -153,6 +153,9 @@
   <data name="ResetPasswordButton" xml:space="preserve">
     <value>Şifremi Sıfırla</value>
   </data>
+  <data name="ResetPasswordLinkText" xml:space="preserve">
+    <value>Şifremi Sıfırla</value>
+  </data>
   <data name="ResetPasswordExpire" xml:space="preserve">
     <value>Bu bağlantı 1 saat boyunca geçerlidir.</value>
   </data>

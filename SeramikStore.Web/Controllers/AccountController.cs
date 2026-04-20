@@ -741,13 +741,14 @@ public class AccountController : Controller
 
                 var template = System.IO.File.ReadAllText(
                 Path.Combine(Directory.GetCurrentDirectory(),
-                        "EmailTemplates", "PassReset.html"));
+                        "EmailTemplates", "PwdReset.html"));
 
                 var body = template 
                     .Replace("{{Intro}}", _emailL["ResetPasswordIntro"])
                     .Replace("{{Info}}", _emailL["ResetPasswordInfo"])
                     .Replace("{{logo}}", _company.LogoUrl)
                     .Replace("{{Company}}", _company.Name)
+                    .Replace("{{LINKTEXT}}", _emailL["ResetPasswordLinkText"])
                     .Replace("{{Code}}", resetLink);
 
                 await _emailService.SendAsync(
