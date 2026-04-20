@@ -691,7 +691,7 @@ public class AccountController : Controller
 
 
     #region EmailMethods
-    private void SendEmailForConfirm(string emailaddress, string ConfirmCode)
+    void SendEmailForConfirm(string emailaddress, string ConfirmCode)
     {
         _ = Task.Run(async () =>
         {
@@ -719,6 +719,8 @@ public class AccountController : Controller
                     emailaddress,
                     _emailL["EmailConfirmSubject"].Value.ToString().FormatWith(ConfirmCode),
                     body);
+
+
             }
             catch (Exception ex)
             {

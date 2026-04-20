@@ -62,7 +62,7 @@ namespace SeramikStore.Services.Email
                         _settings.Password
                     ),
                     EnableSsl = _settings.EnableSsl,
-                    Timeout = 10000 // ⬅️ 10 saniye timeout (çok önemli)
+                    Timeout = 30000 // ⬅️ 10 saniye timeout (çok önemli)
                 };
 
                 await client.SendMailAsync(message);
@@ -70,12 +70,15 @@ namespace SeramikStore.Services.Email
             catch (Exception ex)
             {
 
+                _logger.LogInformation($"SMTP: {_settings.Host}:{_settings.Port}");
+
                 _logger.LogError(ex,
                                $"Email gönderilemedi. To: {to}, Subject: {subject}",
                                to,
                                subject
                            );
 
+                throw new Exception("Email gönderimi başarısız.", ex);
                 // 🔥 KRİTİK: exception fırlatmıyoruz → uygulama devam eder
             }
 
