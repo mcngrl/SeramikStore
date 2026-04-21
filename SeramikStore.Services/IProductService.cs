@@ -1,4 +1,4 @@
-﻿using SeramikStore.Entities;
+using SeramikStore.Entities;
 using SeramikStore.Services.DTOs;
 
 
@@ -15,5 +15,7 @@ using SeramikStore.Services.DTOs;
         int DeleteProduct(int id);
 
         void UpdateDisplayOrder(List<ProductOrderDto> list);
+
+    void SaveProductCategories(int productId, List<int> categoryIds);
 }
 

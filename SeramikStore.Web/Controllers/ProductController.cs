@@ -95,7 +95,9 @@ public class ProductController : Controller
             AvailableForSale = model.AvailableForSale
         };
 
-        _productService.InsertProduct(product);
+        int newProductId = _productService.InsertProduct(product);
+
+        _productService.SaveProductCategories(newProductId, model.SelectedCategoryIds);
 
         return RedirectToAction(nameof(Index));
     }
@@ -136,8 +138,9 @@ public class ProductController : Controller
                             Value = x.Id.ToString(),
                             Text = x.Name.ToString()
                         }).ToList(),
-        };
 
+            SelectedCategoryIds = product.SelectedCategoryIds
+        };
         return View(model);
     }
 
@@ -182,6 +185,8 @@ public class ProductController : Controller
         };
 
         _productService.UpdateProduct(product);
+
+        _productService.SaveProductCategories(model.Id, model.SelectedCategoryIds);
 
         return RedirectToAction("Index");
     }

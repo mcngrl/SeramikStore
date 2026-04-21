@@ -1,10 +1,13 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using SeramikStore.Contracts.Order;
 using SeramikStore.Entities;
 using SeramikStore.Services.DTOs;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
+using System.Reflection.PortableExecutable;
 
 public class ProductService : IProductService
 {
@@ -85,7 +88,7 @@ public class ProductService : IProductService
         ProductDetailDto product = null;
 
         using SqlConnection con = new(_connectionString);
-        using SqlCommand cmd = new("sp_Product_GetById", con);
+        using SqlCommand cmd = new("sp_Product_InfoById", con);
 
         cmd.CommandType = CommandType.StoredProcedure;
         cmd.Parameters.AddWithValue("@Id", id);
@@ -101,14 +104,27 @@ public class ProductService : IProductService
                 ProductCode = dr["ProductCode"].ToString(),
                 ProductName = dr["ProductName"].ToString(),
                 ProductDesc = dr["ProductDesc"].ToString(),
-                CategoryId = Convert.ToInt32(dr["CategoryId"]),
                 UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
                 CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
                 AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"]),
                 CurrencyCode = dr["CurrencyCode"].ToString(),
-                CurrencySymbol = dr["CurrencySymbol"].ToString(),
-                CategoryName = dr["CategoryName"].ToString()
+                CurrencySymbol = dr["CurrencySymbol"].ToString()
             };
+        }
+
+        if (product.SelectedCategoryIds == null)
+            product.SelectedCategoryIds = new List<int>();
+
+        if (dr.NextResult())
+        {
+            while (dr.Read())
+            {
+ 
+                if (dr["CategoryId"] != DBNull.Value)
+                {
+                    product.SelectedCategoryIds.Add(Convert.ToInt32(dr["CategoryId"]));
+                }
+            }
         }
 
         return product;
@@ -185,4 +201,19 @@ public class ProductService : IProductService
 
     }
 
+    public void SaveProductCategories(int productId, List<int> categoryIds)
+    {
+        var json = JsonConvert.SerializeObject(categoryIds);
+
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_Product_SaveCategories", con);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@ProductId", productId);
+        cmd.Parameters.AddWithValue("@CategoryJson", json);
+
+        con.Open();
+        cmd.ExecuteNonQuery();
+
+    }
 }

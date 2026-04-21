@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +20,9 @@ namespace SeramikStore.Services.DTOs
         public string CurrencyCode { get; set; }
         public string CurrencySymbol { get; set; }
         public string CategoryName { get; set; }
+
+
+        public List<int> SelectedCategoryIds { get; set; } = new List<int>();
+
     }
 }
