@@ -39,6 +39,9 @@ namespace SeramikStore.Web.ViewModels
         [ValidateNever]
         public List<SelectListItem> Categories { get; set; }
 
+        [ValidateNever]
+        public List<int> SelectedCategoryIds { get; set; } // 🔥 kritik
+
 
 
     }
