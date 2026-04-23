@@ -8,12 +8,10 @@ namespace SeramikStore.Web.ViewModels
         public string ProductCode { get; set; }     // Product code (nvarchar(50))
         public string ProductName { get; set; }     // Product name (nvarchar(50))
         public string ProductDesc { get; set; }     // Product description (nvarchar(max))
-        public int CategoryId { get; set; }         // Category ID (int)
         public decimal UnitPrice { get; set; }          // Price (decimal(18, 0))
         public string CurrencyCode { get; set; }        
         public string CurrencySymbol { get; set; }       
-        public string CategoryName { get; set; }
-
+  
         [Required(ErrorMessage = "Adet zorunludur")]
         [Range(1, 1000, ErrorMessage = "Adet en az 1 olmalıdır")]
         public int Quantity { get; set; } = 1;

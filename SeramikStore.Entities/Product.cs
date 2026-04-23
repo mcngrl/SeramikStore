@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +14,9 @@ namespace SeramikStore.Entities
         public string ProductCode { get; set; }     // Product code (nvarchar(50))
         public string ProductName { get; set; }     // Product name (nvarchar(50))
         public string ProductDesc { get; set; }     // Product description (nvarchar(max))
-        public int CategoryId { get; set; }         // Category ID (int)
         public decimal UnitPrice { get; set; }          // Price (decimal(9, 2))
         public int CurrencyId { get; set; }        // Currency (nvarchar(10))
         public bool AvailableForSale { get; set; }  // Available for sale (bit)
+        public int StockAmount { get; set; }
     }
 }

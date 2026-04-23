@@ -19,7 +19,7 @@ namespace SeramikStore.Web.ViewModels
 
         [Display(Name = "Ürün Açıklama")]
         public string ProductDesc { get; set; }     // Product description (nvarchar(max))
-        public int CategoryId { get; set; }         // Category ID (int)
+        
 
         [Required(ErrorMessage = "Fiyat zorunludur")]
         [TurkishDecimal]
@@ -31,6 +31,9 @@ namespace SeramikStore.Web.ViewModels
 
         [Display(Name = "Satış için hazır")]
         public bool AvailableForSale { get; set; }  // Available for sale (bit)
+
+        [Display(Name = "Stok Miktarı")]
+        public int StockAmount { get; set; }  // Stock amount (int)
 
         [ValidateNever]
         public List<SelectListItem> Currencies { get; set; }

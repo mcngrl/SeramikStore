@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheWebApiProject", "TheWebA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterTest", "FlutterTest\FlutterTest.csproj", "{83C68B29-E925-4941-8966-634DFE8886DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cebirsel", "cebirsel\cebirsel.csproj", "{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{83C68B29-E925-4941-8966-634DFE8886DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83C68B29-E925-4941-8966-634DFE8886DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83C68B29-E925-4941-8966-634DFE8886DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -37,10 +37,9 @@ public class ProductService : IProductService
                 ProductCode = dr["ProductCode"].ToString(),
                 ProductName = dr["ProductName"].ToString(),
                 ProductDesc = dr["ProductDesc"].ToString(),
-                CategoryName = dr["CategoryName"].ToString(),
-                CategoryId = Convert.ToInt32(dr["CategoryId"]),
                 UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
                 CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
+                StockAmount = Convert.ToInt32(dr["StockAmount"]),
                 AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"]),
                 CurrencyCode = dr["CurrencyCode"].ToString(),
                 CurrencySymbol = dr["CurrencySymbol"].ToString(),
@@ -77,7 +76,7 @@ public class ProductService : IProductService
                 CurrencySymbol = dr["CurrencySymbol"].ToString(),
                 MainImagePath = dr["MainImagePath"].ToString(),
                 ImageCount = Convert.ToInt32(dr["ImageCount"]),
-                CategoryName = dr["CategoryName"].ToString(),
+                StockAmount = Convert.ToInt32(dr["StockAmount"])
             });
         }
 
@@ -106,6 +105,7 @@ public class ProductService : IProductService
                 ProductDesc = dr["ProductDesc"].ToString(),
                 UnitPrice = Convert.ToDecimal(dr["UnitPrice"]),
                 CurrencyId = Convert.ToInt32(dr["CurrencyId"]),
+                StockAmount = Convert.ToInt32(dr["StockAmount"]),
                 AvailableForSale = Convert.ToBoolean(dr["AvailableForSale"]),
                 CurrencyCode = dr["CurrencyCode"].ToString(),
                 CurrencySymbol = dr["CurrencySymbol"].ToString()
@@ -139,10 +139,10 @@ public class ProductService : IProductService
         cmd.Parameters.AddWithValue("@ProductCode", product.ProductCode);
         cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
         cmd.Parameters.AddWithValue("@ProductDesc", product.ProductDesc);
-        cmd.Parameters.AddWithValue("@CategoryId", product.CategoryId);
         cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
         cmd.Parameters.AddWithValue("@CurrencyId", product.CurrencyId);
         cmd.Parameters.AddWithValue("@AvailableForSale", product.AvailableForSale);
+        cmd.Parameters.AddWithValue("@StockAmount", product.StockAmount);
 
         con.Open();
         return Convert.ToInt32(cmd.ExecuteScalar());
@@ -158,10 +158,10 @@ public class ProductService : IProductService
         cmd.Parameters.AddWithValue("@ProductCode", product.ProductCode);
         cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
         cmd.Parameters.AddWithValue("@ProductDesc", product.ProductDesc);
-        cmd.Parameters.AddWithValue("@CategoryId", product.CategoryId);
         cmd.Parameters.AddWithValue("@UnitPrice", product.UnitPrice);
         cmd.Parameters.AddWithValue("@CurrencyId", product.CurrencyId);
         cmd.Parameters.AddWithValue("@AvailableForSale", product.AvailableForSale);
+        cmd.Parameters.AddWithValue("@StockAmount", product.StockAmount);
 
         con.Open();
         return Convert.ToInt32(cmd.ExecuteScalar());

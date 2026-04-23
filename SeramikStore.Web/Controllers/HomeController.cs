@@ -46,10 +46,8 @@ namespace SeramikStore.Web.Controllers
                 vm.ProductCode = TheProduct.ProductCode;
                 vm.ProductName = TheProduct.ProductName;
                 vm.UnitPrice = TheProduct.UnitPrice;
-                vm.CategoryId = TheProduct.CategoryId;
                 vm.CurrencyCode = TheProduct.CurrencyCode;
                 vm.CurrencySymbol = TheProduct.CurrencySymbol;
-                vm.CategoryName = TheProduct.CategoryName;
                 
             }
 
@@ -140,10 +138,8 @@ namespace SeramikStore.Web.Controllers
                     vm.ProductCode = TheProduct.ProductCode;
                     vm.ProductName = TheProduct.ProductName;
                     vm.UnitPrice = TheProduct.UnitPrice;
-                    vm.CategoryId = TheProduct.CategoryId;
                     vm.CurrencyCode = TheProduct.CurrencyCode;
                     vm.CurrencySymbol = TheProduct.CurrencySymbol;
-                    vm.CategoryName = TheProduct.CategoryName;
 
                 }
 

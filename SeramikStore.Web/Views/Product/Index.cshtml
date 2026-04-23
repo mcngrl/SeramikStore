@@ -28,13 +28,13 @@
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CategoryName)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AvailableForSale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockAmount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MainImagePath)
@@ -59,9 +59,6 @@
                 <td class="drag-handle">
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
-                <td class="drag-handle">
-                    @Html.DisplayFor(modelItem => item.CategoryName)
-            </td>
                 <td class="drag-handle text-end" style="font-family: monospace; ">
                        @item.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
                     @Html.DisplayFor(modelItem => item.CurrencyCode)
@@ -69,6 +66,9 @@
                 <td class="drag-handle">
                 @Html.DisplayFor(modelItem => item.AvailableForSale)
             </td>
+                <td class="drag-handle">
+                    @Html.DisplayFor(modelItem => item.StockAmount)
+                </td>
                 <td class="drag-handle">
                     @if (!string.IsNullOrEmpty(item.MainImagePath))
                     {
@@ -94,17 +94,17 @@
 
                     @if (item.ImageCount > 0)
                     {
-                        <button class="btn btn-danger" disabled>Sil</button>
+                        <button class="btn btn-sm btn-danger" disabled>Sil</button>
                     }
                     else
                     {
                         <a asp-action="Delete" asp-route-id="@item.Id"
-                           class="btn btn-danger">Sil</a>
+                           class="btn btn-sm btn-danger">Sil</a>
                     }
                     <a asp-controller="ProductImage"
                        asp-action="Index"
                        asp-route-productId="@item.Id"
-                       class="btn btn-info">
+                       class="btn btn-sm btn-info">
                         Ürün Resimleri
                     </a>
                     

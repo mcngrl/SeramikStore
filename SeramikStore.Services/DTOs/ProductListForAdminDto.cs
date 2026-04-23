@@ -20,8 +20,6 @@ namespace SeramikStore.Services.DTOs
         [Display(Name = "Açıklama")]
         public string ProductDesc { get; set; }
 
-        [Display(Name = "Kategori")]
-        public string CategoryName { get; set; }
 
         [Display(Name = "Birim Fiyat")]
         public decimal UnitPrice { get; set; }
@@ -35,6 +33,9 @@ namespace SeramikStore.Services.DTOs
         
         [Display(Name = "Satış")]
         public bool AvailableForSale { get; set; }
+
+        [Display(Name = "Stok Miktarı")]
+        public int StockAmount { get; set; }
 
         [Display(Name = "Ana Resim")]
         public string MainImagePath { get; set; }

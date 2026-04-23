@@ -91,8 +91,8 @@ public class ProductController : Controller
             ProductDesc = model.ProductDesc,
             UnitPrice = unitPrice,
             CurrencyId = model.CurrencyId,
-            CategoryId = model.CategoryId,
-            AvailableForSale = model.AvailableForSale
+            AvailableForSale = model.AvailableForSale,
+            StockAmount = model.StockAmount,
         };
 
         int newProductId = _productService.InsertProduct(product);
@@ -121,8 +121,8 @@ public class ProductController : Controller
             ProductDesc = product.ProductDesc,
             UnitPrice = product.UnitPrice.ToString("N2", new CultureInfo("tr-TR")),
             CurrencyId = product.CurrencyId,
-            CategoryId = product.CategoryId,
             AvailableForSale = product.AvailableForSale,
+            StockAmount = product.StockAmount,
 
             Currencies = _currencyService.CurrencyList()
                 .Select(x => new SelectListItem
@@ -180,8 +180,8 @@ public class ProductController : Controller
             ProductDesc = model.ProductDesc,
             UnitPrice = unitPrice,
             CurrencyId = model.CurrencyId,
-            CategoryId = model.CategoryId,
-            AvailableForSale = model.AvailableForSale
+            AvailableForSale = model.AvailableForSale,
+            StockAmount = model.StockAmount 
         };
 
         _productService.UpdateProduct(product);

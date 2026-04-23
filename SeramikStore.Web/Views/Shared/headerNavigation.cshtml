@@ -24,6 +24,10 @@
 
         <div class="collapse navbar-collapse" id="mainNavbar">
             <!-- SOL MENÜ -->
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                @await Component.InvokeAsync("CategoryMenu")
+            </ul>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Home" asp-action="Index">@C["Ürünler"]</a>
