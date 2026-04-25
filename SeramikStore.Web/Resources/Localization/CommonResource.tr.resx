@@ -171,4 +171,7 @@
   <data name="Sepetim" xml:space="preserve">
     <value>Sepetim</value>
   </data>
+  <data name="Tüm Ürünler" xml:space="preserve">
+    <value>Tüm Ürünler</value>
+  </data>
 </root>

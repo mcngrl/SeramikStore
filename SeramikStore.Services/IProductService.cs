@@ -4,7 +4,7 @@ using SeramikStore.Services.DTOs;
 
     public interface IProductService
     {
-        List<ProductListForHomeDto> ProductList();
+        List<ProductListForHomeDto> ProductList(int CategoryId);
 
         List<ProductListForAdminDto> ProductListForAdmin();
 

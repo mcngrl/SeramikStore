@@ -1,5 +1,7 @@
 @using SeramikStore.Contracts.Category
 @using SeramikStore.Entities
+@using SeramikStore.Web.Localization
+@inject IStringLocalizer<CommonResource> L
 @model List<CategoryListItemDto>
 
 @foreach (var cat in Model)
@@ -13,3 +15,11 @@
         </a>
     </li>
 }
+<li class="nav-item">
+    <a class="nav-link"
+       asp-controller="Home"
+       asp-action="Category"
+       asp-route-id="0">
+        @L["Tüm Ürünler"]
+    </a>
+</li>

@@ -18,7 +18,7 @@ public class ProductService : IProductService
         _connectionString = config.GetConnectionString("DefaultConnection");
     }
 
-    public List<ProductListForHomeDto> ProductList()
+    public List<ProductListForHomeDto> ProductList(int CategoryId)
     {
         List<ProductListForHomeDto> list = new();
 
@@ -26,6 +26,7 @@ public class ProductService : IProductService
         using SqlCommand cmd = new("sp_Product_ListForHomePage", con);
 
         cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@CategoryId", CategoryId);
         con.Open();
 
         using SqlDataReader dr = cmd.ExecuteReader();

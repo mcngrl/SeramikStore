@@ -1,0 +1,87 @@
+﻿@model SeramikStore.Services.DTOs.ProductListByCategoryForHomeDto
+
+
+
+<div id="myCarousel" class="carousel slide mb-5" data-bs-ride="false">
+   
+
+    <div class="carousel-inner rounded shadow-sm">
+
+        <div class="carousel-item active">
+            <img src="/images/banner1.jpg" class="d-block w-100" style="height:400px;object-fit:cover;" />
+            <div class="carousel-caption text-start">
+                <h2 class="fw-bold">@Model.CategoryName</h2>
+                <p>Şimdi keşfedin, özel tasarımlar sizi bekliyor</p>
+                <a href="/Home" class="btn btn-primary">İncele</a>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/banner2.jpg" class="d-block w-100" style="height:400px;object-fit:cover;" />
+        </div>
+
+    </div>
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+    </div>
+
+    <!-- SOL OK -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+
+    <!-- SAĞ OK -->
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+<div class="container">
+    <div class="row g-4">
+
+        <!-- SOL TARAF (sidebar) -->
+        <div class="col-md-2">
+            <div class="card p-3 shadow-sm">
+                <h6>@Model.CategoryName (@Model.ProductCount)</h6>
+            </div>
+        </div>
+
+        <!-- SAĞ TARAF -->
+        <div class="col-md-10">
+
+            <!-- ÜRÜNLER -->
+            <div class="row g-4">
+                @foreach (var item in Model.ProductList)
+                {
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <a asp-action="Details"
+                           asp-controller="Home"
+                           asp-route-id="@item.Id"
+                           class="text-decoration-none">
+
+                            <div class="card h-100 shadow-sm border-0">
+                                <img src="@(string.IsNullOrEmpty(item.MainImagePath)
+                                                                         ? "/images/no-image.png"
+                                                                         : item.MainImagePath)"
+                                 class="card-img-top"
+                                 style="height:180px;object-fit:cover;" />
+
+                                <div class="card-body">
+                                    <h6 class="text-dark fw-semibold">
+                                        @item.ProductName
+                                    </h6>
+
+                                    <div class="fw-bold text-primary">
+                                        @item.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
+                                        <small>@item.CurrencyCode</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </a>
+                    </div>
+                                }
+            </div>
+
+        </div>
+    </div>
+</div>

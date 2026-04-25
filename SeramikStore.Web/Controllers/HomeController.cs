@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Tasks.Deployment.Bootstrapper;
 using Microsoft.IdentityModel.Logging;
 using SeramikStore.Entities;
 using SeramikStore.Services;
@@ -19,19 +20,53 @@ namespace SeramikStore.Web.Controllers
         private IProductService _productservices;
         private ICartService _cartservices;
         private IProductImageService _productimageservice;
+        private ICategoryService _categoryservice;
 
-        public HomeController(ILogger<HomeController> logger, IProductService productservices, ICartService cartservices, IProductImageService productimageservice)
+        public HomeController(ILogger<HomeController> logger, IProductService productservices,
+            ICartService cartservices, IProductImageService productimageservice, ICategoryService categoryservice)
         {
             _logger = logger;
             _productservices = productservices;
             _cartservices = cartservices;
             _productimageservice = productimageservice;
+            _categoryservice = categoryservice;
         }
 
         public IActionResult Index()
         {
-            List<ProductListForHomeDto> productList = _productservices.ProductList();
+            List<ProductListForHomeDto> productList = _productservices.ProductList(0);
             return View(productList);
+        }
+
+        public IActionResult Category(int id)
+        {
+            var vm = new ProductListByCategoryForHomeDto
+            {
+                CategoryId = id,
+                ProductList = _productservices.ProductList(id) ?? new List<ProductListForHomeDto>()
+            };
+
+            // Kategori adı
+            if (id == 0)
+            {
+                vm.CategoryName = "Tüm Ürünler";
+            }
+            else
+            {
+                var category = _categoryservice.GetById(id);
+
+                if (category == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                vm.CategoryName = category.Name;
+            }
+
+            // Ürün sayısı
+            vm.ProductCount = vm.ProductList.Count;
+
+            return View(vm);
         }
 
         public IActionResult Details(int id)

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -170,5 +170,8 @@
   </data>
   <data name="Sepetim" xml:space="preserve">
     <value>My Cart</value>
+  </data>
+  <data name="Tüm Ürünler" xml:space="preserve">
+    <value>All Products</value>
   </data>
 </root>
