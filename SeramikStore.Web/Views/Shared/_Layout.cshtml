@@ -215,10 +215,7 @@
                 <div class="col-6 col-md-3">
                     <h6 class="fw-bold">Kategorilerimiz</h6>
                     <ul class="list-unstyled small">
-                        <li><a href="/Category/1">Kupalar</a></li>
-                        <li><a href="/Category/2">Fincanlar</a></li>
-                        <li><a href="/Category/3">Tabaklar</a></li>
-                        <li><a href="/Home">Tüm Ürünler</a></li>
+                        @await Component.InvokeAsync("CategoryMenu")
                     </ul>
                 </div>
 
@@ -230,8 +227,8 @@
                         <li><a asp-controller="Home" asp-action="KVKK">@L["KVKK Aydınlatma Metni"]</a></li>
                         <li><a asp-controller="Home" asp-action="UyelikSozlesmesi">@L["Üyelik Sözleşmesi"]</a></li>
                         <li><a asp-controller="Home" asp-action="MesafeliSatis">@L["Mesafeli Satış Sözleşmesi"]</a></li>
-                        <li><a href="/Home/Cookie">Çerez Politikası</a></li>
-                        <li><a href="/Home/Contact">Bize Ulaşın</a></li>
+@*                         <li><a href="/Home/Cookie">Çerez Politikası</a></li>
+                        <li><a href="/Home/Contact">Bize Ulaşın</a></li> *@
                     </ul>
                 </div>
 
@@ -240,9 +237,9 @@
                     <h6 class="fw-bold">Kurumsal</h6>
                     <ul class="list-unstyled small">
                         <li><a href="/Home/About">Hakkımızda</a></li>
-                        <li><a href="/Home/Search">Hızlı Arama</a></li>
-                        <li><a href="/Home/FAQ">Sıkça Sorulan Sorular</a></li>
-                        <li><a href="/Home/Contact">İletişim</a></li>
+@*                         <li><a href="/Home/Search">Hızlı Arama</a></li>
+                        <li><a href="/Home/FAQ">Sıkça Sorulan Sorular</a></li> 
+                        <li><a href="/Home/Contact">İletişim</a></li>*@
                     </ul>
                 </div>
 
