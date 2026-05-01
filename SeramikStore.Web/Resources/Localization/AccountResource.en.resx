@@ -312,4 +312,108 @@
   <data name="Ana Sayfa" xml:space="preserve">
     <value>Homepage</value>
   </data>
+  <data name="El Yapımı Stoneware Ürünler" xml:space="preserve">
+    <value>Handmade Stoneware Products</value>
+  </data>
+
+
+<data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
+  <value>Discover now, unique designs are waiting for you</value>
+</data>
+
+<data name="Her Parça Bir Hikaye" xml:space="preserve">
+  <value>Every Piece Tells a Story</value>
+</data>
+
+<data name="El işçiliği ile üretilen benzersiz stoneware koleksiyonu" xml:space="preserve">
+  <value>A unique stoneware collection crafted by hand</value>
+</data>
+
+<data name="Sofranıza Değer Katın" xml:space="preserve">
+  <value>Add Value to Your Table</value>
+</data>
+
+<data name="Özgün tasarımlar ile fark yaratan sunumlar" xml:space="preserve">
+  <value>Make a difference with unique designs</value>
+</data>
+
+<data name="Her Detayında El Emeği Saklı" xml:space="preserve">
+  <value>Craftsmanship in Every Detail</value>
+</data>
+
+<data name="Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür." xml:space="preserve">
+  <value>Each piece is a true handcrafted product shaped with skill, patience, and high heat</value>
+</data>
+
+<data name="El Yapımı" xml:space="preserve">
+  <value>Handmade</value>
+</data>
+
+<data name="Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır." xml:space="preserve">
+  <value>Each piece is individually shaped by hand, giving every product a unique character</value>
+</data>
+
+<data name="Yüksek Fırınlama" xml:space="preserve">
+  <value>High Temperature Firing</value>
+</data>
+
+<data name="Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir." xml:space="preserve">
+  <value>Fired at high temperatures for extra durability and long-lasting use</value>
+</data>
+
+<data name="Mikrodalga Uyumlu" xml:space="preserve">
+  <value>Microwave Safe</value>
+</data>
+
+<data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
+  <value>Designed for daily use. Safe for microwave use</value>
+</data>
+
+<data name="Bulaşık Makinesine Uygun" xml:space="preserve">
+  <value>Dishwasher Safe</value>
+</data>
+
+<data name="Stoneware yapısı sayesinde bulaşık makinesinde güvenle yıkanabilir, formunu ve rengini korur." xml:space="preserve">
+  <value>Thanks to its stoneware structure, it can be safely washed in a dishwasher without losing its form or color</value>
+</data>
+
+<data name="Gıda ile Temasa Uygun" xml:space="preserve">
+  <value>Food Safe</value>
+</data>
+
+<data name="Sağlığa zararsızdır, tüm ürünlerimiz gıda ile temas için güvenle kullanılabilir." xml:space="preserve">
+  <value>Safe for health, all our products are suitable for food contact</value>
+</data>
+
+<data name="Özenli Paketleme" xml:space="preserve">
+  <value>Careful Packaging</value>
+</data>
+
+<data name="Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır." xml:space="preserve">
+  <value>Your orders are prepared with protective packaging and delivered safely to your address</value>
+</data>
+
+<data name="El Yapımı" xml:space="preserve">
+  <value>Handmade</value>
+</data>
+
+	<data name="Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır." xml:space="preserve">
+  <value>Each piece is individually shaped by hand, giving every product a unique character</value>
+</data>
+
+	<data name="Yüksek Fırınlama" xml:space="preserve">
+  <value>High Temperature Firing</value>
+</data>
+
+	<data name="Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir." xml:space="preserve">
+  <value>Fired at high temperatures for extra durability and long-lasting use</value>
+</data>
+
+	<data name="Mikrodalga Uyumlu" xml:space="preserve">
+  <value>Microwave Safe</value>
+</data>
+
+	<data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
+  <value>Designed for daily use. Safe for microwave use</value>
+</data>
 </root>

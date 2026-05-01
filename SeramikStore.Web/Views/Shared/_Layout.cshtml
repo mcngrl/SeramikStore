@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @Company.Value.Name</title>
+    <title>@Company.Value.Name  @ViewData["Title"]</title>
     @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     @* <link rel="stylesheet" href="~/css/myTheme.css" /> 
     <link href="~/css/journal.min.css" rel="stylesheet" />*@
@@ -169,26 +169,39 @@
     <div class="bg-light py-4 border-top">
         <div class="container">
             <div class="row text-center g-4">
+
                 <div class="col-6 col-md-3">
-                    <i class="bi bi-box-seam fs-2"></i>
-                    <h6 class="mt-2">Aynı Gün Kargo</h6>
-                    <small>Hafta içi 12:00’a kadar verilen siparişler aynı gün kargoda.</small>
+                    <i class="bi bi-truck fs-2 text-primary"></i>
+                    <h6 class="mt-2 fw-semibold">Hızlı Teslimat</h6>
+                    <small class="text-muted">
+                        Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir.
+                    </small>
                 </div>
+
                 <div class="col-6 col-md-3">
-                    <i class="bi bi-headset fs-2"></i>
-                    <h6 class="mt-2">7/24 Canlı Destek</h6>
-                    <small>Her an destek sağlıyoruz.</small>
+                    <i class="bi bi-whatsapp fs-2 text-success"></i>
+                    <h6 class="mt-2 fw-semibold">Canlı Destek</h6>
+                    <small class="text-muted">
+                        WhatsApp üzerinden hızlı ve kolay destek hizmeti.
+                    </small>
                 </div>
+
                 <div class="col-6 col-md-3">
-                    <i class="bi bi-stars fs-2"></i>
-                    <h6 class="mt-2">Kişiye Özel Tasarım</h6>
-                    <small>Hayal edin biz üretelim.</small>
+                    <i class="bi bi-arrow-repeat fs-2 text-warning"></i>
+                    <h6 class="mt-2 fw-semibold">Kolay İade</h6>
+                    <small class="text-muted">
+                        14 gün içinde ücretsiz iade ve değişim imkanı.
+                    </small>
                 </div>
+
                 <div class="col-6 col-md-3">
-                    <i class="bi bi-shield-check fs-2"></i>
-                    <h6 class="mt-2">Güvenli Ödeme</h6>
-                    <small>Ödeme bilgileriniz güvende.</small>
+                    <i class="bi bi-shield-lock fs-2 text-danger"></i>
+                    <h6 class="mt-2 fw-semibold">Güvenli Ödeme</h6>
+                    <small class="text-muted">
+                        Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez.
+                    </small>
                 </div>
+
             </div>
         </div>
     </div>
@@ -205,9 +218,7 @@
                         <li><a href="/Account/Login">Giriş Yap</a></li>
                         <li><a href="/Account/Profile">Hesabım</a></li>
                         <li><a href="/Order/OrderList">Siparişlerim</a></li>
-                        <li><a href="/Order/Track">Sipariş Takip</a></li>
-                        <li><a href="/Cart">Sepetim</a></li>
-                        <li><a href="/Favorites">Favorilerim</a></li>
+                        <li><a href="/Cart/Summary">Sepetim</a></li>
                     </ul>
                 </div>
 
@@ -215,7 +226,7 @@
                 <div class="col-6 col-md-3">
                     <h6 class="fw-bold">Kategorilerimiz</h6>
                     <ul class="list-unstyled small">
-                        @await Component.InvokeAsync("CategoryMenu")
+                        @await Component.InvokeAsync("CategoryMenuFooter")
                     </ul>
                 </div>
 
@@ -247,57 +258,37 @@
                             </a>
                         </li>
                     </ul>
+                    <div class="d-flex gap-3 mt-1 align-items-start">
 
-                    <div class="d-flex gap-1 mt-4">
-
+                        <!-- Instagram -->
                         <div class="text-center">
                             <a href="https://instagram.com/@(Company.Value.SocialMedia.Instagram)"
                                target="_blank"
                                class="social-icon instagram"
                                aria-label="Instagram">
-                                <i class="fa-brands fa-instagram"></i>
+                                <i class="fa-brands fa-instagram fs-4"></i>
                             </a>
 
-                            <div class="mt-2 small text-light">
-                                @@(Company.Value.SocialMedia.Instagram)
+                            <div class="mt-2 small text-dark">
+                                @(Company.Value.SocialMedia.Instagram)
                             </div>
                         </div>
 
+                        <!-- WhatsApp -->
                         <div class="text-center">
                             <a href="https://wa.me/@(Company.Value.SocialMedia.WhatsApp)"
                                target="_blank"
                                class="social-icon whatsapp">
-                                <i class="fa-brands fa-whatsapp"></i>
+                                <i class="fa-brands fa-whatsapp fs-4"></i>
                             </a>
 
-                            <div class="mt-2 small text-light">
-                                WhatsApp
+                            <div class="mt-2 small text-dark">
+                                @(Company.Value.SocialMedia.WhatsApp)
                             </div>
                         </div>
 
                     </div>
 
-@* 
-                    <div class="d-flex gap-1 mt-4">
-
-                        <a href="https://instagram.com/@(Company.Value.SocialMedia.Instagram)"
-                           target="_blank"
-                           class="social-icon instagram"
-                           aria-label="Instagram">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-
-                        <a href="https://wa.me/@(Company.Value.SocialMedia.WhatsApp)"
-                           target="_blank"
-                           class="social-icon whatsapp">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </a>
-
-                    </div>
-
-                    <div class="mt-3 small">
-                       @(Company.Value.SocialMedia.Instagram)
-                    </div> *@
                 </div>
 
 

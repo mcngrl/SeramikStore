@@ -6,17 +6,16 @@
 
 @foreach (var cat in Model)
 {
-    <li class="nav-item">
-        <a class="nav-link  fw-bold fs-6"
-           asp-controller="Home"
-           asp-action="Category"
-           asp-route-id="@cat.Id">
+
+    <li>
+        <a href="/Home/Category/@cat.Id">
             @cat.Name
         </a>
     </li>
+
 }
-<li class="nav-item">
-    <a class="nav-link  fw-bold fs-6"
+<li>
+    <a 
        asp-controller="Home"
        asp-action="Category"
        asp-route-id="0">

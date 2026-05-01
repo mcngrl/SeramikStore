@@ -1,17 +1,34 @@
-﻿<div id="myCarousel" class="carousel slide mb-5" data-bs-ride="false">
+﻿@using SeramikStore.Web.Localization
+@inject IStringLocalizer<AccountResource> L
+<div id="myCarousel" class="carousel slide mb-5" data-bs-ride="false">
     <div class="carousel-inner rounded shadow-sm">
-
         <div class="carousel-item active">
             <img src="/images/banner1.jpg" class="d-block w-100" style="height:400px;object-fit:cover;" />
+            <div class="carousel-caption text-start" style="top:25%; left:10%; right:auto; bottom:auto; max-width:500px;">
+                <h1 class="fw-bold">@L["El Yapımı Stoneware Ürünler"]</h1>
+                <p>@L["Şimdi keşfedin, özel tasarımlar sizi bekliyor"]</p>
+            </div>
         </div>
         <div class="carousel-item">
             <img src="/images/banner2.jpg" class="d-block w-100" style="height:400px;object-fit:cover;" />
+            <div class="carousel-caption text-start" style="top:25%; left:10%; right:auto; bottom:auto; max-width:500px;">
+                <h1 class="fw-bold">@L["Her Parça Bir Hikaye"]</h1>
+                <p>@L["El işçiliği ile üretilen benzersiz stoneware koleksiyonu"]</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/banner2.jpg" class="d-block w-100" style="height:400px;object-fit:cover;" />
+            <div class="carousel-caption text-start" style="top:25%; left:10%; right:auto; bottom:auto; max-width:500px;">
+                <h1 class="fw-bold">@L["Sofranıza Değer Katın"]</h1>
+                <p>@L["Özgün tasarımlar ile fark yaratan sunumlar"]</p>
+            </div>
         </div>
  
     </div>
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 2" class=""></button>
     </div>
 
     <!-- SOL OK -->
@@ -28,9 +45,9 @@
     <div class="container">
 
         <div class="text-center mb-5">
-            <h2 class="fw-bold">Her Detayında El Emeği Saklı</h2>
+            <h2 class="fw-bold">@L["Her Detayında El Emeği Saklı"]</h2>
             <p class="text-muted">
-                Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür.
+                @L["Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür."]
             </p>
         </div>
 
@@ -42,11 +59,10 @@
                         <i class="bi bi-hand-index-thumb fs-1"></i>
                     </div>
 
-                    <h4 class="fw-bold">El Yapımı</h4>
+                    <h4 class="fw-bold">@L["El Yapımı"]</h4>
 
                     <p class="text-muted mb-0">
-                        Her parça ellerimizde tek tek şekillendirilir,
-                        bu yüzden her ürün kendine özgü bir karakter taşır.
+                        @L["Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır."]
                     </p>
 
                 </div>
@@ -58,11 +74,10 @@
                         <i class="bi bi-fire fs-1"></i>
                     </div>
 
-                    <h4 class="fw-bold">Yüksek Fırınlama</h4>
+                    <h4 class="fw-bold">@L["Yüksek Fırınlama"]</h4>
 
                     <p class="text-muted">
-                        Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık
-                        ve uzun ömürlü kullanım elde edilir.
+                        @L["Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir."]
                     </p>
                 </div>
             </div>
@@ -73,153 +88,21 @@
                         <i class="bi bi-shield-check fs-1"></i>
                     </div>
 
-                    <h4 class="fw-bold">Mikrodalga Uyumlu</h4>
+                    <h4 class="fw-bold">@L["Mikrodalga Uyumlu"]</h4>
 
                     <p class="text-muted">
-                        Günlük kullanım için tasarlanmıştır.
-                        Güvenle mikrodalgada kullanılabilir.
+                        @L["Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir."]
                     </p>
                 </div>
             </div>
 
         </div>
 
-        <div class="row g-4">
 
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm h-100 text-center p-4">
-                    <div class="mb-3 text-primary">
-                        <i class="bi bi-hand-index-thumb fs-1"></i>
-                    </div>
-
-                    <h4 class="fw-bold">El Yapımı</h4>
-
-                    <p class="text-muted mb-0">
-                        Her parça ellerimizde tek tek şekillendirilir,
-                        bu yüzden her ürün kendine özgü bir karakter taşır.
-                    </p>
-
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm h-100 text-center p-4">
-                    <div class="mb-3 text-danger">
-                        <i class="bi bi-fire fs-1"></i>
-                    </div>
-
-                    <h4 class="fw-bold">Yüksek Fırınlama</h4>
-
-                    <p class="text-muted">
-                        Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık
-                        ve uzun ömürlü kullanım elde edilir.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm h-100 text-center p-4">
-                    <div class="mb-3">
-                        <i class="bi bi-shield-check fs-1"></i>
-                    </div>
-
-                    <h4 class="fw-bold">Mikrodalga Uyumlu</h4>
-
-                    <p class="text-muted">
-                        Günlük kullanım için tasarlanmıştır.
-                        Güvenle mikrodalgada kullanılabilir.
-                    </p>
-                </div>
-            </div>
-
-        </div>
     </div>
 </section>
 
-<div class="row g-4 mt-2">
 
-    <div class="col-lg-4 col-md-6">
-        <div class="card border-0 shadow-sm h-100 text-center p-4 feature-card">
-
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6">
-        <div class="card border-0 shadow-sm h-100 text-center p-4 feature-card">
-            <div class="mb-3 text-danger">
-                <i class="bi bi-fire fs-1"></i>
-            </div>
-
-            <h4 class="fw-bold">1240°C Yüksek Fırınlama</h4>
-
-            <p class="text-muted mb-0">
-                Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık
-                ve uzun ömürlü kullanım elde edilir.
-            </p>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6">
-        <div class="card border-0 shadow-sm h-100 text-center p-4 feature-card">
-            <div class="mb-3 text-success">
-                <i class="bi bi-microwave fs-1"></i>
-            </div>
-
-            <h4 class="fw-bold">Mikrodalga Uyumlu</h4>
-
-            <p class="text-muted mb-0">
-                Günlük kullanım için tasarlanmıştır.
-                Güvenle mikrodalgada kullanılabilir.
-            </p>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6">
-        <div class="card border-0 shadow-sm h-100 text-center p-4 feature-card">
-            <div class="mb-3 text-info">
-                <i class="bi bi-droplet-half fs-1"></i>
-            </div>
-
-            <h4 class="fw-bold">Bulaşık Makinesi Dostu</h4>
-
-            <p class="text-muted mb-0">
-                Özel yüzey yapısı sayesinde rengini ve dokusunu
-                uzun yıllar korur.
-            </p>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6">
-        <div class="card border-0 shadow-sm h-100 text-center p-4 feature-card">
-            <div class="mb-3 text-warning">
-                <i class="bi bi-shield-check fs-1"></i>
-            </div>
-
-            <h4 class="fw-bold">Çizilmeye Dayanıklı Yüzey</h4>
-
-            <p class="text-muted mb-0">
-                Renk yüzeyde değil çamurun içindedir.
-                Kullanıma bağlı deformasyonları minimuma indirir.
-            </p>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6">
-        <div class="card border-0 shadow-sm h-100 text-center p-4 feature-card">
-            <div class="mb-3 text-secondary">
-                <i class="bi bi-globe-europe-africa fs-1"></i>
-            </div>
-
-            <h4 class="fw-bold">Doğal ve Zamansız Tasarım</h4>
-
-            <p class="text-muted mb-0">
-                Modern sofralara uyum sağlayan,
-                sade ve doğal dokulu özel stoneware tasarımlar.
-            </p>
-        </div>
-    </div>
-
-</div>
 
 <style>
     .feature-card {
@@ -264,6 +147,47 @@
 
                 </a>
             </div>
-                }
+         }
     </div>
 </div>
+
+<div class="row g-4 mb-2">
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 text-center p-4">
+            <div class="mb-3 text-success">
+                <i class="bi bi-droplet fs-1"></i>
+            </div>
+            <h4 class="fw-bold">@L["Bulaşık Makinesine Uygun"]</h4>
+            <p class="text-muted mb-0">
+                @L["Stoneware yapısı sayesinde bulaşık makinesinde güvenle yıkanabilir, formunu ve rengini korur."]
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 text-center p-4">
+            <div class="mb-3 text-warning">
+                <i class="bi bi-check-circle fs-1"></i>
+            </div>
+            <h4 class="fw-bold">@L["Gıda ile Temasa Uygun"]</h4>
+            <p class="text-muted">
+                @L["Sağlığa zararsızdır, tüm ürünlerimiz gıda ile temas için güvenle kullanılabilir."]
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100 text-center p-4">
+            <div class="mb-3 text-primary">
+                <i class="bi bi-box-seam fs-1"></i>
+            </div>
+            <h4 class="fw-bold">@L["Özenli Paketleme"]</h4>
+            <p class="text-muted">
+                @L["Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır."]
+            </p>
+        </div>
+    </div>
+
+</div>
+
