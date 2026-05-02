@@ -89,12 +89,16 @@ namespace SeramikStore.Web.Controllers
 
             var images = _productimageservice.GetByProductId(id);
 
-            List<string> ImagePaths = new List<string>();
-            foreach (var image in images) 
-            {
-                ImagePaths.Add(image.ImagePath);  
-             };
-            vm.ImagePaths = ImagePaths;
+            vm.ImagePaths = images.Select(x => x.ImagePath).ToList();
+            vm.ThumbPaths = images.Select(x => x.ThumbPath).ToList();
+
+
+            //List<string> ImagePaths = new List<string>();
+            //foreach (var image in images) 
+            //{
+            //    ImagePaths.Add(image.ImagePath);  
+            // };
+            //vm.ImagePaths = ImagePaths;
             return View(vm);
         }
 

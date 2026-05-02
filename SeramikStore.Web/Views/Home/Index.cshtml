@@ -135,9 +135,9 @@
                             </div>
                         }
 
-                        <img src="@(string.IsNullOrEmpty(item.MainImagePath)
+                        <img src="@(string.IsNullOrEmpty(item.MainImageThumbPath)
                                                                   ? "/images/no-image.png"
-                                                                  : item.MainImagePath)"
+                                                                                               : item.MainImageThumbPath)"
                          class="card-img-top @(item.StockAmount <= 0 ? "opacity-50" : "")"
                          style="height:180px; object-fit:cover;" />
 

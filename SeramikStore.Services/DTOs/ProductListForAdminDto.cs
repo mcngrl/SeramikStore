@@ -40,6 +40,21 @@ namespace SeramikStore.Services.DTOs
         [Display(Name = "Ana Resim")]
         public string MainImagePath { get; set; }
 
+        [Display(Name = "Ana Resim")]
+        public string MainImageThumbPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(MainImagePath))
+                    return null;
+
+                var extension = Path.GetExtension(MainImagePath);
+                var withoutExt = MainImagePath.Replace(extension, "");
+
+                return $"{withoutExt}_thumb{extension}";
+            }
+        }
+
         [Display(Name = "Resim Sayısı")]
         public int ImageCount { get; set; }
 

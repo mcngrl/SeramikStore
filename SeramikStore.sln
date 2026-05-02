@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cebirsel", "cebirsel\cebirs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPConverter", "WebPConverter\WebPConverter.csproj", "{AD25C430-C097-4EEC-A894-6A0C6567D7BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThumpCreator", "ThumpCreator\ThumpCreator.csproj", "{F4ED0940-880F-4976-AB0D-49BB4E1F712A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{AD25C430-C097-4EEC-A894-6A0C6567D7BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD25C430-C097-4EEC-A894-6A0C6567D7BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD25C430-C097-4EEC-A894-6A0C6567D7BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4ED0940-880F-4976-AB0D-49BB4E1F712A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4ED0940-880F-4976-AB0D-49BB4E1F712A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4ED0940-880F-4976-AB0D-49BB4E1F712A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4ED0940-880F-4976-AB0D-49BB4E1F712A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

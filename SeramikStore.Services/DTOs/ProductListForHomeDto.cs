@@ -21,6 +21,20 @@ namespace SeramikStore.Services.DTOs
         public int StockAmount { get; set; }
         public string MainImagePath { get; set; }
 
+        public string MainImageThumbPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(MainImagePath))
+                    return null;
+
+                var extension = Path.GetExtension(MainImagePath);
+                var withoutExt = MainImagePath.Replace(extension, "");
+
+                return $"{withoutExt}_thumb{extension}";
+            }
+        }
+
 
     }
 }

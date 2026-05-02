@@ -10,5 +10,19 @@ namespace SeramikStore.Contracts.Order
         public decimal LineTotal { get; set; }
         public int DisplayNo { get; set; }
         public string ImagePath { get; set; }
+
+        public string ImageThumbPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ImagePath))
+                    return null;
+
+                var extension = Path.GetExtension(ImagePath);
+                var withoutExt = ImagePath.Replace(extension, "");
+
+                return $"{withoutExt}_thumb{extension}";
+            }
+        }
     }
 }

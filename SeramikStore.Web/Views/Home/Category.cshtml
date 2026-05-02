@@ -55,9 +55,8 @@
                            class="text-decoration-none">
 
                             <div class="card h-100 shadow-sm border-0">
-                                <img src="@(string.IsNullOrEmpty(item.MainImagePath)
-                                                                         ? "/images/no-image.png"
-                                                                         : item.MainImagePath)"
+                                <img src="@(string.IsNullOrEmpty(item.MainImageThumbPath)
+                                                                         ? "/images/no-image.png": item.MainImageThumbPath)"
                                  class="card-img-top"
                                  style="height:180px;object-fit:cover;" />
 

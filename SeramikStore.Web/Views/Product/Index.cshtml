@@ -37,7 +37,7 @@
                 @Html.DisplayNameFor(model => model.StockAmount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MainImagePath)
+                @Html.DisplayNameFor(model => model.MainImageThumbPath)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImageCount)
@@ -70,9 +70,9 @@
                     @Html.DisplayFor(modelItem => item.StockAmount)
                 </td>
                 <td class="drag-handle">
-                    @if (!string.IsNullOrEmpty(item.MainImagePath))
+                    @if (!string.IsNullOrEmpty(item.MainImageThumbPath))
                     {
-                        <img src="@item.MainImagePath"
+                        <img src="@item.MainImageThumbPath"
                              alt="Ürün Resmi"
                              style="width:80px; height:80px; object-fit:cover;" />
                     }

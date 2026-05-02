@@ -15,5 +15,19 @@ namespace SeramikStore.Services.DTOs
         public string cart_id_token { get; set; }
         public string CurrencyCode { get; set; }
         public string MainImagePath { get; set; }
+
+        public string MainImageThumbPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(MainImagePath))
+                    return null;
+
+                var extension = Path.GetExtension(MainImagePath);
+                var withoutExt = MainImagePath.Replace(extension, "");
+
+                return $"{withoutExt}_thumb{extension}";
+            }
+        }
     } 
 }
