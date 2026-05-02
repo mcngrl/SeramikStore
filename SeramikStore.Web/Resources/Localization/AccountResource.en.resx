@@ -562,8 +562,17 @@
 <data name="Anladım" xml:space="preserve">
   <value>Accept</value>
 </data>
-	<data name="NotEnoughStock">
-		<value>Not enough stock available.</value>
-	</data>
+<data name="NotEnoughStock">
+ <value>Not enough stock available.</value>
+</data>
+<data name="Güncellendi">
+ <value>Updated</value>
+</data>
+<data name="INSUFFICIENT_STOCK" xml:space="preserve">
+  <value>Not enough stock for {0}. In cart: {1}, Available: {2}</value>
+</data>
 
+	<data name="OK" xml:space="preserve">
+  <value>Stock check successful.</value>
+</data>
 </root>

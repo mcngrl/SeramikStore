@@ -1,3 +1,4 @@
+using SeramikStore.Contracts.Cart;
 using SeramikStore.Entities;
 using SeramikStore.Services.DTOs;
 using System;
@@ -23,5 +24,7 @@ namespace SeramikStore.Services
 
         void IncreaseQuantity(int cartId);
         void DecreaseQuantity(int cartId);
+
+        StockCheckResult CheckStockByCartId(int cartId);
     }
 }

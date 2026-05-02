@@ -18,6 +18,7 @@ using SeramikStore.Web.ViewModels;
 using SeramikStore.Web.ViewModels.Cart;
 using System.Linq;
 
+
 namespace SeramikStore.Web.Controllers
 {
     public partial class CartController : Controller
@@ -225,6 +226,24 @@ namespace SeramikStore.Web.Controllers
             {
                 return RedirectToAction("EmptyCart");
             }
+
+            foreach (var item in cartResult.Items)
+            {
+                var stockCheck = _cartService.CheckStockByCartId(item.Id);
+                if (stockCheck != null && !stockCheck.IsSuccess)
+                {
+     
+                    TempData["Error"] = stockCheck.ErrorCode; // INSUFFICIENT_STOCK
+                    TempData["P1"] = stockCheck.ProductName;
+                    TempData["P2"] = stockCheck.CartQuantity;
+                    TempData["P3"] = stockCheck.StockAmount;
+
+                    return RedirectToAction("Summary");
+                }
+            }
+
+      
+
 
             var userId = HttpContext.Session.GetInt32("session_UserId");
             if (!userId.HasValue)

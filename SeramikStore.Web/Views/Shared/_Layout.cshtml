@@ -60,6 +60,11 @@
 
     @if (TempData["Error"] != null)
     {
+        var errorKey = TempData["Error"]?.ToString();
+        var p1 = TempData["P1"];
+        var p2 = TempData["P2"];
+        var p3 = TempData["P3"];
+
         <div class="toast-container position-fixed top-0 end-0 p-3">
             <div id="errorToast" class="toast text-bg-danger" role="alert">
                 <div class="toast-header text-bg-danger">
@@ -67,7 +72,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
                 </div>
                 <div class="toast-body">
-                    @L[TempData["Error"]?.ToString()]
+                    @L[errorKey, p1, p2, p3]
                 </div>
             </div>
         </div>

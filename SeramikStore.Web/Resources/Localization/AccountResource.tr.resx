@@ -563,5 +563,15 @@
 	<data name="NotEnoughStock">
 		<value>Yeterli stok bulunmamaktadır.</value>
 	</data>
+	<data name="Güncellendi">
+		<value>Güncellendi</value>
+	</data>
+	<data name="INSUFFICIENT_STOCK" xml:space="preserve">
+  <value>{0} ürününde yeterli stok yok. Sepetteki adet: {1}, Mevcut stok: {2}</value>
+</data>
+
+	<data name="OK" xml:space="preserve">
+  <value>Stok kontrolü başarılı.</value>
+</data>
 
 </root>

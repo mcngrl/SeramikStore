@@ -303,6 +303,37 @@ namespace SeramikStore.Services
             cmd.ExecuteNonQuery();
         }
 
+        public StockCheckResult CheckStockByCartId(int cartId)
+        {
+            StockCheckResult result = null;
+
+            using SqlConnection connection = new(_connectionString);
+            using SqlCommand command = new("sp_CheckStockMyCardId", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@CartId", cartId);
+
+            connection.Open();
+            using SqlDataReader reader = command.ExecuteReader();
+
+            if (reader.Read())
+            {
+                result = new StockCheckResult
+                {
+                    IsSuccess = Convert.ToInt32(reader["IsSuccess"]) == 1,
+                    ErrorCode = reader["ErrorCode"].ToString(),
+                    Message = reader["Message"].ToString(),
+                    CartId = reader["CartId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["CartId"]),
+                    ProductId = reader["ProductId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["ProductId"]),
+                    ProductCode = reader["ProductCode"] == DBNull.Value ? null : reader["ProductCode"].ToString(),
+                    ProductName = reader["ProductName"] == DBNull.Value ? null : reader["ProductName"].ToString(),
+                    CartQuantity = reader["CartQuantity"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["CartQuantity"]),
+                    StockAmount = reader["StockAmount"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["StockAmount"])
+                };
+            }
+
+            return result;
+        }
+
 
     }
 }
