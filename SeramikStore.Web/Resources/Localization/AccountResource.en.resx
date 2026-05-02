@@ -562,6 +562,8 @@
 <data name="Anladım" xml:space="preserve">
   <value>Accept</value>
 </data>
-
+	<data name="NotEnoughStock">
+		<value>Not enough stock available.</value>
+	</data>
 
 </root>

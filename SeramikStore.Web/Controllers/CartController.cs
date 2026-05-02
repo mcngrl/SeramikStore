@@ -24,13 +24,16 @@ namespace SeramikStore.Web.Controllers
     {
         private readonly IUserAddressService _userAddressService;
         private readonly ICartService _cartService;
+        private readonly IProductService _productService;
 
         public CartController(
             IUserAddressService userAddressService,
-            ICartService cartService)
+            ICartService cartService,
+            IProductService productService)
         {
             _userAddressService = userAddressService;
             _cartService = cartService;
+            _productService = productService;
         }
         private CartResultDto GetCurrentCart()
         {
@@ -158,6 +161,17 @@ namespace SeramikStore.Web.Controllers
                 if (cart.cart_id_token != cartId)
                     return Unauthorized();
             }
+
+
+            // Backend stok kontrolü
+            var product = _productService.ProductGetById(cart.ProductId);
+            if (product == null || cart.Quantity >= product.StockAmount)
+            {
+                TempData["Error"] = "NotEnoughStock";
+                return RedirectToAction("Summary");
+            }
+
+
 
             _cartService.IncreaseQuantity(id);
             return RedirectToAction("Summary");

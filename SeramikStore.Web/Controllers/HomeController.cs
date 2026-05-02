@@ -83,6 +83,7 @@ namespace SeramikStore.Web.Controllers
                 vm.UnitPrice = TheProduct.UnitPrice;
                 vm.CurrencyCode = TheProduct.CurrencyCode;
                 vm.CurrencySymbol = TheProduct.CurrencySymbol;
+                vm.StockAmount = TheProduct.StockAmount;
                 
             }
 

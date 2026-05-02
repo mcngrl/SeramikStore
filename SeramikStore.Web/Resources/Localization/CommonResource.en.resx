@@ -207,4 +207,23 @@
 	<data name="Ürün Açıklaması" xml:space="preserve">
   <value>Product Description</value>
 </data>
+	<data name="Max" xml:space="preserve">
+  <value>max</value>
+</data>
+	<data name="Maksimum" xml:space="preserve">
+  <value>Maximum</value>
+</data>
+	<data name="adet" xml:space="preserve">
+  <value>pcs</value>
+</data>
+	<data name="adet ekleyebilirsiniz." xml:space="preserve">
+  <value>items can be added.</value>
+</data>
+	<data name="Son {0} adet!" xml:space="preserve">
+  <value>Only {0} left!</value>
+</data>
+
+	<data name="Stokta {0} adet mevcut" xml:space="preserve">
+  <value>{0} items in stock</value>
+</data>
 </root>

@@ -333,4 +333,16 @@
   <data name="Ürün Toplamı" xml:space="preserve">
     <value>Product Total</value>
   </data>
+	<data name="Tükendi" xml:space="preserve">
+  <value>Out of Stock</value>
+</data>
+	<data name="Son" xml:space="preserve">
+  <value>Last</value>
+</data>
+	<data name="adet" xml:space="preserve">
+  <value>pcs</value>
+</data>
+	<data name="Stokta" xml:space="preserve">
+  <value>In Stock</value>
+</data>
 </root>

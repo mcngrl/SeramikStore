@@ -15,6 +15,7 @@ namespace SeramikStore.Web.ViewModels
         [Required(ErrorMessage = "Adet zorunludur")]
         [Range(1, 1000, ErrorMessage = "Adet en az 1 olmalıdır")]
         public int Quantity { get; set; } = 1;
+        public int StockAmount { get; set; }
         public bool AvailableForSale { get; set; }  // Available for sale (bit)
 
         public List<string> ImagePaths { get; set; }

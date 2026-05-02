@@ -40,11 +40,11 @@
         <div class="toast-container position-fixed top-0 end-0 p-3">
             <div id="successToast" class="toast text-bg-success" role="alert">
                 <div class="toast-header text-bg-success">
-                    <strong class="me-auto">@L"["Başarılı"]</strong>
+                    <strong class="me-auto">@L["Başarılı"]</strong>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
                 </div>
                 <div class="toast-body">
-                    @TempData["Success"]
+                    @L[TempData["Success"]?.ToString()]
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
                 </div>
                 <div class="toast-body">
-                    @TempData["Error"]
+                    @L[TempData["Error"]?.ToString()]
                 </div>
             </div>
         </div>

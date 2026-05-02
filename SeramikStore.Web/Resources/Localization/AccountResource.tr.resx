@@ -560,5 +560,8 @@
 	<data name="Anladım" xml:space="preserve">
   <value>Anladım</value>
 </data>
+	<data name="NotEnoughStock">
+		<value>Yeterli stok bulunmamaktadır.</value>
+	</data>
 
 </root>

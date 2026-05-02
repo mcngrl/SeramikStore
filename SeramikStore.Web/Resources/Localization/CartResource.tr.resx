@@ -333,4 +333,16 @@
   <data name="Ürün Toplamı" xml:space="preserve">
     <value>Ürün Toplamı</value>
   </data>
+	<data name="Tükendi" xml:space="preserve">
+  <value>Tükendi</value>
+</data>
+	<data name="Son" xml:space="preserve">
+  <value>Son</value>
+</data>
+	<data name="adet" xml:space="preserve">
+  <value>adet</value>
+</data>
+	<data name="Stokta" xml:space="preserve">
+  <value>Stokta</value>
+</data>
 </root>
