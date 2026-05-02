@@ -132,8 +132,8 @@ public class ProductImageController : Controller
                     Size = new Size(1200, 0),
                     Mode = ResizeMode.Max
                 })
-                .DrawText(_company.Name, font, Color.Black, new PointF(25, 25))
-                .DrawText(_company.Name, font, Color.White, new PointF(23, 23))
+                //.DrawText(_company.Name, font, Color.Black, new PointF(25, 25))
+                //.DrawText(_company.Name, font, Color.White, new PointF(23, 23))
             );
 
             await fullImg.SaveAsWebpAsync(fullPath, new WebpEncoder { Quality = 82 });

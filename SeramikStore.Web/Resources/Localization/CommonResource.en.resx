@@ -226,4 +226,11 @@
 	<data name="Stokta {0} adet mevcut" xml:space="preserve">
   <value>{0} items in stock</value>
 </data>
+
+	<data name="Büyüt" xml:space="preserve">
+  <value>Zoom</value>
+</data>
+	<data name="Orijinal Boyut" xml:space="preserve">
+  <value>Original Size</value>
+</data>
 </root>

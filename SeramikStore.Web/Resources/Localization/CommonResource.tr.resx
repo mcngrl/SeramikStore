@@ -226,4 +226,10 @@
 	<data name="Stokta {0} adet mevcut" xml:space="preserve">
   <value>Stokta {0} adet mevcut</value>
 </data>
+	<data name="Büyüt" xml:space="preserve">
+  <value>Büyüt</value>
+</data>
+	<data name="Orijinal Boyut" xml:space="preserve">
+  <value>Orijinal Boyut</value>
+</data>
 </root>
