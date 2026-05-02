@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlutterTest", "FlutterTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cebirsel", "cebirsel\cebirsel.csproj", "{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPConverter", "WebPConverter\WebPConverter.csproj", "{AD25C430-C097-4EEC-A894-6A0C6567D7BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,10 @@ Global
 		{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61DD3EF0-B38C-41E3-8DB0-7E9A3CE81F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD25C430-C097-4EEC-A894-6A0C6567D7BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD25C430-C097-4EEC-A894-6A0C6567D7BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD25C430-C097-4EEC-A894-6A0C6567D7BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD25C430-C097-4EEC-A894-6A0C6567D7BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

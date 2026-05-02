@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using SeramikStore.Entities;
 using SeramikStore.Services;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 public class ProductImageController : Controller
 {
@@ -25,9 +27,63 @@ public class ProductImageController : Controller
     }
 
     // 📤 Upload
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public IActionResult Upload(int productId, IFormFile image, bool isMain = false)
+    //{
+    //    if (image == null || image.Length == 0)
+    //    {
+    //        TempData["Error"] = "Lütfen bir resim seçiniz.";
+    //        return RedirectToAction("Index", new { productId });
+    //    }
+
+    //    // uploads/products/{productId}
+    //    var uploadFolder = Path.Combine(
+    //        _env.WebRootPath,
+    //        "uploads",
+    //        "products",
+    //        productId.ToString()
+    //    );
+
+    //    if (!Directory.Exists(uploadFolder))
+    //        Directory.CreateDirectory(uploadFolder);
+
+    //    var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+    //    var filePath = Path.Combine(uploadFolder, fileName);
+
+    //    using (var stream = new FileStream(filePath, FileMode.Create))
+    //    {
+    //        image.CopyTo(stream);
+    //    }
+
+    //    var imagePath = $"/uploads/products/{productId}/{fileName}";
+
+    //    var productImage = new ProductImage
+    //    {
+    //        ProductId = productId,
+    //        ImagePath = imagePath,
+    //        IsMain = isMain,
+    //        DisplayOrder = 0
+    //    };
+
+    //    _productImageService.Insert(productImage);
+
+    //    if (isMain)
+    //    {
+    //        _productImageService.SetMainImage(productId, productImage.Id);
+    //    }
+
+    //    TempData["Success"] = "Resim başarıyla yüklendi.";
+    //    return RedirectToAction("Index", new { productId });
+    //}
+
+    // ⭐ Ana resim yap
+    [HttpPost]
+
+
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Upload(int productId, IFormFile image, bool isMain = false)
+    public async Task<IActionResult> Upload(int productId, IFormFile image, bool isMain = false)
     {
         if (image == null || image.Length == 0)
         {
@@ -35,7 +91,6 @@ public class ProductImageController : Controller
             return RedirectToAction("Index", new { productId });
         }
 
-        // uploads/products/{productId}
         var uploadFolder = Path.Combine(
             _env.WebRootPath,
             "uploads",
@@ -46,12 +101,19 @@ public class ProductImageController : Controller
         if (!Directory.Exists(uploadFolder))
             Directory.CreateDirectory(uploadFolder);
 
-        var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
+        // Uzantı ne olursa olsun .webp olarak kaydet
+        var fileName = Guid.NewGuid() + ".webp";
         var filePath = Path.Combine(uploadFolder, fileName);
 
-        using (var stream = new FileStream(filePath, FileMode.Create))
+        // ImageSharp ile WebP'ye çevir + EXIF yönünü düzelt
+        using (var stream = image.OpenReadStream())
+        using (var img = await SixLabors.ImageSharp.Image.LoadAsync(stream))
         {
-            image.CopyTo(stream);
+            img.Mutate(x => x.AutoOrient());
+            await img.SaveAsWebpAsync(filePath, new SixLabors.ImageSharp.Formats.Webp.WebpEncoder
+            {
+                Quality = 80
+            });
         }
 
         var imagePath = $"/uploads/products/{productId}/{fileName}";
@@ -67,16 +129,11 @@ public class ProductImageController : Controller
         _productImageService.Insert(productImage);
 
         if (isMain)
-        {
             _productImageService.SetMainImage(productId, productImage.Id);
-        }
 
         TempData["Success"] = "Resim başarıyla yüklendi.";
         return RedirectToAction("Index", new { productId });
     }
-
-    // ⭐ Ana resim yap
-    [HttpPost]
     public IActionResult SetMain(int productId, int imageId)
     {
         _productImageService.SetMainImage(productId, imageId);
