@@ -414,4 +414,151 @@
 	<data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
   <value>Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir.</value>
 </data>
+	<data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
+  <value>Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır. Detaylı bilgi için</value>
+</data>
+
+	<data name="Çerez Politikası" xml:space="preserve">
+  <value>Çerez Politikası</value>
+</data>
+
+	<data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
+  <value>sayfamızı inceleyebilirsiniz.</value>
+</data>
+
+	<data name="Anladım" xml:space="preserve">
+  <value>Anladım</value>
+</data>
+	<data name="Başarılı" xml:space="preserve">
+  <value>Başarılı</value>
+</data>
+
+	<data name="Hata" xml:space="preserve">
+  <value>Hata</value>
+</data>
+
+	<data name="Bilgi" xml:space="preserve">
+  <value>Bilgi</value>
+</data>
+
+	<data name="Lütfen kontrol edin" xml:space="preserve">
+  <value>Lütfen kontrol edin</value>
+</data>
+
+	<data name="Emin misiniz?" xml:space="preserve">
+  <value>Emin misiniz?</value>
+</data>
+
+	<data name="Hayır" xml:space="preserve">
+  <value>Hayır</value>
+</data>
+
+	<data name="Evet" xml:space="preserve">
+  <value>Evet</value>
+</data>
+
+	<data name="Hızlı Teslimat" xml:space="preserve">
+  <value>Hızlı Teslimat</value>
+</data>
+
+	<data name="Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir." xml:space="preserve">
+  <value>Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir.</value>
+</data>
+
+	<data name="Canlı Destek" xml:space="preserve">
+  <value>Canlı Destek</value>
+</data>
+
+	<data name="WhatsApp üzerinden hızlı ve kolay destek hizmeti." xml:space="preserve">
+  <value>WhatsApp üzerinden hızlı ve kolay destek hizmeti.</value>
+</data>
+
+	<data name="Kolay İade" xml:space="preserve">
+  <value>Kolay İade</value>
+</data>
+
+	<data name="14 gün içinde ücretsiz iade ve değişim imkanı." xml:space="preserve">
+  <value>14 gün içinde ücretsiz iade ve değişim imkanı.</value>
+</data>
+
+	<data name="Güvenli Ödeme" xml:space="preserve">
+  <value>Güvenli Ödeme</value>
+</data>
+
+	<data name="Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez." xml:space="preserve">
+  <value>Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez.</value>
+</data>
+
+	<data name="Hızlı Erişim" xml:space="preserve">
+  <value>Hızlı Erişim</value>
+</data>
+
+	<data name="Giriş Yap" xml:space="preserve">
+  <value>Giriş Yap</value>
+</data>
+
+	<data name="Hesabım" xml:space="preserve">
+  <value>Hesabım</value>
+</data>
+
+	<data name="Siparişlerim" xml:space="preserve">
+  <value>Siparişlerim</value>
+</data>
+
+	<data name="Sepetim" xml:space="preserve">
+  <value>Sepetim</value>
+</data>
+
+	<data name="Kategorilerimiz" xml:space="preserve">
+  <value>Kategorilerimiz</value>
+</data>
+
+	<data name="Politikalarımız" xml:space="preserve">
+  <value>Politikalarımız</value>
+</data>
+
+	<data name="Gizlilik Politikası" xml:space="preserve">
+  <value>Gizlilik Politikası</value>
+</data>
+
+	<data name="KVKK Aydınlatma Metni" xml:space="preserve">
+  <value>KVKK Aydınlatma Metni</value>
+</data>
+
+	<data name="Üyelik Sözleşmesi" xml:space="preserve">
+  <value>Üyelik Sözleşmesi</value>
+</data>
+
+	<data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
+  <value>Mesafeli Satış Sözleşmesi</value>
+</data>
+
+	<data name="Kurumsal" xml:space="preserve">
+  <value>Kurumsal</value>
+</data>
+
+	<data name="Hakkımızda" xml:space="preserve">
+  <value>Hakkımızda</value>
+</data>
+
+	<data name="Sıkça Sorulan Sorular" xml:space="preserve">
+  <value>Sıkça Sorulan Sorular</value>
+</data>
+
+	<data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
+  <value>Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır. Detaylı bilgi için</value>
+</data>
+
+	<data name="Çerez Politikası" xml:space="preserve">
+  <value>Çerez Politikası</value>
+</data>
+
+	<data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
+  <value>sayfamızı inceleyebilirsiniz.</value>
+</data>
+
+	<data name="Anladım" xml:space="preserve">
+  <value>Anladım</value>
+</data>
+
 </root>

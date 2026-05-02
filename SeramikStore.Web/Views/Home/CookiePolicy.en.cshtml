@@ -1,0 +1,47 @@
+@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
+    ViewData["Title"] = "Cookie Policy";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <h2>Cookie Policy</h2>
+            <p>
+                This website uses only essential cookies to ensure proper functionality and to provide a better user experience.
+            </p>
+
+            <h4>Cookies We Use</h4>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Cookie Name</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>remember_me</td>
+                        <td>Stores user session information</td>
+                        <td>30 days</td>
+                    </tr>
+                    <tr>
+                        <td>cart_id</td>
+                        <td>Manages shopping cart and stores items</td>
+                        <td>30 days</td>
+                    </tr>
+                    <tr>
+                        <td>.AspNetCore.Culture</td>
+                        <td>Stores user's selected language preference</td>
+                        <td>1 year</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                These cookies are essential for the proper functioning of the website and cannot be disabled.
+            </p>
+        </div>
+    </div>
+</div>

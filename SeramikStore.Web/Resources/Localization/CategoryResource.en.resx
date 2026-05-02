@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -147,4 +147,22 @@
   <data name="ListTitle" xml:space="preserve">
     <value>Category List</value>
   </data>
+	<data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
+  <value>Discover now, unique designs are waiting for you</value>
+</data>
+	<data name="İncele" xml:space="preserve">
+  <value>Explore</value>
+</data>
+	<data name="Ürün Kodu" xml:space="preserve">
+  <value>Product Code</value>
+</data>
+<data name="Adet" xml:space="preserve">
+  <value>Quantity</value>
+</data>
+<data name="Sepete Ekle" xml:space="preserve">
+  <value>Add to Cart</value>
+</data>
+<data name="Ürün Açıklaması" xml:space="preserve">
+  <value>Product Description</value>
+</data>
 </root>

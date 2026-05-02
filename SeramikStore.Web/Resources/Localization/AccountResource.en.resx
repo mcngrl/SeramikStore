@@ -416,4 +416,152 @@
 	<data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
   <value>Designed for daily use. Safe for microwave use</value>
 </data>
+	<data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
+  <value>This website uses essential cookies for cart operations and session management. For more information</value>
+</data>
+
+	<data name="Çerez Politikası" xml:space="preserve">
+  <value>Cookie Policy</value>
+</data>
+
+	<data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
+  <value>you can review our page.</value>
+</data>
+
+	<data name="Anladım" xml:space="preserve">
+  <value>Accept and Continue</value>
+</data>
+	<data name="Başarılı" xml:space="preserve">
+  <value>Success</value>
+</data>
+
+<data name="Hata" xml:space="preserve">
+  <value>Error</value>
+</data>
+
+<data name="Bilgi" xml:space="preserve">
+  <value>Information</value>
+</data>
+
+<data name="Lütfen kontrol edin" xml:space="preserve">
+  <value>Please check</value>
+</data>
+
+<data name="Emin misiniz?" xml:space="preserve">
+  <value>Are you sure?</value>
+</data>
+
+<data name="Hayır" xml:space="preserve">
+  <value>No</value>
+</data>
+
+<data name="Evet" xml:space="preserve">
+  <value>Yes</value>
+</data>
+
+<data name="Hızlı Teslimat" xml:space="preserve">
+  <value>Fast Delivery</value>
+</data>
+
+<data name="Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir." xml:space="preserve">
+  <value>Your orders are shipped within 1–3 business days</value>
+</data>
+
+<data name="Canlı Destek" xml:space="preserve">
+  <value>Live Support</value>
+</data>
+
+<data name="WhatsApp üzerinden hızlı ve kolay destek hizmeti." xml:space="preserve">
+  <value>Quick and easy support via WhatsApp</value>
+</data>
+
+<data name="Kolay İade" xml:space="preserve">
+  <value>Easy Returns</value>
+</data>
+
+<data name="14 gün içinde ücretsiz iade ve değişim imkanı." xml:space="preserve">
+  <value>Free returns and exchanges within 14 days</value>
+</data>
+
+<data name="Güvenli Ödeme" xml:space="preserve">
+  <value>Secure Payment</value>
+</data>
+
+<data name="Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez." xml:space="preserve">
+  <value>Payments are accepted only via bank transfer (EFT/FAST), no card details required</value>
+</data>
+
+<data name="Hızlı Erişim" xml:space="preserve">
+  <value>Quick Access</value>
+</data>
+
+<data name="Giriş Yap" xml:space="preserve">
+  <value>Login</value>
+</data>
+
+<data name="Hesabım" xml:space="preserve">
+  <value>My Account</value>
+</data>
+
+<data name="Siparişlerim" xml:space="preserve">
+  <value>My Orders</value>
+</data>
+
+<data name="Sepetim" xml:space="preserve">
+  <value>My Cart</value>
+</data>
+
+<data name="Kategorilerimiz" xml:space="preserve">
+  <value>Categories</value>
+</data>
+
+<data name="Politikalarımız" xml:space="preserve">
+  <value>Policies</value>
+</data>
+
+<data name="Gizlilik Politikası" xml:space="preserve">
+  <value>Privacy Policy</value>
+</data>
+
+<data name="KVKK Aydınlatma Metni" xml:space="preserve">
+  <value>KVKK Information Notice</value>
+</data>
+
+<data name="Üyelik Sözleşmesi" xml:space="preserve">
+  <value>Membership Agreement</value>
+</data>
+
+<data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
+  <value>Distance Sales Agreement</value>
+</data>
+
+<data name="Kurumsal" xml:space="preserve">
+  <value>Corporate</value>
+</data>
+
+<data name="Hakkımızda" xml:space="preserve">
+  <value>About Us</value>
+</data>
+
+<data name="Sıkça Sorulan Sorular" xml:space="preserve">
+  <value>Frequently Asked Questions</value>
+</data>
+
+<data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
+  <value>This website uses essential cookies for cart operations and session management. For more information</value>
+</data>
+
+<data name="Çerez Politikası" xml:space="preserve">
+  <value>Cookie Policy</value>
+</data>
+
+<data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
+  <value>you can review our page.</value>
+</data>
+
+<data name="Anladım" xml:space="preserve">
+  <value>Accept</value>
+</data>
+
+
 </root>

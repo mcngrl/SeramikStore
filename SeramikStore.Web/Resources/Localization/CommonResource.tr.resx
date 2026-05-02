@@ -174,4 +174,37 @@
   <data name="Tüm Ürünler" xml:space="preserve">
     <value>Tüm Ürünler</value>
   </data>
+	<data name="Bardaklar" xml:space="preserve">
+  <value>Bardaklar</value>
+</data>
+	<data name="Fincanlar" xml:space="preserve">
+  <value>Fincanlar</value>
+</data>
+	<data name="Kupalar" xml:space="preserve">
+  <value>Kupalar</value>
+</data>
+	<data name="Sunumluklar" xml:space="preserve">
+  <value>Sunumluklar</value>
+</data>
+	<data name="Tabaklar" xml:space="preserve">
+  <value>Tabaklar</value>
+</data>
+	<data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
+  <value>Şimdi keşfedin, özel tasarımlar sizi bekliyor</value>
+</data>
+	<data name="İncele" xml:space="preserve">
+  <value>İncele</value>
+</data>
+	<data name="Ürün Kodu" xml:space="preserve">
+  <value>Ürün Kodu</value>
+</data>
+	<data name="Adet" xml:space="preserve">
+  <value>Adet</value>
+</data>
+	<data name="Sepete Ekle" xml:space="preserve">
+  <value>Sepete Ekle</value>
+</data>
+	<data name="Ürün Açıklaması" xml:space="preserve">
+  <value>Ürün Açıklaması</value>
+</data>
 </root>

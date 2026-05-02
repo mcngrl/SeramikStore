@@ -174,4 +174,37 @@
   <data name="Tüm Ürünler" xml:space="preserve">
     <value>All Products</value>
   </data>
+	<data name="Bardaklar" xml:space="preserve">
+  <value>Glasses</value>
+</data>
+	<data name="Fincanlar" xml:space="preserve">
+  <value>Cups</value>
+</data>
+	<data name="Kupalar" xml:space="preserve">
+  <value>Mugs</value>
+</data>
+	<data name="Sunumluklar" xml:space="preserve">
+  <value>Serving Plates</value>
+</data>
+	<data name="Tabaklar" xml:space="preserve">
+  <value>Plates</value>
+		</data>
+	<data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
+  <value>Discover now, unique designs are waiting for you</value>
+</data>
+	<data name="İncele" xml:space="preserve">
+  <value>Explore</value>
+</data>
+	<data name="Ürün Kodu" xml:space="preserve">
+  <value>Product Code</value>
+</data>
+	<data name="Adet" xml:space="preserve">
+  <value>Quantity</value>
+</data>
+	<data name="Sepete Ekle" xml:space="preserve">
+  <value>Add to Cart</value>
+</data>
+	<data name="Ürün Açıklaması" xml:space="preserve">
+  <value>Product Description</value>
+</data>
 </root>

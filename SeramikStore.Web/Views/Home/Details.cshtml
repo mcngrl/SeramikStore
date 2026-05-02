@@ -1,4 +1,6 @@
-﻿@model SeramikStore.Web.ViewModels.ProductDetail
+﻿@using SeramikStore.Web.Localization
+@inject IStringLocalizer<CommonResource> L
+@model SeramikStore.Web.ViewModels.ProductDetail
 
 <div class="container mt-4">
     <div class="row g-4">
@@ -43,9 +45,9 @@
         <div class="col-md-6">
             <div class="bg-white border rounded p-4 h-100">
 
-                <small class="text-muted">Ürün Kodu: <strong>@Model.ProductCode</strong></small>
+                <small class="text-muted">@L["Ürün Kodu"]:<strong>@Model.ProductCode</strong></small>
 
-                <h6 class="mt-2 fw-bold">@Model.ProductName</h6>
+                <h6 class="mt-2 fw-bold">@L[Model.ProductName]</h6>
 
                 <!-- FİYAT -->
                 <div class="my-3">
@@ -70,7 +72,7 @@
 
 
                             <div class="mb-2">
-                                <label>Adet</label>
+                                <label>@L["Adet"]</label>
                                 <input asp-for="Quantity"
                                        type="number"
                                        min="1"
@@ -82,7 +84,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="bi bi-cart-plus"></i> Sepete Ekle
+                            <i class="bi bi-cart-plus"></i>@L["Sepete Ekle"]
                         </button>
                     </div>
                 </form>
@@ -90,7 +92,7 @@
                 <hr />
 
                 <!-- ÜRÜN AÇIKLAMA (HTML DESTEKLİ) -->
-                <h5>Ürün Açıklaması</h5>
+                <h5>@L["Ürün Açıklaması"]</h5>
                 <div class="product-description">
                     @Html.Raw(Model.ProductDesc)
                 </div>

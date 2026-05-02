@@ -1,12 +1,14 @@
-﻿@model SeramikStore.Services.DTOs.ProductListByCategoryForHomeDto
+﻿@using SeramikStore.Web.Localization
+@inject IStringLocalizer<CommonResource> L
+@model SeramikStore.Services.DTOs.ProductListByCategoryForHomeDto
 <div id="myCarousel" class="carousel slide mb-5" data-bs-ride="false">
     <div class="carousel-inner rounded shadow-sm">
         <div class="carousel-item active">
             <img src="/images/banner1.jpg" class="d-block w-100" style="height:400px;object-fit:cover;" />
             <div class="carousel-caption text-start">
-                <h2 class="fw-bold">@Model.CategoryName</h2>
-                <p>Şimdi keşfedin, özel tasarımlar sizi bekliyor</p>
-                <a href="/Home" class="btn btn-primary">İncele</a>
+                <h2 class="fw-bold">@L[Model.CategoryName]</h2>
+                <p>@L["Şimdi keşfedin, özel tasarımlar sizi bekliyor"]</p>
+                <a href="/Home" class="btn btn-primary">@L["İncele"]</a>
             </div>
         </div>
         <div class="carousel-item">
@@ -35,7 +37,7 @@
         <!-- SOL TARAF (sidebar) -->
         <div class="col-md-2">
             <div class="card p-3 shadow-sm">
-                <h6>@Model.CategoryName (@Model.ProductCount)</h6>
+                <h6>@L[Model.CategoryName] (@Model.ProductCount)</h6>
             </div>
         </div>
 

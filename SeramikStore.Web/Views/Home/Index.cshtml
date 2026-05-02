@@ -125,29 +125,55 @@
                    asp-controller="Home"
                    asp-route-id="@item.Id"
                    class="text-decoration-none">
+                    <div class="card h-100 shadow-sm border-0 product-card position-relative">
 
-                    <div class="card h-100 shadow-sm border-0 product-card">
+                        @* Tükenmiştir rozeti *@
+                        @if (item.StockAmount <= 0)
+                        {
+                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                                 style="background:rgba(0,0,0,0.45); border-radius: inherit; z-index:1;">
+                            </div>
+                        }
+
                         <img src="@(string.IsNullOrEmpty(item.MainImagePath)
-                                                         ? "/images/no-image.png"
-                                                         : item.MainImagePath)"
-                         class="card-img-top"
-                         style="height:180px;object-fit:cover;" />
+                                                                  ? "/images/no-image.png"
+                                                                  : item.MainImagePath)"
+                         class="card-img-top @(item.StockAmount <= 0 ? "opacity-50" : "")"
+                         style="height:180px; object-fit:cover;" />
 
                         <div class="card-body">
                             <h6 class="card-title text-dark fw-semibold">
                                 @item.ProductName
                             </h6>
-
                             <div class="fw-bold text-primary">
                                 @item.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
                                 <small>@item.CurrencyCode</small>
                             </div>
+
+                            @* Stok durumu *@
+                            <div class="mt-2">
+                            @if (item.StockAmount <= 0)
+                                {
+                                    <span class="badge bg-danger">Tükendi</span>
+                                }
+                                else if (item.StockAmount <= 5)
+                                {
+                                    <span class="badge bg-warning text-dark">
+                                        Son @item.StockAmount adet!
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">
+                                        Stokta: @item.StockAmount adet
+                                    </span>
+                                }
+                            </div>
                         </div>
                     </div>
-
                 </a>
             </div>
-         }
+        }
     </div>
 </div>
 

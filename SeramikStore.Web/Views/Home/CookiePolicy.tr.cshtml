@@ -1,0 +1,50 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
+    ViewData["Title"] = "Çerez Politikası";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+
+            <h2>Çerez Politikası</h2>
+
+            <p>
+                Bu web sitesi, kullanıcı deneyimini sağlamak ve temel işlevleri yerine getirmek amacıyla yalnızca zorunlu çerezler kullanmaktadır.
+            </p>
+
+            <h4>Kullanılan Çerezler</h4>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Çerez Adı</th>
+                        <th>Amaç</th>
+                        <th>Süre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>remember_me</td>
+                        <td>Kullanıcının oturum bilgisini hatırlamak</td>
+                        <td>30 gün</td>
+                    </tr>
+                    <tr>
+                        <td>cart_id</td>
+                        <td>Sepet işlemlerini yönetmek ve ürünleri saklamak</td>
+                        <td>30 gün</td>
+                    </tr>
+                    <tr>
+                        <td>.AspNetCore.Culture</td>
+                        <td>Kullanıcının seçtiği dil bilgisini saklamak</td>
+                        <td>1 yıl</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                Bu çerezler, web sitesinin düzgün çalışabilmesi için zorunludur ve devre dışı bırakılamaz.
+            </p>
+
+        </div>
+    </div>
+</div>

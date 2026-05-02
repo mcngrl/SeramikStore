@@ -112,6 +112,17 @@ namespace SeramikStore.Web.Controllers
                 return Content(ex.ToString());
             }
         }
+        public IActionResult CookiePolicy()
+        {
+            try
+            {
+            return View();
+        }
+            catch (Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+        }
 
         public IActionResult About()
         {
