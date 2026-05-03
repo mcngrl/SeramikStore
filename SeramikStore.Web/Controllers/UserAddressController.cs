@@ -70,11 +70,58 @@ public class UserAddressController : Controller
         return RedirectToAction("Index", "UserAddress");
     }
 
+
+    [HttpGet]
     public IActionResult Delete(int id)
     {
-        _service.Delete(id);
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
+
+        var address = _service.GetById(id);
+
+        if (address == null || address.UserId != userId.Value)
+            return RedirectToAction("Index");
+
+        var vm = new UserAddressViewModel
+        {
+            Id = address.Id,
+            Ad = address.Ad,
+            Soyad = address.Soyad,
+            Telefon = address.Telefon,
+            Il = address.Il,
+            Ilce = address.Ilce,
+            Mahalle = address.Mahalle,
+            Adres = address.Adres,
+            Baslik = address.Baslik,
+            IsDefault = address.IsDefault
+        };
+
+        return View(vm);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Delete(UserAddressViewModel vm)
+    {
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
+
+        var address = _service.GetById(vm.Id);
+
+        if (address == null || address.UserId != userId.Value)
+            return RedirectToAction("Index");
+
+        _service.Delete(vm.Id);
+
         return RedirectToAction("Index");
     }
+    //public IActionResult Delete(int id)
+    //{
+    //    _service.Delete(id);
+    //    return RedirectToAction("Index");
+    //}
 
     [HttpGet]
     public IActionResult Edit(int id, string returnUrl = null)

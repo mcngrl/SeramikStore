@@ -1,86 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-	Microsoft ResX Schema 
-	
-	Version 2.0
-	
-	The primary goals of this format is to allow a simple XML format 
-	that is mostly human readable. The generation and parsing of the 
-	various data types are done through the TypeConverter classes 
-	associated with the data types.
-	
-	Example:
-	
-	... ado.net/XML headers & schema ...
-	<resheader name="resmimetype">text/microsoft-resx</resheader>
-	<resheader name="version">2.0</resheader>
-	<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-	<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-	<data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-	<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-	<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-		<value>[base64 mime encoded serialized .NET Framework object]</value>
-	</data>
-	<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-		<value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-		<comment>This is a comment</comment>
-	</data>
-				
-	There are any number of "resheader" rows that contain simple 
-	name/value pairs.
-	
-	Each data row contains a name, and value. The row also contains a 
-	type or mimetype. Type corresponds to a .NET class that support 
-	text/value conversion through the TypeConverter architecture. 
-	Classes that don't support this are serialized and stored with the 
-	mimetype set.
-	
-	The mimetype is used for serialized objects, and tells the 
-	ResXResourceReader how to depersist the object. This is currently not 
-	extensible. For a given mimetype the value must be set accordingly:
-	
-	Note - application/x-microsoft.net.object.binary.base64 is the format 
-	that the ResXResourceWriter will generate, however the reader can 
-	read any of the formats listed below.
-	
-	mimetype: application/x-microsoft.net.object.binary.base64
-	value   : The object must be serialized with 
-			: System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-			: and then encoded with base64 encoding.
-	
-	mimetype: application/x-microsoft.net.object.soap.base64
-	value   : The object must be serialized with 
-			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-			: and then encoded with base64 encoding.
-
-	mimetype: application/x-microsoft.net.object.bytearray.base64
-	value   : The object must be serialized into a byte array 
-			: using a System.ComponentModel.TypeConverter
-			: and then encoded with base64 encoding.
-	-->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
-          </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
@@ -88,8 +12,6 @@
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
               <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
@@ -118,501 +40,501 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Üyelik Sözleşmesini okudum, anladım ve kabul ediyorum" xml:space="preserve">
-	<value>I have read, understood, and agree to the Membership Agreement</value>
+    <value>Прочетох, разбрах и приемам Договора за членство</value>
   </data>
   <data name="Üye Ol" xml:space="preserve">
-	<value>Sign Up</value>
+    <value>Регистрирай се</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
-	<value>This field is required</value>
+    <value>Това поле е задължително</value>
   </data>
   <data name="Soyad" xml:space="preserve">
-	<value>Last Name</value>
+    <value>Фамилия</value>
   </data>
   <data name="Email" xml:space="preserve">
-	<value>Email</value>
+    <value>Имейл</value>
   </data>
   <data name="InvalidEmail" xml:space="preserve">
-	<value>Please enter a valid email address</value>
+    <value>Моля, въведете валиден имейл адрес</value>
   </data>
   <data name="Password" xml:space="preserve">
-	<value>Password</value>
+    <value>Парола</value>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
-	<value>Password is required</value>
+    <value>Паролата е задължителна</value>
   </data>
   <data name="PasswordMinLength" xml:space="preserve">
-	<value>Password must be at least 6 characters</value>
+    <value>Паролата трябва да е поне 6 символа</value>
   </data>
   <data name="PasswordNotMatch" xml:space="preserve">
-	<value>Passwords do not match</value>
+    <value>Паролите не съвпадат</value>
   </data>
   <data name="AcceptMembershipRequired" xml:space="preserve">
-	<value>You must accept the Membership Agreement</value>
+    <value>Трябва да приемете Договора за членство</value>
   </data>
   <data name="AcceptKvkkRequired" xml:space="preserve">
-	<value>You must accept the Personal Data Processing Notice</value>
+    <value>Трябва да приемете Известието за защита на личните данни</value>
   </data>
   <data name="Ad" xml:space="preserve">
-	<value>First Name</value>
+    <value>Име</value>
   </data>
   <data name="PhoneNumber" xml:space="preserve">
-	<value>Phone Number</value>
+    <value>Телефонен номер</value>
   </data>
   <data name="Şifre" xml:space="preserve">
-	<value>Password</value>
+    <value>Парола</value>
   </data>
   <data name="Üyelik Bilgilerim" xml:space="preserve">
-	<value>My Membership Information</value>
+    <value>Моята информация за членство</value>
   </data>
   <data name="{0} alanı zorunludur." xml:space="preserve">
-	<value>{0} is required.</value>
+    <value>{0} е задължително.</value>
   </data>
   <data name="Şifreler uyuşmuyor" xml:space="preserve">
-	<value>Passwords do not match</value>
+    <value>Паролите не съвпадат</value>
   </data>
   <data name="Telefon numarası (5XX) XXX XX XX formatında olmalıdır" xml:space="preserve">
-	<value>The phone number must be in the format (5XX) XXX XX XX</value>
+    <value>Телефонният номер трябва да е в формат (5XX) XXX XX XX</value>
   </data>
   <data name="Doğum Tarihi" xml:space="preserve">
-	<value>Date of birth</value>
+    <value>Дата на раждане</value>
   </data>
   <data name="Üyelik sözleşmesini kabul etmelisiniz" xml:space="preserve">
-	<value>You must accept the membership agreement</value>
+    <value>Трябва да приемете договора за членство</value>
   </data>
   <data name="Cep Telefonu" xml:space="preserve">
-	<value>Mobile Phone</value>
+    <value>Мобилен телефон</value>
   </data>
   <data name="Şifre Tekrar" xml:space="preserve">
-	<value>Confirm Password</value>
+    <value>Потвърди паролата</value>
   </data>
   <data name="{0} geçerli e-posta adresi değildir." xml:space="preserve">
-	<value>The {0} field is not a valid e-mail address.</value>
+    <value>Полето {0} не е валиден имейл адрес.</value>
   </data>
   <data name="Kullanıcı bulunamadı" xml:space="preserve">
-	<value>User not found</value>
+    <value>Потребителят не е намерен</value>
   </data>
   <data name="Email zaten doğrulanmış" xml:space="preserve">
-	<value>Email is already verified</value>
+    <value>Имейлът вече е потвърден</value>
   </data>
   <data name="Geçersiz doğrulama linki" xml:space="preserve">
-	<value>Invalid verification link</value>
+    <value>Невалиден линк за потвърждение</value>
   </data>
   <data name="Doğrulama linkinin süresi dolmuş" xml:space="preserve">
-	<value>The verification link has expired.</value>
+    <value>Линкът за потвърждение е изтекъл.</value>
   </data>
   <data name="Email başarıyla doğrulandı" xml:space="preserve">
-	<value>Email verified successfully</value>
+    <value>Имейлът е потвърден успешно</value>
   </data>
   <data name="Giriş Yap" xml:space="preserve">
-	<value>Log In</value>
+    <value>Влез</value>
   </data>
   <data name="Üye Girişi" xml:space="preserve">
-	<value>Member Login</value>
+    <value>Вход за членове</value>
   </data>
   <data name="Kayıt Ol" xml:space="preserve">
-	<value>Register</value>
+    <value>Регистрирай се</value>
   </data>
   <data name="Hesabın yok mu?" xml:space="preserve">
-	<value>Don't have an account?</value>
+    <value>Нямаш акаунт?</value>
   </data>
   <data name="E-Posta Adresiniz" xml:space="preserve">
-	<value>Your Email Address</value>
+    <value>Вашият имейл адрес</value>
   </data>
   <data name="Şifreniz" xml:space="preserve">
-	<value>Your Password</value>
+    <value>Вашата парола</value>
   </data>
   <data name="Şifremi Unuttum" xml:space="preserve">
-	<value>I Forgot My Password</value>
+    <value>Забравих паролата си</value>
   </data>
   <data name="Beni Hatırla" xml:space="preserve">
-	<value>Remember Me</value>
+    <value>Запомни ме</value>
   </data>
   <data name="Bu email adresi zaten kayıtlı" xml:space="preserve">
-	<value>This email address is already registered.</value>
+    <value>Този имейл адрес вече е регистриран.</value>
   </data>
   <data name="Profil bilgileri güncellendi" xml:space="preserve">
-	<value>Profil bilgileri güncellendi</value>
+    <value>Профилната информация е актуализирана</value>
   </data>
   <data name="Kullanıcı adı veya şifre hatalı" xml:space="preserve">
-	<value>Username or password is incorrect</value>
+    <value>Потребителското име или паролата е грешна</value>
   </data>
   <data name="Kayıt başarılı. Email adresinizi doğrulayın." xml:space="preserve">
-	<value>Registration successful. Please verify your email address.</value>
+    <value>Регистрацията е успешна. Моля, потвърдете имейл адреса си.</value>
   </data>
   <data name="Şu anki şifre hatalı" xml:space="preserve">
-	<value>The current password is incorrect</value>
+    <value>Текущата парола е грешна</value>
   </data>
   <data name="Şifre başarıyla değiştirildi" xml:space="preserve">
-	<value>Password changed successfully</value>
+    <value>Паролата е променена успешно</value>
   </data>
   <data name="Email adresinizi doğrulamanız gerekiyor" xml:space="preserve">
-	<value>You need to verify your email address</value>
+    <value>Трябва да потвърдите имейл адреса си</value>
   </data>
   <data name="Geçersiz veya süreci geçmiş link" xml:space="preserve">
-	<value>Invalid or expired link</value>
+    <value>Невалиден или изтекъл линк</value>
   </data>
   <data name="Şifreniz başarıyla güncellenmiştir" xml:space="preserve">
-	<value>Your password has been successfully updated</value>
+    <value>Паролата ви е актуализирана успешно</value>
   </data>
   <data name="Kişisel verilerin işlenmesine ilişkin Aydınlatma Metnini okudum" xml:space="preserve">
-	<value>I have read the Privacy Policy regarding the processing of personal data</value>
+    <value>Прочетох Политиката за поверителност относно обработката на лични данни</value>
   </data>
   <data name="Gizlilik Politikası" xml:space="preserve">
-	<value>Privacy Policy</value>
+    <value>Политика за поверителност</value>
   </data>
   <data name="KVKK Aydınlatma Metni" xml:space="preserve">
-	<value>Personal Data Protection Law Information Text</value>
+    <value>Информационен текст за защита на личните данни</value>
   </data>
   <data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
-	<value>Distance Selling Agreement</value>
+    <value>Договор за дистанционна продажба</value>
   </data>
   <data name="Üyelik Sözleşmesi" xml:space="preserve">
-	<value>Membership Agreement</value>
+    <value>Договор за членство</value>
   </data>
   <data name="Bu sayfayı görüntüleme yetkiniz yok." xml:space="preserve">
-	<value>You do not have permission to view this page.</value>
+    <value>Нямате разрешение да преглеждате тази страница.</value>
   </data>
   <data name="Şipariş Oluşturdu." xml:space="preserve">
-	<value>Order Placed.</value>
+    <value>Поръчката е създадена.</value>
   </data>
   <data name="Ödeme Bekleniyor." xml:space="preserve">
-	<value>Payment Awaiting.</value>
+    <value>Изчаква се плащане.</value>
   </data>
   <data name="Kargoya Verildi." xml:space="preserve">
-	<value>Shipped.</value>
+    <value>Изпратено.</value>
   </data>
   <data name="Sipariş Müşteri Tarafından İptal Edildi." xml:space="preserve">
-	<value>Order Canceled by Customer.</value>
+    <value>Поръчката е отказана от клиента.</value>
   </data>
   <data name="Sipariş Satıcı Tarafından İptal Edildi." xml:space="preserve">
-	<value>Order Canceled by Seller.</value>
+    <value>Поръчката е отказана от продавача.</value>
   </data>
   <data name="Müşteri Siparişleri" xml:space="preserve">
-	<value>Customer Orders</value>
+    <value>Поръчки на клиенти</value>
   </data>
   <data name="Sipariş No" xml:space="preserve">
-	<value>Order No</value>
+    <value>Номер на поръчка</value>
   </data>
   <data name="Sipariş Tarihi" xml:space="preserve">
-	<value>Order Date</value>
+    <value>Дата на поръчка</value>
   </data>
   <data name="Müşteri" xml:space="preserve">
-	<value>Customer</value>
+    <value>Клиент</value>
   </data>
   <data name="E-Posta" xml:space="preserve">
-	<value>Email</value>
+    <value>Имейл</value>
   </data>
   <data name="Sipariş Tutarı" xml:space="preserve">
-	<value>Order Amount</value>
+    <value>Сума на поръчката</value>
   </data>
   <data name="Güncelle" xml:space="preserve">
-	<value>Update</value>
+    <value>Актуализирай</value>
   </data>
   <data name="Ana Sayfa" xml:space="preserve">
-	<value>Homepage</value>
+    <value>Начална страница</value>
   </data>
   <data name="El Yapımı Stoneware Ürünler" xml:space="preserve">
-	<value>Handmade Stoneware Products</value>
+    <value>Ръчно изработени каменни изделия</value>
   </data>
   <data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
-  <value>Discover now, unique designs are waiting for you</value>
-</data>
-  <data name="Her Parça Bir Hikaye" xml:space="preserve">
-  <value>Every Piece Tells a Story</value>
-</data>
-  <data name="El işçiliği ile üretilen benzersiz stoneware koleksiyonu" xml:space="preserve">
-  <value>A unique stoneware collection crafted by hand</value>
-</data>
-  <data name="Sofranıza Değer Katın" xml:space="preserve">
-  <value>Add Value to Your Table</value>
-</data>
-  <data name="Özgün tasarımlar ile fark yaratan sunumlar" xml:space="preserve">
-  <value>Make a difference with unique designs</value>
-</data>
-  <data name="Her Detayında El Emeği Saklı" xml:space="preserve">
-  <value>Craftsmanship in Every Detail</value>
-</data>
-  <data name="Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür." xml:space="preserve">
-  <value>Each piece is a true handcrafted product shaped with skill, patience, and high heat</value>
-</data>
-  <data name="Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır." xml:space="preserve">
-  <value>Each piece is individually shaped by hand, giving every product a unique character</value>
-</data>
-  <data name="Yüksek Fırınlama" xml:space="preserve">
-  <value>High Temperature Firing</value>
-</data>
-  <data name="Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir." xml:space="preserve">
-  <value>Fired at high temperatures for extra durability and long-lasting use</value>
-</data>
-  <data name="Mikrodalga Uyumlu" xml:space="preserve">
-  <value>Microwave Safe</value>
-</data>
-  <data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
-  <value>Designed for daily use. Safe for microwave use</value>
-</data>
-  <data name="Bulaşık Makinesine Uygun" xml:space="preserve">
-  <value>Dishwasher Safe</value>
-</data>
-  <data name="Stoneware yapısı sayesinde bulaşık makinesinde güvenle yıkanabilir, formunu ve rengini korur." xml:space="preserve">
-  <value>Thanks to its stoneware structure, it can be safely washed in a dishwasher without losing its form or color</value>
-</data>
-  <data name="Gıda ile Temasa Uygun" xml:space="preserve">
-  <value>Food Safe</value>
-</data>
-  <data name="Sağlığa zararsızdır, tüm ürünlerimiz gıda ile temas için güvenle kullanılabilir." xml:space="preserve">
-  <value>Safe for health, all our products are suitable for food contact</value>
-</data>
-  <data name="Özenli Paketleme" xml:space="preserve">
-  <value>Careful Packaging</value>
-</data>
-  <data name="Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır." xml:space="preserve">
-  <value>Your orders are prepared with protective packaging and delivered safely to your address</value>
-</data>
-  <data name="El Yapımı" xml:space="preserve">
-  <value>Handmade</value>
-</data>
-  <data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
-  <value>This website uses essential cookies for cart operations and session management. For more information</value>
-</data>
-  <data name="Çerez Politikası" xml:space="preserve">
-  <value>Cookie Policy</value>
-</data>
-  <data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
-  <value>you can review our page.</value>
-</data>
-  <data name="Anladım" xml:space="preserve">
-  <value>Accept and Continue</value>
-</data>
-  <data name="Başarılı" xml:space="preserve">
-  <value>Success</value>
-</data>
-  <data name="Hata" xml:space="preserve">
-  <value>Error</value>
-</data>
-  <data name="Bilgi" xml:space="preserve">
-  <value>Information</value>
-</data>
-  <data name="Lütfen kontrol edin" xml:space="preserve">
-  <value>Please check</value>
-</data>
-  <data name="Emin misiniz?" xml:space="preserve">
-  <value>Are you sure?</value>
-</data>
-  <data name="Hayır" xml:space="preserve">
-  <value>No</value>
-</data>
-  <data name="Evet" xml:space="preserve">
-  <value>Yes</value>
-</data>
-  <data name="Hızlı Teslimat" xml:space="preserve">
-  <value>Fast Delivery</value>
-</data>
-  <data name="Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir." xml:space="preserve">
-  <value>Your orders are shipped within 1–3 business days</value>
-</data>
-  <data name="Canlı Destek" xml:space="preserve">
-  <value>Live Support</value>
-</data>
-  <data name="WhatsApp üzerinden hızlı ve kolay destek hizmeti." xml:space="preserve">
-  <value>Quick and easy support via WhatsApp</value>
-</data>
-  <data name="Kolay İade" xml:space="preserve">
-  <value>Easy Returns</value>
-</data>
-  <data name="14 gün içinde ücretsiz iade ve değişim imkanı." xml:space="preserve">
-  <value>Free returns and exchanges within 14 days</value>
-</data>
-  <data name="Güvenli Ödeme" xml:space="preserve">
-  <value>Secure Payment</value>
-</data>
-  <data name="Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez." xml:space="preserve">
-  <value>Payments are accepted only via bank transfer (EFT/FAST), no card details required</value>
-</data>
-  <data name="Hızlı Erişim" xml:space="preserve">
-  <value>Quick Access</value>
-</data>
-  <data name="Hesabım" xml:space="preserve">
-  <value>My Account</value>
-</data>
-  <data name="Siparişlerim" xml:space="preserve">
-  <value>My Orders</value>
-</data>
-  <data name="Sepetim" xml:space="preserve">
-  <value>My Cart</value>
-</data>
-  <data name="Kategorilerimiz" xml:space="preserve">
-  <value>Categories</value>
-</data>
-  <data name="Politikalarımız" xml:space="preserve">
-  <value>Policies</value>
-</data>
-  <data name="Kurumsal" xml:space="preserve">
-  <value>Corporate</value>
-</data>
-  <data name="Hakkımızda" xml:space="preserve">
-  <value>About Us</value>
-</data>
-  <data name="Sıkça Sorulan Sorular" xml:space="preserve">
-  <value>Frequently Asked Questions</value>
-</data>
-  <data name="NotEnoughStock">
-    <value>Not enough stock available.</value>
+    <value>Открийте сега, уникални дизайни ви очакват</value>
   </data>
-  <data name="Güncellendi">
-    <value>Updated</value>
+  <data name="Her Parça Bir Hikaye" xml:space="preserve">
+    <value>Всяко парче разказва история</value>
+  </data>
+  <data name="El işçiliği ile üretilen benzersiz stoneware koleksiyonu" xml:space="preserve">
+    <value>Уникална колекция от каменни изделия, изработени на ръка</value>
+  </data>
+  <data name="Sofranıza Değer Katın" xml:space="preserve">
+    <value>Добавете стойност към трапезата си</value>
+  </data>
+  <data name="Özgün tasarımlar ile fark yaratan sunumlar" xml:space="preserve">
+    <value>Открояващи се презентации с оригинални дизайни</value>
+  </data>
+  <data name="Her Detayında El Emeği Saklı" xml:space="preserve">
+    <value>Майсторство във всеки детайл</value>
+  </data>
+  <data name="Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür." xml:space="preserve">
+    <value>Всяко парче е истински ръчно изработен продукт, оформен с умение, търпение и висока температура</value>
+  </data>
+  <data name="El Yapımı" xml:space="preserve">
+    <value>Ръчно изработен</value>
+  </data>
+  <data name="Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır." xml:space="preserve">
+    <value>Всяко парче се оформя индивидуално на ръка, като дава на всеки продукт уникален характер</value>
+  </data>
+  <data name="Yüksek Fırınlama" xml:space="preserve">
+    <value>Изпичане при висока температура</value>
+  </data>
+  <data name="Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir." xml:space="preserve">
+    <value>Изпечено при висока температура за допълнителна издръжливост и дълготрайна употреба</value>
+  </data>
+  <data name="Mikrodalga Uyumlu" xml:space="preserve">
+    <value>Подходящо за микровълнова</value>
+  </data>
+  <data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
+    <value>Проектирано за ежедневна употреба. Безопасно за използване в микровълнова</value>
+  </data>
+  <data name="Bulaşık Makinesine Uygun" xml:space="preserve">
+    <value>Подходящо за съдомиялна</value>
+  </data>
+  <data name="Stoneware yapısı sayesinde bulaşık makinesinde güvenle yıkanabilir, formunu ve rengini korur." xml:space="preserve">
+    <value>Благодарение на каменната си структура, може безопасно да се мие в съдомиялна, без да губи формата или цвета си</value>
+  </data>
+  <data name="Gıda ile Temasa Uygun" xml:space="preserve">
+    <value>Безопасно за контакт с храна</value>
+  </data>
+  <data name="Sağlığa zararsızdır, tüm ürünlerimiz gıda ile temas için güvenle kullanılabilir." xml:space="preserve">
+    <value>Безопасно за здравето, всички наши продукти са подходящи за контакт с храна</value>
+  </data>
+  <data name="Özenli Paketleme" xml:space="preserve">
+    <value>Внимателно опаковане</value>
+  </data>
+  <data name="Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır." xml:space="preserve">
+    <value>Поръчките ви се подготвят със защитни опаковки и се доставят безопасно до вашия адрес</value>
+  </data>
+  <data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
+    <value>Този уебсайт използва задължителни бисквитки за операции с количката и управление на сесии. За повече информация</value>
+  </data>
+  <data name="Çerez Politikası" xml:space="preserve">
+    <value>Политика за бисквитки</value>
+  </data>
+  <data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
+    <value>можете да прегледате нашата страница.</value>
+  </data>
+  <data name="Anladım" xml:space="preserve">
+    <value>Приемам</value>
+  </data>
+  <data name="Başarılı" xml:space="preserve">
+    <value>Успешно</value>
+  </data>
+  <data name="Hata" xml:space="preserve">
+    <value>Грешка</value>
+  </data>
+  <data name="Bilgi" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="Lütfen kontrol edin" xml:space="preserve">
+    <value>Моля, проверете</value>
+  </data>
+  <data name="Emin misiniz?" xml:space="preserve">
+    <value>Сигурни ли сте?</value>
+  </data>
+  <data name="Hayır" xml:space="preserve">
+    <value>Не</value>
+  </data>
+  <data name="Evet" xml:space="preserve">
+    <value>Да</value>
+  </data>
+  <data name="Hızlı Teslimat" xml:space="preserve">
+    <value>Бърза доставка</value>
+  </data>
+  <data name="Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir." xml:space="preserve">
+    <value>Поръчките ви се изпращат в рамките на 1–3 работни дни</value>
+  </data>
+  <data name="Canlı Destek" xml:space="preserve">
+    <value>Жива поддръжка</value>
+  </data>
+  <data name="WhatsApp üzerinden hızlı ve kolay destek hizmeti." xml:space="preserve">
+    <value>Бърза и лесна поддръжка чрез WhatsApp</value>
+  </data>
+  <data name="Kolay İade" xml:space="preserve">
+    <value>Лесно връщане</value>
+  </data>
+  <data name="14 gün içinde ücretsiz iade ve değişim imkanı." xml:space="preserve">
+    <value>Безплатно връщане и замяна в рамките на 14 дни</value>
+  </data>
+  <data name="Güvenli Ödeme" xml:space="preserve">
+    <value>Сигурно плащане</value>
+  </data>
+  <data name="Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez." xml:space="preserve">
+    <value>Плащанията се приемат само чрез банков превод, не се изискват данни за карта</value>
+  </data>
+  <data name="Hızlı Erişim" xml:space="preserve">
+    <value>Бърз достъп</value>
+  </data>
+  <data name="Hesabım" xml:space="preserve">
+    <value>Моят акаунт</value>
+  </data>
+  <data name="Siparişlerim" xml:space="preserve">
+    <value>Моите поръчки</value>
+  </data>
+  <data name="Sepetim" xml:space="preserve">
+    <value>Моята количка</value>
+  </data>
+  <data name="Kategorilerimiz" xml:space="preserve">
+    <value>Нашите категории</value>
+  </data>
+  <data name="Politikalarımız" xml:space="preserve">
+    <value>Нашите политики</value>
+  </data>
+  <data name="Kurumsal" xml:space="preserve">
+    <value>Корпоративно</value>
+  </data>
+  <data name="Hakkımızda" xml:space="preserve">
+    <value>За нас</value>
+  </data>
+  <data name="Sıkça Sorulan Sorular" xml:space="preserve">
+    <value>Често задавани въпроси</value>
+  </data>
+  <data name="NotEnoughStock" xml:space="preserve">
+    <value>Няма достатъчно наличност.</value>
+  </data>
+  <data name="Güncellendi" xml:space="preserve">
+    <value>Актуализирано</value>
   </data>
   <data name="INSUFFICIENT_STOCK" xml:space="preserve">
-  <value>Not enough stock for {0}. In cart: {1}, Available: {2}</value>
-</data>
+    <value>Недостатъчна наличност за {0}. В количката: {1}, Налично: {2}</value>
+  </data>
   <data name="OK" xml:space="preserve">
-  <value>Stock check successful.</value>
-</data>
+    <value>Проверката на наличността е успешна.</value>
+  </data>
   <data name="Profilim" xml:space="preserve">
-  <value>My Profile</value>
-</data>
+    <value>Моят профил</value>
+  </data>
   <data name="Telefon Numarası" xml:space="preserve">
-  <value>Phone Number</value>
-</data>
+    <value>Телефонен номер</value>
+  </data>
   <data name="Şu Anki Şifre" xml:space="preserve">
-  <value>Current Password</value>
-</data>
+    <value>Текуща парола</value>
+  </data>
   <data name="Yeni Şifre" xml:space="preserve">
-  <value>New Password</value>
-</data>
+    <value>Нова парола</value>
+  </data>
   <data name="Yeni Şifre (Tekrar)" xml:space="preserve">
-  <value>Confirm New Password</value>
-</data>
+    <value>Потвърди новата парола</value>
+  </data>
   <data name="Kişisel Bilgiler" xml:space="preserve">
-  <value>Personal Information</value>
-</data>
+    <value>Лична информация</value>
+  </data>
   <data name="Şifre Değiştir" xml:space="preserve">
-  <value>Change Password</value>
-</data>
+    <value>Промени паролата</value>
+  </data>
   <data name="Bilgileri Güncelle" xml:space="preserve">
-  <value>Update Information</value>
-</data>
+    <value>Актуализирай информацията</value>
+  </data>
   <data name="Şifre Sıfırlama" xml:space="preserve">
-  <value>Password Reset</value>
-</data>
+    <value>Нулиране на паролата</value>
+  </data>
   <data name="Şifre Sıfırlama Linki Gönder" xml:space="preserve">
-  <value>Send Password Reset Link</value>
-</data>
+    <value>Изпрати линк за нулиране на паролата</value>
+  </data>
   <data name="Lütfen kayıtlı email adresinizi girin." xml:space="preserve">
-  <value>Please enter your registered email address.</value>
-</data>
+    <value>Моля, въведете регистрирания си имейл адрес.</value>
+  </data>
   <data name="Şifre sıfırlama bağlantısı gönderilmiştir." xml:space="preserve">
-  <value>Password reset link has been sent.</value>
-</data>
+    <value>Линкът за нулиране на паролата е изпратен.</value>
+  </data>
   <data name="Yeni Şifre Belirleme" xml:space="preserve">
-  <value>Set New Password</value>
-</data>
+    <value>Задай нова парола</value>
+  </data>
   <data name="Şifreyi Güncelle" xml:space="preserve">
-  <value>Update Password</value>
-</data>
+    <value>Актуализирай паролата</value>
+  </data>
   <data name="İşlem Onayı" xml:space="preserve">
-  <value>Action Confirmation</value>
-</data>
+    <value>Потвърждение на действие</value>
+  </data>
   <data name="Adreslerim" xml:space="preserve">
-  <value>My Addresses</value>
-</data>
+    <value>Моите адреси</value>
+  </data>
   <data name="Yeni Adres Ekle" xml:space="preserve">
-  <value>Add New Address</value>
-</data>
+    <value>Добави нов адрес</value>
+  </data>
   <data name="Başlık" xml:space="preserve">
-  <value>Title</value>
-</data>
+    <value>Заглавие</value>
+  </data>
   <data name="Adres" xml:space="preserve">
-  <value>Address</value>
-</data>
+    <value>Адрес</value>
+  </data>
   <data name="Varsayılan" xml:space="preserve">
-  <value>Default</value>
-</data>
+    <value>По подразбиране</value>
+  </data>
   <data name="Sil" xml:space="preserve">
-  <value>Delete</value>
-</data>
+    <value>Изтрий</value>
+  </data>
   <data name="Adresi Düzenle" xml:space="preserve">
-  <value>Edit Address</value>
-</data>
+    <value>Редактирай адрес</value>
+  </data>
   <data name="Yeni Adres" xml:space="preserve">
-    <value>New Address</value>
+    <value>Нов адрес</value>
   </data>
   <data name="Telefon" xml:space="preserve">
-    <value>Phone</value>
+    <value>Телефон</value>
   </data>
   <data name="İl" xml:space="preserve">
-    <value>City</value>
+    <value>Град</value>
   </data>
   <data name="İlçe" xml:space="preserve">
-    <value>District</value>
+    <value>Район</value>
   </data>
   <data name="Mahalle" xml:space="preserve">
-    <value>Neighborhood</value>
+    <value>Квартал</value>
   </data>
   <data name="Varsayılan adres olarak ayarla" xml:space="preserve">
-    <value>Set as default address</value>
+    <value>Задай като адрес по подразбиране</value>
   </data>
   <data name="Kaydet" xml:space="preserve">
-    <value>Save</value>
+    <value>Запази</value>
   </data>
   <data name="İptal" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Откажи</value>
   </data>
   <data name="Ev, İş vb." xml:space="preserve">
-    <value>Home, Work etc.</value>
+    <value>Дом, Работа и др.</value>
   </data>
   <data name="Adres Güncelle" xml:space="preserve">
-    <value>Edit Address</value>
+    <value>Редактирай адрес</value>
   </data>
   <data name="Varsayılan adres" xml:space="preserve">
-    <value>Default address</value>
+    <value>Адрес по подразбиране</value>
   </data>
   <data name="Geri" xml:space="preserve">
-    <value>Back</value>
+    <value>Назад</value>
   </data>
   <data name="Adres Sil" xml:space="preserve">
-    <value>Delete Address</value>
+    <value>Изтрий адрес</value>
   </data>
   <data name="başlıklı adresi silmek istediğinize emin misiniz?" xml:space="preserve">
-  <value>Are you sure you want to delete the address titled?</value>
-</data>
+    <value>Сигурни ли сте, че искате да изтриете адреса с заглавие?</value>
+  </data>
   <data name="Evet, Sil" xml:space="preserve">
-    <value>Yes, Delete</value>
+    <value>Да, изтрий</value>
   </data>
   <data name="Vazgeç" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Откажи</value>
   </data>
   <data name="Doğrulama emaili elinize geçmedi mi?" xml:space="preserve">
-    <value>Didn't receive the verification email?</value>
+    <value>Не сте получили имейл за потвърждение?</value>
   </data>
   <data name="Doğrulama emailini tekrar gönder" xml:space="preserve">
-    <value>Resend verification email</value>
+    <value>Изпрати отново имейл за потвърждение</value>
   </data>
   <data name="Email Adresi" xml:space="preserve">
-    <value>Email Address</value>
+    <value>Имейл адрес</value>
   </data>
   <data name="Email Adresi henüz doğrulanmamış." xml:space="preserve">
-    <value>Email address has not been verified yet.</value>
+    <value>Имейл адресът все още не е потвърден.</value>
   </data>
   <data name="Doğrula" xml:space="preserve">
-    <value>Verify</value>
+    <value>Потвърди</value>
   </data>
   <data name="Email Değişikliği" xml:space="preserve">
-    <value>Email Change</value>
+    <value>Промяна на имейл</value>
   </data>
   <data name="Yeni Email için doğrulama yapılması gerekecek. Email adresinizi değiştirmek istediğinize emin misiniz?" xml:space="preserve">
-    <value>You will need to verify your new email address. Are you sure you want to change your email?</value>
+    <value>За новия имейл ще е необходимо потвърждение. Сигурни ли сте, че искате да промените имейл адреса си?</value>
   </data>
   <data name="Evet, değiştir" xml:space="preserve">
-    <value>Yes, change it</value>
+    <value>Да, промени</value>
   </data>
   <data name="Tükendi" xml:space="preserve">
-    <value>Out of stock</value>
+    <value>Изчерпано</value>
   </data>
   <data name="Son {0} adet!" xml:space="preserve">
-    <value>Last {0} items!</value>
+    <value>Последни {0} броя!</value>
   </data>
   <data name="Stokta: {0} adet" xml:space="preserve">
-    <value>In stock: {0} items</value>
+    <value>В наличност: {0} броя</value>
   </data>
 </root>

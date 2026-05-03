@@ -3,181 +3,189 @@
 @inject IStringLocalizer<AccountResource> L
 @{
     ViewData["Title"] = "Profilim";
+    string currentLang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
 }
 
-<div class="container mt-4">
+
+
+@* CDN *@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+
+
+<div class="container mt-3">
     <div class="row">
         <div class="col-md-2">
             <partial name="_LeftMenu" />
         </div>
         <div class="col-md-7">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h4 class="mb-2">Profilim</h4>
+                <div class="card-body p-3">
+                    <h6 class="mb-2 fw-semibold profile-main-title">@L["Profilim"]</h6>
+
                     @{
                         var isConfirmed = Context.Session.GetString("session_IsEmailConfirmed") == "True";
                         var email = Context.Session.GetString("session_Email");
                     }
 
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <strong>@L["Email Adresi"]</strong>
+                    @* EMAIL KARTI *@
+                    <div class="card mb-3">
+                        <div class="card-header py-2 px-3">
+                            <strong>@L["Email"]</strong>
                         </div>
-                        <div class="card-body">
-                            <div class="row align-items-center">
-
-                                @if (isConfirmed)
-                                {
-                                    <div class="col-md-12 mb-3 text-primary">
-                                        <i class="bi bi-check-circle-fill"></i>
-                                        @email
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-md-12 mb-3 text-info">
-                                        <i class="bi bi-exclamation-triangle-fill"></i>
-                                        @email Email Adresi henüz doğrulanmamış.
-                                    </div>
-
-                                    <div class="col-md-12 mb-1">
-                                        <form asp-action="ResendConfEmail" asp-controller="Account" method="post">
-                                            @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-outline-info">
-                                                @L["Doğrula"]
-                                            </button>
-                                        </form>
-                                    </div>
-                                }
-
-                            </div>
+                        <div class="card-body py-2 px-3">
+                            @if (isConfirmed)
+                            {
+                                <div class="text-primary small">
+                                    <i class="bi bi-check-circle-fill"></i> @email
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-info small mb-2">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    @email — @L["Email Adresi henüz doğrulanmamış."]
+                                </div>
+                                <form asp-action="ResendConfEmail" asp-controller="Account" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-info ">
+                                        @L["Doğrula"]
+                                    </button>
+                                </form>
+                            }
                         </div>
                     </div>
 
-
-
-                   <div class="card mb-4">
-                        <div class="card-header">
-                            <strong>Kişisel Bilgiler</strong>
+                    @* KİŞİSEL BİLGİLER *@
+                    <div class="card mb-3">
+                        <div class="card-header py-2 px-3">
+                            <strong>@L["Kişisel Bilgiler"]</strong>
                         </div>
-                        <div class="card-body">    
+                        <div class="card-body py-2 px-3">
                             <form asp-action="Profile" method="post" id="profileForm">
-                                   @Html.AntiForgeryToken()
-                            <input type="hidden" name="FormType" value="Profile" />
-                             <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label asp-for="Profile.FirstName"></label>
-                                        <input asp-for="Profile.FirstName" class="form-control" />
-                                        <span asp-validation-for="Profile.FirstName" class="text-danger"></span>
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="FormType" value="Profile" />
+                                <div class="row g-2">
+                                    <div class="col-md-6">
+                                        <label asp-for="Profile.FirstName" class="form-label mb-0"></label>
+                                        <input asp-for="Profile.FirstName" class="form-control form-control-sm" />
+                                        <span asp-validation-for="Profile.FirstName" class="text-danger small"></span>
                                     </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label asp-for="Profile.LastName"></label>
-                                        <input asp-for="Profile.LastName" class="form-control" />
-                                        <span asp-validation-for="Profile.LastName" class="text-danger"></span>
+                                    <div class="col-md-6">
+                                        <label asp-for="Profile.LastName" class="form-label mb-0"></label>
+                                        <input asp-for="Profile.LastName" class="form-control form-control-sm" />
+                                        <span asp-validation-for="Profile.LastName" class="text-danger small"></span>
                                     </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label asp-for="Profile.Email"></label>
-                                        <input asp-for="Profile.Email" class="form-control" />
+                                    <div class="col-md-6">
+                                        <label asp-for="Profile.Email" class="form-label mb-0"></label>
+                                        <input asp-for="Profile.Email" class="form-control form-control-sm" />
                                         <input type="hidden" id="originalEmail" value="@Model.Profile.Email" />
                                     </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label asp-for="Profile.PhoneNumber"></label>
-                                        <input asp-for="Profile.PhoneNumber" class="form-control" />
+                                    <div class="col-md-6">
+                                        <label asp-for="Profile.PhoneNumber" class="form-label mb-0"></label>
+                                        <input asp-for="Profile.PhoneNumber" class="form-control form-control-sm" />
                                     </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label asp-for="Profile.BirthDate"></label>
-                                        <input asp-for="Profile.BirthDate" class="form-control" type="date" />
+                                    <div class="col-md-6">
+                                        <label asp-for="Profile.BirthDate" class="form-label mb-0"></label>
+                                        <input asp-for="Profile.BirthDate"
+                                               class="form-control"
+                                               type="text"
+                                               id="birthDatePicker"
+                                               autocomplete="off" />
                                     </div>
-                                    <div class="col-md-12 mb-3">
+                                    <div class="col-md-12 mt-1">
                                         <button type="submit" class="btn btn-outline-info">
                                             @L["Bilgileri Güncelle"]
                                         </button>
                                     </div>
                                 </div>
-                                </form>
-                                
-
-                           
-                        </div>
-                    </div>
-
-                    <!-- ================= ŞİFRE DEĞİŞTİR ================= -->
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <strong>Şifre Değiştir</strong>
-                        </div>
-                        @if (!ViewData.ModelState.IsValid)
-                        {
-                            <div class="alert alert-danger">
-                                @Html.ValidationSummary(false)
-                            </div>
-                        }
-                        <div class="card-body">
-                            <form asp-action="Profile" method="post">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="FormType" value="Password" />
-
-                                <div class="mb-3">
-                                    <label asp-for="Password.CurrentPassword"></label>
-                                    <input asp-for="Password.CurrentPassword" class="form-control" type="password" />
-                                    <span asp-validation-for="Password.CurrentPassword" class="text-danger"></span>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label asp-for="Password.NewPassword"></label>
-                                    <input asp-for="Password.NewPassword" class="form-control" type="password" />
-                                    <span asp-validation-for="Password.NewPassword" class="text-danger"></span>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label asp-for="Password.ConfirmNewPassword"></label>
-                                    <input asp-for="Password.ConfirmNewPassword" class="form-control" type="password" />
-                                    <span asp-validation-for="Password.ConfirmNewPassword" class="text-danger"></span>
-                                </div>
-
-                                <button type="submit" class="btn btn-outline-info">
-                                    Şifreyi Değiştir
-                                </button>
                             </form>
                         </div>
                     </div>
+
+                    @* ŞİFRE DEĞİŞTİR *@
+                    <div class="card mb-3">
+                        <div class="card-header py-2 px-3">
+                            <strong>@L["Şifre Değiştir"]</strong>
+                        </div>
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger mb-0 py-1 px-3 small">
+                                @Html.ValidationSummary(false)
+                            </div>
+                        }
+                        <div class="card-body py-2 px-3">
+                            <form asp-action="Profile" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="FormType" value="Password" />
+                                <div class="row g-2">
+                                    <div class="col-md-12">
+                                        <label asp-for="Password.CurrentPassword" class="form-label mb-0"></label>
+                                        <div class="input-group input-group-sm">
+                                            <input asp-for="Password.CurrentPassword" class="form-control form-control-sm" type="password" id="currentPasswordInput" />
+                                            <button class="btn btn-outline-secondary" type="button" tabindex="-1" id="toggleCurrentPassword">
+                                                <i class="bi bi-eye" id="toggleCurrentPasswordIcon"></i>
+                                            </button>
+                                        </div>
+                                        <span asp-validation-for="Password.CurrentPassword" class="text-danger small"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Password.NewPassword" class="form-label mb-0"></label>
+                                        <div class="input-group input-group-sm">
+                                            <input asp-for="Password.NewPassword" class="form-control form-control-sm" type="password" id="newPasswordInput" />
+                                            <button class="btn btn-outline-secondary" type="button" tabindex="-1" id="toggleNewPassword">
+                                                <i class="bi bi-eye" id="toggleNewPasswordIcon"></i>
+                                            </button>
+                                        </div>
+                                        <span asp-validation-for="Password.NewPassword" class="text-danger small"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label asp-for="Password.ConfirmNewPassword" class="form-label mb-0"></label>
+                                        <div class="input-group input-group-sm">
+                                            <input asp-for="Password.ConfirmNewPassword" class="form-control form-control-sm" type="password" id="confirmNewPasswordInput" />
+                                            <button class="btn btn-outline-secondary" type="button" tabindex="-1" id="toggleConfirmNewPassword">
+                                                <i class="bi bi-eye" id="toggleConfirmNewPasswordIcon"></i>
+                                            </button>
+                                        </div>
+                                        <span asp-validation-for="Password.ConfirmNewPassword" class="text-danger small"></span>
+                                    </div>
+                                    <div class="col-md-12 mt-1">
+                                        <button type="submit" class="btn btn-outline-info">
+                                            @L["Şifre Değiştir"]
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-        </div>
+        <div class="col-md-3"></div>
     </div>
 </div>
+
+@* EMAIL DEĞİŞİKLİĞİ MODAL *@
 <div class="modal fade" id="emailConfirmModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title">@L["Email Değişikliği"]</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <div class="modal-header py-2">
+                <h6 class="modal-title mb-0">@L["Email Değişikliği"]</h6>
+                <button type="button" class="btn-close " data-bs-dismiss="modal"></button>
             </div>
-
-            <div class="modal-body">
-                @L["Yeni Email için doğrulama yapılması gerekecek. Email adresinizi değiştirmek istediğinize emin misiniz? "]
+            <div class="modal-body small">
+                @L["Yeni Email için doğrulama yapılması gerekecek. Email adresinizi değiştirmek istediğinize emin misiniz?"]
             </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    @L["İptal"]
-                </button>
-                <button type="button" class="btn btn-outline-primary" id="confirmEmailChange">
-                    @L["Evet, değiştir"]
-                    
-                </button>
+            <div class="modal-footer py-2">
+                <button type="button" class="btn btn-outline-secondary " data-bs-dismiss="modal">@L["İptal"]</button>
+                <button type="button" class="btn btn-outline-primary " id="confirmEmailChange">@L["Evet, değiştir"]</button>
             </div>
-
         </div>
     </div>
 </div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
@@ -188,21 +196,50 @@
     let allowSubmit = false;
 
     form.addEventListener("submit", function (e) {
-
         if (allowSubmit) return;
-
         const newEmail = document.querySelector("input[name='Profile.Email']").value;
-
         if (originalEmail !== newEmail) {
             e.preventDefault();
-
             const modal = new bootstrap.Modal(document.getElementById('emailConfirmModal'));
             modal.show();
-
             document.getElementById("confirmEmailChange").onclick = function () {
                 allowSubmit = true;
                 form.submit();
             };
         }
     });
+</script>
+
+<script>
+    const lang = "@currentLang.ToLower()";
+
+    flatpickr("#birthDatePicker", {
+        locale: lang === "tr" ? "tr" : "default",
+        dateFormat: lang === "tr" ? "d.m.Y" : "m/d/Y",  // TR: 25.03.1990 | EN: 03/25/1990
+        maxDate: "today",
+        allowInput: true
+    });
+</script>
+
+<script>
+    function setupHoldToView(buttonId, inputId, iconId) {
+        const btn   = document.getElementById(buttonId);
+        const input = document.getElementById(inputId);
+        const icon  = document.getElementById(iconId);
+
+        function show() { input.type = "text";     icon.className = "bi bi-eye-slash"; }
+        function hide() { input.type = "password"; icon.className = "bi bi-eye"; }
+
+        btn.addEventListener("mousedown",  show);
+        btn.addEventListener("mouseup",    hide);
+        btn.addEventListener("mouseleave", hide);
+
+        btn.addEventListener("touchstart",  (e) => { e.preventDefault(); show(); });
+        btn.addEventListener("touchend",    hide);
+        btn.addEventListener("touchcancel", hide);
+    }
+
+    setupHoldToView("toggleCurrentPassword",     "currentPasswordInput",     "toggleCurrentPasswordIcon");
+    setupHoldToView("toggleNewPassword",          "newPasswordInput",         "toggleNewPasswordIcon");
+    setupHoldToView("toggleConfirmNewPassword",   "confirmNewPasswordInput",  "toggleConfirmNewPasswordIcon");
 </script>

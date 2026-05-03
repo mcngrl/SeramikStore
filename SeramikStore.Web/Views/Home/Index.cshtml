@@ -154,18 +154,20 @@
                             <div class="mt-2">
                             @if (item.StockAmount <= 0)
                                 {
-                                    <span class="badge bg-danger">Tükendi</span>
+                                    <span class="badge bg-danger">
+                                        @L["Tükendi"]
+                                    </span>
                                 }
                                 else if (item.StockAmount <= 5)
                                 {
                                     <span class="badge bg-warning text-dark">
-                                        Son @item.StockAmount adet!
+                                        @L["Son {0} adet!", item.StockAmount]
                                     </span>
                                 }
                                 else
                                 {
                                     <span class="badge bg-success">
-                                        Stokta: @item.StockAmount adet
+                                        @L["Stokta: {0} adet", item.StockAmount]
                                     </span>
                                 }
                             </div>

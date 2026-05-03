@@ -147,5 +147,22 @@
   <data name="ListTitle" xml:space="preserve">
     <value>Kategori Listesi</value>
   </data>
-
+  <data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
+    <value>Şimdi keşfedin, özel tasarımlar sizi bekliyor</value>
+  </data>
+  <data name="İncele" xml:space="preserve">
+    <value>İncele</value>
+  </data>
+  <data name="Ürün Kodu" xml:space="preserve">
+    <value>Ürün Kodu</value>
+  </data>
+  <data name="Adet" xml:space="preserve">
+    <value>Adet</value>
+  </data>
+  <data name="Sepete Ekle" xml:space="preserve">
+    <value>Sepete Ekle</value>
+  </data>
+  <data name="Ürün Açıklaması" xml:space="preserve">
+    <value>Ürün Açıklaması</value>
+  </data>
 </root>

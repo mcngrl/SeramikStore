@@ -83,7 +83,7 @@
                 <!-- 🛒 SEPET -->
                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Cart" asp-action="Summary">
-                        <i class="fas fa-shopping-cart"></i> Sepetim  @await Component.InvokeAsync("Cart")
+                        <i class="fas fa-shopping-cart"></i> @C["Sepetim"]  @await Component.InvokeAsync("Cart")
                     </a>
                 </li>
                 @{
@@ -174,7 +174,7 @@
                                asp-controller="Culture"
                                asp-action="Set"
                                asp-route-culture="tr-TR"
-                               asp-route-returnUrl="@Context.Request.Path">
+                               asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)">
                                 <img src="/images/flags/tr.svg" width="20" height="14" class="me-2" />
                                 Türkçe
                             </a>
@@ -185,9 +185,19 @@
                                asp-controller="Culture"
                                asp-action="Set"
                                asp-route-culture="en-US"
-                               asp-route-returnUrl="@Context.Request.Path">
+                               asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)">
                                 <img src="/images/flags/en.svg" width="20" height="14" class="me-2" />
                                 English
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Culture"
+                               asp-action="Set"
+                               asp-route-culture="bg-BG"
+                               asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)">
+                                <img src="/images/flags/bg.svg" width="20" height="14" class="me-2" />
+                                Български
                             </a>
                         </li>
 
@@ -195,8 +205,18 @@
                             <a class="dropdown-item"
                                asp-controller="Culture"
                                asp-action="Set"
+                               asp-route-culture="el-GR"
+                               asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)">
+                                <img src="/images/flags/el.svg" width="20" height="14" class="me-2" />
+                                Ελληνικά
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Culture"
+                               asp-action="Set"
                                asp-route-culture="fr-FR"
-                               asp-route-returnUrl="@Context.Request.Path">
+                               asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)">
                                 <img src="/images/flags/fr.svg" width="20" height="14" class="me-2" />
                                 Français
                             </a>
@@ -207,7 +227,7 @@
                                asp-controller="Culture"
                                asp-action="Set"
                                asp-route-culture="de-DE"
-                               asp-route-returnUrl="@Context.Request.Path">
+                               asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)">
                                 <img src="/images/flags/de.svg" width="20" height="14" class="me-2" />
                                 Deutsch
                             </a>
@@ -218,7 +238,7 @@
                                asp-controller="Culture"
                                asp-action="Set"
                                asp-route-culture="it-IT"
-                               asp-route-returnUrl="@Context.Request.Path">
+                               asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)">
                                 <img src="/images/flags/it.svg" width="20" height="14" class="me-2" />
                                 Italiano
                             </a>
@@ -229,22 +249,14 @@
                                asp-controller="Culture"
                                asp-action="Set"
                                asp-route-culture="ru-RU"
-                               asp-route-returnUrl="@Context.Request.Path">
+                               asp-route-returnUrl="@(Context.Request.Path + Context.Request.QueryString)">
                                 <img src="/images/flags/ru.svg" width="20" height="14" class="me-2" />
                                 Русский
                             </a>
                         </li>
 
-                        <li>
-                            <a class="dropdown-item"
-                               asp-controller="Culture"
-                               asp-action="Set"
-                               asp-route-culture="el-GR"
-                               asp-route-returnUrl="@Context.Request.Path">
-                                <img src="/images/flags/el.svg" width="20" height="14" class="me-2" />
-                                Ελληνικά
-                            </a>
-                        </li>
+
+
                     </ul>
                 </li>
 

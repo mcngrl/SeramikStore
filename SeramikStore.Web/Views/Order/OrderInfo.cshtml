@@ -424,8 +424,8 @@
                             <input type="hidden" name="orderId" value="@Model.Id" />
 
                             <button type="button"
-                                    class="btn btn-outline-danger btn-sm"
-                                    onclick="showConfirm('Siparişi iptal etmek istediğinize emin misiniz?', function() { document.getElementById('cancelOrderForm').submit(); });">
+                                    class="btn btn-outline-danger"
+                                    onclick="showConfirm('@L["Siparişi iptal etmek istediğinize emin misiniz?"]', function() { document.getElementById('cancelOrderForm').submit(); });">
                                 <i class="fa-solid fa-ban me-1"></i>
                                 @L["Siparişi İptal Et"]
                             </button>

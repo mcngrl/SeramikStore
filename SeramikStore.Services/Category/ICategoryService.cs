@@ -9,5 +9,8 @@ namespace SeramikStore.Services
         int XInsertCategory(Category category);
         int XUpdateCategory(Category category);
         int XDeleteCategory(int id);
+        bool HasProducts(int categoryId);
+ 
+
     }
 }

@@ -199,7 +199,7 @@
     <value>Geçersiz doğrulama linki</value>
   </data>
   <data name="Doğrulama linkinin süresi dolmuş" xml:space="preserve">
-    <value>Doğrulama linkinin süresi dolmuş</value>
+    <value>Doğrulama linkinin süresi dolmuş.</value>
   </data>
   <data name="Email başarıyla doğrulandı" xml:space="preserve">
     <value>Email başarıyla doğrulandı</value>
@@ -229,7 +229,7 @@
     <value>Beni Hatırla</value>
   </data>
   <data name="Bu email adresi zaten kayıtlı" xml:space="preserve">
-    <value>Bu email adresi zaten kayıtlı</value>
+    <value>Bu email adresi zaten kayıtlı.</value>
   </data>
   <data name="Profil bilgileri güncellendi" xml:space="preserve">
     <value>Profile information updated</value>
@@ -312,266 +312,307 @@
   <data name="Ana Sayfa" xml:space="preserve">
     <value>Ana Sayfa</value>
   </data>
-	<data name="El Yapımı Stoneware Ürünler" xml:space="preserve">
-  <value>El Yapımı Stoneware Ürünler</value>
-</data>
-
-	<data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
-  <value>Şimdi keşfedin, özel tasarımlar sizi bekliyor</value>
-</data>
-
-	<data name="Her Parça Bir Hikaye" xml:space="preserve">
-  <value>Her Parça Bir Hikaye</value>
-</data>
-
-	<data name="El işçiliği ile üretilen benzersiz stoneware koleksiyonu" xml:space="preserve">
-  <value>El işçiliği ile üretilen benzersiz stoneware koleksiyonu</value>
-</data>
-
-	<data name="Sofranıza Değer Katın" xml:space="preserve">
-  <value>Sofranıza Değer Katın</value>
-</data>
-
-	<data name="Özgün tasarımlar ile fark yaratan sunumlar" xml:space="preserve">
-  <value>Özgün tasarımlar ile fark yaratan sunumlar</value>
-</data>
-
-	<data name="Her Detayında El Emeği Saklı" xml:space="preserve">
-  <value>Her Detayında El Emeği Saklı</value>
-</data>
-
-	<data name="Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür." xml:space="preserve">
-  <value>Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür.</value>
-</data>
-
-	<data name="El Yapımı" xml:space="preserve">
-  <value>El Yapımı</value>
-</data>
-
-	<data name="Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır." xml:space="preserve">
-  <value>Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır.</value>
-</data>
-
-	<data name="Yüksek Fırınlama" xml:space="preserve">
-  <value>Yüksek Fırınlama</value>
-</data>
-
-	<data name="Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir." xml:space="preserve">
-  <value>Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir.</value>
-</data>
-
-	<data name="Mikrodalga Uyumlu" xml:space="preserve">
-  <value>Mikrodalga Uyumlu</value>
-</data>
-
-	<data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
-  <value>Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir.</value>
-</data>
-
-	<data name="Bulaşık Makinesine Uygun" xml:space="preserve">
-  <value>Bulaşık Makinesine Uygun</value>
-</data>
-
-	<data name="Stoneware yapısı sayesinde bulaşık makinesinde güvenle yıkanabilir, formunu ve rengini korur." xml:space="preserve">
-  <value>Stoneware yapısı sayesinde bulaşık makinesinde güvenle yıkanabilir, formunu ve rengini korur.</value>
-</data>
-
-	<data name="Gıda ile Temasa Uygun" xml:space="preserve">
-  <value>Gıda ile Temasa Uygun</value>
-</data>
-
-	<data name="Sağlığa zararsızdır, tüm ürünlerimiz gıda ile temas için güvenle kullanılabilir." xml:space="preserve">
-  <value>Sağlığa zararsızdır, tüm ürünlerimiz gıda ile temas için güvenle kullanılabilir.</value>
-</data>
-
-	<data name="Özenli Paketleme" xml:space="preserve">
-  <value>Özenli Paketleme</value>
-</data>
-
-	<data name="Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır." xml:space="preserve">
-  <value>Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır.</value>
-</data>
-	<data name="El Yapımı" xml:space="preserve">
-  <value>El Yapımı</value>
-</data>
-
-	<data name="Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır." xml:space="preserve">
-  <value>Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır.</value>
-</data>
-
-	<data name="Yüksek Fırınlama" xml:space="preserve">
-  <value>Yüksek Fırınlama</value>
-</data>
-
-	<data name="Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir." xml:space="preserve">
-  <value>Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir.</value>
-</data>
-
-	<data name="Mikrodalga Uyumlu" xml:space="preserve">
-  <value>Mikrodalga Uyumlu</value>
-</data>
-
-	<data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
-  <value>Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir.</value>
-</data>
-	<data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
-  <value>Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır. Detaylı bilgi için</value>
-</data>
-
-	<data name="Çerez Politikası" xml:space="preserve">
-  <value>Çerez Politikası</value>
-</data>
-
-	<data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
-  <value>sayfamızı inceleyebilirsiniz.</value>
-</data>
-
-	<data name="Anladım" xml:space="preserve">
-  <value>Anladım</value>
-</data>
-	<data name="Başarılı" xml:space="preserve">
-  <value>Başarılı</value>
-</data>
-
-	<data name="Hata" xml:space="preserve">
-  <value>Hata</value>
-</data>
-
-	<data name="Bilgi" xml:space="preserve">
-  <value>Bilgi</value>
-</data>
-
-	<data name="Lütfen kontrol edin" xml:space="preserve">
-  <value>Lütfen kontrol edin</value>
-</data>
-
-	<data name="Emin misiniz?" xml:space="preserve">
-  <value>Emin misiniz?</value>
-</data>
-
-	<data name="Hayır" xml:space="preserve">
-  <value>Hayır</value>
-</data>
-
-	<data name="Evet" xml:space="preserve">
-  <value>Evet</value>
-</data>
-
-	<data name="Hızlı Teslimat" xml:space="preserve">
-  <value>Hızlı Teslimat</value>
-</data>
-
-	<data name="Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir." xml:space="preserve">
-  <value>Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir.</value>
-</data>
-
-	<data name="Canlı Destek" xml:space="preserve">
-  <value>Canlı Destek</value>
-</data>
-
-	<data name="WhatsApp üzerinden hızlı ve kolay destek hizmeti." xml:space="preserve">
-  <value>WhatsApp üzerinden hızlı ve kolay destek hizmeti.</value>
-</data>
-
-	<data name="Kolay İade" xml:space="preserve">
-  <value>Kolay İade</value>
-</data>
-
-	<data name="14 gün içinde ücretsiz iade ve değişim imkanı." xml:space="preserve">
-  <value>14 gün içinde ücretsiz iade ve değişim imkanı.</value>
-</data>
-
-	<data name="Güvenli Ödeme" xml:space="preserve">
-  <value>Güvenli Ödeme</value>
-</data>
-
-	<data name="Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez." xml:space="preserve">
-  <value>Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez.</value>
-</data>
-
-	<data name="Hızlı Erişim" xml:space="preserve">
-  <value>Hızlı Erişim</value>
-</data>
-
-	<data name="Giriş Yap" xml:space="preserve">
-  <value>Giriş Yap</value>
-</data>
-
-	<data name="Hesabım" xml:space="preserve">
-  <value>Hesabım</value>
-</data>
-
-	<data name="Siparişlerim" xml:space="preserve">
-  <value>Siparişlerim</value>
-</data>
-
-	<data name="Sepetim" xml:space="preserve">
-  <value>Sepetim</value>
-</data>
-
-	<data name="Kategorilerimiz" xml:space="preserve">
-  <value>Kategorilerimiz</value>
-</data>
-
-	<data name="Politikalarımız" xml:space="preserve">
-  <value>Politikalarımız</value>
-</data>
-
-	<data name="Gizlilik Politikası" xml:space="preserve">
-  <value>Gizlilik Politikası</value>
-</data>
-
-	<data name="KVKK Aydınlatma Metni" xml:space="preserve">
-  <value>KVKK Aydınlatma Metni</value>
-</data>
-
-	<data name="Üyelik Sözleşmesi" xml:space="preserve">
-  <value>Üyelik Sözleşmesi</value>
-</data>
-
-	<data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
-  <value>Mesafeli Satış Sözleşmesi</value>
-</data>
-
-	<data name="Kurumsal" xml:space="preserve">
-  <value>Kurumsal</value>
-</data>
-
-	<data name="Hakkımızda" xml:space="preserve">
-  <value>Hakkımızda</value>
-</data>
-
-	<data name="Sıkça Sorulan Sorular" xml:space="preserve">
-  <value>Sıkça Sorulan Sorular</value>
-</data>
-
-	<data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
-  <value>Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır. Detaylı bilgi için</value>
-</data>
-
-	<data name="Çerez Politikası" xml:space="preserve">
-  <value>Çerez Politikası</value>
-</data>
-
-	<data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
-  <value>sayfamızı inceleyebilirsiniz.</value>
-</data>
-
-	<data name="Anladım" xml:space="preserve">
-  <value>Anladım</value>
-</data>
-	<data name="NotEnoughStock">
-		<value>Yeterli stok bulunmamaktadır.</value>
-	</data>
-	<data name="Güncellendi">
-		<value>Güncellendi</value>
-	</data>
-	<data name="INSUFFICIENT_STOCK" xml:space="preserve">
-  <value>{0} ürününde yeterli stok yok. Sepetteki adet: {1}, Mevcut stok: {2}</value>
-</data>
-
-	<data name="OK" xml:space="preserve">
-  <value>Stok kontrolü başarılı.</value>
-</data>
-
+  <data name="El Yapımı Stoneware Ürünler" xml:space="preserve">
+    <value>El Yapımı Stoneware Ürünler</value>
+  </data>
+  <data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
+    <value>Şimdi keşfedin, özel tasarımlar sizi bekliyor</value>
+  </data>
+  <data name="Her Parça Bir Hikaye" xml:space="preserve">
+    <value>Her Parça Bir Hikaye</value>
+  </data>
+  <data name="El işçiliği ile üretilen benzersiz stoneware koleksiyonu" xml:space="preserve">
+    <value>El işçiliği ile üretilen benzersiz stoneware koleksiyonu</value>
+  </data>
+  <data name="Sofranıza Değer Katın" xml:space="preserve">
+    <value>Sofranıza Değer Katın</value>
+  </data>
+  <data name="Özgün tasarımlar ile fark yaratan sunumlar" xml:space="preserve">
+    <value>Özgün tasarımlar ile fark yaratan sunumlar</value>
+  </data>
+  <data name="Her Detayında El Emeği Saklı" xml:space="preserve">
+    <value>Her Detayında El Emeği Saklı</value>
+  </data>
+  <data name="Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür." xml:space="preserve">
+    <value>Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür</value>
+  </data>
+  <data name="Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır." xml:space="preserve">
+    <value>Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır</value>
+  </data>
+  <data name="Yüksek Fırınlama" xml:space="preserve">
+    <value>Yüksek Fırınlama</value>
+  </data>
+  <data name="Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir." xml:space="preserve">
+    <value>Yüksek sıcaklıkta pişirilerek ekstra dayanıklılık ve uzun ömürlü kullanım elde edilir</value>
+  </data>
+  <data name="Mikrodalga Uyumlu" xml:space="preserve">
+    <value>Mikrodalga Uyumlu</value>
+  </data>
+  <data name="Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir." xml:space="preserve">
+    <value>Günlük kullanım için tasarlanmıştır. Güvenle mikrodalgada kullanılabilir</value>
+  </data>
+  <data name="Bulaşık Makinesine Uygun" xml:space="preserve">
+    <value>Bulaşık Makinesine Uygun</value>
+  </data>
+  <data name="Stoneware yapısı sayesinde bulaşık makinesinde güvenle yıkanabilir, formunu ve rengini korur." xml:space="preserve">
+    <value>Stoneware yapısı sayesinde bulaşık makinesinde güvenle yıkanabilir, formunu ve rengini korur</value>
+  </data>
+  <data name="Gıda ile Temasa Uygun" xml:space="preserve">
+    <value>Gıda ile Temasa Uygun</value>
+  </data>
+  <data name="Sağlığa zararsızdır, tüm ürünlerimiz gıda ile temas için güvenle kullanılabilir." xml:space="preserve">
+    <value>Sağlığa zararsızdır, tüm ürünlerimiz gıda ile temas için güvenle kullanılabilir</value>
+  </data>
+  <data name="Özenli Paketleme" xml:space="preserve">
+    <value>Özenli Paketleme</value>
+  </data>
+  <data name="Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır." xml:space="preserve">
+    <value>Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır</value>
+  </data>
+  <data name="El Yapımı" xml:space="preserve">
+    <value>El Yapımı</value>
+  </data>
+  <data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
+    <value>Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır. Detaylı bilgi için</value>
+  </data>
+  <data name="Çerez Politikası" xml:space="preserve">
+    <value>Çerez Politikası</value>
+  </data>
+  <data name="sayfamızı inceleyebilirsiniz." xml:space="preserve">
+    <value>sayfamızı inceleyebilirsiniz.</value>
+  </data>
+  <data name="Anladım" xml:space="preserve">
+    <value>Anladım</value>
+  </data>
+  <data name="Başarılı" xml:space="preserve">
+    <value>Başarılı</value>
+  </data>
+  <data name="Hata" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="Bilgi" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="Lütfen kontrol edin" xml:space="preserve">
+    <value>Lütfen kontrol edin</value>
+  </data>
+  <data name="Emin misiniz?" xml:space="preserve">
+    <value>Emin misiniz?</value>
+  </data>
+  <data name="Hayır" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="Evet" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="Hızlı Teslimat" xml:space="preserve">
+    <value>Hızlı Teslimat</value>
+  </data>
+  <data name="Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir." xml:space="preserve">
+    <value>Siparişleriniz 1–3 iş günü içinde kargoya teslim edilir</value>
+  </data>
+  <data name="Canlı Destek" xml:space="preserve">
+    <value>Canlı Destek</value>
+  </data>
+  <data name="WhatsApp üzerinden hızlı ve kolay destek hizmeti." xml:space="preserve">
+    <value>WhatsApp üzerinden hızlı ve kolay destek hizmeti</value>
+  </data>
+  <data name="Kolay İade" xml:space="preserve">
+    <value>Kolay İade</value>
+  </data>
+  <data name="14 gün içinde ücretsiz iade ve değişim imkanı." xml:space="preserve">
+    <value>14 gün içinde ücretsiz iade ve değişim imkanı</value>
+  </data>
+  <data name="Güvenli Ödeme" xml:space="preserve">
+    <value>Güvenli Ödeme</value>
+  </data>
+  <data name="Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez." xml:space="preserve">
+    <value>Sadece EFT ve FAST ile ödeme alınır, kart bilgisi paylaşımı gerekmez</value>
+  </data>
+  <data name="Hızlı Erişim" xml:space="preserve">
+    <value>Hızlı Erişim</value>
+  </data>
+  <data name="Hesabım" xml:space="preserve">
+    <value>Hesabım</value>
+  </data>
+  <data name="Siparişlerim" xml:space="preserve">
+    <value>Siparişlerim</value>
+  </data>
+  <data name="Sepetim" xml:space="preserve">
+    <value>Sepetim</value>
+  </data>
+  <data name="Kategorilerimiz" xml:space="preserve">
+    <value>Kategorilerimiz</value>
+  </data>
+  <data name="Politikalarımız" xml:space="preserve">
+    <value>Politikalarımız</value>
+  </data>
+  <data name="Kurumsal" xml:space="preserve">
+    <value>Kurumsal</value>
+  </data>
+  <data name="Hakkımızda" xml:space="preserve">
+    <value>Hakkımızda</value>
+  </data>
+  <data name="Sıkça Sorulan Sorular" xml:space="preserve">
+    <value>Sıkça Sorulan Sorular</value>
+  </data>
+  <data name="NotEnoughStock" xml:space="preserve">
+    <value>Yeterli stok bulunmamaktadır.</value>
+  </data>
+  <data name="Güncellendi" xml:space="preserve">
+    <value>Güncellendi</value>
+  </data>
+  <data name="INSUFFICIENT_STOCK" xml:space="preserve">
+    <value>{0} ürününde yeterli stok yok. Sepetteki adet: {1}, Mevcut stok: {2}</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>Stok kontrolü başarılı.</value>
+  </data>
+  <data name="Profilim" xml:space="preserve">
+    <value>Profilim</value>
+  </data>
+  <data name="Telefon Numarası" xml:space="preserve">
+    <value>Telefon Numarası</value>
+  </data>
+  <data name="Şu Anki Şifre" xml:space="preserve">
+    <value>Şu Anki Şifre</value>
+  </data>
+  <data name="Yeni Şifre" xml:space="preserve">
+    <value>Yeni Şifre</value>
+  </data>
+  <data name="Yeni Şifre (Tekrar)" xml:space="preserve">
+    <value>Yeni Şifre (Tekrar)</value>
+  </data>
+  <data name="Kişisel Bilgiler" xml:space="preserve">
+    <value>Kişisel Bilgiler</value>
+  </data>
+  <data name="Şifre Değiştir" xml:space="preserve">
+    <value>Şifre Değiştir</value>
+  </data>
+  <data name="Bilgileri Güncelle" xml:space="preserve">
+    <value>Bilgileri Güncelle</value>
+  </data>
+  <data name="Şifre Sıfırlama" xml:space="preserve">
+    <value>Şifre Sıfırlama</value>
+  </data>
+  <data name="Şifre Sıfırlama Linki Gönder" xml:space="preserve">
+    <value>Şifre Sıfırlama Linki Gönder</value>
+  </data>
+  <data name="Lütfen kayıtlı email adresinizi girin." xml:space="preserve">
+    <value>Lütfen kayıtlı email adresinizi girin.</value>
+  </data>
+  <data name="Şifre sıfırlama bağlantısı gönderilmiştir." xml:space="preserve">
+    <value>Şifre sıfırlama bağlantısı gönderilmiştir.</value>
+  </data>
+  <data name="Yeni Şifre Belirleme" xml:space="preserve">
+    <value>Yeni Şifre Belirleme</value>
+  </data>
+  <data name="Şifreyi Güncelle" xml:space="preserve">
+    <value>Şifreyi Güncelle</value>
+  </data>
+  <data name="İşlem Onayı" xml:space="preserve">
+    <value>İşlem Onayı</value>
+  </data>
+  <data name="Adreslerim" xml:space="preserve">
+    <value>Adreslerim</value>
+  </data>
+  <data name="Yeni Adres Ekle" xml:space="preserve">
+    <value>Yeni Adres Ekle</value>
+  </data>
+  <data name="Başlık" xml:space="preserve">
+    <value>Başlık</value>
+  </data>
+  <data name="Adres" xml:space="preserve">
+    <value>Adres</value>
+  </data>
+  <data name="Varsayılan" xml:space="preserve">
+    <value>Varsayılan</value>
+  </data>
+  <data name="Sil" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="Adresi Düzenle" xml:space="preserve">
+    <value>Adresi Düzenle</value>
+  </data>
+  <data name="Yeni Adres" xml:space="preserve">
+    <value>Yeni Adres</value>
+  </data>
+  <data name="Telefon" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="İl" xml:space="preserve">
+    <value>İl</value>
+  </data>
+  <data name="İlçe" xml:space="preserve">
+    <value>İlçe</value>
+  </data>
+  <data name="Mahalle" xml:space="preserve">
+    <value>Mahalle</value>
+  </data>
+  <data name="Varsayılan adres olarak ayarla" xml:space="preserve">
+    <value>Varsayılan adres olarak ayarla</value>
+  </data>
+  <data name="Kaydet" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="İptal" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="Ev, İş vb." xml:space="preserve">
+    <value>Ev, İş vb.</value>
+  </data>
+  <data name="Adres Güncelle" xml:space="preserve">
+    <value>Adres Güncelle</value>
+  </data>
+  <data name="Varsayılan adres" xml:space="preserve">
+    <value>Varsayılan adres</value>
+  </data>
+  <data name="Geri" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="Adres Sil" xml:space="preserve">
+    <value>Adres Sil</value>
+  </data>
+  <data name="başlıklı adresi silmek istediğinize emin misiniz?" xml:space="preserve">
+    <value>başlıklı adresi silmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="Evet, Sil" xml:space="preserve">
+    <value>Evet, Sil</value>
+  </data>
+  <data name="Vazgeç" xml:space="preserve">
+    <value>Vazgeç</value>
+  </data>
+  <data name="Doğrulama emaili elinize geçmedi mi?" xml:space="preserve">
+    <value>Doğrulama emaili elinize geçmedi mi?</value>
+  </data>
+  <data name="Doğrulama emailini tekrar gönder" xml:space="preserve">
+    <value>Doğrulama emailini tekrar gönder</value>
+  </data>
+  <data name="Email Adresi" xml:space="preserve">
+    <value>E-Posta Adresi</value>
+  </data>
+  <data name="Email Adresi henüz doğrulanmamış." xml:space="preserve">
+    <value>Email Adresi henüz doğrulanmamış.</value>
+  </data>
+  <data name="Doğrula" xml:space="preserve">
+    <value>Doğrula</value>
+  </data>
+  <data name="Email Değişikliği" xml:space="preserve">
+    <value>E-Posta Değişikliği</value>
+  </data>
+  <data name="Yeni Email için doğrulama yapılması gerekecek. Email adresinizi değiştirmek istediğinize emin misiniz?" xml:space="preserve">
+    <value>Yeni E-Posta için doğrulama yapılması gerekecek. E-Posta adresinizi değiştirmek istediğinize emin misiniz?</value>
+  </data>
+  <data name="Evet, değiştir" xml:space="preserve">
+    <value>Evet, değiştir</value>
+  </data>
+  <data name="Tükendi" xml:space="preserve">
+    <value>Tükendi</value>
+  </data>
+  <data name="Son {0} adet!" xml:space="preserve">
+    <value>Son {0} adet!</value>
+  </data>
+  <data name="Stokta: {0} adet" xml:space="preserve">
+    <value>Stokta: {0} adet</value>
+  </data>
 </root>

@@ -15,7 +15,7 @@
             <div class="col-md-5 col-sm-8">
                 <div class="card shadow-lg border-0">
                     <div class="card-header text-center bg-primary text-white">
-                        <h4 class="mb-0">@L["Üye Girişi"]</h4>
+                        <h6 class="mb-0">@L["Üye Girişi"]</h6>
                     </div>
                     <form asp-action="Login" method="post">
                         <div class="card-body p-4">
@@ -25,11 +25,24 @@
                                 <span asp-validation-for="UserName" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group mb-3">
+@*                             <div class="form-group mb-3">
                                 <label>@L["Şifre"]</label>
                                 <input asp-for="Password" type="password" class="form-control" placeholder="@L["Şifreniz"]"/>
                                 <span asp-validation-for="Password" class="text-danger"></span>
+                            </div> *@
+
+                        <div class="form-group mb-3">
+                            <label>@L["Şifre"]</label>
+                            <div class="input-group">
+                                <input asp-for="Password" type="password" class="form-control"
+                                       placeholder="@L["Şifreniz"]" id="loginPasswordInput" />
+                                <button class="btn btn-outline-secondary" type="button"
+                                        tabindex="-1" id="toggleLoginPassword">
+                                    <i class="bi bi-eye" id="toggleLoginPasswordIcon"></i>
+                                </button>
                             </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
                             <div class="form-group form-check mb-3">
                                 <input asp-for="RememberMe" class="form-check-input" />
@@ -96,4 +109,25 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function setupHoldToView(buttonId, inputId, iconId) {
+            const btn   = document.getElementById(buttonId);
+            const input = document.getElementById(inputId);
+            const icon  = document.getElementById(iconId);
+
+            function show() { input.type = "text";     icon.className = "bi bi-eye-slash"; }
+            function hide() { input.type = "password"; icon.className = "bi bi-eye"; }
+
+            btn.addEventListener("mousedown",  show);
+            btn.addEventListener("mouseup",    hide);
+            btn.addEventListener("mouseleave", hide);
+
+            btn.addEventListener("touchstart",  (e) => { e.preventDefault(); show(); });
+            btn.addEventListener("touchend",    hide);
+            btn.addEventListener("touchcancel", hide);
+        }
+
+        setupHoldToView("toggleLoginPassword", "loginPasswordInput", "toggleLoginPasswordIcon");
+    </script>
 }

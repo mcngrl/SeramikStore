@@ -100,5 +100,20 @@ namespace SeramikStore.Services
             con.Open();
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
+
+        public bool HasProducts(int categoryId)
+        {
+            using SqlConnection con = new(_connectionString);
+            using SqlCommand cmd = new("sp_Category_HasProducts", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@CategoryId", categoryId);
+
+            con.Open();
+
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            return count > 0;
+        }
+
     }
 }

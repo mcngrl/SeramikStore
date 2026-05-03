@@ -42,6 +42,7 @@ var supportedCultures = new[]
     new CultureInfo("it-IT"),
     new CultureInfo("ru-RU"),
     new CultureInfo("el-GR"),
+    new CultureInfo("bg-BG"),  // Bulgarca
 };
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>

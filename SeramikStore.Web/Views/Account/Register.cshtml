@@ -7,11 +7,19 @@
     ViewData["Title"] = @L["Üye Ol"];
     string currentLang = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
 }
-@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+
+
+@* CDN *@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+
+
+
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-6">
-            <h3 class="mb-4">@L["Üye Ol"]</h3>
+            <h3 class="mb-4 the-main-title">@L["Üye Ol"]</h3>
 
             <form asp-action="Register" method="post">
                 @Html.AntiForgeryToken()
@@ -54,11 +62,15 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="BirthDate" class="form-label"></label>
-                    <input asp-for="BirthDate" class="form-control" />
+                    <input asp-for="BirthDate"
+                           class="form-control"
+                           type="text"
+                           id="birthDatePicker"
+                           autocomplete="off" />
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
                 </div>
 
-                <div class="mb-3">
+  @*               <div class="mb-3">
                     <label asp-for="Password" class="form-label"></label>
                     <div class="input-group mb-3">
                     <input asp-for="Password"
@@ -86,7 +98,48 @@
                     </button>
                     </div>
                 </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span> *@
+
+
+
+
+                <!-- Şifre -->
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <div class="input-group">
+                        <input asp-for="Password"
+                               class="form-control"
+                               id="passwordInput"
+                               type="password" />
+                        <button class="btn btn-outline-secondary"
+                                type="button"
+                                id="togglePassword"
+                                tabindex="-1">
+                            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                        </button>
+                    </div>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <!-- Şifre Tekrar -->
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                    <div class="input-group">
+                        <input asp-for="ConfirmPassword"
+                               class="form-control"
+                               id="confirmPasswordInput"
+                               type="password" />
+                        <button class="btn btn-outline-secondary"
+                                type="button"
+                                id="toggleConfirmPassword"
+                                tabindex="-1">
+                            <i class="bi bi-eye" id="toggleConfirmPasswordIcon"></i>
+                        </button>
+                    </div>
+                </div>
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+
                 <hr />
 
                 <div class="border rounded p-3 mb-2 bg-light">
@@ -169,23 +222,39 @@
 
 
 <script>
-    function setupHoldToView(buttonId, inputId) {
-        const btn = document.getElementById(buttonId);
+    function setupHoldToView(buttonId, inputId, iconId) {
+        const btn   = document.getElementById(buttonId);
         const input = document.getElementById(inputId);
+        const icon  = document.getElementById(iconId);
+
+        function show() { input.type = "text";     icon.className = "bi bi-eye-slash"; }
+        function hide() { input.type = "password"; icon.className = "bi bi-eye"; }
 
         // Mouse
-        btn.addEventListener("mousedown", () => input.type = "text");
-        btn.addEventListener("mouseup", () => input.type = "password");
-        btn.addEventListener("mouseleave", () => input.type = "password");
+        btn.addEventListener("mousedown",  show);
+        btn.addEventListener("mouseup",    hide);
+        btn.addEventListener("mouseleave", hide);
 
         // Touch (mobil)
-        btn.addEventListener("touchstart", () => input.type = "text");
-        btn.addEventListener("touchend", () => input.type = "password");
-        btn.addEventListener("touchcancel", () => input.type = "password");
+        btn.addEventListener("touchstart",  (e) => { e.preventDefault(); show(); });
+        btn.addEventListener("touchend",    hide);
+        btn.addEventListener("touchcancel", hide);
     }
 
-    setupHoldToView("togglePassword", "passwordInput");
-    setupHoldToView("toggleConfirmPassword", "confirmPasswordInput");
+    setupHoldToView("togglePassword",        "passwordInput",        "togglePasswordIcon");
+    setupHoldToView("toggleConfirmPassword", "confirmPasswordInput", "toggleConfirmPasswordIcon");
+</script>
+
+@* Script *@
+<script>
+    const lang = "@currentLang.ToLower()";
+
+    flatpickr("#birthDatePicker", {
+        locale: lang === "tr" ? "tr" : "default",
+        dateFormat: lang === "tr" ? "d.m.Y" : "m/d/Y",  // TR: 25.03.1990 | EN: 03/25/1990
+        maxDate: "today",
+        allowInput: true
+    });
 </script>
 
 <style>

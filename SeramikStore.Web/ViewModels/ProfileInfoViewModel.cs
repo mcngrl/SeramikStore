@@ -12,10 +12,13 @@ public class ProfileInfoViewModel
     [Display(Name = "Soyad")]
     public string LastName { get; set; }
 
-    public string Email { get; set; } 
+    [Display(Name = "Email")]
+    public string Email { get; set; }
 
+    [Display(Name = "Telefon Numarası")]
     public string PhoneNumber { get; set; }
 
     [DataType(DataType.Date)]
+    [Display(Name = "Doğum Tarihi")]
     public DateTime? BirthDate { get; set; }
 }

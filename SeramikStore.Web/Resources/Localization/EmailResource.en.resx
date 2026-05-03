@@ -136,10 +136,10 @@
     <value> Verify Email Address</value>
   </data>
   <data name="EmailIgnoreText" xml:space="preserve">
-    <value>Best regards</value>
+    <value>Best regards.</value>
   </data>
   <data name="EmailFooter" xml:space="preserve">
-    <value>If you did not request this, please ignore this email.</value>
+    <value>If you did not request this, please ignore this email</value>
   </data>
   <data name="ResetPasswordTitle" xml:space="preserve">
     <value>Reset Your Password</value>

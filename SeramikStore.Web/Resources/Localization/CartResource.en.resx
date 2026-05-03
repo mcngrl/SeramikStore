@@ -333,16 +333,28 @@
   <data name="Ürün Toplamı" xml:space="preserve">
     <value>Product Total</value>
   </data>
-	<data name="Tükendi" xml:space="preserve">
+  <data name="Tükendi" xml:space="preserve">
   <value>Out of Stock</value>
 </data>
-	<data name="Son" xml:space="preserve">
+  <data name="Son" xml:space="preserve">
   <value>Last</value>
 </data>
-	<data name="adet" xml:space="preserve">
+  <data name="adet" xml:space="preserve">
   <value>pcs</value>
 </data>
-	<data name="Stokta" xml:space="preserve">
+  <data name="Stokta" xml:space="preserve">
   <value>In Stock</value>
+</data>
+  <data name="Siparişlerim" xml:space="preserve">
+  <value>My Orders</value>
+</data>
+  <data name="İade Talepleri" xml:space="preserve">
+  <value>Return Requests</value>
+</data>
+  <data name="Siparişi İptal Et" xml:space="preserve">
+  <value>Cancel Order</value>
+</data>
+  <data name="Siparişi iptal etmek istediğinize emin misiniz?" xml:space="preserve">
+  <value>Are you sure you want to cancel the order?</value>
 </data>
 </root>

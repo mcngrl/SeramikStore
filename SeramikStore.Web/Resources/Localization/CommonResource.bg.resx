@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,117 +118,117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="New" xml:space="preserve">
-    <value>New</value>
+    <value>Нов</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Редактирай</value>
   </data>
   <data name="Detail" xml:space="preserve">
-    <value>Detail</value>
+    <value>Детайл</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Запази</value>
   </data>
   <data name="Çıkış Yap" xml:space="preserve">
-    <value>Log out</value>
+    <value>Изход</value>
   </data>
   <data name="Giriş Yap" xml:space="preserve">
-    <value>Log in</value>
+    <value>Вход</value>
   </data>
   <data name="Ürünler" xml:space="preserve">
-    <value>Products</value>
+    <value>Продукти</value>
   </data>
   <data name="Hakkımızda" xml:space="preserve">
-    <value>About Us</value>
+    <value>За нас</value>
   </data>
   <data name="Ürün Tanımlama" xml:space="preserve">
-    <value>Product Definition</value>
+    <value>Дефиниране на продукти</value>
   </data>
   <data name="Para Birimleri" xml:space="preserve">
-    <value>Currencies</value>
+    <value>Валути</value>
   </data>
   <data name="Müşteri Siparişleri" xml:space="preserve">
-    <value>Customer Orders</value>
+    <value>Поръчки на клиенти</value>
   </data>
   <data name="Potansiyel Müşteriler" xml:space="preserve">
-    <value>Prospects</value>
+    <value>Потенциални клиенти</value>
   </data>
   <data name="Yönetim" xml:space="preserve">
-    <value>Administration</value>
+    <value>Управление</value>
   </data>
   <data name="Kayıt Ol" xml:space="preserve">
-    <value>Register</value>
+    <value>Регистрация</value>
   </data>
   <data name="Siparişlerim" xml:space="preserve">
-    <value>My Orders</value>
+    <value>Моите поръчки</value>
   </data>
   <data name="Adreslerim" xml:space="preserve">
-    <value>My Addresses</value>
+    <value>Моите адреси</value>
   </data>
   <data name="Hesabım" xml:space="preserve">
-    <value>My Account</value>
+    <value>Моят профил</value>
   </data>
   <data name="Sepetim" xml:space="preserve">
-    <value>My Cart</value>
+    <value>Моята количка</value>
   </data>
   <data name="Tüm Ürünler" xml:space="preserve">
-    <value>All Products</value>
+    <value>Всички продукти</value>
   </data>
   <data name="Bardaklar" xml:space="preserve">
-  <value>Glasses</value>
-</data>
+    <value>Чаши</value>
+  </data>
   <data name="Fincanlar" xml:space="preserve">
-  <value>Cups</value>
-</data>
+    <value>Финджани</value>
+  </data>
   <data name="Kupalar" xml:space="preserve">
-  <value>Mugs</value>
-</data>
+    <value>Купи</value>
+  </data>
   <data name="Sunumluklar" xml:space="preserve">
-  <value>Serving Plates</value>
-</data>
+    <value>Съдове за сервиране</value>
+  </data>
   <data name="Tabaklar" xml:space="preserve">
-  <value>Plates</value>
-        </data>
+    <value>Чинии</value>
+  </data>
   <data name="Şimdi keşfedin, özel tasarımlar sizi bekliyor" xml:space="preserve">
-  <value>Discover now, unique designs are waiting for you</value>
-</data>
+    <value>Открийте сега, специални дизайни ви очакват</value>
+  </data>
   <data name="İncele" xml:space="preserve">
-  <value>Explore</value>
-</data>
+    <value>Прегледай</value>
+  </data>
   <data name="Ürün Kodu" xml:space="preserve">
-  <value>Product Code</value>
-</data>
+    <value>Код на продукта</value>
+  </data>
   <data name="Adet" xml:space="preserve">
-  <value>Quantity</value>
-</data>
+    <value>Количество</value>
+  </data>
   <data name="Sepete Ekle" xml:space="preserve">
-  <value>Add to Cart</value>
-</data>
+    <value>Добави в количката</value>
+  </data>
   <data name="Ürün Açıklaması" xml:space="preserve">
-  <value>Product Description</value>
-</data>
+    <value>Описание на продукта</value>
+  </data>
   <data name="Max" xml:space="preserve">
-  <value>max</value>
-</data>
+    <value>Макс</value>
+  </data>
   <data name="Maksimum" xml:space="preserve">
-  <value>Maximum</value>
-</data>
+    <value>Максимум</value>
+  </data>
   <data name="adet" xml:space="preserve">
-  <value>pcs</value>
-</data>
+    <value>брой</value>
+  </data>
   <data name="adet ekleyebilirsiniz." xml:space="preserve">
-  <value>items can be added.</value>
-</data>
+    <value>можете да добавите.</value>
+  </data>
   <data name="Son {0} adet!" xml:space="preserve">
-  <value>Only {0} left!</value>
-</data>
+    <value>Последни {0} броя!</value>
+  </data>
   <data name="Stokta {0} adet mevcut" xml:space="preserve">
-  <value>{0} items in stock</value>
-</data>
+    <value>В наличност има {0} броя</value>
+  </data>
   <data name="Büyüt" xml:space="preserve">
-  <value>Zoom</value>
-</data>
+    <value>Увеличи</value>
+  </data>
   <data name="Orijinal Boyut" xml:space="preserve">
-  <value>Original Size</value>
-</data>
+    <value>Оригинален размер</value>
+  </data>
 </root>

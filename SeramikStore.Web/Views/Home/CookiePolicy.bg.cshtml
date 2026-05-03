@@ -1,0 +1,46 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<SeramikStore.Web.Options.CompanyOptions> Company
+@{
+    ViewData["Title"] = "Политика за бисквитките";
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <h2>Политика за бисквитките</h2>
+            <p>
+                Този уебсайт използва само основни бисквитки, за да осигури правилното функциониране и по-добро потребителско изживяване.
+            </p>
+
+            <h4>Бисквитки, които използваме</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Име на бисквитката</th>
+                        <th>Цел</th>
+                        <th>Продължителност</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>remember_me</td>
+                        <td>Съхранява информация за потребителската сесия</td>
+                        <td>30 дни</td>
+                    </tr>
+                    <tr>
+                        <td>cart_id</td>
+                        <td>Управлява количката и съхранява продуктите</td>
+                        <td>30 дни</td>
+                    </tr>
+                    <tr>
+                        <td>.AspNetCore.Culture</td>
+                        <td>Съхранява избрания от потребителя език</td>
+                        <td>1 година</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                Тези бисквитки са необходими за правилното функциониране на уебсайта и не могат да бъдат деактивирани.
+            </p>
+        </div>
+    </div>
+</div>

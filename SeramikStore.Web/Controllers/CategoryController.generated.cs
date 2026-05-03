@@ -109,14 +109,7 @@ namespace SeramikStore.Web.Controllers
             return View(vm);
         }
 
-        // DELETE (POST)
-        [HttpPost, ActionName("DeleteConfirmed")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            _categoryService.Delete(id);
-            return RedirectToAction(nameof(Index));
-        }
+
 
     }
 }

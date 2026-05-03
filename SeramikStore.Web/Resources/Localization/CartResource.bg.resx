@@ -118,243 +118,243 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Sepetinizde henüz ürün bulunmamaktadır." xml:space="preserve">
-    <value>Sepetinizde henüz ürün bulunmamaktadır.</value>
-  </data>
+  <value>Вашата количка все още е празна.</value>
+</data>
   <data name="Sepetiniz Boş" xml:space="preserve">
-    <value>Sepetiniz Boş</value>
-  </data>
+  <value>Вашата количка е празна</value>
+</data>
   <data name="Sepetim" xml:space="preserve">
-    <value>Sepetim</value>
-  </data>
+  <value>Моята количка</value>
+</data>
   <data name="Ürün" xml:space="preserve">
-    <value>Ürün</value>
-  </data>
+  <value>Продукт</value>
+</data>
   <data name="Hızlı Teslimat" xml:space="preserve">
-    <value>Hızlı Teslimat</value>
-  </data>
+  <value>Бърза доставка</value>
+</data>
   <data name="Sil" xml:space="preserve">
-    <value>Sil</value>
-  </data>
+  <value>Изтрий</value>
+</data>
   <data name="Sepet Özeti" xml:space="preserve">
-    <value>Sepet Özeti</value>
-  </data>
+  <value>Обобщение на количката</value>
+</data>
   <data name="Ara Toplam" xml:space="preserve">
-    <value>Ara Toplam</value>
-  </data>
+  <value>Междинна сума</value>
+</data>
   <data name="Kargo" xml:space="preserve">
-    <value>Kargo</value>
-  </data>
+  <value>Доставка</value>
+</data>
   <data name="Toplam" xml:space="preserve">
-    <value>Toplam</value>
-  </data>
+  <value>Общо</value>
+</data>
   <data name="Alışverişi Tamamla" xml:space="preserve">
-    <value>Alışverişi Tamamla</value>
-  </data>
+  <value>Завърши поръчката</value>
+</data>
   <data name="Teslimat Adresi" xml:space="preserve">
-    <value>Teslimat Adresi</value>
-  </data>
+  <value>Адрес за доставка</value>
+</data>
   <data name="Teslimat Adresim" xml:space="preserve">
-    <value>Teslimat Adresim</value>
-  </data>
+  <value>Моят адрес за доставка</value>
+</data>
   <data name="Ekle / Değiştir" xml:space="preserve">
-    <value>Add / Edit</value>
-  </data>
-  <data name="Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum." xml:space="preserve">
-    <value>Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum.</value>
-  </data>
+  <value>Добави / Промени</value>
+</data>
   <data name="Siparişi Oluştur" xml:space="preserve">
-    <value>Siparişi Oluştur</value>
-  </data>
+  <value>Създай поръчка</value>
+</data>
   <data name="Ödenecek Tutar" xml:space="preserve">
-    <value>Ödenecek Tutar</value>
-  </data>
+  <value>Сума за плащане</value>
+</data>
   <data name="Ürünler" xml:space="preserve">
-    <value>Ürünler</value>
-  </data>
-  <data name="Lütfen bir teslimat adresi seçiniz." xml:space="preserve">
-    <value>Lütfen bir teslimat adresi seçiniz.</value>
-  </data>
-  <data name="Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız." xml:space="preserve">
-    <value>Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız.</value>
-  </data>
+  <value>Продукти</value>
+</data>
   <data name="Sipariş Özeti" xml:space="preserve">
-    <value>Sipariş Özeti</value>
-  </data>
+  <value>Обобщение на поръчката</value>
+</data>
   <data name="Yeni Adres Ekle" xml:space="preserve">
-    <value>Yeni Adres Ekle</value>
-  </data>
+  <value>Добави нов адрес</value>
+</data>
   <data name="Güncelle" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="Sipariş Tutarı" xml:space="preserve">
-    <value>Sipariş Tutarı</value>
-  </data>
-  <data name="Kargo Tutarı" xml:space="preserve">
-    <value>Kargo Tutarı</value>
-  </data>
-  <data name="Toplam Tutar" xml:space="preserve">
-    <value>Toplam Tutar</value>
-  </data>
+  <value>Актуализирай</value>
+</data>
   <data name="Adet" xml:space="preserve">
-    <value>Adet</value>
-  </data>
-  <data name="Bu ürünü sepetinizden silmek istediğinize emin misiniz?" xml:space="preserve">
-    <value>Bu ürünü sepetinizden silmek istediğinize emin misiniz?</value>
-  </data>
-  <data name="Sepetten Sil" xml:space="preserve">
-    <value>Sepetten Sil</value>
-  </data>
-  <data name="Ürün Kodu" xml:space="preserve">
-    <value>Ürün Kodu</value>
-  </data>
+  <value>Количество</value>
+</data>
   <data name="Vazgeç" xml:space="preserve">
-    <value>Vazgeç</value>
-  </data>
+  <value>Отказ</value>
+</data>
   <data name="Ödeme Yap" xml:space="preserve">
-    <value>Ödeme Yap</value>
-  </data>
+  <value>Плати</value>
+</data>
   <data name="Sipariş Detayı" xml:space="preserve">
-    <value>Sipariş Detayı</value>
-  </data>
+  <value>Детайли на поръчката</value>
+</data>
   <data name="Birim Fiyat" xml:space="preserve">
-    <value>Birim Fiyat</value>
-  </data>
-  <data name="Miktar" xml:space="preserve">
-    <value>Miktar</value>
-  </data>
+  <value>Единична цена</value>
+</data>
   <data name="Genel Toplam" xml:space="preserve">
-    <value>Genel Toplam</value>
-  </data>
-  <data name="Banka Havalesi Bilgileri" xml:space="preserve">
-    <value>Banka Havalesi Bilgileri</value>
-  </data>
-  <data name="Açıklama" xml:space="preserve">
-    <value>Açıklama</value>
-  </data>
-  <data name="Tutar" xml:space="preserve">
-    <value>Tutar</value>
-  </data>
+  <value>Обща сума</value>
+</data>
   <data name="Banka" xml:space="preserve">
-    <value>Banka</value>
-  </data>
-  <data name="Siparişi Oluştur butonuna tıklayarak siparişinizi tamamlayabilirsiniz." xml:space="preserve">
-    <value>Siparişi Oluştur butonuna tıklayarak siparişinizi tamamlayabilirsiniz.</value>
-  </data>
-  <data name="Sipariş numaranız işlem sonrası ekranda gösterilecektir." xml:space="preserve">
-    <value>Sipariş numaranız işlem sonrası ekranda gösterilecektir.</value>
-  </data>
-  <data name="Ödemenizi banka havalesi veya EFT ile yapabilirsiniz." xml:space="preserve">
-    <value>Ödemenizi banka havalesi veya EFT ile yapabilirsiniz.</value>
-  </data>
-  <data name="Lütfen havale açıklama kısmına sipariş numaranızı yazınız." xml:space="preserve">
-    <value>Lütfen havale açıklama kısmına sipariş numaranızı yazınız.</value>
-  </data>
-  <data name="Ödemeniz onaylandıktan sonra siparişiniz kargoya verilecektir." xml:space="preserve">
-    <value>Ödemeniz onaylandıktan sonra siparişiniz kargoya verilecektir.</value>
-  </data>
-  <data name="Siparişinizin durumunu Siparişlerim menüsünden takip edebilirsiniz." xml:space="preserve">
-    <value>Siparişinizin durumunu Siparişlerim menüsünden takip edebilirsiniz.</value>
-  </data>
-  <data name="Açıklama kısmına Sipariş Numaranızı yazmayı unutmayınız." xml:space="preserve">
-    <value>Açıklama kısmına Sipariş Numaranızı yazmayı unutmayınız.</value>
-  </data>
+  <value>Банка</value>
+</data>
   <data name="IBAN" xml:space="preserve">
-    <value>IBAN</value>
-  </data>
-  <data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
-    <value>Mesafeli Satış Sözleşmesi</value>
-  </data>
-  <data name="Alıcı Adı Soyadı" xml:space="preserve">
-    <value>Alıcı Adı Soyadı</value>
-  </data>
-  <data name="Şipariş Oluşturdu" xml:space="preserve">
-    <value>Şipariş Oluşturdu</value>
-  </data>
-  <data name="Ödeme Bekleniyor" xml:space="preserve">
-    <value>Ödeme Bekleniyor</value>
-  </data>
-  <data name="Kargoya Verildi" xml:space="preserve">
-    <value>Kargoya Verildi</value>
-  </data>
-  <data name="Sipariş Müşteri Tarafından İptal Edildi" xml:space="preserve">
-    <value>Sipariş Müşteri Tarafından İptal Edildi</value>
-  </data>
-  <data name="Sipariş Satıcı Tarafından İptal Edildi" xml:space="preserve">
-    <value>Sipariş Satıcı Tarafından İptal Edildi</value>
-  </data>
-  <data name="Müşteri Siparişleri" xml:space="preserve">
-    <value>Müşteri Siparişleri</value>
-  </data>
-  <data name="Sipariş No" xml:space="preserve">
-    <value>Sipariş No</value>
-  </data>
-  <data name="Sipariş Tarihi" xml:space="preserve">
-    <value>Sipariş Tarihi</value>
-  </data>
-  <data name="Müşteri" xml:space="preserve">
-    <value>Müşteri</value>
-  </data>
-  <data name="E-Posta" xml:space="preserve">
-    <value>E-Posta</value>
-  </data>
-  <data name="Ana Sayfa" xml:space="preserve">
-    <value>Ana Sayfa</value>
-  </data>
-  <data name="Son Durumu Geri Al" xml:space="preserve">
-    <value>Son Durumu Geri Al</value>
-  </data>
-  <data name="Sipariş Durumu" xml:space="preserve">
-    <value>Sipariş Durumu</value>
-  </data>
-  <data name="İade Taleplerim" xml:space="preserve">
-    <value>İade Taleplerim</value>
-  </data>
-  <data name="Sipariş Süreci" xml:space="preserve">
-    <value>Sipariş Süreci</value>
-  </data>
-  <data name="Sipariş Ürünleri" xml:space="preserve">
-    <value>Sipariş Ürünleri</value>
-  </data>
-  <data name="Sipariş İptal Edildi" xml:space="preserve">
-    <value>Sipariş İptal Edildi</value>
-  </data>
-  <data name="Ödeme Alındı" xml:space="preserve">
-    <value>Ödeme Alındı</value>
-  </data>
-  <data name="Sipariş Onaylandı" xml:space="preserve">
-    <value>Sipariş Onaylandı</value>
-  </data>
-  <data name="Sipariş Hazırlanıyor" xml:space="preserve">
-    <value>Sipariş Hazırlanıyor</value>
-  </data>
-  <data name="Teslim Edildi" xml:space="preserve">
-    <value>Teslim Edildi</value>
-  </data>
-  <data name="Ürün Toplamı" xml:space="preserve">
-    <value>Ürün Toplamı</value>
-  </data>
-  <data name="Tükendi" xml:space="preserve">
-  <value>Tükendi</value>
-</data>
-  <data name="Son" xml:space="preserve">
-  <value>Son</value>
-</data>
-  <data name="adet" xml:space="preserve">
-  <value>adet</value>
-</data>
-  <data name="Stokta" xml:space="preserve">
-  <value>Stokta</value>
+  <value>IBAN</value>
 </data>
   <data name="Siparişlerim" xml:space="preserve">
-  <value>Siparişlerim</value>
+  <value>Моите поръчки</value>
 </data>
   <data name="İade Talepleri" xml:space="preserve">
-  <value>İade Talepleri</value>
+  <value>Заявки за връщане</value>
 </data>
   <data name="Siparişi İptal Et" xml:space="preserve">
-  <value>Siparişi İptal Et</value>
+  <value>Отмени поръчката</value>
 </data>
+  <data name="Ön bilgilendirme formunu ve Mesafeli satış sözleşmesini onaylıyorum." xml:space="preserve">
+    <value>Потвърждавам предварителната информация и договора за дистанционна продажба.</value>
+  </data>
+  <data name="Lütfen bir teslimat adresi seçiniz." xml:space="preserve">
+    <value>Моля, изберете адрес за доставка.</value>
+  </data>
+  <data name="Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız." xml:space="preserve">
+    <value>Моля, потвърдете предварителната информация и договора за продажба преди да продължите.</value>
+  </data>
+  <data name="Sipariş Tutarı" xml:space="preserve">
+    <value>Сума на поръчката</value>
+  </data>
+  <data name="Kargo Tutarı" xml:space="preserve">
+    <value>Такса за доставка</value>
+  </data>
+  <data name="Toplam Tutar" xml:space="preserve">
+    <value>Обща сума</value>
+  </data>
+  <data name="Bu ürünü sepetinizden silmek istediğinize emin misiniz?" xml:space="preserve">
+    <value>Сигурни ли сте, че искате да премахнете този продукт от количката?</value>
+  </data>
+  <data name="Sepetten Sil" xml:space="preserve">
+    <value>Премахни от количката</value>
+  </data>
+  <data name="Ürün Kodu" xml:space="preserve">
+    <value>Код на продукта</value>
+  </data>
+  <data name="Banka Havalesi Bilgileri" xml:space="preserve">
+    <value>Банкови данни за превод</value>
+  </data>
+  <data name="Açıklama" xml:space="preserve">
+    <value>Описание</value>
+  </data>
+  <data name="Tutar" xml:space="preserve">
+    <value>Сума</value>
+  </data>
+  <data name="Siparişi Oluştur butonuna tıklayarak siparişinizi tamamlayabilirsiniz." xml:space="preserve">
+    <value>Можете да завършите поръчката, като натиснете бутона "Създай поръчка".</value>
+  </data>
+  <data name="Sipariş numaranız işlem sonrası ekranda gösterilecektir." xml:space="preserve">
+    <value>Номерът на вашата поръчка ще бъде показан след завършване.</value>
+  </data>
+  <data name="Ödemenizi banka havalesi veya EFT ile yapabilirsiniz." xml:space="preserve">
+    <value>Можете да извършите плащането чрез банков превод или EFT.</value>
+  </data>
+  <data name="Lütfen havale açıklama kısmına sipariş numaranızı yazınız." xml:space="preserve">
+    <value>Моля, напишете номера на поръчката в основанието за превода.</value>
+  </data>
+  <data name="Ödemeniz onaylandıktan sonra siparişiniz kargoya verilecektir." xml:space="preserve">
+    <value>След потвърждение на плащането, поръчката ви ще бъде изпратена.</value>
+  </data>
+  <data name="Siparişinizin durumunu Siparişlerim menüsünden takip edebilirsiniz." xml:space="preserve">
+    <value>Можете да следите състоянието на поръчката от менюто "Моите поръчки".</value>
+  </data>
+  <data name="Açıklama kısmına Sipariş Numaranızı yazmayı unutmayınız." xml:space="preserve">
+    <value>Не забравяйте да напишете номера на поръчката в основанието.</value>
+  </data>
+  <data name="Mesafeli Satış Sözleşmesi" xml:space="preserve">
+    <value>Договор за дистанционна продажба</value>
+  </data>
+  <data name="Alıcı Adı Soyadı" xml:space="preserve">
+    <value>Име и фамилия на получателя</value>
+  </data>
+  <data name="Şipariş Oluşturdu" xml:space="preserve">
+    <value>Поръчката е създадена</value>
+  </data>
+  <data name="Ödeme Bekleniyor" xml:space="preserve">
+    <value>Очаква се плащане</value>
+  </data>
+  <data name="Kargoya Verildi" xml:space="preserve">
+    <value>Изпратено</value>
+  </data>
+  <data name="Sipariş Müşteri Tarafından İptal Edildi" xml:space="preserve">
+    <value>Поръчката е отменена от клиента</value>
+  </data>
+  <data name="Sipariş Satıcı Tarafından İptal Edildi" xml:space="preserve">
+    <value>Поръчката е отменена от продавача</value>
+  </data>
+  <data name="Müşteri Siparişleri" xml:space="preserve">
+    <value>Поръчки на клиенти</value>
+  </data>
+  <data name="Sipariş No" xml:space="preserve">
+    <value>Номер на поръчка</value>
+  </data>
+  <data name="Sipariş Tarihi" xml:space="preserve">
+    <value>Дата на поръчка</value>
+  </data>
+  <data name="Müşteri" xml:space="preserve">
+    <value>Клиент</value>
+  </data>
+  <data name="E-Posta" xml:space="preserve">
+    <value>Имейл</value>
+  </data>
+  <data name="Ana Sayfa" xml:space="preserve">
+    <value>Начална страница</value>
+  </data>
+  <data name="Son Durumu Geri Al" xml:space="preserve">
+    <value>Върни последното състояние</value>
+  </data>
+  <data name="Sipariş Durumu" xml:space="preserve">
+    <value>Състояние на поръчката</value>
+  </data>
+  <data name="İade Taleplerim" xml:space="preserve">
+    <value>Моите заявки за връщане</value>
+  </data>
+  <data name="Sipariş Süreci" xml:space="preserve">
+    <value>Процес на поръчката</value>
+  </data>
+  <data name="Sipariş Ürünleri" xml:space="preserve">
+    <value>Продукти в поръчката</value>
+  </data>
+  <data name="Sipariş İptal Edildi" xml:space="preserve">
+    <value>Поръчката е отменена</value>
+  </data>
+  <data name="Ödeme Alındı" xml:space="preserve">
+    <value>Плащането е получено</value>
+  </data>
+  <data name="Sipariş Onaylandı" xml:space="preserve">
+    <value>Поръчката е потвърдена</value>
+  </data>
+  <data name="Sipariş Hazırlanıyor" xml:space="preserve">
+    <value>Поръчката се подготвя</value>
+  </data>
+  <data name="Teslim Edildi" xml:space="preserve">
+    <value>Доставено</value>
+  </data>
+  <data name="Ürün Toplamı" xml:space="preserve">
+    <value>Обща стойност на продуктите</value>
+  </data>
+  <data name="Tükendi" xml:space="preserve">
+    <value>Изчерпано</value>
+  </data>
+  <data name="Son" xml:space="preserve">
+    <value>Последни</value>
+  </data>
+  <data name="adet" xml:space="preserve">
+    <value>брой</value>
+  </data>
+  <data name="Stokta" xml:space="preserve">
+    <value>В наличност</value>
+  </data>
   <data name="Siparişi iptal etmek istediğinize emin misiniz?" xml:space="preserve">
-  <value>Siparişi iptal etmek istediğinize emin misiniz?</value>
-</data>
+    <value>Сигурни ли сте, че искате да отмените поръчката?</value>
+  </data>
+  <data name="Miktar" xml:space="preserve">
+    <value>Количество</value>
+  </data>
 </root>

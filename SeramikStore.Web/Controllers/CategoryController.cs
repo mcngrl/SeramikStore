@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SeramikStore.Services;
 using SeramikStore.Contracts.Category;
 using SeramikStore.Web.ViewModels.Category;
@@ -26,5 +26,22 @@ namespace SeramikStore.Web.Controllers
             return View(vm);
         }
 
+
+        // DELETE (POST)
+        [HttpPost, ActionName("DeleteConfirmed")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+
+            if (_categoryService.HasProducts(id))
+            {
+                TempData["Error"] = "Bu kategoriye ait ürünler bulunmaktadır. Silinemez.";
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            _categoryService.Delete(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

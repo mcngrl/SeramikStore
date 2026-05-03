@@ -1,4 +1,7 @@
-﻿@model SeramikStore.Web.ViewModels.UserAddressViewModel
+﻿@using SeramikStore.Web.Localization
+@model SeramikStore.Web.ViewModels.UserAddressViewModel
+@inject IStringLocalizer<AccountResource> L
+
 @{
     ViewData["Title"] = "Yeni Adres";
 }
@@ -10,67 +13,71 @@
         <div class="col-md-7">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3 class="mb-4">Yeni Adres Ekle</h3>
+
+                    <h6 class="mb-4">@L["Yeni Adres Ekle"]</h6>
 
                     <form asp-action="Create" method="post">
                         @Html.AntiForgeryToken()
+
                         <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+
                         <div class="row">
+
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Ad"></label>
+                                <label asp-for="Ad">@L["Ad"]</label>
                                 <input asp-for="Ad" class="form-control" />
                                 <span asp-validation-for="Ad" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Soyad"></label>
+                                <label asp-for="Soyad">@L["Soyad"]</label>
                                 <input asp-for="Soyad" class="form-control" />
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Telefon"></label>
+                                <label asp-for="Telefon">@L["Telefon"]</label>
                                 <input asp-for="Telefon" class="form-control" />
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Baslik"></label>
-                                <input asp-for="Baslik" class="form-control" placeholder="Ev, İş vb." />
+                                <label asp-for="Baslik">@L["Başlık"]</label>
+                                <input asp-for="Baslik" class="form-control" placeholder="@L["Ev, İş vb."]" />
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Il"></label>
+                                <label asp-for="Il">@L["İl"]</label>
                                 <input asp-for="Il" class="form-control" />
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label asp-for="Ilce"></label>
+                                <label asp-for="Ilce">@L["İlçe"]</label>
                                 <input asp-for="Ilce" class="form-control" />
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                <label asp-for="Mahalle"></label>
+                                <label asp-for="Mahalle">@L["Mahalle"]</label>
                                 <input asp-for="Mahalle" class="form-control" />
                             </div>
 
                             <div class="col-md-12 mb-3">
-                                <label asp-for="Adres"></label>
+                                <label asp-for="Adres">@L["Adres"]</label>
                                 <textarea asp-for="Adres" class="form-control" rows="3"></textarea>
                             </div>
 
                             <div class="col-md-12 mb-3 form-check">
                                 <input asp-for="IsDefault" class="form-check-input" />
                                 <label asp-for="IsDefault" class="form-check-label">
-                                    Varsayılan adres olarak ayarla
+                                    @L["Varsayılan adres olarak ayarla"]
                                 </label>
                             </div>
+
                         </div>
 
-                        <button type="submit" class="btn btn-success">Kaydet</button>
-                        @*    <a asp-action="Index" class="btn btn-secondary">İptal</a> *@
+                        <button type="submit" class="btn btn-success">@L["Kaydet"]</button>
 
                         <a href="@(ViewBag.ReturnUrl ?? Url.Action("Index"))"
                            class="btn btn-secondary">
-                            İptal
+                            @L["İptal"]
                         </a>
                     </form>
                 </div>

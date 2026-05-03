@@ -16,21 +16,21 @@
 
         <div class="list-group text-left">
 
-            <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Order" asp-action="OrderList">
+            <a class="btn btn-outline-info w-100 mb-2" asp-controller="Order" asp-action="OrderList">
                 @C["Siparişlerim"]
             </a>
-            <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="UserAddress" asp-action="Index">
+            <a class="btn btn-outline-info w-100 mb-2" asp-controller="UserAddress" asp-action="Index">
                 @C["Adreslerim"]
             </a>
-            <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Account" asp-action="Profile">
+            <a class="btn btn-outline-info w-100 mb-2" asp-controller="Account" asp-action="Profile">
                 @C["Hesabım"]
             </a>
-            <a class="btn btn-outline-info btn-sm w-100 mb-2" asp-controller="Cart" asp-action="Summary">
+            <a class="btn btn-outline-info w-100 mb-2" asp-controller="Cart" asp-action="Summary">
                 <i class="fas fa-shopping-cart"></i>@C["Sepetim"] @await Component.InvokeAsync("Cart")
             </a>
         </div>
         <hr />
-        <a class="btn btn-outline-danger btn-sm w-100" asp-controller="Account" asp-action="Logout">
+        <a class="btn btn-outline-danger w-100" asp-controller="Account" asp-action="Logout">
             <i class="fas fa-sign-out-alt"></i>@C["Çıkış Yap"]
         </a>
 

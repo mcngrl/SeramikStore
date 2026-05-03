@@ -1,4 +1,6 @@
-﻿@model SeramikStore.Web.ViewModels.UserAddressViewModel
+﻿@using SeramikStore.Web.Localization
+@model SeramikStore.Web.ViewModels.UserAddressViewModel
+@inject IStringLocalizer<AccountResource> L
 @{
     ViewData["Title"] = "Adres Sil";
 }
@@ -10,33 +12,33 @@
         </div>
         <div class="col-md-7">
             <div class="card shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    @L["Adres Sil"]
+                </div>
+
                 <div class="card-body">
-                    <div class="container mt-5" style="max-width:600px;">
-                        <div class="card border-danger">
-                            <div class="card-header bg-danger text-white">
-                                Adres Sil
-                            </div>
-                            <div class="card-body">
-                                <p>
-                                    <strong>@Model.Baslik</strong> başlıklı adresi silmek istediğinize emin misiniz?
-                                </p>
+                    <p>
+                        <strong>@Model.Baslik</strong>
+                        @L["başlıklı adresi silmek istediğinize emin misiniz?"]
+                    </p>
 
-                                <p>
-                                    @Model.Il / @Model.Ilce <br />
-                                    @Model.Adres
-                                </p>
+                    <p>
+                        @Model.Il / @Model.Ilce <br />
+                        @Model.Adres
+                    </p>
 
-                                <form asp-action="Delete" method="post">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" asp-for="Id" />
+                    <form asp-action="Delete" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" asp-for="Id" />
 
-                                    <button type="submit" class="btn btn-danger">Evet, Sil</button>
-                                    <a asp-action="Index" class="btn btn-secondary">Vazgeç</a>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-danger">
+                            @L["Evet, Sil"]
+                        </button>
 
+                        <a asp-action="Index" class="btn btn-secondary">
+                            @L["Vazgeç"]
+                        </a>
+                    </form>
                 </div>
             </div>
         </div>
