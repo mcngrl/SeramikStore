@@ -213,7 +213,7 @@
   <data name="Maksimum" xml:space="preserve">
   <value>Maximum</value>
 </data>
-  <data name="adet" xml:space="preserve">
+  <data name="adetmiktar" xml:space="preserve">
   <value>pcs</value>
 </data>
   <data name="adet ekleyebilirsiniz." xml:space="preserve">

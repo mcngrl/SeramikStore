@@ -108,7 +108,7 @@
                                        style="width:80px"
                                        onchange="validateQty()" />
                                 <button type="button" class="btn btn-outline-secondary" onclick="changeQty(1)">+</button>
-                                <span class="text-muted small">@L["Max"] @Model.StockAmount @L["adet"]</span>
+                                <span class="text-muted small">@L["Max"] @Model.StockAmount @L["adetmiktar"]</span>
                             </div>
                             <span asp-validation-for="Quantity" class="text-danger"></span>
                             <div id="stockWarning" class="text-danger small mt-1 d-none">

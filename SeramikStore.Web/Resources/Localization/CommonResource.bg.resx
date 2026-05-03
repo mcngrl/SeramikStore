@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -213,7 +213,7 @@
   <data name="Maksimum" xml:space="preserve">
     <value>Максимум</value>
   </data>
-  <data name="adet" xml:space="preserve">
+  <data name="adetmiktar" xml:space="preserve">
     <value>брой</value>
   </data>
   <data name="adet ekleyebilirsiniz." xml:space="preserve">
