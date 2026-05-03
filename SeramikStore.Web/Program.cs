@@ -57,7 +57,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     {
         new QueryStringRequestCultureProvider(), // ?culture=en-US
         new CookieRequestCultureProvider(),      // .AspNetCore.Culture
-        new AcceptLanguageHeaderRequestCultureProvider()
+        //new AcceptLanguageHeaderRequestCultureProvider()
     };
 });
 
