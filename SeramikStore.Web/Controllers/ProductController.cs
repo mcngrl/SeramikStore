@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SeramikStore.Entities;
 using SeramikStore.Services;
+using SeramikStore.Services.DTOs;
 using SeramikStore.Web.Filters;
 using SeramikStore.Web.ViewModels;
 using System.Collections.Generic;
@@ -14,13 +16,16 @@ public class ProductController : Controller
     private readonly ICurrencyService _currencyService;
     private readonly IProductImageService _productImageService;
     private readonly ICategoryService _categoryService;
+    private readonly IFcmService _fcmService;
 
-    public ProductController(IProductService productService, ICurrencyService currencyService, IProductImageService productImageService, ICategoryService categoryService)
+    public ProductController(IProductService productService, ICurrencyService currencyService,
+        IProductImageService productImageService, ICategoryService categoryService, IFcmService fcmService)
     {
         _productService = productService;
         _currencyService = currencyService;
         _productImageService = productImageService;
         _categoryService = categoryService;
+        _fcmService = fcmService;
     }
 
     [RoleAuthorize("Admin")]
@@ -28,6 +33,18 @@ public class ProductController : Controller
     {
         
         return View(_productService.ProductListForAdmin());
+    }
+
+    [HttpPost]
+    [RoleAuthorize("Admin")]
+    public IActionResult SaveFcmToken([FromBody] FcmTokenDto dto)
+    {
+        if (string.IsNullOrEmpty(dto.Token))
+            return BadRequest();
+
+        _fcmService.SaveToken(dto.Token);
+
+        return Ok();
     }
 
     [HttpGet]

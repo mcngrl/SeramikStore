@@ -88,6 +88,10 @@ namespace SeramikStore.Web.Controllers
                 CurrencyCode = vm.CurrencyCode!,
             });
 
+
+
+
+
             return RedirectToAction(nameof(Index));
         }
 

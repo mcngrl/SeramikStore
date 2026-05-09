@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Api.Gax.ResourceNames;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Tasks.Deployment.Bootstrapper;
 using Microsoft.IdentityModel.Logging;
 using SeramikStore.Entities;
@@ -21,15 +22,17 @@ namespace SeramikStore.Web.Controllers
         private ICartService _cartservices;
         private IProductImageService _productimageservice;
         private ICategoryService _categoryservice;
+        private INotificationService _notificationService;
 
         public HomeController(ILogger<HomeController> logger, IProductService productservices,
-            ICartService cartservices, IProductImageService productimageservice, ICategoryService categoryservice)
+            ICartService cartservices, IProductImageService productimageservice, ICategoryService categoryservice, INotificationService notificationService)
         {
             _logger = logger;
             _productservices = productservices;
             _cartservices = cartservices;
             _productimageservice = productimageservice;
             _categoryservice = categoryservice;
+            _notificationService = notificationService;
         }
 
         public IActionResult Index()
@@ -174,7 +177,7 @@ namespace SeramikStore.Web.Controllers
 
         //[CheckSession("session_UserFullName")]
         [HttpPost]
-        public IActionResult Cart(ProductDetail vm)
+        public async Task<IActionResult> Cart(ProductDetail vm)
         {
             if (vm.Quantity < 1)
             {
@@ -228,6 +231,10 @@ namespace SeramikStore.Web.Controllers
 
             int result = _cartservices.SaveCart(cart);
 
+            await _notificationService.SendToAdmin(
+                "🧺 Sepete Eklendi",
+                $"{product.ProductName} sepete eklendi."
+            );
             if (result > 0)
             {
                 return RedirectToAction("Summary", "Cart");

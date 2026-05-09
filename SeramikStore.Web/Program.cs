@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Localization;
+﻿using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Localization;
 using SeramikStore.Services;
 using SeramikStore.Services.Email;
 using SeramikStore.Web.Localization;
@@ -77,6 +79,9 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IReturnService, ReturnService>();
 builder.Services.AddScoped<IReasonService, ReasonService>();
 builder.Services.AddScoped<IOrderReturnManager, OrderReturnManager>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IFcmService, FcmService>();
+
 
 builder.Services.Configure<EmailSettings>(
     builder.Configuration.GetSection("EmailSettings"));
@@ -97,6 +102,18 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+var firebasePath = builder.Configuration["Firebase:CredentialPath"];
+
+
+if (FirebaseApp.DefaultInstance == null)
+{
+    FirebaseApp.Create(new AppOptions()
+    {
+        Credential = GoogleCredential.FromFile(firebasePath!)
+    });
+}
+
 
 var app = builder.Build();
 
