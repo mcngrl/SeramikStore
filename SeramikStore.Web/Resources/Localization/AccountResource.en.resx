@@ -615,4 +615,40 @@
   <data name="Stokta: {0} adet" xml:space="preserve">
     <value>In stock: {0} items</value>
   </data>
+  <data name="Doğadan İlham Alan Tasarımlar" xml:space="preserve">
+    <value>Nature-Inspired Designs</value>
+  </data>
+  <data name="Doğal dokular ve formlar ile tasarlanmış özel stoneware ürünler" xml:space="preserve">
+    <value>Natural textures and forms used to design unique stoneware products</value>
+  </data>
+  <data name="El İşçiliğinin Zarafeti" xml:space="preserve">
+    <value>Elegance of Handcraft</value>
+  </data>
+  <data name="Her biri ustalıkla elde şekillendirilen benzersiz parçalar" xml:space="preserve">
+    <value>Each piece is uniquely shaped by skilled craftsmanship</value>
+  </data>
+  <data name="Minimal ve Şık" xml:space="preserve">
+    <value>Minimal and Stylish</value>
+  </data>
+  <data name="Sade tasarım anlayışıyla modern sofralara uyum sağlar" xml:space="preserve">
+    <value>Fits modern tables with a simple design approach</value>
+  </data>
+  <data name="Dayanıklılık ve Estetik" xml:space="preserve">
+    <value>Durability and Aesthetics</value>
+  </data>
+  <data name="Yüksek ısıda üretilen uzun ömürlü stoneware ürünler" xml:space="preserve">
+    <value>Long-lasting stoneware products fired at high temperatures</value>
+  </data>
+  <data name="Günlük Kullanıma Uygun" xml:space="preserve">
+    <value>Suitable for Daily Use</value>
+  </data>
+  <data name="Hem şık hem pratik ürünlerle her gün keyifli kullanım" xml:space="preserve">
+    <value>Stylish and practical products for everyday enjoyment</value>
+  </data>
+  <data name="Her Parça Eşsizdir" xml:space="preserve">
+    <value>Each Piece is Unique</value>
+  </data>
+  <data name="El yapımı olduğu için her ürün kendine özgü bir karakter taşır" xml:space="preserve">
+    <value>Every product has its own unique character as it is handmade</value>
+  </data>
 </root>

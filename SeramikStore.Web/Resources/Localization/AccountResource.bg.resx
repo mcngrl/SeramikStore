@@ -537,4 +537,40 @@
   <data name="Stokta: {0} adet" xml:space="preserve">
     <value>В наличност: {0} броя</value>
   </data>
+  <data name="Doğadan İlham Alan Tasarımlar" xml:space="preserve">
+    <value>Дизайни, вдъхновени от природата</value>
+  </data>
+  <data name="Doğal dokular ve formlar ile tasarlanmış özel stoneware ürünler" xml:space="preserve">
+    <value>Специални stoneware продукти, създадени с естествени текстури и форми  </value>
+  </data>
+  <data name="El İşçiliğinin Zarafeti" xml:space="preserve">
+    <value>Елегантност на ръчната изработка  </value>
+  </data>
+  <data name="Her biri ustalıkla elde şekillendirilen benzersiz parçalar" xml:space="preserve">
+    <value>Всяко изделие е уникално оформено с майсторство  </value>
+  </data>
+  <data name="Minimal ve Şık" xml:space="preserve">
+    <value>Минималистичен и стилен  </value>
+  </data>
+  <data name="Sade tasarım anlayışıyla modern sofralara uyum sağlar" xml:space="preserve">
+    <value>Подходящ за модерни маси със семпъл дизайн  </value>
+  </data>
+  <data name="Dayanıklılık ve Estetik" xml:space="preserve">
+    <value>Издръжливост и естетика  </value>
+  </data>
+  <data name="Yüksek ısıda üretilen uzun ömürlü stoneware ürünler" xml:space="preserve">
+    <value>Дълготрайни stoneware продукти, изпечени при висока температура  </value>
+  </data>
+  <data name="Günlük Kullanıma Uygun" xml:space="preserve">
+    <value>Подходящ за ежедневна употреба  </value>
+  </data>
+  <data name="Hem şık hem pratik ürünlerle her gün keyifli kullanım" xml:space="preserve">
+    <value>Стилни и практични продукти за всекидневна употреба</value>
+  </data>
+  <data name="Her Parça Eşsizdir" xml:space="preserve">
+    <value>Всяко изделие е уникално</value>
+  </data>
+  <data name="El yapımı olduğu için her ürün kendine özgü bir karakter taşır" xml:space="preserve">
+    <value>Всеки продукт има собствен характер, тъй като е ръчно изработен</value>
+  </data>
 </root>
