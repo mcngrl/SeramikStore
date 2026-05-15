@@ -1,0 +1,132 @@
+@using SeramikStore.Web.Localization
+@inject IStringLocalizer<AccountResource> L
+
+<style>
+    .carousel-item img {
+        height: 500px;
+        object-fit: cover;
+    }
+
+    .carousel-caption-custom {
+        position: absolute;
+        top: 25%;
+        left: 10%;
+        right: auto;
+        bottom: auto;
+        max-width: 600px;
+        text-align: left;
+        color: white;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.6); /* okunabilirlik için opsiyonel */
+    }
+
+        .carousel-caption-custom h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .carousel-caption-custom p {
+            font-size: 1rem;
+        }
+
+    @@media (max-width: 768px) {
+        .carousel-item img {
+            height: 260px;
+        }
+
+        .carousel-caption-custom {
+            top: 10%;
+            left: 5%;
+            max-width: 90%;
+        }
+
+            .carousel-caption-custom h1 {
+                font-size: 1rem;
+            }
+
+            .carousel-caption-custom p {
+                font-size: 0.75rem;
+                margin-bottom: 0;
+            }
+    }
+
+    @@media (max-width: 480px) {
+        .carousel-item img {
+            height: 200px;
+        }
+
+        .carousel-caption-custom h1 {
+            font-size: 0.85rem;
+        }
+
+        .carousel-caption-custom p {
+            display: none;
+        }
+    }
+
+    .carousel-control-prev:hover span,
+    .carousel-control-next:hover span {
+        background: rgba(255,255,255,0.65);
+    }
+</style>
+
+<div id="myCarousel" class="carousel slide mb-5" data-bs-ride="false">
+    <div class="carousel-inner rounded shadow-sm">
+        @{
+            var carouselItems = new[]
+            {
+                new { Image = "sunumluk",   Title = "El Yapýmý Stoneware Ürünler",     Desc = "Þimdi keþfedin, özel tasarýmlar sizi bekliyor" },
+                new { Image = "sunumluk2",  Title = "Her Parça Bir Hikaye",            Desc = "El iþçiliði ile üretilen benzersiz stoneware koleksiyonu" },
+                new { Image = "zeytin",     Title = "Her Parça Eþsizdir",              Desc = "El yapýmý olduðu için her ürün kendine özgü bir karakter taþýr" },
+                new { Image = "denizati",   Title = "Sofranýza Deðer Katýn",           Desc = "Özgün tasarýmlar ile fark yaratan sunumlar" },
+                new { Image = "kabuk2",     Title = "Doðadan Ýlham Alan Tasarýmlar",   Desc = "Doðal dokular ve formlar ile tasarlanmýþ özel stoneware ürünler" },
+                new { Image = "kopekli",    Title = "El Ýþçiliðinin Zarafeti",         Desc = "Her biri ustalýkla elde þekillendirilen benzersiz parçalar" },
+                new { Image = "mavikuyruk", Title = "Minimal ve Þýk",                  Desc = "Sade tasarým anlayýþýyla modern sofralara uyum saðlar" },
+                new { Image = "salyangoz",  Title = "Dayanýklýlýk ve Estetik",         Desc = "Yüksek ýsýda üretilen uzun ömürlü stoneware ürünler" },
+                new { Image = "yengec",     Title = "Günlük Kullanýma Uygun",          Desc = "Hem þýk hem pratik ürünlerle her gün keyifli kullaným" },
+                };
+        }
+        @for (int i = 0; i < carouselItems.Length; i++)
+        {
+            var item = carouselItems[i];
+            <div class="carousel-item @(i == 0 ? "active" : "")">
+                <img src="/images/banner/@(item.Image).webp"
+                     class="d-block w-100" />
+                <div class="carousel-caption-custom">
+                    <h1>@L[item.Title]</h1>
+                    <p>@L[item.Desc]</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="carousel-indicators">
+        @for (int i = 0; i < carouselItems.Length; i++)
+        {
+            <button type="button"
+                    data-bs-target="#myCarousel"
+                    data-bs-slide-to="@i"
+                    class="@(i == 0 ? "active" : "")"
+                    aria-label="Slide @(i + 1)"
+                    @(i == 0 ? "aria-current=true" : "")>
+            </button>
+        }
+    </div>
+
+    <!-- SOL OK -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span style="background:rgba(255,255,255,0.45); border: 2px solid rgba(255,255,255,0.95); border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px); transition: background 0.2s;">
+            <svg width="22" height="22" fill="white" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+            </svg>
+        </span>
+    </button>
+
+    <!-- SAÐ OK -->
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span style="background:rgba(255,255,255,0.45); border: 2px solid rgba(255,255,255,0.95); border-radius:50%; width:52px; height:52px; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px); transition: background 0.2s;">
+            <svg width="22" height="22" fill="white" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+        </span>
+    </button>
+</div>

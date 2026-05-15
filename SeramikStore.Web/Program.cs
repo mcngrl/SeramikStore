@@ -105,15 +105,16 @@ builder.Services.AddSession(options =>
 
 var firebasePath = builder.Configuration["Firebase:CredentialPath"];
 
-
-if (FirebaseApp.DefaultInstance == null)
+if (firebasePath != null)
 {
-    FirebaseApp.Create(new AppOptions()
+    if (FirebaseApp.DefaultInstance == null)
     {
-        Credential = GoogleCredential.FromFile(firebasePath!)
-    });
+        FirebaseApp.Create(new AppOptions()
+        {
+            Credential = GoogleCredential.FromFile(firebasePath!)
+        });
+    }
 }
-
 
 var app = builder.Build();
 

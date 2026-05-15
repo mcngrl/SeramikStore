@@ -1,0 +1,24 @@
+@using SeramikStore.Contracts.Category
+@using SeramikStore.Entities
+@using SeramikStore.Web.Localization
+@inject IStringLocalizer<CommonResource> L
+@model List<CategoryListItemDto>
+
+@foreach (var cat in Model)
+{
+
+    <li>
+        <a href="/Home/Category/@cat.Id">
+            @L[cat.Name]
+        </a>
+    </li>
+
+}
+<li>
+    <a 
+       asp-controller="Home"
+       asp-action="Category"
+       asp-route-id="0">
+        @L["Tüm Ürünler"]
+    </a>
+</li>
