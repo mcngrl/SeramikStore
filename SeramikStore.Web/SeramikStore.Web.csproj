@@ -67,7 +67,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Reason\" />
-    <Folder Include="Views\Shared\Components\Carousel - Copy\" />
     <Folder Include="wwwroot\lib\fontawesome\css\" />
     <Folder Include="wwwroot\lib\fontawesome\webfonts\" />
   </ItemGroup>
