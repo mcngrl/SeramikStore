@@ -9,17 +9,23 @@
     ViewData["Title"] = L["Müşteri Siparişleri"];
     var culture = CultureInfo.CurrentCulture;
 }
-
+<div class="mt-3 d-flex gap-2">
+    <a asp-controller="Order" asp-action="CustomerOrders" class="btn btn-outline-primary">
+        <i class="bi bi-arrow-clockwise me-1"></i> Yenile
+    </a>
+</div>
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-body">
 
-            <h4 class="mb-4">
-                <i class="fa-solid fa-users me-2"></i>
+            <h6 class="mb-4 d-flex align-items-center gap-2">
+                <i class="fa-solid fa-users me-1"></i>
                 @L["Müşteri Siparişleri"]
-            </h4>
+                <span class="badge bg-secondary fw-normal">@Model.Count @L["Sipariş"]</span>
+            </h6>
 
-            <div class="table-responsive">
+            @* MASAÜSTÜ TABLO - md ve üzeri *@
+            <div class="d-none d-md-block table-responsive">
                 <table class="table align-middle table-hover">
                     <thead class="table-light">
                         <tr>
@@ -27,8 +33,6 @@
                             <th>@L["Sipariş Tarihi"]</th>
                             <th>@L["Müşteri"]</th>
                             <th>@L["E-Posta"]</th>
-                            <th class="text-end">@L["Sipariş Tutarı"]</th>
-                            <th class="text-end">@L["Kargo Tutarı"]</th>
                             <th class="text-end">@L["Toplam Tutar"]</th>
                             <th>@L["Sipariş Durumu"]</th>
                             <th class="text-end">@L["Güncelle"]</th>
@@ -38,38 +42,17 @@
                         @foreach (var item in Model)
                         {
                             <tr id="order-@item.Id">
-                                <td>#@item.Id</td>
-
+                                <td><span class="text-muted">#</span>@item.Id</td>
+                                <td class="small">@item.OrderDate.ToString("dd.MM.yyyy HH:mm", culture)</td>
+                                <td>@item.FirstName @item.LastName</td>
+                                <td class="small text-muted">@item.Email</td>
+                                <td class="text-end fw-semibold">
+                                    @item.GrandTotal.ToString("N2", culture)
+                                    <small class="text-muted">@item.CurrencyCode</small>
+                                </td>
                                 <td>
-                                    @item.OrderDate.ToString("dd.MM.yyyy HH:mm", culture)
+                                    <span class="badge bg-secondary">@L[item.OrderStatus]</span>
                                 </td>
-
-                                <td>
-                                    @item.FirstName @item.LastName
-                                </td>
-
-                                <td>
-                                    @item.Email
-                                </td>
-
-                                <td class="text-end">
-                                    @item.ProductTotal.ToString("N2", culture) @item.CurrencyCode
-                                </td>
-
-                                <td class="text-end">
-                                    @item.CargoAmount.ToString("N2", culture) @item.CurrencyCode
-                                </td>
-
-                                <td class="text-end fw-bold">
-                                    @item.GrandTotal.ToString("N2", culture) @item.CurrencyCode
-                                </td>
-
-                                <td>
-                                    <span class="badge bg-secondary">
-                                        @L[item.OrderStatus]
-                                    </span>
-                                </td>
-
                                 <td class="text-end">
                                     <a asp-controller="Order"
                                        asp-action="OrderEditForAdmin"
@@ -84,14 +67,38 @@
                 </table>
             </div>
 
-            <div class="mt-3">
-                <a asp-controller="Home"
-                   asp-action="Index"
-                   class="btn btn-outline-secondary">
-                    <i class="fa-solid fa-house me-1"></i>
-                    @L["Ana Sayfa"]
-                </a>
+            @* MOBİL KARTLAR - md altı *@
+            <div class="d-md-none">
+                @foreach (var item in Model)
+                {
+                    <div class="card mb-2 border" id="order-@item.Id">
+                        <div class="card-body p-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <span class="fw-semibold">#@item.Id</span>
+                                    <span class="badge bg-secondary ms-2">@L[item.OrderStatus]</span>
+                                </div>
+                                <a asp-controller="Order"
+                                   asp-action="OrderEditForAdmin"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-dark">
+                                    <i class="fa-solid fa-edit"></i>
+                                </a>
+                            </div>
+                            <p class="mb-1 fw-semibold">@item.FirstName @item.LastName</p>
+                            <p class="mb-1 small text-muted">@item.Email</p>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <small class="text-muted">@item.OrderDate.ToString("dd.MM.yyyy HH:mm", culture)</small>
+                                <span class="fw-semibold">
+                                    @item.GrandTotal.ToString("N2", culture)
+                                    <small class="text-muted">@item.CurrencyCode</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
+
 
         </div>
     </div>
@@ -103,15 +110,10 @@
 
     if (highlightId) {
         const row = document.getElementById("order-" + highlightId);
-
         if (row) {
             row.scrollIntoView({ behavior: "smooth", block: "center" });
             row.classList.add("table-warning");
-
-            // 6 saniye sonra rengi azalt
-            setTimeout(() => {
-                row.classList.remove("table-warning");
-            }, 6000);
+            setTimeout(() => row.classList.remove("table-warning"), 6000);
         }
     }
 </script>

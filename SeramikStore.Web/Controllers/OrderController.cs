@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Tasks.Deployment.Bootstrapper;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using SeramikStore.Contracts.Order;
@@ -22,12 +23,14 @@ namespace SeramikStore.Web.Controllers
         private readonly CompanyOptions _company;
         private readonly IReturnService _returnService;
         private readonly IOrderReturnManager _orderReturnManager;
+        private INotificationService _notificationService;
         public OrderController(IOrderService orderService,
             IUserAddressService userAddressService,
             ICartService cartService, 
             IOptions<CompanyOptions> companyOptions,
             IReturnService returnService,
-            IOrderReturnManager orderReturnManager)
+            IOrderReturnManager orderReturnManager,
+            INotificationService notificationService)
         {
             _orderService = orderService;
             _userAddressService = userAddressService;
@@ -35,6 +38,7 @@ namespace SeramikStore.Web.Controllers
             _company = companyOptions.Value;
             _returnService = returnService;
             _orderReturnManager = orderReturnManager;
+            _notificationService = notificationService;
         }
 
         [HttpGet]
@@ -117,7 +121,7 @@ namespace SeramikStore.Web.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateOrder(int AddressId, decimal CargoAmount)
+        public async Task<IActionResult> CreateOrder(int AddressId, decimal CargoAmount)
         {
 
             var userId = HttpContext.Session.GetInt32("session_UserId");
@@ -148,6 +152,15 @@ namespace SeramikStore.Web.Controllers
 
             // 3️⃣ Başarılıysa OrderInfo sayfasına yönlendir
             HttpContext.Session.Remove("CheckoutAddressId");
+
+            var userName = HttpContext.Session.GetString("session_UserFullName");
+            var displayName = string.IsNullOrEmpty(userName) ? "Misafir" : userName;
+
+            await _notificationService.SendToAdmin(
+                "🛍️ Yeni Sipariş!",
+                $"{displayName}, #{result.OrderId} nolu siparişi oluşturdu."
+            );
+
             return RedirectToAction("OrderInfo", new { id = result.OrderId });
         }
 

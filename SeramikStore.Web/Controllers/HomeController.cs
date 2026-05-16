@@ -231,9 +231,12 @@ namespace SeramikStore.Web.Controllers
 
             int result = _cartservices.SaveCart(cart);
 
+            var userName = HttpContext.Session.GetString("session_UserFullName");
+            var displayName = string.IsNullOrEmpty(userName) ? "Misafir" : userName;
+
             await _notificationService.SendToAdmin(
                 "🧺 Sepete Eklendi",
-                $"{product.ProductName} sepete eklendi."
+                $"{displayName} sepetine {product.ProductName} ekledi."
             );
             if (result > 0)
             {

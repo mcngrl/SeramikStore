@@ -41,6 +41,7 @@ public class NotificationService : INotificationService
                 {
                     Title = title,
                     Body = body
+                
                 },
                 Android = new AndroidConfig
                 {

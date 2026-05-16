@@ -22,6 +22,16 @@
             <img src="@Company.Value.LogoUrl" alt="Logo" style="height:90px;" />
         </a>
 
+        @if (HttpContextAccessor.HttpContext.Session.GetString("session_RoleName") == "Admin")
+        {
+            <a class="btn btn-primary"
+                    asp-controller="Admin"
+                    asp-action="Index"
+                    asp-route-id="0">
+                    <i class="bi bi-speedometer2 me-1"></i> Yönetim Paneli
+         </a>
+        }
+
         <!-- MOBILE TOGGLE -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -33,6 +43,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 @await Component.InvokeAsync("CategoryMenu")
             </ul>
+
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 @*                 <li class="nav-item">
                     <a class="nav-link" asp-controller="Home" asp-action="Index">@C["Ürünler"]</a>
@@ -43,7 +54,8 @@
                 <li class="nav-item">
                 @if (HttpContextAccessor.HttpContext.Session.GetString("session_RoleName") == "Admin")
                 {
-                    <li class="nav-item dropdown">
+
+                    @* <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="accountDropdown"
                            role="button" data-bs-toggle="dropdown">
                             <i class="fas fa-user"></i> @C["Yönetim"]
@@ -69,7 +81,7 @@
                             </li>
 
                         </ul>
-                    </li>
+                    </li> *@
                 }
             </ul>
 
