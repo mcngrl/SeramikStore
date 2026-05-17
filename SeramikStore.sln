@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPConverter", "WebPConver
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThumpCreator", "ThumpCreator\ThumpCreator.csproj", "{F4ED0940-880F-4976-AB0D-49BB4E1F712A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEmailSender", "TestEmailSender\TestEmailSender.csproj", "{39879788-220F-4784-9D8C-E440306F5364}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,6 +92,10 @@ Global
 		{F4ED0940-880F-4976-AB0D-49BB4E1F712A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4ED0940-880F-4976-AB0D-49BB4E1F712A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4ED0940-880F-4976-AB0D-49BB4E1F712A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39879788-220F-4784-9D8C-E440306F5364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39879788-220F-4784-9D8C-E440306F5364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39879788-220F-4784-9D8C-E440306F5364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39879788-220F-4784-9D8C-E440306F5364}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
