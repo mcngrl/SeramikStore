@@ -8,6 +8,6 @@ namespace SeramikStore.Services
 {
     public interface IFcmService
     {
-        void SaveToken(string token);
+        void SaveToken(string token, string userAgent, string deviceName, string userName);
     }
 }

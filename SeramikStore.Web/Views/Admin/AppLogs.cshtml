@@ -1,0 +1,129 @@
+﻿@using SeramikStore.Contracts.Admin
+@model List<AppLogDto>
+@{
+    ViewData["Title"] = "Uygulama Logları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <h6 class="mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-journal-text me-1"></i>
+                Uygulama Logları
+                <a asp-controller="Admin" asp-action="AppLogs"
+                   class="btn btn-sm btn-outline-secondary ms-auto">
+                    <i class="bi bi-arrow-clockwise"></i> Yenile
+                </a>
+            </h6>
+
+            @* Filtre butonları *@
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+                <a asp-action="AppLogs" class="btn btn-sm btn-outline-secondary">Tümü</a>
+                <a asp-action="AppLogs" asp-route-level="ERROR" class="btn btn-sm btn-outline-danger">Hatalar</a>
+                <a asp-action="AppLogs" asp-route-level="WARNING" class="btn btn-sm btn-outline-warning">Uyarılar</a>
+                <a asp-action="AppLogs" asp-route-level="SUCCESS" class="btn btn-sm btn-outline-success">Başarılı</a>
+                <a asp-action="AppLogs" asp-route-level="INFO" class="btn btn-sm btn-outline-secondary">Bilgi</a>
+            </div>
+
+            <div class="d-none d-md-block table-responsive">
+                <table class="table table-hover align-middle" style="font-size:13px;">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Seviye</th>
+                            <th>Modül</th>
+                            <th>İşlem</th>
+                            <th>Mesaj</th>
+                            <th>Kullanıcı</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var log in Model)
+                        {
+                            <tr class="@(log.LogLevel == "ERROR" ? "table-danger" : log.LogLevel == "WARNING" ? "table-warning" : "")">
+                                <td class="text-muted">@log.LogDate.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                                <td>
+                                    @switch (log.LogLevel)
+                                    {
+                                        case "SUCCESS":
+                                            <span class="badge bg-success">Başarılı</span>
+                                            break;
+                                        case "ERROR":
+                                            <span class="badge bg-danger">Hata</span>
+                                            break;
+                                        case "WARNING":
+                                            <span class="badge bg-warning text-dark">Uyarı</span>
+                                            break;
+                                        default:
+                                            <span class="badge bg-secondary">Bilgi</span>
+                                            break;
+                                    }
+                                </td>
+                                <td>@log.Module</td>
+                                <td>@log.Action</td>
+                                <td style="max-width:300px;">
+                                    <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                                        @log.Message
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(log.Exception))
+                                    {
+                                        <small class="text-danger">
+                                            @log.Exception.Substring(0, Math.Min(log.Exception.Length, 100))...
+                                        </small>
+                                    }
+                                </td>
+                                <td class="text-muted">@log.UserName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @* Mobil *@
+            <div class="d-md-none">
+                @foreach (var log in Model)
+                {
+                    <div class="card mb-2 border @(log.LogLevel == "ERROR" ? "border-danger" : log.LogLevel == "WARNING" ? "border-warning" : "")">
+                        <div class="card-body p-2">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">@log.LogDate.ToString("dd.MM HH:mm")</small>
+                                @switch (log.LogLevel)
+                                {
+                                    case "SUCCESS":
+                                        <span class="badge bg-success">Başarılı</span>
+                                        break;
+                                    case "ERROR":
+                                        <span class="badge bg-danger">Hata</span>
+                                        break;
+                                    case "WARNING":
+                                        <span class="badge bg-warning text-dark">Uyarı</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-secondary">Bilgi</span>
+                                        break;
+                                }
+                            </div>
+                            <p class="mb-0 small">
+                                <span class="text-muted">@log.Module / @log.Action</span>
+                            </p>
+                            <p class="mb-0 small">@log.Message</p>
+                            @if (!string.IsNullOrEmpty(log.UserName))
+                            {
+                                <p class="mb-0 small text-muted">@log.UserName</p>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="mt-3">
+                <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-speedometer2 me-1"></i> Yönetim Paneli
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>

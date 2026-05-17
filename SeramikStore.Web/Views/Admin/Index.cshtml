@@ -103,7 +103,22 @@
                     </a>
                 </div>
 
-
+                <div class="col-6 col-md-4">
+                    <a asp-controller="Admin" asp-action="AppLogs" class="text-decoration-none">
+                        <div class="card h-100 border">
+                            <div class="card-body d-flex flex-column gap-2">
+                                <div class="rounded p-2 bg-light" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;">
+                                    <i class="bi bi-journal-text fs-5 text-secondary"></i>
+                                </div>
+                                <div>
+                                    <p class="fw-semibold mb-1">Uygulama Logları</p>
+                                    <p class="text-muted small mb-0">Hata ve işlem kayıtları</p>
+                                </div>
+                                <span class="text-muted small">Görüntüle →</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
 
             </div>
 
@@ -111,9 +126,16 @@
                 <button id="btnEnableNotifications" class="btn btn-warning">
                     <i class="bi bi-bell me-1"></i> Bildirimleri Etkinleştir
                 </button>
+                <button id="btnTestNotification" class="btn btn-outline-primary">
+                    <i class="bi bi-bell-fill me-1"></i> Test Bildirimi Gönder
+                </button>
+                <button id="btnTestEmail" class="btn btn-outline-info">
+                    <i class="bi bi-envelope me-1"></i> Test Email Gönder
+                </button>
                 <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
                     <i class="bi bi-house me-1"></i> Ana Sayfa
                 </a>
+
             </div>
         </div>
     </div>
@@ -142,29 +164,36 @@
                 });
             });
         });
-
         async function requestPermission() {
             try {
                 const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
                 await navigator.serviceWorker.ready;
 
-                const permission = await Notification.requestPermission();
+                // İzin zaten varsa tekrar sorma, direkt token al
+                let permission = Notification.permission;
+                if (permission !== 'granted') {
+                    permission = await Notification.requestPermission();
+                }
+
                 if (permission === 'granted') {
                     const token = await getToken(messaging, {
                         vapidKey: 'BJdbWrpDBV1fHd-HRq-GBBiA36oDOLoqRIPlYt2GQC77g-ebW2-0j1Pp7btuJB5yaBd8fCFS5Qr7upYjO_9sOTI',
                         serviceWorkerRegistration: registration
                     });
 
-                    await fetch('/Product/SaveFcmToken', {
-                        method: 'POST',
-                        body: JSON.stringify({ token }),
-                        headers: { 'Content-Type': 'application/json' }
-                    });
+                        await fetch('/Product/SaveFcmToken', {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                token,
+                                userAgent: navigator.userAgent,
+                                deviceName: getDeviceName()
+                            }),
+                            headers: { 'Content-Type': 'application/json' }
+                        });
 
                     document.getElementById('btnEnableNotifications').innerHTML =
                         '<i class="bi bi-bell-fill me-1"></i> Bildirimler Aktif ✅';
                     document.getElementById('btnEnableNotifications').classList.replace('btn-warning', 'btn-success');
-                    document.getElementById('btnEnableNotifications').disabled = true;
                 } else {
                     alert("Bildirim izni verilmedi.");
                 }
@@ -172,6 +201,7 @@
                 alert("Hata: " + err.message);
             }
         }
+
 
         document.getElementById('btnEnableNotifications')
             .addEventListener('click', requestPermission);
@@ -181,7 +211,78 @@
             document.getElementById('btnEnableNotifications').innerHTML =
                 '<i class="bi bi-bell-fill me-1"></i> Bildirimler Aktif ✅';
             document.getElementById('btnEnableNotifications').classList.replace('btn-warning', 'btn-success');
-            document.getElementById('btnEnableNotifications').disabled = true;
+            // disabled KALDIRILDI — tekrar basılabilsin, token yenilensin
         }
+
+
+           function getDeviceName() {
+            const ua = navigator.userAgent;
+            if (/iPhone/.test(ua)) return 'iPhone';
+            if (/iPad/.test(ua)) return 'iPad';
+            if (/Android/.test(ua)) {
+                const match = ua.match(/Android.*?;\s*([^)]+)\)/);
+                return match ? match[1].trim() : 'Android';
+            }
+            if (/Windows/.test(ua)) return 'Windows PC';
+            if (/Macintosh/.test(ua)) return 'Mac';
+            return 'Bilinmeyen';
+        }
+
+                // Test Bildirimi
+        document.getElementById('btnTestNotification').addEventListener('click', async () => {
+            const btn = document.getElementById('btnTestNotification');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-hourglass me-1"></i> Gönderiliyor...';
+            try {
+                const response = await fetch('/Admin/TestNotification', { method: 'POST' });
+                const result = await response.json();
+                if (result.success) {
+                    btn.innerHTML = '<i class="bi bi-check-circle me-1"></i> Gönderildi ✅';
+                    btn.classList.replace('btn-outline-primary', 'btn-success');
+                } else {
+                    btn.innerHTML = '<i class="bi bi-x-circle me-1"></i> Hata ❌';
+                    btn.classList.replace('btn-outline-primary', 'btn-danger');
+                    alert("Hata: " + result.message);
+                }
+            } catch (err) {
+                btn.innerHTML = '<i class="bi bi-x-circle me-1"></i> Hata ❌';
+                alert("Hata: " + err.message);
+            } finally {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-bell-fill me-1"></i> Test Bildirimi Gönder';
+                    btn.className = 'btn btn-outline-primary';
+                }, 3000);
+            }
+        });
+
+        // Test Email
+        document.getElementById('btnTestEmail').addEventListener('click', async () => {
+            const btn = document.getElementById('btnTestEmail');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-hourglass me-1"></i> Gönderiliyor...';
+            try {
+                const response = await fetch('/Admin/TestEmail', { method: 'POST' });
+                const result = await response.json();
+                if (result.success) {
+                    btn.innerHTML = '<i class="bi bi-check-circle me-1"></i> Gönderildi ✅';
+                    btn.classList.replace('btn-outline-info', 'btn-success');
+                } else {
+                    btn.innerHTML = '<i class="bi bi-x-circle me-1"></i> Hata ❌';
+                    btn.classList.replace('btn-outline-info', 'btn-danger');
+                    alert("Hata: " + result.message);
+                }
+            } catch (err) {
+                btn.innerHTML = '<i class="bi bi-x-circle me-1"></i> Hata ❌';
+                alert("Hata: " + err.message);
+            } finally {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-envelope me-1"></i> Test Email Gönder';
+                    btn.className = 'btn btn-outline-info';
+                }, 3000);
+            }
+        });
+
     </script>
 }

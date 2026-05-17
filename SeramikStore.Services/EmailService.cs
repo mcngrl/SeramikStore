@@ -9,12 +9,12 @@ namespace SeramikStore.Services.Email
     public class EmailService : IEmailService
     {
         private readonly EmailSettings _settings;
-        private readonly ILogger<EmailService> _logger;
+        private readonly IAppLogService _appLogService;
 
-        public EmailService(IOptions<EmailSettings> settings,ILogger<EmailService> logger)
+        public EmailService(IOptions<EmailSettings> settings,ILogger<EmailService> logger,IAppLogService appLogService)
         {
             _settings = settings.Value;
-            _logger = logger;
+            _appLogService = appLogService;
         }
 
         public void Send(string to, string subject, string htmlBody)
@@ -66,20 +66,17 @@ namespace SeramikStore.Services.Email
                 };
 
                 await client.SendMailAsync(message);
+
+                await _appLogService.SuccessAsync("Email", "SendAsync",
+                $"Email gönderildi. To: {to} | Subject: {subject}");
             }
             catch (Exception ex)
             {
 
-                _logger.LogInformation($"SMTP: {_settings.Host}:{_settings.Port}");
-
-                _logger.LogError(ex,
-                               $"Email gönderilemedi. To: {to}, Subject: {subject}",
-                               to,
-                               subject
-                           );
+                await _appLogService.ErrorAsync("Email", "SendAsync",
+                      $"Email gönderilemedi. To: {to} | Subject: {subject}", ex);
 
                 throw new Exception("Email gönderimi başarısız.", ex);
-                // 🔥 KRİTİK: exception fırlatmıyoruz → uygulama devam eder
             }
 
 

@@ -7,32 +7,37 @@
     ViewData["Title"] = L["Giriş Yap"];
 }
 
+<div class="container mt-5 d-flex align-items-center justify-content: center">
+    <div class="row w-100 justify-content-center">
+        <div class="col-md-5 col-sm-8">
+            <div class="card shadow-lg border-0 rounded-4">
 
+                <div class="card-header text-center bg-primary text-white rounded-top-4 py-1">
+                    <h6 class="mb-0">@L["Üye Girişi"]</h6>
+                </div>
 
+                <form asp-action="Login" method="post">
+                    <div class="card-body p-4">
 
-    <div class="container mt-5 d-flex align-items-center justify-content-center">
-        <div class="row w-100 justify-content-center">
-            <div class="col-md-5 col-sm-8">
-                <div class="card shadow-lg border-0">
-                    <div class="card-header text-center bg-primary text-white">
-                        <h6 class="mb-0">@L["Üye Girişi"]</h6>
-                    </div>
-                    <form asp-action="Login" method="post">
-                        <div class="card-body p-4">
-                            <div class="form-group mb-3">
-                                <label>@L["Email"]</label>
-                                <input asp-for="UserName" class="form-control" placeholder="@L["E-Posta Adresiniz"]" />
-                                <span asp-validation-for="UserName" class="text-danger"></span>
+                        @{
+                            var userorpassError = ViewData.ModelState["kullanicisifrehatasi"]?.Errors.FirstOrDefault();
+                        }
+                        @if (userorpassError != null)
+                        {
+                            <div class="alert alert-danger py-2 small">
+                                <i class="bi bi-exclamation-circle me-1"></i>@userorpassError.ErrorMessage
                             </div>
-
-@*                             <div class="form-group mb-3">
-                                <label>@L["Şifre"]</label>
-                                <input asp-for="Password" type="password" class="form-control" placeholder="@L["Şifreniz"]"/>
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div> *@
+                        }
 
                         <div class="form-group mb-3">
-                            <label>@L["Şifre"]</label>
+                            <label class="form-label small fw-semibold">@L["Email"]</label>
+                            <input asp-for="UserName" class="form-control"
+                                   placeholder="@L["E-Posta Adresiniz"]" />
+                            <span asp-validation-for="UserName" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="form-label small fw-semibold">@L["Şifre"]</label>
                             <div class="input-group">
                                 <input asp-for="Password" type="password" class="form-control"
                                        placeholder="@L["Şifreniz"]" id="loginPasswordInput" />
@@ -41,71 +46,58 @@
                                     <i class="bi bi-eye" id="toggleLoginPasswordIcon"></i>
                                 </button>
                             </div>
-                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
 
-                            <div class="form-group form-check mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="form-check">
                                 <input asp-for="RememberMe" class="form-check-input" />
-                                <label asp-for="RememberMe" class="form-check-label">
+                                <label asp-for="RememberMe" class="form-check-label small">
                                     @L["Beni Hatırla"]
                                 </label>
                             </div>
+                            <a asp-action="ForgotPassword" asp-controller="Account"
+                               class="small text-muted text-decoration-none">
+                                @L["Şifremi Unuttum"]
+                            </a>
+                        </div>
 
-                            <button type="submit" class="btn btn-primary w-100">
-                                <i class="fas fa-sign-in-alt"></i>@L["Giriş Yap"]
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="fas fa-sign-in-alt me-1"></i>@L["Giriş Yap"]
+                        </button>
+
+                    </div>
+                </form>
+
+                @{
+                    var emailError = ViewData.ModelState["emaildogrulama"]?.Errors.FirstOrDefault();
+                }
+                @if (emailError != null)
+                {
+                    <div class="alert alert-warning mx-3 py-2 small">
+                        <i class="bi bi-envelope-exclamation me-1"></i>@emailError.ErrorMessage
+                        <br />
+                        <form asp-action="ResendConfirmationEmail" asp-controller="Account" method="post" class="mt-1">
+                            <input type="hidden" name="Email" value="@Model.UserName" />
+                            <button type="submit" class="btn btn-link btn-sm p-0">
+                                @L["Doğrulama emailini tekrar gönder"]
                             </button>
-                       
-                        </div>
-                    </form>
-                    @{
-                        var emailError = ViewData.ModelState["emaildogrulama"]?.Errors.FirstOrDefault();
-                    }
-
-                    @if (emailError != null)
-                    {
-                        <div class="alert alert-warning">
-                            @emailError.ErrorMessage
-
-                            <br />
-                            <small>
-                                @L["Doğrulama emaili elinize geçmedi mi?"]
-                                <form asp-action="ResendConfirmationEmail" asp-controller="Account" method="post">
-                                    <input type="hidden" name="Email" value="@Model.UserName" />
-                                    <button type="submit" class="btn btn-link">@L["Doğrulama emailini tekrar gönder"]</button>
-                                </form>
-                            </small>
-                        </div>
-                    }
-
-                    @{
-                        var userorpassError = ViewData.ModelState["kullanicisifrehatasi"]?.Errors.FirstOrDefault();
-                    }
-
-                    @if (userorpassError != null)
-                    {
-                        <div class="alert alert-warning">
-                            @userorpassError.ErrorMessage
-                        </div>
-                    }
-
-
-                    <div class="card-footer text-center">
-                        <small>
-                            @L["Hesabın yok mu?"]
-                            <a asp-action="Register" asp-controller="Account">@L["Kayıt Ol"]</a>
-                        </small>
+                        </form>
                     </div>
-                    <div class="card-footer text-center">
-                        <a asp-action="ForgotPassword" asp-controller="Account">
-                            @L["Şifremi Unuttum"]
-                        </a>
-                    </div>
+                }
+
+                <div class="card-footer text-center py-3 bg-light rounded-bottom-4">
+                    <p class="mb-2 small text-muted">@L["Hesabın yok mu?"]</p>
+                    <a asp-action="Register" asp-controller="Account"
+                       class="btn btn-outline-primary w-100">
+                        <i class="bi bi-person-plus me-1"></i>@L["Kayıt Ol"]
+                    </a>
                 </div>
+
             </div>
         </div>
     </div>
-
-
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

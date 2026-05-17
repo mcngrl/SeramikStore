@@ -42,7 +42,10 @@ public class ProductController : Controller
         if (string.IsNullOrEmpty(dto.Token))
             return BadRequest();
 
-        _fcmService.SaveToken(dto.Token);
+
+        var email = HttpContext.Session.GetString("session_Email");
+
+        _fcmService.SaveToken(dto.Token, dto.UserAgent, dto.DeviceName, email);
 
         return Ok();
     }

@@ -23,9 +23,9 @@ namespace SeramikStore.Web.Controllers
         private IProductImageService _productimageservice;
         private ICategoryService _categoryservice;
         private INotificationService _notificationService;
-
+        private IAppLogService _appLogService;
         public HomeController(ILogger<HomeController> logger, IProductService productservices,
-            ICartService cartservices, IProductImageService productimageservice, ICategoryService categoryservice, INotificationService notificationService)
+            ICartService cartservices, IProductImageService productimageservice, ICategoryService categoryservice, INotificationService notificationService, IAppLogService appLogService)
         {
             _logger = logger;
             _productservices = productservices;
@@ -33,6 +33,7 @@ namespace SeramikStore.Web.Controllers
             _productimageservice = productimageservice;
             _categoryservice = categoryservice;
             _notificationService = notificationService;
+            _appLogService = appLogService;
         }
 
         public IActionResult Index()
@@ -174,82 +175,80 @@ namespace SeramikStore.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
-        //[CheckSession("session_UserFullName")]
         [HttpPost]
         public async Task<IActionResult> Cart(ProductDetail vm)
         {
-            if (vm.Quantity < 1)
+            try
             {
-                ModelState.AddModelError("Quantity", "Adet en az 1 olmalıdır");
-
-                var TheProduct = _productservices.ProductGetById(vm.Id);
-
-                if (TheProduct.Id != 0)
+                if (vm.Quantity < 1)
                 {
-
-                    vm.ProductDesc = TheProduct.ProductDesc;
-                    vm.ProductCode = TheProduct.ProductCode;
-                    vm.ProductName = TheProduct.ProductName;
-                    vm.UnitPrice = TheProduct.UnitPrice;
-                    vm.CurrencyCode = TheProduct.CurrencyCode;
-                    vm.CurrencySymbol = TheProduct.CurrencySymbol;
-
+                    ModelState.AddModelError("Quantity", "Adet en az 1 olmalıdır");
+                    var TheProduct = _productservices.ProductGetById(vm.Id);
+                    if (TheProduct.Id != 0)
+                    {
+                        vm.ProductDesc = TheProduct.ProductDesc;
+                        vm.ProductCode = TheProduct.ProductCode;
+                        vm.ProductName = TheProduct.ProductName;
+                        vm.UnitPrice = TheProduct.UnitPrice;
+                        vm.CurrencyCode = TheProduct.CurrencyCode;
+                        vm.CurrencySymbol = TheProduct.CurrencySymbol;
+                    }
+                    var images = _productimageservice.GetByProductId(vm.Id);
+                    List<string> ImagePaths = new List<string>();
+                    foreach (var image in images)
+                    {
+                        ImagePaths.Add(image.ImagePath);
+                    }
+                    vm.ImagePaths = ImagePaths;
+                    return View("Details", vm);
                 }
 
-                var images = _productimageservice.GetByProductId(vm.Id);
+                var product = _productservices.ProductGetById(vm.Id);
+                if (product == null)
+                    return RedirectToAction("Index", "Home");
 
-                List<string> ImagePaths = new List<string>();
-                foreach (var image in images)
+                var userId = HttpContext.Session.GetInt32("session_UserId");
+                Cart cart = new Cart
                 {
-                    ImagePaths.Add(image.ImagePath);
+                    ProductId = product.Id,
+                    ProductName = product.ProductName,
+                    ProductCode = product.ProductCode,
+                    Quantity = vm.Quantity,
+                    UnitPrice = product.UnitPrice,
+                    cart_id_token = GetOrCreateCartId(),
+                    UserId = userId,
+                    CurrencyCode = product.CurrencyCode,
+                };
+
+                int result = _cartservices.SaveCart(cart);
+
+                try
+                {
+                    var userName = HttpContext.Session.GetString("session_UserFullName");
+                    var displayName = string.IsNullOrEmpty(userName) ? "Misafir" : userName;
+                    await _notificationService.SendToAdmin(
+                        "🧺 Sepete Eklendi",
+                        $"{displayName} sepetine {product.ProductName} ekledi."
+                    );
                 }
-                ;
-                vm.ImagePaths = ImagePaths;
-                return View("Details", vm);
+                catch (Exception ex)
+                {
+                    await _appLogService.ErrorAsync("Home", "Cart", @"Sepeye Ekleme Bildirim Hatası", ex);
+                }
+
+                if (result > 0)
+                    return RedirectToAction("Summary", "Cart");
+                else
+                    return RedirectToAction("Index", "Home");
             }
-
-
-            var product = _productservices.ProductGetById(vm.Id);
-            if (product == null) {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var userId = HttpContext.Session.GetInt32("session_UserId");
-
-            Cart cart = new Cart
+            catch (Exception ex)
             {
-                ProductId = product.Id,
-                ProductName = product.ProductName,
-                ProductCode = product.ProductCode,
-                Quantity = vm.Quantity,
-                UnitPrice = product.UnitPrice,
-                cart_id_token = GetOrCreateCartId(),
-                UserId = userId,
-                CurrencyCode = product.CurrencyCode,
-            };
+                TempData["Error"] = $"{ex.Message} | {ex.InnerException?.Message}";
+                await _appLogService.ErrorAsync("Home", "Cart", @"Sepete ekleme hatası",ex);
 
-            int result = _cartservices.SaveCart(cart);
-
-            var userName = HttpContext.Session.GetString("session_UserFullName");
-            var displayName = string.IsNullOrEmpty(userName) ? "Misafir" : userName;
-
-            await _notificationService.SendToAdmin(
-                "🧺 Sepete Eklendi",
-                $"{displayName} sepetine {product.ProductName} ekledi."
-            );
-            if (result > 0)
-            {
-                return RedirectToAction("Summary", "Cart");
+                return RedirectToAction("Details", "Home", new { id = vm.Id });
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-               
         }
-
         private string GetOrCreateCartId()
         {
             const string cookieName = "cart_id";

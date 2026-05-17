@@ -81,6 +81,7 @@ builder.Services.AddScoped<IReasonService, ReasonService>();
 builder.Services.AddScoped<IOrderReturnManager, OrderReturnManager>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IFcmService, FcmService>();
+builder.Services.AddScoped<IAppLogService, AppLogService>();
 
 
 builder.Services.Configure<EmailSettings>(

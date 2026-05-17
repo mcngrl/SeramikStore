@@ -10,11 +10,14 @@
 @{
     var isConfirmed = Context.Session.GetString("session_IsEmailConfirmed") == "True";
 }
+@{
+    var userName = Context.Session.GetString("session_UserFullName");
+}
 @* <nav class="navbar navbar-expand-lg navbar-dark bg-primary"> *@
-    <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
     <div class="container">
         <!-- LOGO -->
-@*         <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+        @*         <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
             @Company.Value.Name
         </a> *@
 
@@ -25,12 +28,40 @@
         @if (HttpContextAccessor.HttpContext.Session.GetString("session_RoleName") == "Admin")
         {
             <a class="btn btn-primary"
-                    asp-controller="Admin"
-                    asp-action="Index"
-                    asp-route-id="0">
-                    <i class="bi bi-speedometer2 me-1"></i> Yönetim Paneli
-         </a>
+               asp-controller="Admin"
+               asp-action="Index"
+               asp-route-id="0">
+                <i class="bi bi-speedometer2 me-1"></i> Yönetim Paneli
+            </a>
         }
+        <!-- SADECE MOBİL EKRANDA GÖRÜNÜR OLMALI BAŞLANGIÇ-->
+        <div class="d-flex d-lg-none align-items-center gap-2">
+           
+        @if (string.IsNullOrEmpty(userName))
+        {
+
+            <a class="btn btn-primary" asp-controller="Account" asp-action="Login">
+                <i class="fa-regular fa-user-circle"></i>@C["Giriş Yap"]
+            </a>
+
+        }
+        else
+        {
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Profile">
+                    <i class="bi @(isConfirmed ? "bi-check-circle-fill" : "bi-exclamation-triangle-fill")"></i>
+                    @userName
+                </a>
+        }
+
+        @if (HttpContextAccessor.HttpContext.Session.GetString("session_RoleName") != "Admin")
+        {
+            <a class="btn btn-primary" asp-controller="Cart" asp-action="Summary">
+            <i class="fas fa-shopping-cart"></i>@C["Sepetim"] @await Component.InvokeAsync("Cart")
+        </a>
+        }
+        </div>
+        <!-- SADECE MOBİL EKRANDA GÖRÜNÜR OLMALI BİTİŞ -->
+
 
         <!-- MOBILE TOGGLE -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
@@ -44,52 +75,12 @@
                 @await Component.InvokeAsync("CategoryMenu")
             </ul>
 
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-@*                 <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="Index">@C["Ürünler"]</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Home" asp-action="About">@C["Hakkımızda"]</a>
-                </li> *@
-                <li class="nav-item">
-                @if (HttpContextAccessor.HttpContext.Session.GetString("session_RoleName") == "Admin")
-                {
-
-                    @* <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown"
-                           role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user"></i> @C["Yönetim"]
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Product">@C["Ürün Tanımlama"]</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-controller="Currency">@C["Para Birimleri"]</a>
- 
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Category">@C["Kategoriler"]</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-action="Index" asp-controller="Reason">@C["İade Sebepleri"]</a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item" asp-action="CustomerOrders" asp-controller="Order">@C["Müşteri Siparişleri"]</a>
-                            </li>
-
-                        </ul>
-                    </li> *@
-                }
-            </ul>
 
 
 
 
             <!-- SAĞ MENÜ -->
- 
+
             <ul class="navbar-nav ms-auto">
 
                 <!-- 🛒 SEPET -->
@@ -98,21 +89,13 @@
                         <i class="fas fa-shopping-cart"></i> @C["Sepetim"]  @await Component.InvokeAsync("Cart")
                     </a>
                 </li>
-                @{
-                    var userName = Context.Session.GetString("session_UserFullName");
-                }
+
 
                 @if (string.IsNullOrEmpty(userName))
                 {
-                    <!-- Giriş yapılmamış -->
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Account" asp-action="Login">
-                            <i class="fas fa-sign-in-alt"></i>@C["Giriş Yap"]
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Account" asp-action="Register">
-                            <i class="fas fa-user-plus"></i>@C["Kayıt Ol"]
+                            <i class="fa-regular fa-user-circle"></i>@C["Giriş Yap"]
                         </a>
                     </li>
                 }
@@ -139,18 +122,18 @@
                                 </a>
                             </li>
                             <li>
-                                    @if (isConfirmed)
-                                    {
-                                        <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
+                                @if (isConfirmed)
+                                {
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
                                         <i class="bi bi-check-circle-fill"></i>@C["Hesabım"]
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
-                                            <i class="bi bi-exclamation-triangle-fill"></i>@C["Hesabım"]
-                                        </a>
-                                    }
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>@C["Hesabım"]
+                                    </a>
+                                }
                             </li>
                             <li>
                                 <a class="dropdown-item" asp-controller="Cart" asp-action="Summary">
@@ -166,8 +149,8 @@
                         </ul>
                     </li>
                 }
-  
-                
+
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"
                        href="#"
@@ -213,7 +196,7 @@
                             </a>
                         </li>
 
-@*                         <li>
+                        @*                         <li>
                             <a class="dropdown-item"
                                asp-controller="Culture"
                                asp-action="Set"
