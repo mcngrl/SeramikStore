@@ -34,69 +34,13 @@ public class ProductImageController : Controller
         var images = _productImageService.GetByProductId(productId);
         return View(images);
     }
-
-    // 📤 Upload
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public IActionResult Upload(int productId, IFormFile image, bool isMain = false)
-    //{
-    //    if (image == null || image.Length == 0)
-    //    {
-    //        TempData["Error"] = "Lütfen bir resim seçiniz.";
-    //        return RedirectToAction("Index", new { productId });
-    //    }
-
-    //    // uploads/products/{productId}
-    //    var uploadFolder = Path.Combine(
-    //        _env.WebRootPath,
-    //        "uploads",
-    //        "products",
-    //        productId.ToString()
-    //    );
-
-    //    if (!Directory.Exists(uploadFolder))
-    //        Directory.CreateDirectory(uploadFolder);
-
-    //    var fileName = Guid.NewGuid() + Path.GetExtension(image.FileName);
-    //    var filePath = Path.Combine(uploadFolder, fileName);
-
-    //    using (var stream = new FileStream(filePath, FileMode.Create))
-    //    {
-    //        image.CopyTo(stream);
-    //    }
-
-    //    var imagePath = $"/uploads/products/{productId}/{fileName}";
-
-    //    var productImage = new ProductImage
-    //    {
-    //        ProductId = productId,
-    //        ImagePath = imagePath,
-    //        IsMain = isMain,
-    //        DisplayOrder = 0
-    //    };
-
-    //    _productImageService.Insert(productImage);
-
-    //    if (isMain)
-    //    {
-    //        _productImageService.SetMainImage(productId, productImage.Id);
-    //    }
-
-    //    TempData["Success"] = "Resim başarıyla yüklendi.";
-    //    return RedirectToAction("Index", new { productId });
-    //}
-
-    // ⭐ Ana resim yap
-    [HttpPost]
-
-
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Upload(int productId, IFormFile image, bool isMain = false)
+    public async Task<IActionResult> Upload(int productId, List<IFormFile> images, bool isMain = false)
     {
-        if (image == null || image.Length == 0)
+        if (images == null || images.Count == 0)
         {
-            TempData["Error"] = "Lütfen bir resim seçiniz.";
+            TempData["Error"] = "Lütfen en az bir resim seçiniz.";
             return RedirectToAction("Index", new { productId });
         }
 
@@ -110,62 +54,59 @@ public class ProductImageController : Controller
         if (!Directory.Exists(uploadFolder))
             Directory.CreateDirectory(uploadFolder);
 
-        var baseName = Guid.NewGuid().ToString("N");
+        bool firstImage = true;
 
-        // Dosya yolları
-        var fullFileName = baseName + ".webp";
-        var thumbFileName = baseName + "_thumb.webp";
-        var fullPath = Path.Combine(uploadFolder, fullFileName);
-        var thumbPath = Path.Combine(uploadFolder, thumbFileName);
-        var font = SystemFonts.CreateFont("Arial", 36, FontStyle.Bold);
-
-        using (var stream = image.OpenReadStream())
-        using (var img = await SixLabors.ImageSharp.Image.LoadAsync(stream))
+        foreach (var image in images)
         {
-            // EXIF yönünü düzelt
-            img.Mutate(x => x.AutoOrient());
+            if (image == null || image.Length == 0) continue;
 
-            // 1) Orijinal boyut (1200'den büyükse küçült, küçükse dokunma)
-            using var fullImg = img.Clone(x => x
-                .Resize(new ResizeOptions
+            var baseName = Guid.NewGuid().ToString("N");
+            var fullFileName = baseName + ".webp";
+            var thumbFileName = baseName + "_thumb.webp";
+            var fullPath = Path.Combine(uploadFolder, fullFileName);
+            var thumbPath = Path.Combine(uploadFolder, thumbFileName);
+
+            using (var stream = image.OpenReadStream())
+            using (var img = await SixLabors.ImageSharp.Image.LoadAsync(stream))
+            {
+                img.Mutate(x => x.AutoOrient());
+
+                using var fullImg = img.Clone(x => x.Resize(new ResizeOptions
                 {
                     Size = new Size(1200, 0),
                     Mode = ResizeMode.Max
-                })
-                //.DrawText(_company.Name, font, Color.Black, new PointF(25, 25))
-                //.DrawText(_company.Name, font, Color.White, new PointF(23, 23))
-            );
+                }));
+                await fullImg.SaveAsWebpAsync(fullPath, new WebpEncoder { Quality = 82 });
 
-            await fullImg.SaveAsWebpAsync(fullPath, new WebpEncoder { Quality = 82 });
+                using var thumbImg = img.Clone(x => x.Resize(new ResizeOptions
+                {
+                    Size = new Size(200, 200),
+                    Mode = ResizeMode.Crop
+                }));
+                await thumbImg.SaveAsWebpAsync(thumbPath, new WebpEncoder { Quality = 70 });
+            }
 
-            // 2) Thumbnail 200x200 (orantılı kırparak)
-            using var thumbImg = img.Clone(x => x.Resize(new ResizeOptions
+            var productImage = new ProductImage
             {
-                Size = new Size(200, 200),
-                Mode = ResizeMode.Crop  // ortadan kırpar, oranı zorlar
-            }));
-            await thumbImg.SaveAsWebpAsync(thumbPath, new WebpEncoder { Quality = 70 });
+                ProductId = productId,
+                ImagePath = $"/uploads/products/{productId}/{fullFileName}",
+                IsMain = isMain && firstImage, // sadece ilk resim ana olur
+                DisplayOrder = 0
+            };
+
+            _productImageService.Insert(productImage);
+
+            if (isMain && firstImage)
+                _productImageService.SetMainImage(productId, productImage.Id);
+
+            firstImage = false;
         }
 
-        var imagePath = $"/uploads/products/{productId}/{fullFileName}";
-        var thumbImagePath = $"/uploads/products/{productId}/{thumbFileName}";
-
-        var productImage = new ProductImage
-        {
-            ProductId = productId,
-            ImagePath = imagePath,
-            IsMain = isMain,
-            DisplayOrder = 0
-        };
-
-        _productImageService.Insert(productImage);
-
-        if (isMain)
-            _productImageService.SetMainImage(productId, productImage.Id);
-
-        TempData["Success"] = "Resim başarıyla yüklendi.";
+        TempData["Success"] = $"{images.Count} resim başarıyla yüklendi.";
         return RedirectToAction("Index", new { productId });
     }
+
+
     public IActionResult SetMain(int productId, int imageId)
     {
         _productImageService.SetMainImage(productId, imageId);
