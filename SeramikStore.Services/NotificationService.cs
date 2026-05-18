@@ -57,14 +57,22 @@ public class NotificationService : INotificationService
                 }
             };
 
+
+
             try
             {
-                var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
+                if (FirebaseMessaging.DefaultInstance!=null)
+                {
+                    var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
 
-              
+                    await _appLogService.SuccessAsync("Notification", "SendToAdmin",
+                    $"Bildirim gönderildi. Token: {token.Substring(0, 20)}.{response.ToString()}");
+                }
+                else                {
+                    await _appLogService.ErrorAsync("Notification", "SendToAdmin",
+                    $"FirebaseMessaging.DefaultInstance null. Bildirim gönderilemedi. Token: {token.Substring(0, 20)}");
+                }
 
-                await _appLogService.SuccessAsync("Notification", "SendToAdmin",
-                $"Bildirim gönderildi. Token: {token.Substring(0, 20)}.{response.ToString()}");
             }
             catch (Exception ex)
             {

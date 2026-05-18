@@ -1,0 +1,26 @@
+@using SeramikStore.Contracts.Category
+@using SeramikStore.Entities
+@using SeramikStore.Web.Localization
+@inject IStringLocalizer<CommonResource> L
+@model CategoryNavigationDto
+
+<div class="col-12 col-md-2">
+    <div class="product-sidebar card border-0 shadow-sm p-3">
+        <a href="/Home/Category/0"
+           class="sidebar-item @(Model.SelectedCategoryId == 0 ? "active" : "")">
+            <span class="dot"></span>
+            @L["Tüm Ürünler"]
+        </a>
+        @foreach (var cat in Model.List)
+        {
+            <a href="/Home/Category/@cat.Id"
+               class="sidebar-item @(Model.SelectedCategoryId == cat.Id ? "active" : "")">
+                <span class="dot"></span>
+                @L[cat.Name]
+            </a>
+
+        }
+    </div>
+</div>
+
+
