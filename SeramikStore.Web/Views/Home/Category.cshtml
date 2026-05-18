@@ -3,11 +3,15 @@
 @model SeramikStore.Services.DTOs.ProductListByCategoryForHomeDto
 @using System.Globalization
 
-@await Component.InvokeAsync("Carousel")
+@if (Model.CategoryId > 0)
+{
+    @await Component.InvokeAsync("Carousel")
+}
+
 
 <div class="container-fluid px-1 px-md-1 py-1">
     <div class="row g-4">
-        @await Component.InvokeAsync("CategoryMenuMainPage", new { selectedCategoryId = Model.CategoryId })
+        @await Component.InvokeAsync("CategoryMenuMainPage", new { selectedCategoryId = Model.CategoryId }) 
 
         <div class="col-12 col-md-10">
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-3">
@@ -110,106 +114,3 @@
     </div>
 </div>
 
-<style>
-    /* ── Stok badge ── */
-    .stock-badge {
-        display: inline-block;
-        font-size: 15px;
-        font-weight: 500;
-        padding: 2px 8px;
-        border-radius: 20px;
-        white-space: nowrap;
-    }
-
-    .stock-in {
-        background: #eaf3de;
-        color: #3b6d11;
-    }
-
-    .stock-low {
-        background: #faeeda;
-        color: #854f0b;
-    }
-
-    .stock-out {
-        background: #fcebeb;
-        color: #a32d2d;
-    }
-
-    /* ── Tükendi görsel overlay ── */
-    .stock-overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(255,255,255,.55);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 13px;
-        font-weight: 600;
-        color: #a32d2d;
-        letter-spacing: .5px;
-    }
-
-    .out-of-stock .product-img {
-        filter: grayscale(40%);
-    }
-
-    /* ── Sepete Ekle butonu ── */
-    .cart-action {
-        padding: 0 10px 10px;
-    }
-
-    .cart-btn-full {
-        width: 100%;
-        height: 36px;
-        border-radius: 8px;
-        border: none;
-        background: #6e9e7a; /* yumuşak sage yeşil */
-        color: #fff;
-        font-size: 13px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        cursor: pointer;
-        transition: background .15s;
-        text-decoration: none;
-    }
-
-        .cart-btn-full:hover:not(.disabled) {
-            background: #5a8a65;
-        }
-
-    .cart-btn-outline {
-        background: #f0f4f1;
-        color: #4a7a56;
-        border: 1px solid #b8d4be;
-    }
-
-        .cart-btn-outline:hover {
-            background: #deeee3;
-            color: #3b6d11;
-        }
-
-        .cart-btn-full.disabled {
-            background: #f0ebe4;
-            color: #b4b2a9;
-            border-color: transparent;
-            cursor: not-allowed;
-        }
-
-        .cart-btn-full i {
-            font-size: 15px;
-        }
-
-    @@media (max-width: 767px) {
-        .cart-btn-full
-
-    {
-        height: 34px;
-        font-size: 12px;
-    }
-
-    }
- </style>

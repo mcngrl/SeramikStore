@@ -1,6 +1,7 @@
 ﻿@using SeramikStore.Web.Localization
 @inject IStringLocalizer<AccountResource> L
 
+
 @await Component.InvokeAsync("Carousel")
 <section class="py-5 bg-light">
     <div class="container">
@@ -63,83 +64,109 @@
     </div>
 </section>
 
-
-
-<style>
-    .feature-card {
-        transition: all .25s ease;
-        border-radius: 18px;
-    }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0,0,0,.12) !important;
-        }
-</style>
 <!-- PRODUCTS -->
-<div class="container">
+<div class="container-fluid px-1 px-md-1 py-1">
     <div class="row g-4">
-        @foreach (var item in Model)
-        {
-            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
-                <a asp-action="Details"
-                   asp-controller="Home"
-                   asp-route-id="@item.Id"
-                   class="text-decoration-none">
-                    <div class="card h-100 shadow-sm border-0 product-card position-relative">
+    
 
-                        @* Tükenmiştir rozeti *@
-                        @if (item.StockAmount <= 0)
-                        {
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-                                 style="background:rgba(0,0,0,0.45); border-radius: inherit; z-index:1;">
-                            </div>
-                        }
+        <div class="col-12 col-md-12">
+            <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-3">
+                @foreach (var item in Model)
+                {
+                    var inStock = item.StockAmount > 0;
 
-                        <img src="@(string.IsNullOrEmpty(item.MainImageThumbPath)
-                                                                  ? "/images/no-image.png"
-                                                                                               : item.MainImageThumbPath)"
-                         class="card-img-top @(item.StockAmount <= 0 ? "opacity-50" : "")"
-                         style="height:180px; object-fit:cover;" />
+                    <div class="col">
+                        <div class="product-card @(!inStock ? "out-of-stock" : "")">
+                            <a asp-action="Details"
+                               asp-controller="Home"
+                               asp-route-id="@item.Id"
+                               class="text-decoration-none d-block">
 
-                        <div class="card-body">
-                            <h6 class="card-title text-dark fw-semibold">
-                                @item.ProductName
-                            </h6>
-                            <div class="fw-bold text-primary">
-                                @item.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
-                                <small>@item.CurrencyCode</small>
-                            </div>
+                                <div class="product-img-wrap">
+                                    <img src="@(string.IsNullOrEmpty(item.MainImageThumbPath) ? "/images/no-image.png": item.MainImageThumbPath)"
+                                     alt="@item.ProductName"
+                                     class="product-img" />
 
-                            @* Stok durumu *@
-                            <div class="mt-2">
-                            @if (item.StockAmount <= 0)
+
+                                @if (!inStock)
+                                    {
+                                        <span class="stock-overlay"></span>
+                                    }
+                                </div>
+
+                                <div class="product-body">
+
+                                    <h6 class="card-title text-dark fw-semibold">
+                                        @item.ProductName
+                                    </h6>
+                                    <div class="fw-bold text-primary">
+                                        @item.UnitPrice.ToString("N2", new System.Globalization.CultureInfo("tr-TR"))
+                                        <small>@item.CurrencyCode</small>
+
+                                    </div>
+
+                                    <div class="mt-1">
+                                        @if (item.StockAmount <= 0)
+                                        {
+                                            <span class="stock-badge stock-out">
+                                                @L["Tükendi"]
+                                            </span>
+                                        }
+                                        else if (item.StockAmount <= 5)
+                                        {
+                                            <span class="stock-badge stock-low">
+                                                @L["Son {0} adet!", item.StockAmount]
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="stock-badge stock-in">
+                                                @L["Stokta: {0} adet", item.StockAmount]
+                                            </span>
+                                        }
+                                    </div>
+                                </div>
+                            </a>
+
+                            <div class="cart-action">
+                                @if (inStock)
                                 {
-                                    <span class="badge bg-danger">
-                                        @L["Tükendi"]
-                                    </span>
-                                }
-                                else if (item.StockAmount <= 5)
-                                {
-                                    <span class="badge bg-warning text-dark">
-                                        @L["Son {0} adet!", item.StockAmount]
-                                    </span>
+                                    <form asp-action="Cart"
+                                          asp-controller="Home"
+                                          method="post"
+                                          class="cart-form">
+                                        <input type="hidden" name="Id" value="@item.Id" />
+                                        <input type="hidden" name="Quantity" value="1" />
+                                        <button type="submit" class="cart-btn-full">
+                                            <i class="bi bi-cart-plus"></i>
+                                            <span>@L["Sepete Ekle"]</span>
+                                        </button>
+                                    </form>
                                 }
                                 else
                                 {
-                                    <span class="badge bg-success">
-                                        @L["Stokta: {0} adet", item.StockAmount]
-                                    </span>
+                                    <button class="cart-btn-full disabled" disabled>
+                                        <i class="bi bi-x-circle"></i>
+                                        <span>@L["Sepete Ekle"]</span>
+                                    </button>
                                 }
+
+                                <a asp-action="Details"
+                                   asp-controller="Home"
+                                   asp-route-id="@item.Id"
+                                   class="cart-btn-full cart-btn-outline mt-2">
+                                    <i class="bi bi-eye"></i>
+                                    <span>@L["İncele"]</span>
+                                </a>
                             </div>
+
                         </div>
                     </div>
-                </a>
+                }
             </div>
-        }
+        </div>
     </div>
 </div>
-
 <div class="row g-4 mb-2">
 
     <div class="col-md-4">
