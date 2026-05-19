@@ -1,120 +1,178 @@
 ﻿@model List<SeramikStore.Entities.ProductImage>
-
 @{
     ViewData["Title"] = "Ürün Resimleri";
     var productId = ViewBag.ProductId;
 }
 
 <h2>Ürün Resimleri</h2>
-
-<a asp-controller="Product"
-   asp-action="Edit"
-   asp-route-id="@productId"
-   class="btn btn-secondary mb-3">
+<a asp-controller="Product" asp-action="Edit" asp-route-id="@productId" class="btn btn-secondary mb-3">
     Ürüne Geri Dön
 </a>
-<a asp-controller="Product"
-   asp-action="Index"
-   class="btn btn-secondary mb-3">
+<a asp-controller="Product" asp-action="Index" class="btn btn-secondary mb-3">
     Tüm Ürünler
 </a>
 <hr />
 
 <!-- 📤 UPLOAD FORM -->
-<form asp-action="Upload"
-      method="post"
-      enctype="multipart/form-data"
-      class="mb-4">
-
+<form asp-action="Upload" method="post" enctype="multipart/form-data" class="mb-4">
     <input type="hidden" name="productId" value="@productId" />
-
     <div class="row">
         <div class="col-md-4">
             <input type="file" name="images" class="form-control" multiple required />
         </div>
-
         <div class="col-md-2">
             <div class="form-check mt-2">
                 <input type="checkbox" name="isMain" class="form-check-input" />
                 <label class="form-check-label">İlkini Ana Resim Yap</label>
             </div>
         </div>
-
         <div class="col-md-2">
-            <button type="submit" class="btn btn-success">
-                Resimleri Yükle
-            </button>
+            <button type="submit" class="btn btn-success">Resimleri Yükle</button>
         </div>
     </div>
 </form>
-
 <hr />
 
-<!-- 📋 IMAGE LIST -->
-<table class="table table-bordered table-hover align-middle">
-    <thead class="table-light">
-        <tr>
-            <th>Resim</th>
-            <th>Ana</th>
-            <th>Sıra</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img src="@item.ThumbPath"
-                         style="height:100px"
-                         class="img-thumbnail" />
-                </td>
+<!-- Gizli formlar (iç içe form sorununu önlemek için tablonun DIŞINDA) -->
+<form id="setMainForm" asp-action="SetMain" method="post">
+    <input type="hidden" name="productId" value="@productId" />
+    <input type="hidden" id="setMainImageId" name="imageId" value="" />
+</form>
 
-                <td>
-                    @if (item.IsMain)
-                    {
-                        <span class="badge bg-success">ANA</span>
-                    }
-                    else
-                    {
-                        <form asp-action="SetMain" method="post">
-                            <input type="hidden" name="productId" value="@productId" />
-                            <input type="hidden" name="imageId" value="@item.Id" />
-                            <button class="btn btn-outline-primary btn-sm">
+<form id="updateOrderForm" asp-action="UpdateOrder" method="post">
+    <input type="hidden" name="productId" value="@productId" />
+    <input type="hidden" id="updateOrderId" name="id" value="" />
+    <input type="hidden" id="updateOrderValue" name="displayOrder" value="" />
+</form>
+
+<form id="deleteForm" asp-action="Delete" method="post">
+    <input type="hidden" name="productId" value="@productId" />
+    <input type="hidden" id="deleteImageId" name="id" value="" />
+</form>
+
+<!-- 🗑️ TOPLU SİLME FORMU -->
+<form id="bulkDeleteForm" asp-action="DeleteMultiple" method="post"
+      onsubmit="return confirmBulkDelete()">
+    <input type="hidden" name="productId" value="@productId" />
+
+    <div class="d-flex align-items-center gap-2 mb-2">
+        <div class="form-check mb-0">
+            <input type="checkbox" id="selectAll" class="form-check-input" />
+            <label for="selectAll" class="form-check-label fw-semibold">Tümünü Seç</label>
+        </div>
+        <button type="submit" class="btn btn-danger btn-sm" id="bulkDeleteBtn" disabled>
+            🗑️ Seçilenleri Sil (<span id="selectedCount">0</span>)
+        </button>
+    </div>
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th style="width:40px"></th>
+                <th>Resim</th>
+                <th>Ana</th>
+                <th>Sıra</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="imageIds" value="@item.Id"
+                               class="form-check-input row-check" />
+                    </td>
+                    <td>
+                        <img src="@item.ThumbPath" style="height:100px" class="img-thumbnail" />
+                    </td>
+                    <td>
+                        @if (item.IsMain)
+                        {
+                            <span class="badge bg-success">ANA</span>
+                        }
+                        else
+                        {
+                            <button type="button"
+                                    class="btn btn-outline-primary btn-sm"
+                                    onclick="submitSetMain(@item.Id)">
                                 Ana Yap
                             </button>
-                        </form>
-                    }
-                </td>
-
-                <td style="width:120px">
-                    <form asp-action="UpdateOrder" method="post" class="d-flex">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <input type="hidden" name="productId" value="@productId" />
-
-                        <input type="number"
-                               name="displayOrder"
-                               value="@item.DisplayOrder"
-                               class="form-control form-control-sm me-2" />
-
-                        <button class="btn btn-sm btn-primary">✔</button>
-                    </form>
-                </td>
-
-                <td>
-                    <form asp-action="Delete"
-                          method="post"
-                          onsubmit="return confirm('Resim silinsin mi?');">
-
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <input type="hidden" name="productId" value="@productId" />
-
-                        <button class="btn btn-danger btn-sm">
+                        }
+                    </td>
+                    <td style="width:120px">
+                        <div class="d-flex">
+                            <input type="number" id="order_@item.Id"
+                                   value="@item.DisplayOrder"
+                                   class="form-control form-control-sm me-2" />
+                            <button type="button"
+                                    class="btn btn-sm btn-primary"
+                                    onclick="submitUpdateOrder(@item.Id)">
+                                ✔
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button"
+                                class="btn btn-danger btn-sm"
+                                onclick="submitDelete(@item.Id)">
                             Sil
                         </button>
-                    </form>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+@section Scripts {
+    <script>
+        // SetMain
+        function submitSetMain(imageId) {
+            document.getElementById('setMainImageId').value = imageId;
+            document.getElementById('setMainForm').submit();
         }
-    </tbody>
-</table>
+
+        // UpdateOrder
+        function submitUpdateOrder(id) {
+            const order = document.getElementById('order_' + id).value;
+            document.getElementById('updateOrderId').value = id;
+            document.getElementById('updateOrderValue').value = order;
+            document.getElementById('updateOrderForm').submit();
+        }
+
+        // Tek sil
+        function submitDelete(id) {
+            if (!confirm('Resim silinsin mi?')) return;
+            document.getElementById('deleteImageId').value = id;
+            document.getElementById('deleteForm').submit();
+        }
+
+        // Toplu seçim
+        const selectAll     = document.getElementById('selectAll');
+        const rowChecks     = document.querySelectorAll('.row-check');
+        const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+        const selectedCount = document.getElementById('selectedCount');
+
+        function updateToolbar() {
+            const checked = document.querySelectorAll('.row-check:checked').length;
+            selectedCount.textContent = checked;
+            bulkDeleteBtn.disabled = checked === 0;
+            selectAll.indeterminate = checked > 0 && checked < rowChecks.length;
+            selectAll.checked = checked === rowChecks.length && rowChecks.length > 0;
+        }
+
+        selectAll.addEventListener('change', () => {
+            rowChecks.forEach(cb => cb.checked = selectAll.checked);
+            updateToolbar();
+        });
+
+        rowChecks.forEach(cb => cb.addEventListener('change', updateToolbar));
+
+        function confirmBulkDelete() {
+            const count = document.querySelectorAll('.row-check:checked').length;
+            if (count === 0) return false;
+            return confirm(`Seçilen ${count} resim silinsin mi? Bu işlem geri alınamaz.`);
+        }
+    </script>
+}

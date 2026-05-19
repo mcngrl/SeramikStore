@@ -26,5 +26,8 @@ namespace SeramikStore.Services
         void DecreaseQuantity(int cartId);
 
         StockCheckResult CheckStockByCartId(int cartId);
+
+        List<CartByProductDto> GetByProductId(int productId);
+        bool IsProductInCart(int productId);  // mevcut metod
     }
 }

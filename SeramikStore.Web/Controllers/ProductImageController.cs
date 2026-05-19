@@ -47,8 +47,7 @@ public class ProductImageController : Controller
         var uploadFolder = Path.Combine(
             _env.WebRootPath,
             "uploads",
-            "products",
-            productId.ToString()
+            "products"
         );
 
         if (!Directory.Exists(uploadFolder))
@@ -62,8 +61,10 @@ public class ProductImageController : Controller
 
             var baseName = Guid.NewGuid().ToString("N");
             var fullFileName = baseName + ".webp";
+            var mediumFileName = baseName + "_medium.webp";
             var thumbFileName = baseName + "_thumb.webp";
             var fullPath = Path.Combine(uploadFolder, fullFileName);
+            var mediumPath = Path.Combine(uploadFolder, mediumFileName);
             var thumbPath = Path.Combine(uploadFolder, thumbFileName);
 
             using (var stream = image.OpenReadStream())
@@ -78,6 +79,14 @@ public class ProductImageController : Controller
                 }));
                 await fullImg.SaveAsWebpAsync(fullPath, new WebpEncoder { Quality = 82 });
 
+                using var mediumImg = img.Clone(x => x.Resize(new ResizeOptions
+                {
+                    Size = new Size(450, 560),
+                    Mode = ResizeMode.Max
+                }));
+
+                await mediumImg.SaveAsWebpAsync(mediumPath, new WebpEncoder { Quality = 75 });
+
                 using var thumbImg = img.Clone(x => x.Resize(new ResizeOptions
                 {
                     Size = new Size(200, 200),
@@ -89,7 +98,7 @@ public class ProductImageController : Controller
             var productImage = new ProductImage
             {
                 ProductId = productId,
-                ImagePath = $"/uploads/products/{productId}/{fullFileName}",
+                ImagePath = $"/uploads/products/{fullFileName}",
                 IsMain = isMain && firstImage, // sadece ilk resim ana olur
                 DisplayOrder = 0
             };
@@ -128,12 +137,79 @@ public class ProductImageController : Controller
     }
 
     // ❌ Sil
+    //[HttpPost]
+    //public IActionResult Delete(int id, int productId)
+    //{
+
+    //    _productImageService.Delete(id);
+    //    TempData["Success"] = "Resim silindi.";
+    //    return RedirectToAction("Index", new { productId });
+    //}
+
+
     [HttpPost]
     public IActionResult Delete(int id, int productId)
     {
+        // Önce resim bilgisini al
+        var image = _productImageService.GetById(id);
 
+        if (image != null)
+        {
+            // Fiziksel dosyayı sil (full resim)
+            var fullPath = Path.Combine(_env.WebRootPath, image.ImagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+            if (System.IO.File.Exists(fullPath))
+                System.IO.File.Delete(fullPath);
+
+            // Thumbnail'i sil (_thumb versiyonu)
+            var thumbPath = fullPath.Replace(".webp", "_thumb.webp");
+            if (System.IO.File.Exists(thumbPath))
+                System.IO.File.Delete(thumbPath);
+
+            // Klasör boşsa klasörü de sil
+            var folder = Path.Combine(_env.WebRootPath, "uploads", "products", productId.ToString());
+            if (Directory.Exists(folder) && !Directory.EnumerateFiles(folder).Any())
+                Directory.Delete(folder);
+        }
+
+        // Veritabanından sil
         _productImageService.Delete(id);
+
         TempData["Success"] = "Resim silindi.";
+        return RedirectToAction("Index", new { productId });
+    }
+
+
+    [HttpPost]
+    public IActionResult DeleteMultiple(List<int> imageIds, int productId)
+    {
+        if (imageIds == null || !imageIds.Any())
+        {
+            TempData["Error"] = "Lütfen en az bir resim seçiniz.";
+            return RedirectToAction("Index", new { productId });
+        }
+
+        foreach (var id in imageIds)
+        {
+            var image = _productImageService.GetById(id);
+            if (image == null) continue;
+
+            var fullPath = Path.Combine(_env.WebRootPath, image.ImagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+            if (System.IO.File.Exists(fullPath))
+                System.IO.File.Delete(fullPath);
+
+            var thumbPath = fullPath.Replace(".webp", "_thumb.webp");
+            if (System.IO.File.Exists(thumbPath))
+                System.IO.File.Delete(thumbPath);
+
+            _productImageService.Delete(id);
+        }
+
+        // Klasör boşsa sil
+        var folder = Path.Combine(_env.WebRootPath, "uploads", "products", productId.ToString());
+        if (Directory.Exists(folder) && !Directory.EnumerateFiles(folder).Any())
+            Directory.Delete(folder);
+
+        TempData["Success"] = $"{imageIds.Count} resim silindi.";
         return RedirectToAction("Index", new { productId });
     }
 }

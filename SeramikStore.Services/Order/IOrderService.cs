@@ -25,6 +25,9 @@ namespace SeramikStore.Services
 
         bool OrderCanCancelbyCustomer(OrderStatusCode status);
 
+        List<OrderByProductDto> GetByProductId(int productId);
+        bool IsProductInOrder(int productId);
+
 
 
     }

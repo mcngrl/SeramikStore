@@ -345,7 +345,55 @@ namespace SeramikStore.Services
                 || status == OrderStatusCode.PaymentPending;
         }
 
-  
+
+        public List<OrderByProductDto> GetByProductId(int productId)
+        {
+            var list = new List<OrderByProductDto>();
+
+            using var conn = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("sp_Order_GetByProductId", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ProductId", productId);
+
+            conn.Open();
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new OrderByProductDto
+                {
+                    OrderDetailId = reader.GetInt32(reader.GetOrdinal("OrderDetailId")),
+                    OrderId = reader.GetInt32(reader.GetOrdinal("OrderId")),
+                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
+                    ProductCode = reader.IsDBNull(reader.GetOrdinal("ProductCode"))
+                                        ? null
+                                        : reader.GetString(reader.GetOrdinal("ProductCode")),
+                    ProductName = reader.IsDBNull(reader.GetOrdinal("ProductName"))
+                                        ? null
+                                        : reader.GetString(reader.GetOrdinal("ProductName")),
+                    Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+                    UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
+                    LineTotal = reader.GetDecimal(reader.GetOrdinal("LineTotal")),
+                    OrderDate = reader.GetDateTime(reader.GetOrdinal("OrderDate")),
+                    CurrencyCode = reader.IsDBNull(reader.GetOrdinal("CurrencyCode"))
+                                        ? null
+                                        : reader.GetString(reader.GetOrdinal("CurrencyCode")),
+                    UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
+                    KullaniciAdi = reader.GetString(reader.GetOrdinal("KullaniciAdi")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber"))
+                                        ? null
+                                        : reader.GetString(reader.GetOrdinal("PhoneNumber"))
+                });
+            }
+
+            return list;
+        }
+
+        public bool IsProductInOrder(int productId)
+        {
+            return GetByProductId(productId).Any();
+        }
+
     }
 }
 

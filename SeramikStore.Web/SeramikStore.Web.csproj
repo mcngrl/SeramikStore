@@ -69,6 +69,7 @@
     <Folder Include="Views\Reason\" />
     <Folder Include="wwwroot\lib\fontawesome\css\" />
     <Folder Include="wwwroot\lib\fontawesome\webfonts\" />
+    <Folder Include="wwwroot\uploads\products\" />
   </ItemGroup>
 
   <ItemGroup>

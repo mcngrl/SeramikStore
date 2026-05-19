@@ -17,15 +17,19 @@ public class ProductController : Controller
     private readonly IProductImageService _productImageService;
     private readonly ICategoryService _categoryService;
     private readonly IFcmService _fcmService;
+    private readonly ICartService _cartService;
+    private readonly IOrderService _orderService;
 
     public ProductController(IProductService productService, ICurrencyService currencyService,
-        IProductImageService productImageService, ICategoryService categoryService, IFcmService fcmService)
+        IProductImageService productImageService, ICategoryService categoryService, IFcmService fcmService, ICartService cartService, IOrderService orderService)
     {
         _productService = productService;
         _currencyService = currencyService;
         _productImageService = productImageService;
         _categoryService = categoryService;
         _fcmService = fcmService;
+        _cartService = cartService;
+        _orderService = orderService;
     }
 
     [RoleAuthorize("Admin")]
@@ -237,12 +241,26 @@ public class ProductController : Controller
             var product = _productService.ProductGetById(id);
             return View("Delete", product);
         }
-        else
+
+
+        if (_cartService.IsProductInCart(id))
         {
-            _productService.DeleteProduct(id);
+            ModelState.AddModelError("", "Bu ürün sepette bulunduğu için silinemez.");
+            var product = _productService.ProductGetById(id);
+            return View("Delete", product);
+        }
+
+        if (_orderService.IsProductInOrder(id))
+        {
+            ModelState.AddModelError("", "Bu ürün bir siparişte bulunduğu için silinemez.");
+            var product = _productService.ProductGetById(id);
+            return View("Delete", product);
+        }
+
+        _productService.DeleteProduct(id);
             TempData["Success"] = "Product deleted successfully.";
             return RedirectToAction(nameof(Index));
-        }
+
 
 
     }

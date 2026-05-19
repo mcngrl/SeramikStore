@@ -35,6 +35,20 @@ namespace SeramikStore.Services.DTOs
             }
         }
 
+        public string MainImageMediumPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(MainImagePath))
+                    return null;
+
+                var extension = Path.GetExtension(MainImagePath);
+                var withoutExt = MainImagePath.Replace(extension, "");
+
+                return $"{withoutExt}_medium{extension}";
+            }
+        }
+
 
     }
 }

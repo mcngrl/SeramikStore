@@ -1,4 +1,4 @@
-﻿using SeramikStore.Entities;
+using SeramikStore.Entities;
 
 public interface IProductImageService
 {
@@ -7,4 +7,5 @@ public interface IProductImageService
     int Delete(int id);
     List<ProductImage> GetByProductId(int productId);
     void SetMainImage(int productId, int imageId);
+    ProductImage GetById(int imageId);
 }

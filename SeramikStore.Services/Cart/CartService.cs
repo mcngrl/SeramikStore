@@ -335,5 +335,51 @@ namespace SeramikStore.Services
         }
 
 
+        public List<CartByProductDto> GetByProductId(int productId)
+        {
+            var list = new List<CartByProductDto>();
+
+            using var conn = new SqlConnection(_connectionString);
+            using var cmd = new SqlCommand("sp_Cart_GetByProductId", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@ProductId", productId);
+
+            conn.Open();
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new CartByProductDto
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                    ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
+                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                    ProductCode = reader.GetString(reader.GetOrdinal("ProductCode")),
+                    Quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+                    UnitPrice = reader.GetDecimal(reader.GetOrdinal("UnitPrice")),
+                    TotalAmount = reader.GetDecimal(reader.GetOrdinal("TotalAmount")),
+                    CurrencyCode = reader.GetString(reader.GetOrdinal("CurrencyCode")),
+                    InsertDate = reader.GetDateTime(reader.GetOrdinal("InsertDate")),
+                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
+                    CartIdToken = reader.IsDBNull(reader.GetOrdinal("cart_id_token"))
+                                       ? null
+                                       : reader.GetString(reader.GetOrdinal("cart_id_token")),
+                    UserId = reader.IsDBNull(reader.GetOrdinal("UserId"))
+                                       ? null
+                                       : reader.GetInt32(reader.GetOrdinal("UserId")),
+                    KullaniciAdi = reader.GetString(reader.GetOrdinal("KullaniciAdi")),
+                    Email = reader.IsDBNull(reader.GetOrdinal("Email"))
+                                       ? null
+                                       : reader.GetString(reader.GetOrdinal("Email"))
+                });
+            }
+
+            return list;
+        }
+
+        public bool IsProductInCart(int productId)
+        {
+            return GetByProductId(productId).Any();
+        }
+
     }
 }

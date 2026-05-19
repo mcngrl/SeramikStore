@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using SeramikStore.Entities;
 using System.Data;
@@ -92,5 +92,31 @@ public class ProductImageService : IProductImageService
 
         con.Open();
         cmd.ExecuteNonQuery();
+    }
+
+    public ProductImage GetById(int imageId)
+    {
+        ProductImage img = null;
+
+        using SqlConnection con = new(_connectionString);
+        using SqlCommand cmd = new("sp_ProductImage_GetById", con);
+
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.AddWithValue("@Id", imageId);
+
+        con.Open();
+        using SqlDataReader dr = cmd.ExecuteReader();
+
+        while (dr.Read())
+        {
+            img = new();
+            img.Id = Convert.ToInt32(dr["Id"]);
+            img.ProductId = Convert.ToInt32(dr["ProductId"]);
+            img.ImagePath = dr["ImagePath"].ToString();
+            img.IsMain = Convert.ToBoolean(dr["IsMain"]);
+            img.DisplayOrder = Convert.ToInt32(dr["DisplayOrder"]);
+
+        }
+        return img;
     }
 }
