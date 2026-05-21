@@ -72,7 +72,7 @@ class Program
                 using var img = await Image.LoadAsync(filePath);
                 using var thumb = img.Clone(x => x.Resize(new ResizeOptions
                 {
-                    Size = new Size(32, 32),
+                    Size = new Size(100, 100),
                     Mode = ResizeMode.Crop
                 }));
                 await thumb.SaveAsWebpAsync(thumbPath, encoder);

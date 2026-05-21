@@ -590,7 +590,7 @@ public class AccountController : Controller
         var template = System.IO.File.ReadAllText(templatePath);
 
         var body = template
-            .Replace("{{logo}}", _company.LogoUrl)
+            .Replace("{{logo}}", _company.LogoUrlForEmail)
             .Replace("{{Title}}", _emailL["ResetPasswordTitle"])
             .Replace("{{Intro}}", _emailL["ResetPasswordIntro"])
             .Replace("{{Button}}", _emailL["ResetPasswordButton"])
@@ -708,7 +708,7 @@ public class AccountController : Controller
                     .Replace("{{Title}}", _emailL["EmailConfirmTitle"])
                     .Replace("{{Intro}}", _emailL["EmailConfirmIntro"])
                     .Replace("{{Info}}", _emailL["EmailConfirmInfo"])
-                    .Replace("{{logo}}", _company.LogoUrl)
+                    .Replace("{{logo}}", _company.LogoUrlForEmail)
                     .Replace("{{Button}}", _emailL["{0}"].Value.ToString().FormatWith(ConfirmCode))
                     .Replace("{{Ignore}}", _emailL["EmailIgnoreText"])
                     .Replace("{{Footer}}", _emailL["EmailFooter"])
@@ -748,7 +748,7 @@ public class AccountController : Controller
                 var body = template 
                     .Replace("{{Intro}}", _emailL["ResetPasswordIntro"])
                     .Replace("{{Info}}", _emailL["ResetPasswordInfo"])
-                    .Replace("{{logo}}", _company.LogoUrl)
+                    .Replace("{{logo}}", _company.LogoUrlForEmail)
                     .Replace("{{Company}}", _company.Name)
                     .Replace("{{LINKTEXT}}", _emailL["ResetPasswordLinkText"])
                     .Replace("{{Code}}", resetLink);
