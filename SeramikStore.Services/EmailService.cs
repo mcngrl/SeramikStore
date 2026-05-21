@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Resend;
 using System.Net;
 using System.Net.Mail;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace SeramikStore.Services.Email
         private readonly EmailSettings _settings;
         private readonly IAppLogService _appLogService;
 
-        public EmailService(IOptions<EmailSettings> settings,ILogger<EmailService> logger,IAppLogService appLogService)
+        public EmailService(IOptions<EmailSettings> settings, ILogger<EmailService> logger, IAppLogService appLogService)
         {
             _settings = settings.Value;
             _appLogService = appLogService;
@@ -41,7 +42,7 @@ namespace SeramikStore.Services.Email
             client.Send(message);
         }
 
-        public async Task SendAsync(string to, string subject, string htmlBody)
+        public async Task SendAsyncOld(string to, string subject, string htmlBody)
         {
             try
             {
@@ -82,5 +83,28 @@ namespace SeramikStore.Services.Email
 
         }
 
+        public async Task SendAsync(string to, string subject, string htmlBody)
+        {
+            try
+            {
+                IResend resend = ResendClient.Create(_settings.ResendApi.ApiKey);
+                var resp = await resend.EmailSendAsync(new EmailMessage()
+                {
+                    From = _settings.ResendApi.FromEmailAdress,
+                    To = to,
+                    Subject = subject,
+                    HtmlBody = htmlBody,
+                });
+
+                await _appLogService.SuccessAsync("Email", "SendAsync", $"Email gönderildi. To: {to} | Subject: {subject} | Id: {resp.Content}");
+                Console.WriteLine("Email Id={0}", resp.Content);
+            }
+            catch (Exception ex)
+            {
+                await _appLogService.ErrorAsync("Email", "SendAsync", $"Email gönderilemedi. To: {to} | Subject: {subject} | Hata: {ex.Message}");
+                Console.WriteLine("Hata: {0}", ex.Message);
+                throw;
+            }
+        }
     }
 }

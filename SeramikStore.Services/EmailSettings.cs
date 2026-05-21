@@ -1,4 +1,4 @@
-﻿namespace SeramikStore.Services.Email
+namespace SeramikStore.Services.Email
 {
     public class EmailSettings
     {
@@ -9,5 +9,10 @@
         public string Password { get; set; }
         public string FromName { get; set; }
         public string FromEmailAdress { get; set; }
+        public Resend ResendApi { get; set; }
+
+      
     }
+
+    
 }
