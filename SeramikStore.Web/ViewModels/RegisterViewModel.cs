@@ -66,5 +66,9 @@ namespace SeramikStore.Web.ViewModels.Account
         // LOG / HUKUKİ KAYIT (server set eder)
         // ===============================
 
+        public int? BirthDay { get; set; }
+        public int? BirthMonth { get; set; }
+        public int? BirthYear { get; set; }
+
     }
 }

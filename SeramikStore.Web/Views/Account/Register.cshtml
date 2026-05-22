@@ -60,7 +60,72 @@
 
                     </div>
                 </div>
+
                 <div class="mb-3">
+                    <label class="form-label">@L["Doğum Tarihi"]</label>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <select id="BirthDay" class="form-select" name="BirthDay">
+                                <option value="">@L["Gün"]</option>
+                                @for (int d = 1; d <= 31; d++)
+                                {
+                                    if (Model.BirthDay == d)
+                                    {
+                                        <option value="@d" selected>@d</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@d">@d</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-4">
+                            <select id="BirthMonth" class="form-select" name="BirthMonth">
+                                <option value="">@L["Ay"]</option>
+                                @{
+                                    var months = new[] { "Ocak","Şubat","Mart","Nisan","Mayıs","Haziran",
+                                                                "Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık" };
+                                }
+                                @for (int m = 1; m <= 12; m++)
+                                {
+                                    if (Model.BirthMonth == m)
+                                    {
+                                        <option value="@m" selected>@months[m - 1]</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@m">@months[m - 1]</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-4">
+                            <select id="BirthYear" class="form-select" name="BirthYear">
+                                <option value="">@L["Yıl"]</option>
+                                @for (int y = DateTime.Now.Year; y >= 1924; y--)
+                                {
+                                    if (Model.BirthYear == y)
+                                    {
+                                        <option value="@y" selected>@y</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@y">@y</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <input type="text" asp-for="BirthDate" id="BirthDateHidden" />
+                    <span asp-validation-for="BirthDate" class="text-danger"></span>
+                </div>
+
+
+@*                 <div class="mb-3">
                     <label asp-for="BirthDate" class="form-label"></label>
                     <input asp-for="BirthDate"
                            class="form-control"
@@ -68,7 +133,7 @@
                            id="birthDatePicker"
                            autocomplete="off" />
                     <span asp-validation-for="BirthDate" class="text-danger"></span>
-                </div>
+                </div> *@
 
   @*               <div class="mb-3">
                     <label asp-for="Password" class="form-label"></label>
@@ -243,6 +308,21 @@
 
     setupHoldToView("togglePassword",        "passwordInput",        "togglePasswordIcon");
     setupHoldToView("toggleConfirmPassword", "confirmPasswordInput", "toggleConfirmPasswordIcon");
+
+    function syncBirthDate() {
+    const d = document.getElementById('BirthDay').value;
+    const m = document.getElementById('BirthMonth').value;
+    const y = document.getElementById('BirthYear').value;
+    if (d && m && y)
+
+    {
+        document .getElementById('BirthDateHidden').value = y + '-' + String(m).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    }
+
+    }
+    ['BirthDay', 'BirthMonth', 'BirthYear'].forEach(id => document.getElementById(id).addEventListener('change', syncBirthDate) );
+
+
 </script>
 
 @* Script *@
@@ -264,3 +344,4 @@
 
 
 </style>
+

@@ -60,6 +60,13 @@ public class AccountController : Controller
             return View(model);
         }
 
+        if (model.BirthDay.HasValue && model.BirthMonth.HasValue && model.BirthYear.HasValue)
+        {
+            model.BirthDate = new DateTime(model.BirthYear.Value,
+                                           model.BirthMonth.Value,
+                                           model.BirthDay.Value);
+        }
+
 
         var ConfirmCode = new Random().Next(100000, 999999).ToString();
 
