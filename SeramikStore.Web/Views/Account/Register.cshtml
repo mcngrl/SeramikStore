@@ -85,9 +85,13 @@
                             <select id="BirthMonth" class="form-select" name="BirthMonth">
                                 <option value="">@L["Ay"]</option>
                                 @{
-                                    var months = new[] { "Ocak","Şubat","Mart","Nisan","Mayıs","Haziran",
-                                                                "Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık" };
+                                    var months = new[] {
+                                                                L["Ocak"], L["Şubat"], L["Mart"], L["Nisan"], L["Mayıs"], L["Haziran"],
+                                                                L["Temmuz"], L["Ağustos"], L["Eylül"], L["Ekim"], L["Kasım"], L["Aralık"]
+                                                                };
                                 }
+
+
                                 @for (int m = 1; m <= 12; m++)
                                 {
                                     if (Model.BirthMonth == m)

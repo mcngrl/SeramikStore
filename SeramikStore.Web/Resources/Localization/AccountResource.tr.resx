@@ -336,6 +336,9 @@
   <data name="Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür." xml:space="preserve">
     <value>Her parça; ustalık, sabır ve yüksek sıcaklıkta şekillenen gerçek bir el işçiliği ürünüdür</value>
   </data>
+  <data name="El Yapımı" xml:space="preserve">
+    <value>El Yapımı</value>
+  </data>
   <data name="Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır." xml:space="preserve">
     <value>Her parça ellerimizde tek tek şekillendirilir, bu yüzden her ürün kendine özgü bir karakter taşır</value>
   </data>
@@ -368,9 +371,6 @@
   </data>
   <data name="Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır." xml:space="preserve">
     <value>Siparişleriniz özel korumalı ambalajlarla hazırlanır ve güvenle adresinize ulaştırılır</value>
-  </data>
-  <data name="El Yapımı" xml:space="preserve">
-    <value>El Yapımı</value>
   </data>
   <data name="Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır.Detaylı bilgi için" xml:space="preserve">
     <value>Bu web sitesi, sepet işlemleri ve oturum yönetimi için zorunlu çerezler kullanır. Detaylı bilgi için</value>
@@ -650,5 +650,50 @@
   </data>
   <data name="El yapımı olduğu için her ürün kendine özgü bir karakter taşır" xml:space="preserve">
     <value>El yapımı olduğu için her ürün kendine özgü bir karakter taşır</value>
+  </data>
+  <data name="Ay" xml:space="preserve">
+    <value>Ay</value>
+  </data>
+  <data name="Ocak" xml:space="preserve">
+    <value>Ocak</value>
+  </data>
+  <data name="Şubat" xml:space="preserve">
+    <value>Şubat</value>
+  </data>
+  <data name="Mart" xml:space="preserve">
+    <value>Mart</value>
+  </data>
+  <data name="Nisan" xml:space="preserve">
+    <value>Nisan</value>
+  </data>
+  <data name="Mayıs" xml:space="preserve">
+    <value>Mayıs</value>
+  </data>
+  <data name="Haziran" xml:space="preserve">
+    <value>Haziran</value>
+  </data>
+  <data name="Temmuz" xml:space="preserve">
+    <value>Temmuz</value>
+  </data>
+  <data name="Ağustos" xml:space="preserve">
+    <value>Ağustos</value>
+  </data>
+  <data name="Eylül" xml:space="preserve">
+    <value>Eylül</value>
+  </data>
+  <data name="Ekim" xml:space="preserve">
+    <value>Ekim</value>
+  </data>
+  <data name="Kasım" xml:space="preserve">
+    <value>Kasım</value>
+  </data>
+  <data name="Aralık" xml:space="preserve">
+    <value>Aralık</value>
+  </data>
+  <data name="Yıl" xml:space="preserve">
+    <value>Yıl</value>
+  </data>
+  <data name="Gün" xml:space="preserve">
+    <value>Gün</value>
   </data>
 </root>

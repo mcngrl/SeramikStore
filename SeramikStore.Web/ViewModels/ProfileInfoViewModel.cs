@@ -21,4 +21,8 @@ public class ProfileInfoViewModel
     [DataType(DataType.Date)]
     [Display(Name = "Doğum Tarihi")]
     public DateTime? BirthDate { get; set; }
+
+    public int? BirthDay { get; set; }
+    public int? BirthMonth { get; set; }
+    public int? BirthYear { get; set; }
 }

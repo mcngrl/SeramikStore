@@ -321,7 +321,11 @@ public class AccountController : Controller
                 LastName = user.LastName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
-                BirthDate = user.BirthDate
+                BirthDate = user.BirthDate,
+                BirthDay = user.BirthDate?.Day,
+                BirthMonth = user.BirthDate?.Month,
+                BirthYear = user.BirthDate?.Year,
+
             },
             Password = new ChangePasswordViewModel()
         };
