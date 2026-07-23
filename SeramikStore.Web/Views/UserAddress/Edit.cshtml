@@ -45,17 +45,24 @@
 
                             <div class="col-md-6 mb-3">
                                 <label asp-for="Il">@L["İl"]</label>
-                                <input asp-for="Il" class="form-control" />
+                                <select asp-for="Il" class="form-select" data-turkiye-il data-selected-value="@Model.Il">
+                                    <option value="">İl seçiniz</option>
+                                </select>
+                                <span asp-validation-for="Il" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-6 mb-3">
                                 <label asp-for="Ilce">@L["İlçe"]</label>
-                                <input asp-for="Ilce" class="form-control" />
+                                <select asp-for="Ilce" class="form-select" data-turkiye-ilce data-selected-value="@Model.Ilce" disabled>
+                                    <option value="">Önce il seçiniz</option>
+                                </select>
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <label asp-for="Mahalle">@L["Mahalle"]</label>
-                                <input asp-for="Mahalle" class="form-control" />
+                                <select asp-for="Mahalle" class="form-select" data-turkiye-mahalle data-selected-value="@Model.Mahalle" disabled>
+                                    <option value="">Önce ilçe seçiniz</option>
+                                </select>
                             </div>
 
                             <div class="col-md-12 mb-3">
@@ -87,4 +94,9 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/turkiye-il-ilce.js" asp-append-version="true"></script>
+}
 

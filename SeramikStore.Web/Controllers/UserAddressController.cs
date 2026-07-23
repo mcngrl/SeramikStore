@@ -26,6 +26,20 @@ public class UserAddressController : Controller
     }
 
     [HttpGet]
+    public IActionResult Details(int id)
+    {
+        var userId = HttpContext.Session.GetInt32("session_UserId");
+        if (userId is null)
+            return RedirectToAction("Index", "Home");
+
+        var address = _service.GetById(id);
+        if (address == null || address.UserId != userId.Value)
+            return RedirectToAction("Index");
+
+        return View(address);
+    }
+
+    [HttpGet]
     public IActionResult Create(string returnUrl = null)
     {
         ViewBag.ReturnUrl = returnUrl;

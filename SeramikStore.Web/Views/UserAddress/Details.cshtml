@@ -1,0 +1,53 @@
+@using SeramikStore.Web.Localization
+@model SeramikStore.Entities.UserAddress
+@inject IStringLocalizer<AccountResource> L
+@{
+    ViewData["Title"] = "Adres Detayı";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-2">
+            <partial name="_LeftMenu" />
+        </div>
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h6 class="mb-0">Adres Detayı</h6>
+                        @if (Model.IsDefault)
+                        {
+                            <span class="badge bg-success">@L["Varsayılan"]</span>
+                        }
+                    </div>
+
+                    <dl class="row mb-4">
+                        <dt class="col-sm-4">@L["Başlık"]</dt>
+                        <dd class="col-sm-8">@Model.Baslik</dd>
+
+                        <dt class="col-sm-4">@L["Ad"] @L["Soyad"]</dt>
+                        <dd class="col-sm-8">@Model.Ad @Model.Soyad</dd>
+
+                        <dt class="col-sm-4">@L["Telefon"]</dt>
+                        <dd class="col-sm-8">@Model.Telefon</dd>
+
+                        <dt class="col-sm-4">@L["İl"] / @L["İlçe"]</dt>
+                        <dd class="col-sm-8">@Model.Il / @Model.Ilce</dd>
+
+                        <dt class="col-sm-4">@L["Mahalle"]</dt>
+                        <dd class="col-sm-8">@Model.Mahalle</dd>
+
+                        <dt class="col-sm-4">@L["Adres"]</dt>
+                        <dd class="col-sm-8" style="white-space: pre-line">@Model.Adres</dd>
+                    </dl>
+
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                        @L["Adresi Düzenle"]
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">@L["Geri"]</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
