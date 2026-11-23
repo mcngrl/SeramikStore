@@ -1,11 +1,11 @@
-@using SeramikStore.Services.DTOs
+ï»¿@using SeramikStore.Services.DTOs
 @using Microsoft.Extensions.Localization
 @using SeramikStore.Web.Localization
 @model List<UserDto>
 @inject IStringLocalizer<AccountResource> L
 
 @{
-    ViewData["Title"] = "Müþteri Yönetimi";
+    ViewData["Title"] = "MÃ¼ÅŸteri YÃ¶netimi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -20,14 +20,14 @@
         <div class="card-body">
             <h6 class="mb-4 d-flex align-items-center gap-2">
                 <i class="fa-solid fa-users me-1"></i>
-                Müþteri Listesi
+                MÃ¼ÅŸteri Listesi
             </h6>
 
             @if (Model.Count == 0)
             {
                 <div class="alert alert-info">
                     <i class="bi bi-info-circle me-2"></i>
-                    Kayýtlý müþteri bulunmamaktadýr.
+                    KayÄ°tlÄ° mÃ¼ÅŸteri bulunmamaktadÄ°r.
                 </div>
             }
             else
@@ -38,11 +38,11 @@
                             <tr>
                                 <th style="width: 5%">#</th>
                                 <th style="width: 15%">Ad</th>
-                                <th style="width: 15%">Soyadý</th>
+                                <th style="width: 15%">SoyadÄ°</th>
                                 <th style="width: 25%">E-posta</th>
                                 <th style="width: 15%">Telefon</th>
                                 <th style="width: 15%">Durum</th>
-                                <th style="width: 10%">Ýþlem</th>
+                                <th style="width: 10%">Ä°ÅŸlem</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -87,7 +87,7 @@
                                         @if (!customer.IsEmailConfirmed)
                                         {
                                             <span class="badge bg-warning ms-1">
-                                                <i class="bi bi-exclamation-circle me-1"></i> Onaylanmamýþ
+                                                <i class="bi bi-exclamation-circle me-1"></i> OnaylanmamÄ±ÅŸ
                                             </span>
                                         }
                                     </td>
@@ -112,19 +112,19 @@
     </div>
 </div>
 
-<!-- Müþteri Detay Modal -->
+<!-- MÃ¼ÅŸteri Detay Modal -->
 <div class="modal fade" id="customerDetailModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title">Müþteri Detaylarý</h6>
+                <h6 class="modal-title">MÃ¼ÅŸteri DetaylarÄ±</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div id="customerDetailContent">
                     <div class="text-center">
                         <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Yükleniyor...</span>
+                            <span class="visually-hidden">YÃ¼kleniyor...</span>
                         </div>
                     </div>
                 </div>
@@ -136,11 +136,11 @@
 @section Scripts {
     <script>
         function loadCustomerDetail(customerId) {
-            // Modal içeriði yükleme
+            // Modal iÃ§eriÃ°i yÃ¼kleme
             const content = document.getElementById('customerDetailContent');
             const customer = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.FirstOrDefault()));
 
-            // Basit bir detay gösterimi
+            // Basit bir detay gÃ¶sterimi
             if (customerId) {
                 fetch(`/Admin/GetCustomerDetail?id=${customerId}`)
                     .then(response => response.text())
@@ -148,7 +148,7 @@
                         content.innerHTML = html;
                     })
                     .catch(error => {
-                        content.innerHTML = '<div class="alert alert-danger">Müþteri bilgisi yüklenemedi.</div>';
+                        content.innerHTML = '<div class="alert alert-danger">MÃ¼ÅŸteri bilgisi yÃ¼klenemedi.</div>';
                     });
             }
         }

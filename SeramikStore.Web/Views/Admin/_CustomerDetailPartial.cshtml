@@ -1,4 +1,4 @@
-@using SeramikStore.Services.DTOs
+ï»¿@using SeramikStore.Services.DTOs
 @model UserDto
 
 <div class="row">
@@ -7,7 +7,7 @@
             <dt class="col-sm-4">Ad:</dt>
             <dd class="col-sm-8">@Model.FirstName</dd>
 
-            <dt class="col-sm-4">Soyadý:</dt>
+            <dt class="col-sm-4">SoyadÄ°:</dt>
             <dd class="col-sm-8">@Model.LastName</dd>
 
             <dt class="col-sm-4">E-posta:</dt>
@@ -27,7 +27,7 @@
                 }
             </dd>
 
-            <dt class="col-sm-4">Doðum Tarihi:</dt>
+            <dt class="col-sm-4">DoÃ°um Tarihi:</dt>
             <dd class="col-sm-8">
                 @if (Model.BirthDate.HasValue)
                 {
@@ -59,18 +59,18 @@
             <dd class="col-sm-8">
                 @if (Model.IsEmailConfirmed)
                 {
-                    <span class="badge bg-success">Onaylandý</span>
+                    <span class="badge bg-success">OnaylandÄ°</span>
                 }
                 else
                 {
-                    <span class="badge bg-warning">Onaylanmadý</span>
+                    <span class="badge bg-warning">OnaylanmadÄ°</span>
                 }
             </dd>
 
             <dt class="col-sm-4">Rol:</dt>
             <dd class="col-sm-8">@Model.RoleName</dd>
 
-            <dt class="col-sm-4">Müdür.Sözleþ.:</dt>
+            <dt class="col-sm-4">MÃ¼dÃ¼r.SÃ¶zleÅŸ.:</dt>
             <dd class="col-sm-8">
                 @if (Model.AcceptMembershipAgreement)
                 {
@@ -82,7 +82,7 @@
                 }
             </dd>
 
-            <dt class="col-sm-4">KVKK Onayý:</dt>
+            <dt class="col-sm-4">KVKK OnayÄ°:</dt>
             <dd class="col-sm-8">
                 @if (Model.AcceptKvkk)
                 {
