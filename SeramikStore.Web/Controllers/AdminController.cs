@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿    using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using SeramikStore.Contracts.Admin;
 using SeramikStore.Services;
@@ -13,12 +13,14 @@ namespace SeramikStore.Web.Controllers
         private readonly IAppLogService _appLogService;
         private readonly INotificationService _notificationService;
         private readonly IEmailService _emailService;
+        private readonly IUserService _userService;
 
-        public AdminController(IAppLogService appLogService, INotificationService notificationService, IEmailService emailService)
+        public AdminController(IAppLogService appLogService, INotificationService notificationService, IEmailService emailService, IUserService userService)
         {
             _appLogService = appLogService;
             _notificationService = notificationService;
             _emailService = emailService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -31,6 +33,21 @@ namespace SeramikStore.Web.Controllers
             //return View("~/Views/Admin/Index.cshtml");
             //return View("Index");
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Customers()
+        {
+            var role = HttpContext.Session.GetString("session_RoleName");
+            if (role != "Admin")
+                return RedirectToAction("Index", "Home");
+
+            var customers = _userService.GetAll()
+                .Where(u => u.RoleName == "Customer")
+                .ToList();
+
+
+            return View(customers);
         }
 
         public IActionResult AppLogs(string level = null)

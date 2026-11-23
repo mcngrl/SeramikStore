@@ -1,0 +1,98 @@
+@using SeramikStore.Services.DTOs
+@model UserDto
+
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Ad:</dt>
+            <dd class="col-sm-8">@Model.FirstName</dd>
+
+            <dt class="col-sm-4">Soyadý:</dt>
+            <dd class="col-sm-8">@Model.LastName</dd>
+
+            <dt class="col-sm-4">E-posta:</dt>
+            <dd class="col-sm-8">
+                <a href="mailto:@Model.Email">@Model.Email</a>
+            </dd>
+
+            <dt class="col-sm-4">Telefon:</dt>
+            <dd class="col-sm-8">
+                @if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                {
+                    <a href="tel:@Model.PhoneNumber">@Model.PhoneNumber</a>
+                }
+                else
+                {
+                    <span class="text-muted">Belirsiz</span>
+                }
+            </dd>
+
+            <dt class="col-sm-4">Doðum Tarihi:</dt>
+            <dd class="col-sm-8">
+                @if (Model.BirthDate.HasValue)
+                {
+                    @Model.BirthDate.Value.ToString("dd.MM.yyyy")
+                }
+                else
+                {
+                    <span class="text-muted">Belirsiz</span>
+                }
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Durum:</dt>
+            <dd class="col-sm-8">
+                @if (Model.IsActive)
+                {
+                    <span class="badge bg-success">Aktif</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Pasif</span>
+                }
+            </dd>
+
+            <dt class="col-sm-4">E-posta Onay:</dt>
+            <dd class="col-sm-8">
+                @if (Model.IsEmailConfirmed)
+                {
+                    <span class="badge bg-success">Onaylandý</span>
+                }
+                else
+                {
+                    <span class="badge bg-warning">Onaylanmadý</span>
+                }
+            </dd>
+
+            <dt class="col-sm-4">Rol:</dt>
+            <dd class="col-sm-8">@Model.RoleName</dd>
+
+            <dt class="col-sm-4">Müdür.Sözleþ.:</dt>
+            <dd class="col-sm-8">
+                @if (Model.AcceptMembershipAgreement)
+                {
+                    <span class="badge bg-success"><i class="bi bi-check"></i></span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary"><i class="bi bi-x"></i></span>
+                }
+            </dd>
+
+            <dt class="col-sm-4">KVKK Onayý:</dt>
+            <dd class="col-sm-8">
+                @if (Model.AcceptKvkk)
+                {
+                    <span class="badge bg-success"><i class="bi bi-check"></i></span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary"><i class="bi bi-x"></i></span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
