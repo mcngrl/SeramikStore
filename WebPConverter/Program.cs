@@ -1,7 +1,5 @@
-﻿using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Webp;
-using SixLabors.ImageSharp.Processing;
-using static System.Net.Mime.MediaTypeNames;
+﻿
+using SkiaSharp;
 
 class Program
 {
@@ -11,6 +9,7 @@ class Program
 
         // Klasör yolu argümandan veya elle girilebilir
         string folderPath;
+
         if (args.Length > 0 && Directory.Exists(args[0]))
         {
             folderPath = args[0];
@@ -18,10 +17,11 @@ class Program
         else
         {
             Console.Write("Klasör yolunu girin: ");
-            folderPath = Console.ReadLine()?.Trim();
+            folderPath = Console.ReadLine()?.Trim() ?? "";
         }
 
-        if (string.IsNullOrEmpty(folderPath) || !Directory.Exists(folderPath))
+        if (string.IsNullOrWhiteSpace(folderPath) ||
+            !Directory.Exists(folderPath))
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Geçersiz klasör yolu.");
@@ -32,23 +32,34 @@ class Program
         // Kalite ayarı
         Console.Write("WebP kalitesi (1-100, varsayılan 80): ");
         var qualityInput = Console.ReadLine()?.Trim();
-        int quality = int.TryParse(qualityInput, out var q) && q >= 1 && q <= 100 ? q : 80;
+
+        int quality = int.TryParse(qualityInput, out var q) &&
+                      q >= 1 && q <= 100 ? q : 80;
 
         // Orijinal dosyalar silinsin mi?
         Console.Write("Dönüştürme sonrası orijinal dosyalar silinsin mi? (e/h, varsayılan h): ");
         var deleteInput = Console.ReadLine()?.Trim().ToLower();
-        bool deleteOriginals = deleteInput == "e" || deleteInput == "evet";
+
+        bool deleteOriginals =
+            deleteInput == "e" || deleteInput == "evet";
 
         // Alt klasörler dahil edilsin mi?
         Console.Write("Alt klasörler de dahil edilsin mi? (e/h, varsayılan e): ");
         var subDirInput = Console.ReadLine()?.Trim().ToLower();
-        bool includeSubDirs = subDirInput != "h" && subDirInput != "hayır";
 
-        var searchOption = includeSubDirs ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+        bool includeSubDirs =
+            subDirInput != "h" && subDirInput != "hayır";
+
+        var searchOption = includeSubDirs
+            ? SearchOption.AllDirectories
+            : SearchOption.TopDirectoryOnly;
+
         var extensions = new[] { "*.jpg", "*.jpeg", "*.png" };
 
         var files = extensions
-            .SelectMany(ext => Directory.GetFiles(folderPath, ext, searchOption))
+            .SelectMany(ext => Directory.GetFiles(
+                folderPath, ext, searchOption))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToList();
 
         if (files.Count == 0)
@@ -61,21 +72,22 @@ class Program
 
         Console.WriteLine($"\n{files.Count} dosya bulundu. Dönüştürme başlıyor...\n");
 
-        int success = 0, failed = 0, skipped = 0;
+        int success = 0;
+        int failed = 0;
+        int skipped = 0;
         long totalSavedBytes = 0;
-
-        var encoder = new WebpEncoder { Quality = quality };
 
         foreach (var filePath in files)
         {
             var outputPath = Path.ChangeExtension(filePath, ".webp");
 
-            // Zaten WebP varsa atla
+            // WebP dosyası zaten varsa atla
             if (File.Exists(outputPath))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"[ATLA]  {Path.GetFileName(filePath)} → zaten mevcut");
                 Console.ResetColor();
+
                 skipped++;
                 continue;
             }
@@ -84,19 +96,53 @@ class Program
             {
                 var originalSize = new FileInfo(filePath).Length;
 
-                using var image = await SixLabors.ImageSharp.Image.LoadAsync(filePath);
-                image.Mutate(x => x.AutoOrient()); // ← bunu ekle
-                await image.SaveAsWebpAsync(outputPath, encoder);
+                // Dosyayı belleğe al
+                using var stream = File.OpenRead(filePath);
+                using var codec = SKCodec.Create(stream);
+
+                if (codec == null)
+                    throw new Exception("Görüntü dosyası okunamadı.");
+
+                // Görüntüyü decode et
+                using var bitmap = SKBitmap.Decode(codec);
+
+                if (bitmap == null)
+                    throw new Exception("Görüntü çözümlenemedi.");
+
+                // EXIF yönünü düzelt
+                using var orientedBitmap = ApplyOrientation(
+                    bitmap, codec.EncodedOrigin);
+
+                // WebP olarak encode et
+                using var image = SKImage.FromBitmap(orientedBitmap);
+
+                using var encodedData = image.Encode(
+                    SKEncodedImageFormat.Webp,
+                    quality);
+
+                if (encodedData == null)
+                    throw new Exception("WebP dönüştürme başarısız.");
+
+                using (var outputStream = File.Create(outputPath))
+                {
+                    encodedData.SaveTo(outputStream);
+                }
 
                 var newSize = new FileInfo(outputPath).Length;
+
                 var savedBytes = originalSize - newSize;
-                var savedPercent = (double)savedBytes / originalSize * 100;
+                var savedPercent = originalSize > 0
+                    ? (double)savedBytes / originalSize * 100
+                    : 0;
+
                 totalSavedBytes += savedBytes;
 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"[OK]    {Path.GetFileName(filePath)} " +
-                                  $"({FormatBytes(originalSize)} → {FormatBytes(newSize)}, " +
-                                  $"%{savedPercent:F1} küçüldü)");
+                Console.WriteLine(
+                    $"[OK]    {Path.GetFileName(filePath)} " +
+                    $"({FormatBytes(originalSize)} → {FormatBytes(newSize)}, " +
+                    $"%{savedPercent:F1} küçüldü)");
+
                 Console.ResetColor();
 
                 if (deleteOriginals)
@@ -107,15 +153,18 @@ class Program
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"[HATA]  {Path.GetFileName(filePath)} → {ex.Message}");
+                Console.WriteLine(
+                    $"[HATA]  {Path.GetFileName(filePath)} → {ex.Message}");
+
                 Console.ResetColor();
+
                 failed++;
             }
         }
 
         // Özet
         Console.WriteLine("\n" + new string('─', 50));
-        Console.WriteLine($"Tamamlandı!");
+        Console.WriteLine("Tamamlandı!");
         Console.WriteLine($"  ✔ Başarılı : {success}");
         Console.WriteLine($"  ✘ Hatalı   : {failed}");
         Console.WriteLine($"  ↷ Atlanan  : {skipped}");
@@ -123,10 +172,90 @@ class Program
         Console.WriteLine(new string('─', 50));
     }
 
+    // EXIF fotoğraf yönünü düzeltir
+    static SKBitmap ApplyOrientation(
+        SKBitmap source,
+        SKEncodedOrigin origin)
+    {
+        if (origin == SKEncodedOrigin.TopLeft)
+            return source.Copy();
+
+        bool swapDimensions =
+            origin == SKEncodedOrigin.LeftTop ||
+            origin == SKEncodedOrigin.RightTop ||
+            origin == SKEncodedOrigin.RightBottom ||
+            origin == SKEncodedOrigin.LeftBottom;
+
+        int width = swapDimensions ? source.Height : source.Width;
+        int height = swapDimensions ? source.Width : source.Height;
+
+        var result = new SKBitmap(width, height);
+
+        using var canvas = new SKCanvas(result);
+
+        canvas.Clear(SKColors.Transparent);
+
+        switch (origin)
+        {
+            case SKEncodedOrigin.TopRight:
+                canvas.Translate(width, 0);
+                canvas.Scale(-1, 1);
+                break;
+
+            case SKEncodedOrigin.BottomRight:
+                canvas.Translate(width, height);
+                canvas.RotateDegrees(180);
+                break;
+
+            case SKEncodedOrigin.BottomLeft:
+                canvas.Translate(0, height);
+                canvas.Scale(1, -1);
+                break;
+
+            case SKEncodedOrigin.LeftTop:
+                canvas.RotateDegrees(90);
+                canvas.Scale(1, -1);
+                break;
+
+            case SKEncodedOrigin.RightTop:
+                canvas.Translate(width, 0);
+                canvas.RotateDegrees(90);
+                break;
+
+            case SKEncodedOrigin.RightBottom:
+                canvas.Translate(0, height);
+                canvas.RotateDegrees(-90);
+                break;
+
+            case SKEncodedOrigin.LeftBottom:
+                canvas.Translate(0, height);
+                canvas.RotateDegrees(-90);
+                canvas.Scale(1, -1);
+                break;
+        }
+
+        canvas.DrawBitmap(
+            source,
+            new SKRect(0, 0, source.Width, source.Height),
+            new SKRect(0, 0, source.Width, source.Height),
+            new SKPaint
+            {
+                IsAntialias = true
+            });
+
+        canvas.Flush();
+
+        return result;
+    }
+
     static string FormatBytes(long bytes)
     {
-        if (bytes < 1024) return $"{bytes} B";
-        if (bytes < 1024 * 1024) return $"{bytes / 1024.0:F1} KB";
+        if (bytes < 1024)
+            return $"{bytes} B";
+
+        if (bytes < 1024 * 1024)
+            return $"{bytes / 1024.0:F1} KB";
+
         return $"{bytes / (1024.0 * 1024):F1} MB";
     }
 }
