@@ -244,6 +244,7 @@ namespace SeramikStore.Web.Controllers
             {
                 var vm = new AddressSelectViewModel
                 {
+                    PaymentMethod = model.PaymentMethod,
                     Addresses = addresses.Select(a => new UserAddressViewModel
                     {
                         Id = a.Id,
@@ -270,6 +271,34 @@ namespace SeramikStore.Web.Controllers
 
             if (address == null || address.UserId != userId)
                 return RedirectToAction("AddressDetail", "Cart");
+
+            if (model.PaymentMethod == "CreditCard")          // <-- BU BLOK EKLENİYOR
+            {
+                if (HttpContext.Session.GetString("session_IsEmailConfirmed") != "True")
+                {
+                    TempData["Error"] = "Sipariş verebilmek için email adresinizi doğrulamalısınız.";
+                    return RedirectToAction("Profile", "Account");
+                }
+
+                // Kargo tutarı istemciden değil, sunucudaki sepetten alınıyor
+                var created = _orderService.CreateOrder(new OrderCreateDto
+                {
+                    UserId = userId.Value,
+                    AddressId = address.Id,
+                    CargoAmount = cartResult.Summary.CargoAmount
+                });
+
+                HttpContext.Session.Remove("CheckoutAddressId");
+                return RedirectToAction("Start", "Payment", new { orderId = created.OrderId });
+            }
+
+
+
+
+
+
+
+
 
             var vmPayment = new OrderPaymentInfoViewModel
             {

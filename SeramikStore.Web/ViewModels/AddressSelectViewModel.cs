@@ -5,6 +5,7 @@ namespace SeramikStore.Web.ViewModels
 {
     public class AddressSelectViewModel
     {
+        public string PaymentMethod { get; set; } = "CreditCard"; // "CreditCard" | "Transfer"
         public List<UserAddressViewModel> Addresses { get; set; }
 
         [Required(ErrorMessage = "Lütfen bir adres seçiniz")]

@@ -104,7 +104,17 @@
                              data-terms-required="@L["Lütfen devam etmeden önce ön bilgilendirme formunu ve satış sözleşmesini onaylayınız."].Value">
                             <span id="formAlertText"></span>
                         </div>
-
+                        <div class="mt-3">
+                            <h6 class="mb-2">@L["Ödeme Seçenekleri"]</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="PaymentMethod" value="CreditCard" id="pmCard" />
+                                <label class="form-check-label" for="pmCard">@L["Kredi Kartı / Banka Kartı"]</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" asp-for="PaymentMethod" value="Transfer" id="pmTransfer" />
+                                <label class="form-check-label" for="pmTransfer">@L["EFT / HAVALE"]</label>
+                            </div>
+                        </div>
                         <!-- SUBMIT -->
                         <button type="submit" class="btn btn-success w-100 mt-3" id="btnSubmitPaymentInfo">
                             @L["Ödeme Yap"]

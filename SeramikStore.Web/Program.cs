@@ -18,6 +18,16 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.local.json", optional: true)
     .AddEnvironmentVariables();
 
+
+var apiKey = builder.Configuration["Iyzico:ApiKey"];
+var secretKey = builder.Configuration["Iyzico:SecretKey"];
+
+System.Diagnostics.Debug.WriteLine($"ENV = {builder.Environment.EnvironmentName}");
+
+Console.WriteLine("Environment: " + builder.Environment.EnvironmentName);
+Console.WriteLine("Iyzico ApiKey mevcut: " + !string.IsNullOrWhiteSpace(apiKey));
+Console.WriteLine("Iyzico SecretKey mevcut: " + !string.IsNullOrWhiteSpace(secretKey));
+
 // =====================
 // LOCALIZATION
 // =====================
@@ -82,6 +92,8 @@ builder.Services.AddScoped<IOrderReturnManager, OrderReturnManager>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IFcmService, FcmService>();
 builder.Services.AddScoped<IAppLogService, AppLogService>();
+builder.Services.AddScoped<IIyzicoService, IyzicoService>();
+builder.Services.AddScoped<IOrderPaymentService, OrderPaymentService>();
 
 
 builder.Services.Configure<EmailSettings>(

@@ -283,7 +283,10 @@
                                             </form> 
 
                                             }
-
+                                            <a asp-controller="Payment" asp-action="Start" asp-route-orderId="@Model.Id"
+                                               class="btn btn-success btn-sm mb-2">
+                                                @L["Kartla Öde"]
+                                            </a>
 
 
                                         </div>

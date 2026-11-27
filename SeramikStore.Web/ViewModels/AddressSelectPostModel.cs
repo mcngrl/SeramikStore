@@ -6,6 +6,9 @@ namespace SeramikStore.Web.ViewModels
 {
     public class AddressSelectPostModel
     {
+
+        public string PaymentMethod { get; set; } = "Transfer";   // "CreditCard" | "Transfer"
+
         [Required(ErrorMessage = "Adres seçmek zorunludur")]
         public int? SelectedAddressId { get; set; }
 
