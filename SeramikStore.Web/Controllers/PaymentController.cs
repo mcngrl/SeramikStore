@@ -15,17 +15,21 @@ namespace SeramikStore.Web.Controllers
         private readonly IIyzicoService _iyzico;
         private readonly IOrderPaymentService _orderPayment;
         private readonly INotificationService _notificationService;   // OrderController'daki tipin aynısı
+        private readonly IAppLogService _appLogService;
 
         public PaymentController(
             IOrderService orderService,
             IIyzicoService iyzico,
             IOrderPaymentService orderPayment,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IAppLogService appLogService)
         {
             _orderService = orderService;
             _iyzico = iyzico;
             _orderPayment = orderPayment;
             _notificationService = notificationService;
+            _appLogService = appLogService;
+
         }
 
         // ------------------------------------------------------------------
@@ -91,13 +95,21 @@ namespace SeramikStore.Web.Controllers
             };
 
             var init = await _iyzico.StartAsync(req);
-
+            
             if (!init.Success)
             {
                 // TODO: mevcut AppLogs loglama çağrını buraya ekle (init.ErrorCode, init.ErrorMessage, orderId)
+
+
+                await _appLogService.ErrorAsync("Iyzico", "SendAsync",
+                      $"Iyzico E.Code: {init.ErrorCode} | E.Message: {init.ErrorMessage} | OrderId: {orderId} | ");
+
                 TempData["Error"] = "Ödeme sayfası açılamadı. Lütfen sipariş sayfasından tekrar deneyin.";
                 return RedirectToAction("OrderInfo", "Order", new { id = orderId });
             }
+
+            await _appLogService.SuccessAsync("Iyzico", "SendAsync",
+             $"Iyzico başlatma başarılı. OrderId: {orderId} | Token: {init.Token}");
 
             _orderPayment.AddInitiated(order.Id, init.Token!, init.Price, req.CurrencyCode);
             return Redirect(init.PaymentPageUrl!);
